@@ -117,14 +117,14 @@ public class User {
    // </editor-fold>
    
    // <editor-fold defaultstate="collapsed" desc=" Property:   boolean enabled ">
-   private boolean enabled;
+   private Boolean enabled;
    /**
     *   @hibernate.propertys
     */
-   public boolean getEnabled() {
+   public Boolean getEnabled() {
        return enabled;
    }
-   public void setEnabled(boolean enabled) {
+   public void setEnabled(Boolean enabled) {
        this.enabled = enabled;
    }
    // </editor-fold>
@@ -272,20 +272,19 @@ public class User {
    }
    // </editor-fold>
 
-  
-   // <editor-fold defaultstate="collapsed" desc=" Property:   int passwordEncrypted ">
-   private boolean passwordEncrypted;
+   
+   // <editor-fold defaultstate="collapsed" desc=" Property:   boolean passwordEncrypted ">
+   private Boolean passwordEncrypted;
    /**
     *   @hibernate.property
     */
-   public boolean getPasswordEncrypted() {
+   public Boolean getPasswordEncrypted() {
        return passwordEncrypted;
    }
-   public void setPasswordEncrypted(boolean passwordEncrypted) {
+   public void setPasswordEncrypted(Boolean passwordEncrypted) {
        this.passwordEncrypted = passwordEncrypted;
    }
    // </editor-fold>
-   
    
    // <editor-fold defaultstate="collapsed" desc=" Property:   String username ">
    private String username;
