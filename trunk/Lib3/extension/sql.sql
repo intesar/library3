@@ -585,6 +585,8 @@ CREATE TABLE `phone` (
   `creationDate` datetime default NULL,
   `id` int(10) unsigned default NULL,
   PRIMARY KEY  (`username`,`phoneNo`),
+  KEY `FK_phone_2` (`type`),
+  CONSTRAINT `FK_phone_2` FOREIGN KEY (`type`) REFERENCES `phone_types` (`type`),
   CONSTRAINT `FK_phone_1` FOREIGN KEY (`username`) REFERENCES `user` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -594,6 +596,26 @@ CREATE TABLE `phone` (
 
 /*!40000 ALTER TABLE `phone` DISABLE KEYS */;
 /*!40000 ALTER TABLE `phone` ENABLE KEYS */;
+
+
+--
+-- Table structure for table `library3`.`phone_types`
+--
+
+DROP TABLE IF EXISTS `phone_types`;
+CREATE TABLE `phone_types` (
+  `id` int(10) unsigned default NULL,
+  `type` varchar(45) NOT NULL default '',
+  `description` varchar(45) default NULL,
+  PRIMARY KEY  (`type`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `library3`.`phone_types`
+--
+
+/*!40000 ALTER TABLE `phone_types` DISABLE KEYS */;
+/*!40000 ALTER TABLE `phone_types` ENABLE KEYS */;
 
 
 --
