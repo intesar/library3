@@ -1,26 +1,26 @@
 Java <br/>
-Maven
-Hibernate
-JPA
-Hibernate Search
-EHcache
-Spring IOC (Annotations)
-Spring Transactions
-DWR
-Spring Hessain
-ACEGI
-JUnit
-HTML
-JQuery
-CSS
-MySQL
-Jetty - dev
-Tomcat - stage
-Glassfish - production
-
-Supported Browser
-IE
-Firefox
-Chrome
+Maven <br/> 
+Hibernate <br/>
+JPA <br/>
+Hibernate Search <br/>
+EHcache <br/>
+Spring IOC (Annotations) <br/>
+Spring Transactions <br/>
+DWR <br/>
+Spring Hessain <br/>
+ACEGI <br/>
+JUnit <br/>
+HTML <br/>
+JQuery <br/>
+CSS <br/>
+MySQL <br/>
+Jetty - dev <br/>
+Tomcat - stage <br/>
+Glassfish - production <br/>
+ <br/>
+Supported Browser <br/>
+IE <br/>
+Firefox <br/>
+Chrome <br/>
 
   
