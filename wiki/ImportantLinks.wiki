@@ -1,3 +1,7 @@
 How to sell software <br/>
 
 http://www.miketaber.net/2009/10/29/how-to-sell-enterprise-software/
+
+Tomcat hosting
+
+http://eroute.net/vps_java.htm
