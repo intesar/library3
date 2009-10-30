@@ -8,6 +8,10 @@ Tomcat 6
 
 Hibernate
 
+Hibernate Search
+
+Hibernate Validator
+
 JPA
 
 Spring
