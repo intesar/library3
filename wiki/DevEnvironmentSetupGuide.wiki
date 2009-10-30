@@ -38,7 +38,7 @@ Add libraries to project
 right click on "Libraries" folder of your checked out project in Netbeans and click "Add Jar" then select all the jars from project's lib folder
 
 Step 5.  <br/>
-Change database configuration
+Change database configuration <br/>
 Open src\conf\Persistence.xml and src\java\context\ApplicationContext-Acegi.xml to change your username/password for database configuration
 
 
