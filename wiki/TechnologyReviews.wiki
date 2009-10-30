@@ -1,1 +1,26 @@
-= Technologies used reviews =
+= Upgrade to bug fix versions whenever its safe =
+
+JDK1.6
+
+MySQL 5
+
+Tomcat 6
+
+Hibernate
+
+JPA
+
+Spring
+
+DWR
+
+Jasypt
+
+Acegi
+
+
+HTML
+
+CSS
+
+JQuery
