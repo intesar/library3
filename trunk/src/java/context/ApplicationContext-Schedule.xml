@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+    <bean id="reportEngine" class="com.bia.ccm.services.ajax.ReportEngine" >
+        <property name="emailService" ref="emailServiceImpl" />
+    </bean>
+    <bean id="jobDetailForStartContract" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="reportEngine"/> <!--reportEngine" /> -->
+        <property name="targetMethod" value="processReportAtContractStart" />
+        <property name="concurrent" value="false" />
+    </bean>
+    <bean id="jobDetailForEndContract" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="reportEngine"/> <!--reportEngine" /> -->
+        <property name="targetMethod" value="processReportAtContractEnd" />
+        <property name="concurrent" value="false" />
+    </bean>
+    <bean id="jobDetailForCafeReport" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="reportEngine"/> <!--reportEngine" /> -->
+        <property name="targetMethod" value="processReport" />
+        <property name="concurrent" value="false" />
+    </bean>
+    <bean id="simpleTriggerStartContract" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+    <!-- see the example of method invoking job above -->
+        <property name="jobDetail" ref="jobDetailForStartContract" />
+    <!-- 18 seconds -->
+        <property name="startDelay" value="18000" />
+    <!-- repeat 15 minutes 15 * 60 * 1000-->
+        <property name="repeatInterval" value="900000" />
+        <!-- start time 6 am 
+        <property name="startTime" value="0 0 6 * * ?" />
+         start time 1 am 
+        <property name="endTime" value="0 0 1 * * ?" />
+        -->
+    </bean>
+    <bean id="simpleTriggerEndContract" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+    <!-- see the example of method invoking job above -->
+        <property name="jobDetail" ref="jobDetailForEndContract" />
+    <!-- 18 seconds -->
+        <property name="startDelay" value="18000" />
+    <!-- repeat 15 minutes 10 * 60 * 1000-->
+        <property name="repeatInterval" value="900000" />
+        <!-- start time 6 am 
+        <property name="startTime" value="0 0 6 * * ?" />
+         start time 1 am 
+        <property name="endTime" value="0 0 1 * * ?" />
+        -->
+    </bean>
+    <bean id="cronTriggerCafeReport" class="org.springframework.scheduling.quartz.CronTriggerBean">
+    <!-- see the example of method invoking job above -->
+        <property name="jobDetail" ref="jobDetailForCafeReport" />
+    <!-- 10 seconds -->
+    <!--    <property name="startDelay" value="10000" /> -->
+    <!-- repeat 1 minutes 10 * 60 * 1000-->
+    <!-- <property name="repeatInterval" value="600000" /> -->
+        <!-- start time 6 am 
+        <property name="startTime" value="0 0 6 * * ?" />
+         start time 1 am 
+        <property name="endTime" value="0 0 1 * * ?" />
+        -->
+        <property name="cronExpression" value="0 0 0-23 * * ?" />
+    </bean>
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref local="simpleTriggerStartContract"/>
+                <ref local="simpleTriggerEndContract"/>
+                <ref local="cronTriggerCafeReport" />
+            </list>
+        </property>
+    </bean>
+</beans>
