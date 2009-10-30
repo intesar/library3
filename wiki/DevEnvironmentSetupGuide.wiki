@@ -4,6 +4,8 @@ JDK 1.6
 http://java.sun.com/javase/downloads/index.jsp
 
 MySQL 5 Server
+
+When you install mysql note your Root password, you will use that in step 2 and step 5 <br/>
 http://dev.mysql.com/get/Downloads/MySQL-5.1/mysql-essential-5.1.40-win32.msi/from/http://mysql.he.net/
 
 MySQL GUI Tools
