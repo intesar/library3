@@ -56,3 +56,18 @@ JQuery
 
 
 JQuery-Plugins
+
+ LightBox
+
+ Menu or Tabs
+
+ Confirmation Message boxes
+
+ Nice Form elements
+
+ Date Picker
+
+ Table
+
+
+ 
