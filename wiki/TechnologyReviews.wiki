@@ -57,17 +57,23 @@ JQuery
 
 JQuery-Plugins
 
- LightBox
-
  Menu or Tabs
+  * http://t3chh3lp.com/blog/2009/7/4/20-best-high-quality-jquery-menus-menu-plugins.html
 
- Confirmation Message boxes
+ LightBox & Confirmation Message boxes
+  * http://blog.insicdesigns.com/2009/01/10-promising-jquery-lighbox-plugin/
+  * http://famspam.com/facebox
+  * http://fancybox.net/example
+
 
  Nice Form elements
+  * http://speckyboy.com/2009/08/26/20-jquery-plugins-and-tutorials-to-enhance-forms/
 
  Date Picker
+  * http://docs.jquery.com/UI/Datepicker
 
  Table
+  * http://javabyexample.wisdomplug.com/web-programming/47-javascript/88-20-best-jquery-table-plugins.html
 
 
  
