@@ -56,6 +56,7 @@ JQuery
 
 
 JQuery-Plugins
+ * http://jeez.eu/2009/10/30/the-list-of-jquery-plugins/
 
  Menu or Tabs
   * http://t3chh3lp.com/blog/2009/7/4/20-best-high-quality-jquery-menus-menu-plugins.html
