@@ -22,7 +22,7 @@
            
             var org;
             function fillTable() {
-                dwr.util.useLoadingMessage("Please Wait, Loading");
+                //dwr.util.useLoadingMessage("Please Wait, Loading");
                 AjaxAdminService.getOrganization(function(people) {
                     org = people;
                     dwr.util.setValues(people);
