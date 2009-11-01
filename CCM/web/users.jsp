@@ -28,7 +28,7 @@
             var user = null;
         
             function fillTable() {
-                dwr.util.useLoadingMessage();
+                //dwr.util.useLoadingMessage();
                 AjaxAdminService.getAllUsers(function(people) {
                     // Delete all the rows except for the "pattern" row
                     dwr.util.removeAllRows("peoplebody", { filter:function(tr) {

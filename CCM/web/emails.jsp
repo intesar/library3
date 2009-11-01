@@ -27,7 +27,7 @@
             var viewed = null;
         
             function fillTable() {
-                dwr.util.useLoadingMessage("Please Wait, Loading");
+                //dwr.util.useLoadingMessage("Please Wait, Loading");
                 AjaxAdminService.getAllEmailPreference(function(people) {
                     // Delete all the rows except for the "pattern" row
                     dwr.util.removeAllRows("peoplebody", { filter:function(tr) {

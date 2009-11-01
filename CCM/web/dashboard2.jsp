@@ -46,7 +46,7 @@
             var services = { };
             var usedSystemList = { };
             function fillTable() {
-                dwr.util.useLoadingMessage("Please Wait, Loading...");
+                //dwr.util.useLoadingMessage("Please Wait, Loading...");
                 AjaxWorkService.getActiveSystems(function(people) {
                     usedSystemList = { };
                     // Delete all the rows except for the "pattern" row

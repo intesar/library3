@@ -23,7 +23,7 @@
         
         <script type="text/javascript">
             function execute() {
-                dwr.util.useLoadingMessage("Please wait, Loading");
+                //dwr.util.useLoadingMessage("Please wait, Loading");
                 var startDate = document.getElementById("DPC_startDate_YYYY-MM-DD").value;
                 var endDate = document.getElementById("DPC_endDate_YYYY-MM-DD").value;
                 if ( startDate != null && startDate.length == 10 && endDate != null && endDate.length == 10 ) {

@@ -8,6 +8,7 @@
 
 <script type="text/javascript">
     var isMenuCreated = false;
+    dwr.util.useLoadingMessage("Please Wait");
     function createMenu() {
         if ( !isMenuCreated ) {
             AjaxUserService.getUserRole(function(isAdmin) {
