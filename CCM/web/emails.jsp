@@ -13,20 +13,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         
         <script type="text/javascript" src="email_validation.js"></script>
-        <style>
-            a:link    {color:black; text-decoration:none; font-size:11pt}
-            a:hover   {color:black; text-decoration:none; 
-                font-size:11pt}
-            a:active  {color:black; text-decoration:none; font-size:11pt}
-            a:visited {color:black; text-decoration:none; font-size:11pt}
-        </style>
-        <style>
-            a:link    {color:black; text-decoration:none; font-size:11pt}
-            a:hover   {color:black; text-decoration:none; 
-                font-size:11pt}
-            a:active  {color:black; text-decoration:none; font-size:11pt}
-            a:visited {color:black; text-decoration:none; font-size:11pt}
-        </style>
+        
         <script type='text/javascript' src='/CCM/dwr/interface/AjaxAdminService.js'></script>
         <script type='text/javascript' src='/CCM/dwr/engine.js'></script>        
         <script type='text/javascript' src='/CCM/dwr/util.js'></script>

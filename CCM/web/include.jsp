@@ -53,78 +53,49 @@
 
 <div id="mainDiv">
     <div id="adminDiv" align="center">
-        <a onclick="forwardFunction('dashboard2.jsp');">
-            <img src="menu_icons/dashboard.png" alt="Dashboard" title="Dashboard" />            
-        </a>
+        <a href="javascript:void(0);" onclick="forwardFunction('dashboard2.jsp');">Home</a>
         
-        <a onclick="forwardFunction('users.jsp');"><img src="menu_icons/controlpanel.png" title="Control Panel" />
-        </a>
+        <a href="javascript:void(0);" onclick="forwardFunction('users.jsp');">Users</a>
         
-        <a onclick="forwardFunction('systems.jsp');"><img src="menu_icons/systems.png" title="Computers" alt="3"/>
-        </a>        
+        <a href="javascript:void(0);" onclick="forwardFunction('systems.jsp');">Systems</a>
         
-        <a onclick="forwardFunction('services.jsp');"><img src="menu_icons/services.png" title="Services"  alt="Extra Services"/>
-        </a>
+        <a href="javascript:void(0);" onclick="forwardFunction('services.jsp');">Services</a>
         
-        <a onclick="forwardFunction('emails.jsp');"><img src="menu_icons/emails.png" title="Emails/SMS"  alt="4 emails"/>
-        </a>
+        <a href="javascript:void(0);" onclick="forwardFunction('emails.jsp');">Emails</a>
         
-        <a onclick="forwardFunction('emailtimings.jsp');"><img src="menu_icons/report time.png" title="Report Timing"  alt="5 Time"/>
-        </a>
+        <a href="javascript:void(0);" onclick="forwardFunction('emailtimings.jsp');">Timings</a>
         
-        <a onclick="forwardFunction('organization.jsp');"><img src="menu_icons/profile.png" title="Profile" alt="7 profile"/>
-        </a>
+        <a href="javascript:void(0);" onclick="forwardFunction('organization.jsp');">Company</a>
         
-        <a onclick="forwardFunction('systemlease.jsp');"><img src="menu_icons/rental history.png" title="Rental History" alt="9 history"/>
-        </a>
+        <a href="javascript:void(0);" onclick="forwardFunction('systemlease.jsp');">History</a>
         
-        <a onclick="forwardFunction('report.jsp');"><img src="menu_icons/billing.png" title="Billing Report" alt="8 report"/>
-        </a>
+        <a href="javascript:void(0);" onclick="forwardFunction('report.jsp');">Billing</a>
         
-        <a onclick="forwardFunction('customer.jsp');"><img src="menu_icons/customer profile_2.png" title="Customer Profiles" alt="6"/>
-        </a>
+        <a href="javascript:void(0);" onclick="forwardFunction('customer.jsp');">Customers</a>
         
-        <a onclick="forwardFunction('my_systemlease.jsp');">
-            <img src="menu_icons/myhistory234.png" alt="Dashboard" title="My History" />
-        </a>
+        <a href="javascript:void(0);" onclick="forwardFunction('my_systemlease.jsp');">My History</a>
         
-        <a onclick="forwardFunction('j_acegi_logout');"><img src="menu_icons/logout.png" title="LogOut" alt="logout"/>
-        </a> 
-        
-        <a onclick="refresh();"><img src="menu_icons/re.png" title="Refresh" alt="11 logout"/>
-        </a> 
-        
+        <a href="javascript:void(0);" onclick="forwardFunction('j_acegi_logout');">Logout</a>
+                
     </div>
     
     
     <div id="employeeDiv" style="visibility: hidden" align="center">
-        <a onclick="forwardFunction('dashboard2.jsp');">
-            <img src="menu_icons/dashboard.png" alt="Dashboard" title="Dashboard" />
-        </a>
+        <a href="javascript:void(0);" onclick="forwardFunction('dashboard2.jsp');">Home</a>
         
-        <a onclick="forwardFunction('customer.jsp');"><img src="menu_icons/customer profile_2.png" title="Customer Profiles" alt="6"/>
-        </a>
+        <a href="javascript:void(0);" onclick="forwardFunction('customer.jsp');">Customers</a>
         
-        <a onclick="forwardFunction('my_systemlease.jsp');">
-            <img src="menu_icons/myhistory234.png" alt="Dashboard" title="My History" />
-        </a>
-         <a onclick="forwardFunction('j_acegi_logout');"><img src="menu_icons/logout.png" title="LogOut" alt="logout"/>
-        </a>
+        <a href="javascript:void(0);" onclick="forwardFunction('my_systemlease.jsp');">My History</a>
 
-        <a onclick="refresh();"><img src="menu_icons/re.png" title="Refresh" alt="11 logout"/>
-        </a> 
+         <a href="javascript:void(0);" onclick="forwardFunction('j_acegi_logout');">Logout</a>
     </div>
     
     <div id="customerDiv" style="visibility: hidden" align="center">
         
-         <a onclick="forwardFunction('my_systemlease.jsp');">
-            <img src="menu_icons/myhistory234.png" alt="Dashboard" title="My History" />
-        </a>
-         <a onclick="forwardFunction('j_acegi_logout');"><img src="menu_icons/logout.png" title="LogOut" alt="logout"/>
-        </a>
+         <a href="javascript:void(0);" onclick="forwardFunction('my_systemlease.jsp');">History</a>
 
-        <a onclick="refresh();"><img src="menu_icons/re.png" title="Refresh" alt="11 logout"/>
-        </a> 
+         <a href="javascript:void(0);" onclick="forwardFunction('j_acegi_logout');">Logout</a>
+
     </div>
     <br>
     <div align="center">   
