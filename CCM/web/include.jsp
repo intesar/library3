@@ -56,7 +56,7 @@
     <div id="adminDiv" align="center">
         <a href="javascript:void(0);" onclick="forwardFunction('dashboard2.jsp');">Home</a>
         
-        <a href="javascript:void(0);" onclick="forwardFunction('users.jsp');">Users</a>
+        <a href="javascript:void(0);" onclick="forwardFunction('users.jsp');">Managers</a>
         
         <a href="javascript:void(0);" onclick="forwardFunction('systems.jsp');">Systems</a>
         
