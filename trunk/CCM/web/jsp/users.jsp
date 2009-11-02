@@ -22,8 +22,8 @@
         <script type='text/javascript' src='../dwr/interface/AjaxAdminService.js'></script>
         <script type='text/javascript' src='../dwr/engine.js'></script>
         <script type='text/javascript' src='../dwr/util.js'></script>
-        <link href="../css/facebox/facebox.css" media="screen" rel="stylesheet" type="text/css"/>
-        <link rel="stylesheet" href="../css/blue/style.css" type="text/css" id="" media="print, projection, screen" />        
+        <link rel="stylesheet" type="text/css" href="../css/facebox/facebox.css" media="screen" />
+        <link rel="stylesheet" type="text/css" href="../css/blue/style.css" media="print, projection, screen" />
         <script type="text/javascript" src="../js/users.js"></script>
     </head>
     <body style="background-image:url('../images/body_background.png'); font-family:arial">
@@ -31,7 +31,7 @@
         <div align="center">
             <jsp:include page="include.jsp" />
 
-            <div align="center" style="width:700px">
+            <div style="width:700px" >
                 <div style="font-size:12px" align="right">
                     <a href="#managerProfile"  rel="facebox" id="createNewManager">Create a new manager</a>
                 </div>
