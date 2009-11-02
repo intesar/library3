@@ -56,19 +56,19 @@
     <div id="adminDiv" align="center">
         <a href="javascript:void(0);" onclick="forwardFunction('dashboard2.jsp');">Home</a>
         
-        <a href="javascript:void(0);" onclick="forwardFunction('users.jsp');">Managers</a>
-        
         <a href="javascript:void(0);" onclick="forwardFunction('systems.jsp');">Systems</a>
         
         <a href="javascript:void(0);" onclick="forwardFunction('services.jsp');">Services</a>
-        
+
+        <a href="javascript:void(0);" onclick="forwardFunction('users.jsp');">Managers</a>
+
         <a href="javascript:void(0);" onclick="forwardFunction('emails.jsp');">Emails</a>
         
         <a href="javascript:void(0);" onclick="forwardFunction('emailtimings.jsp');">Timings</a>
         
         <a href="javascript:void(0);" onclick="forwardFunction('organization.jsp');">Company</a>
         
-        <a href="javascript:void(0);" onclick="forwardFunction('systemlease.jsp');">History</a>
+        <a href="javascript:void(0);" onclick="forwardFunction('systemlease.jsp');">Customer History</a>
         
         <a href="javascript:void(0);" onclick="forwardFunction('report.jsp');">Billing</a>
         
@@ -76,7 +76,7 @@
         
         <a href="javascript:void(0);" onclick="forwardFunction('my_systemlease.jsp');">My History</a>
         
-        <a href="javascript:void(0);" onclick="forwardFunction('j_acegi_logout');">Logout</a>
+        <a href="javascript:void(0);" onclick="forwardFunction('j_acegi_logout');">Sign Out</a>
                 
     </div>
     
