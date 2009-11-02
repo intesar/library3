@@ -1,4 +1,4 @@
-<script type='text/javascript' src='/CCM/dwr/interface/AjaxUserService.js'></script>
+<script type='text/javascript' src='../dwr/interface/AjaxUserService.js'></script>
 
 <!--
 <script type='text/javascript' src='/CCM/dwr/engine.js'></script>

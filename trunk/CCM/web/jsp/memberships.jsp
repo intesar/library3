@@ -12,8 +12,8 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         
-        <script type="text/javascript" src="email_validation.js"></script>
-        <script type="text/javascript" src="name_valadation.js"></script>
+        <script type="text/javascript" src="../js/email_validation.js"></script>
+        <script type="text/javascript" src="../js/name_valadation.js"></script>
         
         <style>
             a:link    {color:black; text-decoration:none; font-size:11pt}

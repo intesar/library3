@@ -13,9 +13,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     
   
-    <script type='text/javascript' src='/CCM/dwr/interface/AjaxAdminService.js'></script>
-    <script type='text/javascript' src='/CCM/dwr/engine.js'></script>        
-    <script type='text/javascript' src='/CCM/dwr/util.js'></script>
+    <script type='text/javascript' src='../dwr/interface/AjaxAdminService.js'></script>
+    <script type='text/javascript' src='../dwr/engine.js'></script>
+    <script type='text/javascript' src='../dwr/util.js'></script>
     
     <script type="text/javascript">
         function init() {
