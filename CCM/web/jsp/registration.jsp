@@ -11,10 +11,10 @@
 <html>
     <head>
         
-        <script type='text/javascript' src='/CCM/dwr/interface/AjaxUserService.js'></script>
-        <script type='text/javascript' src='/CCM/dwr/engine.js'></script>
-        <script type="text/javascript" src="email_validation.js"></script>
-        <script type='text/javascript' src='/CCM/dwr/util.js'></script>
+        <script type='text/javascript' src='../dwr/interface/AjaxUserService.js'></script>
+        <script type='text/javascript' src='../dwr/engine.js'></script>
+        <script type="text/javascript" src="../js/email_validation.js"></script>
+        <script type='text/javascript' src='../dwr/util.js'></script>
         
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script type="text/javascript">

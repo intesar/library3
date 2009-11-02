@@ -47,10 +47,10 @@
             .style35 {font-size: 12px; color: #ffffff; }
             -->
         </style>
-        <script type='text/javascript' src='/CCM/dwr/interface/AjaxUserService.js'></script>
-        <script type='text/javascript' src='/CCM/dwr/engine.js'></script>
-        <script type="text/javascript" src="js/email_validation.js"></script>
-        <script type='text/javascript' src='/CCM/dwr/util.js'></script>
+        <script type='text/javascript' src='../dwr/interface/AjaxUserService.js'></script>
+        <script type='text/javascript' src='../dwr/engine.js'></script>
+        <script type="text/javascript" src="../js/email_validation.js"></script>
+        <script type='text/javascript' src='../dwr/util.js'></script>
         
         <script type="text/javascript"> 
             var email = "";
