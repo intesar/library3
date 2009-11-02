@@ -158,83 +158,88 @@
 
 
     </head>
-    <body>
+    <body style="background-image:url('images/body_background.png'); font-family:arial">
 
-        <jsp:include page="include.jsp" />
-        <!-- <h2 align="center">Cyber Cafe Users  </h2>                         -->
-        <div align="center" style="width:700px">
-            <a href="#managerProfile"  rel="facebox" id="createNewManager">Create a new manager</a>
-            <br/>
-            <table id="managers" cellspacing="1" class="tablesorter">
+        <div align="center">
+            <jsp:include page="include.jsp" />
+            <!-- <h2 align="center">Cyber Cafe Users  </h2>                         -->
+            <div align="center" style="width:700px">
+                <div style="font-size:12px" align="right">
+                    <a href="#managerProfile"  rel="facebox" id="createNewManager">Create a new manager</a>
+                </div>
+                
+                <table id="managers" cellspacing="1" class="tablesorter">
 
-                <thead>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Role</th>
+                            <th>Active</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="peoplebody">
+                        <tr id="pattern" style="display:none;">
+                            <td><span id="username1">name</span></td>
+                            <td><span id="role1">role</span></td>
+                            <td><span id="enabled1">enabled</span></td>
+                            <td>
+                                <a href="#managerProfile"  rel="facebox"  class="editManager" id="edit"> edit </a>
+                            </td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+
+            <div style="display:none" id="managerProfile">
+                <table>
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>
+
+                            </th>
+                        </tr>
+                    </thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Role</th>
-                        <th>Active</th>
-                        <th></th>
+                        <td>  Name:*  </td>
+                        <td><input id="name" class="name" type="text" size="30"/></td>
                     </tr>
-                </thead>
-
-                <tbody id="peoplebody">
-                    <tr id="pattern" style="display:none;">
-                        <td><span id="username1">name</span></td>
-                        <td><span id="role1">role</span></td>
-                        <td><span id="enabled1">enabled</span></td>
-                        <td>
-                            <a href="#managerProfile"  rel="facebox"  class="editManager" id="edit"> edit </a>
+                    <tr>
+                        <td> Email:* </td>
+                        <td><input id="username" class="username" type="text" size="30"/></td>
+                    </tr>
+                    <tr>
+                        <td> Password:* </td>
+                        <td><input id="password" class="password" type="password" size="30"/></td>
+                    </tr>
+                    <tr>
+                        <td> Active </td>
+                        <td><select name="enabledString" class="enabledString">
+                                <option>yes</option>
+                                <option>no</option>
+                            </select>
+                            (To Cancel Account set Active:No)</td>
+                    </tr>
+                    <tr>
+                        <td>  Role </td>
+                        <td><select name="role" class="role">
+                                <option value="admin">Administrator</option>
+                                <option value="employee">Cashier</option>
+                            </select>
                         </td>
                     </tr>
-                </tbody>
-
-            </table>
-        </div>
-
-        <div style="display:none" id="managerProfile">
-            <table>
-                <thead>
                     <tr>
-                        <th></th>
-                        <th>
-
-                        </th>
+                        <td></td>
+                        <td>
+                            <input type="button" value="Save" id="saveManager" />
+                        </td>
                     </tr>
-                </thead>
-                <tr>
-                    <td>  Name:*  </td>
-                    <td><input id="name" class="name" type="text" size="30"/></td>
-                </tr>
-                <tr>
-                    <td> Email:* </td>
-                    <td><input id="username" class="username" type="text" size="30"/></td>
-                </tr>
-                <tr>
-                    <td> Password:* </td>
-                    <td><input id="password" class="password" type="password" size="30"/></td>
-                </tr>                
-                <tr>
-                    <td> Active </td>
-                    <td><select name="enabledString" class="enabledString">
-                            <option>yes</option>
-                            <option>no</option>
-                        </select>
-                        (To Cancel Account set Active:No)</td>
-                </tr>
-                <tr>
-                    <td>  Role </td>
-                    <td><select name="role" class="role">
-                            <option value="admin">Administrator</option>
-                            <option value="employee">Cashier</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>
-                        <input type="button" value="Save" id="saveManager" />
-                    </td>
-                </tr>
-            </table>
+                </table>
+            </div>
+
         </div>
     </body>
 
