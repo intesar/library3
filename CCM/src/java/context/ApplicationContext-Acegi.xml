@@ -33,13 +33,13 @@ http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
     <bean id="authenticationProcessingFilter"
         class="org.acegisecurity.ui.webapp.AuthenticationProcessingFilter">
         <property name="authenticationManager" ref="authenticationManager"/>
-        <property name="authenticationFailureUrl" value="/login.jsp?login_error=1"/>
-        <property name="defaultTargetUrl" value="/dashboard2.jsp"/>
+        <property name="authenticationFailureUrl" value="/jsp/login.jsp?login_error=1"/>
+        <property name="defaultTargetUrl" value="/jsp/dashboard2.jsp"/>
         <property name="filterProcessesUrl" value="/j_acegi_security_check"/>
         <property name="rememberMeServices" ref="rememberMeServices"/>
     </bean>
     <bean id="logoutFilter" class="org.acegisecurity.ui.logout.LogoutFilter">
-        <constructor-arg index="0" value="/login.jsp"/>
+        <constructor-arg index="0" value="/jsp/login.jsp"/>
         <constructor-arg index="1">
             <list>
                 <ref local="securityContextLogoutHandler"/>
@@ -83,20 +83,20 @@ http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
         PATTERN_TYPE_APACHE_ANT                
                 /dwr/interface/ajaxadminservice.js*=ROLE_ADMIN
                 /dwr/interface/ajaxworkservice.js*=ROLE_USER
-                /users.jsp*=ROLE_ADMIN    
-                /emails.jsp*=ROLE_ADMIN
-                /emailtimings*.jps=ROLE_ADMIN
-                /organization.jsp*=ROLE_ADMIN
-                /report.jsp*=ROLE_ADMIN
-                /systemlease.jsp*=ROLE_ADMIN
-                /systems.jsp*=ROLE_ADMIN                
-                /dashboard.jsp*=ROLE_ADMIN,ROLE_USER
-                /dashboard1.jsp*=ROLE_ADMIN,ROLE_USER
-                /dashboard2.jsp*=ROLE_ADMIN,ROLE_USER
-                /customer.jsp*=ROLE_ADMIN,ROLE_USER
-                /services.jsp*=ROLE_ADMIN
-                /memberships.jsp*=ROLE_ADMIN,ROLE_USER
-                /membership_types.jsp*=ROLE_ADMIN,ROLE_USER
+                /jsp/users.jsp*=ROLE_ADMIN
+                /jsp/emails.jsp*=ROLE_ADMIN
+                /jsp/emailtimings*.jps=ROLE_ADMIN
+                /jsp/organization.jsp*=ROLE_ADMIN
+                /jsp/report.jsp*=ROLE_ADMIN
+                /jsp/systemlease.jsp*=ROLE_ADMIN
+                /jsp/systems.jsp*=ROLE_ADMIN
+                /jsp/dashboard.jsp*=ROLE_ADMIN,ROLE_USER
+                /jsp/dashboard1.jsp*=ROLE_ADMIN,ROLE_USER
+                /jsp/dashboard2.jsp*=ROLE_ADMIN,ROLE_USER
+                /jsp/customer.jsp*=ROLE_ADMIN,ROLE_USER
+                /jsp/services.jsp*=ROLE_ADMIN
+                /jsp/memberships.jsp*=ROLE_ADMIN,ROLE_USER
+                /jsp/membership_types.jsp*=ROLE_ADMIN,ROLE_USER
             </value>
         </property>
     </bean>
@@ -162,7 +162,7 @@ http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
             <value>root</value>
         </property>
         <property name="password">
-            <value>mercury13</value>
+            <value>Abbh1234</value>
         </property>
     </bean>
     <bean id="httpRequestAccessDecisionManager"
