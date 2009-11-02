@@ -102,9 +102,9 @@
             }
         </script>
         
-        <jsp:include page="table_style.jsp" ></jsp:include>
+        
     </head>
-    <body>
+    <body  style="background-image:url('images/body_background.png'); font-family:arial">
         
         <jsp:include page="include.jsp" />
         <!-- <h2 align="center"> Email/Phone For Daily Reports </h2>  -->

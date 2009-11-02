@@ -52,8 +52,8 @@
 
 
 
-<div id="mainDiv">
-    <div id="adminDiv" align="center">
+<div id="mainDiv" style="font-size:12px;">
+    <div id="adminDiv" align="center" style="text-decoration:none">
         <a href="javascript:void(0);" onclick="forwardFunction('dashboard2.jsp');">Home</a>
         
         <a href="javascript:void(0);" onclick="forwardFunction('systems.jsp');">Systems</a>
