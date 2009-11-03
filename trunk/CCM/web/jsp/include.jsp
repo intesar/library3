@@ -51,33 +51,52 @@
 </script>
 
 
+<style>
+    #adminDiv span {
 
-<div id="mainDiv" style="font-size:12px;">
-    <div id="adminDiv" align="center" style="text-decoration:none">
-        <a href="dashboard2.jsp" >Home</a>
+    }
+    #mainDiv {
+        background-image:url('../images/topNavBG.png');
+        background-repeat:no-repeat;
+        width:760px;
+    }
+    #adminDiv {
+        top:15px;
+        vertical-align:bottom;
+    }
+    #adminDiv a{
+        font-weight:normal;
+        font-size:13px;
+        color:white;
+        cursor:pointer;
+        text-decoration:none;
+        font-family:Arial, Hevelectica, sans-serif;
 
-        <a href="systems.jsp" >Systems</a>
-
-        <a href="services.jsp" >Services</a>
-
-        <a href="users.jsp" >Managers</a>
-
-        <a href="emails.jsp" >Emails</a>
-
-        <a href="emailtimings.jsp" >Timings</a>
-
-        <a href="organization.jsp" >Company</a>
-
-        <a href="systemlease.jsp" >Customer History</a>
-
+    }
+    #adminDiv a:hover {
+        text-decoration:underline;
+        cursor:pointer;
+    }
+</style>
+<div id="mainDiv" align="center" style="font-size:12px;">
+    <div id="adminDiv" align="center" style="text-decoration:none;">
+        <a href="dashboard2.jsp" class="links">Home</a>
+        &nbsp;&nbsp;
+        <a href="systemlease.jsp" >History</a>
+        &nbsp;&nbsp;
         <a href="report.jsp" >Billing</a>
-
-        <a href="customer.jsp" >Customers</a>
-
-        <a href="my_systemlease.jsp" >My History</a>
-
-        <a href="j_acegi_logout" >Sign Out</a>
-
+        &nbsp;&nbsp;
+        <a href="customer.jsp" >Customer</a>
+        &nbsp;&nbsp;
+        <a href="my_systemlease.jsp" >My-History</a>
+        &nbsp;&nbsp;
+        <a href="memberships.jsp" >Members</a>
+        &nbsp;&nbsp;
+        <a href="systems.jsp" >Manage</a>
+        &nbsp;&nbsp;
+        <span>
+            <a href="../j_acegi_logout" >Sign Out</a>
+        </span>
     </div>
 
 
@@ -88,14 +107,14 @@
 
         <a href="my_systemlease.jsp" >My History</a>
 
-        <a href="j_acegi_logout" >Sign Out</a>
+        <a href="../j_acegi_logout" >Sign Out</a>
     </div>
 
     <div id="customerDiv" style="visibility: hidden" align="center">
 
         <a href="my_systemlease.jsp" >My History</a>
 
-        <a href="j_acegi_logout" >Sign Out</a>
+        <a href="../j_acegi_logout" >Sign Out</a>
 
     </div>
     <br>

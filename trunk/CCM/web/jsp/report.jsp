@@ -6,24 +6,25 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+    "http://www.w3.org/TR/html4/loose.dtd">
 
 <html>
     <head>
+        <title>Report</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        
-       
+
+
         <script type='text/javascript' src='../dwr/interface/AjaxAdminService.js'></script>
         <script type='text/javascript' src='../dwr/engine.js'></script>
         <script type='text/javascript' src='../dwr/util.js'></script>
         <script type="text/javascript" src="../js/datepickercontrol.js"></script>
         <link type="text/css" rel="stylesheet" href="../css/datepickercontrol.css">
-        
+
         <script type="text/javascript">
             function execute() {
                 dwr.util.useLoadingMessage("Please Wait!");
-                 var startDate = document.getElementById("DPC_startDate_YYYY-MM-DD").value;
-                 var endDate = document.getElementById("DPC_endDate_YYYY-MM-DD").value;
+                var startDate = document.getElementById("DPC_startDate_YYYY-MM-DD").value;
+                var endDate = document.getElementById("DPC_endDate_YYYY-MM-DD").value;
                 if ( startDate != null && startDate.length == 10 && endDate != null && endDate.length == 10 ) {
                     AjaxAdminService.getReport(startDate,endDate, reply1 );
                 } else {
@@ -40,25 +41,26 @@
                 dwr.util.setValue("id3", str3);
             }
         </script>
-        
-       
+
+
     </head>
     <body style="background-image:url('../images/body_background.png'); font-family:arial">
-        
-        <jsp:include page="include.jsp" />
-        
-        
-        
-             <table align="center">
-            
+
+        <div align="center">
+            <jsp:include page="include.jsp" />
+        </div>
+
+
+        <table align="center">
+
             <tr>
                 <td>
-                    
+
                     <input type="hidden" id="DPC_TODAY_TEXT" value="today">
                     <input type="hidden" id="DPC_BUTTON_TITLE" value="Open calendar...">
                     <input type="hidden" id="DPC_MONTH_NAMES" value="['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']">
                     <input type="hidden" id="DPC_DAY_NAMES" value="['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']">
-                    
+
                     Start-Date    
                 </td>
                 <td>
@@ -77,11 +79,11 @@
                 </td>
             </tr>
         </table>
-        
+
         <br>
-        
+
         <br>
-        
+
         <div align="center">
             <table>
                 <tr>
@@ -91,10 +93,10 @@
                 </tr>
             </table>
         </div>
-        
-        
-        
-        
+
+
+
+
         <jsp:include page="report_help.jsp" />      
         <jsp:include page="copyright.jsp" />
     </body>
