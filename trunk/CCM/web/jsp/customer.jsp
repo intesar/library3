@@ -122,8 +122,7 @@
                     <th>
                         Customer Look Up
                     </th>
-                    <th> <a href="memberships.jsp" style="color:white"> Memberships</a> </th>
-                    <th><a href="membership_types.jsp" style="color:white">Rules</a></th>
+                   
                 </tr>
             </thead>
             <tr>
