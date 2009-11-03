@@ -6,34 +6,35 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+    "http://www.w3.org/TR/html4/loose.dtd">
 
 <html>
     <head>
+        <title>Create Update Mebership policies</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        
+
         <script type="text/javascript" src="email_validation.js"></script>
         <script type="text/javascript" src="name_valadation.js"></script>
-        
+
         <style>
             a:link    {color:black; text-decoration:none; font-size:11pt}
             a:hover   {color:black; text-decoration:none; 
-                font-size:11pt}
+                       font-size:11pt}
             a:active  {color:black; text-decoration:none; font-size:11pt}
             a:visited {color:black; text-decoration:none; font-size:11pt}
         </style>
         <style>
             a:link    {color:black; text-decoration:none; font-size:11pt}
             a:hover   {color:black; text-decoration:none; 
-                font-size:11pt}
+                       font-size:11pt}
             a:active  {color:black; text-decoration:none; font-size:11pt}
             a:visited {color:black; text-decoration:none; font-size:11pt}
         </style>
-        
+
         <script type='text/javascript' src='/CCM/dwr/interface/AjaxWorkService.js'></script>
         <script type='text/javascript' src='/CCM/dwr/engine.js'></script>        
         <script type='text/javascript' src='/CCM/dwr/util.js'></script>
-        
+
         <script type="text/javascript">
             function init() {
                 fillTable();
@@ -169,17 +170,18 @@
                 return true;
             }
         </script>
-        
-        <jsp:include page="table_style.jsp" ></jsp:include>
+
+
     </head>
-    <body>
-        
-        <jsp:include page="include.jsp" />
+    <body  style="background-image:url('../images/body_background.png'); font-family:arial">
+        <div align="center">
+            <jsp:include page="include-manage.jsp" />
+        </div>
         <!-- <h2 align="center"> Extra Services </h2> -->
         <table align="center">
             <tr>
                 <td valign="top">
-                    
+
                     <table>
                         <thead>
                             <tr>
@@ -200,11 +202,11 @@
                             </tbody>
                         </form>
                     </table>
-                    
-                    
+
+
                 </td>
                 <td valign="top">
-                    
+
                     <table>
                         <thead>
                             <tr>
@@ -234,9 +236,9 @@
                                 <button value="Save" id="save" onclick="writePerson()" >Save</button>                                                                                                
                             </td>
                         </tr>             
-                        
+
                     </table>
-                    
+
                 </td>
             </tr>
             <tr>
@@ -264,7 +266,7 @@
                 </td>
             </tr>
         </table>
-        
+
         <script type="text/javascript">
             window.onload = fillTable();
         </script>
@@ -274,5 +276,5 @@
         <jsp:include page="emails_help.jsp" />
         <jsp:include page="copyright.jsp" />
     </body>
-    
+
 </html>

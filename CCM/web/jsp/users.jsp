@@ -29,9 +29,9 @@
     <body style="background-image:url('../images/body_background.png'); font-family:arial">
 
         <div align="center">
-            <jsp:include page="include.jsp" />
+            <jsp:include page="include-manage.jsp" />
 
-            <div style="width:700px" >
+            <div style="width:760px" >
                 <div style="font-size:12px" align="right">
                     <a href="#managerProfile"  rel="facebox" id="createNewManager">Create a new manager</a>
                 </div>

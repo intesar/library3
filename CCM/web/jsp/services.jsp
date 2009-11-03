@@ -30,8 +30,8 @@
     </head>
     <body  style="background-image:url('../images/body_background.png'); font-family:arial">
         <div align="center">
-            <jsp:include page="include.jsp" />
-            <div style="width:700px" >
+            <jsp:include page="include-manage.jsp" />
+            <div style="width:760px" >
                 <div style="font-size:12px" align="right">
                     <a href="#managerProfile"  rel="facebox" id="createNewManager">Add new service</a>
                 </div>

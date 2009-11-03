@@ -6,17 +6,19 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+    "http://www.w3.org/TR/html4/loose.dtd">
 
 <html>
     <head>
+        <title> Lease Systems</title>
+
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        
+
         <script type='text/javascript' src='../dwr/interface/AjaxWorkService.js'></script>
         <script type='text/javascript' src='../dwr/engine.js'></script>
         <script type='text/javascript' src='../dwr/util.js'></script>
         <script type="text/javascript" src="../js/email_validation.js"></script>
-        
+
         <script type="text/javascript">
             function search() {
                 if ( validateEmail(dwr.util.getValue("key"), true, true) )  {                
@@ -28,7 +30,7 @@
                 clearMessages();
                 dwr.util.setValue("image", null);
                 if ( customer.id == null ) {
-                     writeMessage ("failureReply",  "No Customer found with the Email, Please create Customer Profile at Users menu ");
+                    writeMessage ("failureReply",  "No Customer found with the Email, Please create Customer Profile at Users menu ");
                 } else {
                     if ( customer.image == null ) {
                         writeMessage ("successReply", "No Image Available for " + customer.email + " please upload an image!");                                        
@@ -228,19 +230,20 @@
             }
         </script>
         <jsp:include page="table_style.jsp" ></jsp:include>
-        
+
     </head>
-    <body>
-        <jsp:include page="include.jsp" />
-        
+    <body  style="background-image:url('../images/body_background.png'); font-family:arial">
+        <div align="center">
+            <jsp:include page="include.jsp" />
+        </div>
         <table align="center" width="800px" >
-            
+
             <tbody>
                 <tr>
                     <td>
-                        
+
                         <table>
-                            
+
                             <tr>
                                 <td>
                                     <input type="text"  id="key" value="Email" size="30" class="cleardefault" />
@@ -251,10 +254,9 @@
                             </tr>
                         </table>
                         <br>
-                        
+
                         <table >
                             <thead>
-                                
                                 <tr>
                                     <th>
                                         Sys No
@@ -268,7 +270,7 @@
                                     <th>
                                         Action 
                                     </th>
-                                    
+
                                 </tr>
                             </thead>
                         </table>
@@ -297,7 +299,7 @@
                                     <th>
                                         Start Time
                                     </th>
-                                    
+
                                     <th>
                                         Mins/Units
                                     </th>
@@ -313,7 +315,7 @@
                                     <td><span id="totalMinutesUsed">Total</span></td>
                                     <td><span id="payableAmount">
                                             <input type="text" id="paidAmount" value="" disabled="disabled" size="4" />
-                                    <button value="Paid" onclick="paid();"  id="paidButton" disabled="disabled">Paid</button> </span> </td>
+                                            <button value="Paid" onclick="paid();"  id="paidButton" disabled="disabled">Paid</button> </span> </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -330,8 +332,8 @@
                             <tr>
                                 <td>Service</td>
                                 <td><select name="services" id="services" onfocus="populateSystemNos();">
-                                        
-                                </select></td>
+
+                                    </select></td>
                                 <td>Units*</td>
                                 <td>
                                     <input type=text name="units" value="" size="4" class="cleardefault" onchange="updatePrice();" onKeyup="isInteger(this.value);updatePrice();">
@@ -340,7 +342,7 @@
                             <tr>
                                 <td>Add To</td>
                                 <td><select name="systemNos" id="systemNos">                                        
-                                </select></td>
+                                    </select></td>
                                 <td>Payable Amount*</td>
                                 <td><input type=text name="payableAmount1" value="" size="4" class="cleardefault" onKeyup="isInteger(this.value)" disabled></td>                           
                             </tr>

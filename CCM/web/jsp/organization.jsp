@@ -6,51 +6,22 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+    "http://www.w3.org/TR/html4/loose.dtd">
 
 <html>
     <head>
+        <title>Company Details</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        
-       
         <script type='text/javascript' src='../dwr/interface/AjaxAdminService.js'></script>
         <script type='text/javascript' src='../dwr/engine.js'></script>
         <script type='text/javascript' src='../dwr/util.js'></script>
-        
-        <script type="text/javascript">
-           
-           
-            var org;
-            function fillTable() {
-                //dwr.util.useLoadingMessage("Please Wait, Loading");
-                AjaxAdminService.getOrganization(function(people) {
-                    org = people;
-                    dwr.util.setValues(people);
-                });
-            }
-        
-        
-            function writePerson() {                
-                dwr.util.getValues(org);
-                AjaxAdminService.saveOrganization(org, function (data) {
-                    clearMessages();                
-                    if (  data == 'Operation succesful!') {
-                        writeMessage("successReply", " Profile Updated at " + new Date().toLocaleString());
-                        fillTable();
-                    } else {
-                        writeMessage("failureReply", "Please try with different values");
-                    }    
-                });
-            }
-        </script>
-        
-        
+        <script type="text/javascript" src="../js/organization.js"></script>
     </head>
-    
+
     <body style="background-image:url('../images/body_background.png'); font-family:arial">
-        
-        <jsp:include page="include.jsp" />
-        
+        <div align="center">
+            <jsp:include page="include-manage.jsp" />
+        </div>
         <table align="center">
             <thead>
                 <tr>
@@ -63,7 +34,7 @@
             <tr>
                 <td>
                     <table align="center">
-                        
+
                         <tr>
                             <td>Name:</td>
                             <td><input id="name" type="text" size="30" disabled="disabled" /></td>
@@ -89,7 +60,7 @@
                             <td><input type="text" id="country" size="30"/></td>
                         </tr>
                     </table>
-                    
+
                 </td>
                 <td>
                     <table>
@@ -108,17 +79,17 @@
                         <tr>
                             <td>Print Email</td>
                             <td>(Used for customer printouts) <br>
-                            <input type="text" id="printEmail" size="30"/></td>
+                                <input type="text" id="printEmail" size="30"/></td>
                         </tr>
                         <tr>
                             <td>Timings</td>
                             <td>(eg: mon- sun 9am to 1am) <br>
-                            <textarea id="timings" cols="30" rows="4"></textarea></td>
+                                <textarea id="timings" cols="30" rows="4"></textarea></td>
                         </tr>
                     </table>
                 </td>
             </tr>
-            <br>
+
             <tr>
                 <td >    </td>
                 <td>
@@ -126,15 +97,15 @@
                 </td>
             </tr>
         </table>
-        
+
         <script type="text/javascript">
             window.onload = fillTable;
         </script>
-        
-        
-        
+
+
+
         <jsp:include page="organization_help.jsp" />
         <jsp:include page="copyright.jsp" />
-        
+
     </body>
 </html>
