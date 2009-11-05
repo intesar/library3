@@ -22,6 +22,9 @@
         <script type='text/javascript' src='../dwr/interface/AjaxAdminService.js'></script>
         <script type='text/javascript' src='../dwr/engine.js'></script>
         <script type='text/javascript' src='../dwr/util.js'></script>
+        <script type="text/javascript" src="../js/jquery.jqtransform.js"></script>
+        <link rel="stylesheet" type="text/css" href="../css/jqtransform.css" media="screen" />
+
         <link rel="stylesheet" type="text/css" href="../css/facebox/facebox.css" media="screen" />
         <link rel="stylesheet" type="text/css" href="../css/blue/style.css" media="print, projection, screen" />
         <script type="text/javascript" src="../js/emails.js"></script>
@@ -58,77 +61,78 @@
                 </table>
             </div>
             <div style="display:none" id="addEmailDiv">
-                <table>
-                    <thead>
+                <form  class="jqtransform" >
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Add / Update </th>
+                                <th>
+                                    Email/Mobile For Daily Reports
+                                </th>
+                            </tr>
+                        </thead>
+
                         <tr>
-                            <th>Add / Update </th>
-                            <th>
-                                Email/Mobile For Daily Reports
-                            </th>
+                            <td> Service: </td>
+                            <td><select name="serviceProvider">
+                                    <option value="email">email</option>
+                                    <option value="@airtelap.com">Andhra Pradesh Airtel</option>
+                                    <option value="@ideacellular.net">Andhra Pradesh Idea</option>
+                                    <option value="@airtelchennai.com">Chennai Skycell/Airtel</option>
+                                    <option value="@rpgmail.net">Chennai RPG Cellular</option>
+                                    <option value="@airtelmail.com">Delhi Airtel</option>
+                                    <option value="@delhi.hutch.co.in">Delhi Hutch</option>
+                                    <option value="@ideacellular.net">Gujarat Idea Cellular</option>
+                                    <option value="@airtelmail.com">Gujarat Airtel</option>
+                                    <option value="@celforce.com">Gujarat Celforce / Fascel</option>
+                                    <option value="@airtelmail.com">Goa Airtel </option>
+                                    <option value="@bplmobile.com">Goa BPL Mobile</option>
+                                    <option value="@ideacellular.net">Goa Idea Cellular</option>
+                                    <option value="@airtelmail.com">Haryana Airtel</option>
+                                    <option value="@escotelmobile.com">Haryana Escotel</option>
+                                    <option value="@airtelmail.com">Himachal Pradesh Airtel</option>
+                                    <option value="@airtelkk.com">Karnataka Airtel</option>
+                                    <option value="@airtelkerala.com">Kerala Airtel</option>
+                                    <option value="@escotelmobile.com">Kerala Escotel</option>
+                                    <option value="@bplmobile.com">Kerala BPL Mobile</option>
+                                    <option value="@airtelkol.com">Kolkata Airtel</option>
+                                    <option value="@airtelmail.com">Madhya Pradesh Airtel</option>
+                                    <option value="@airtelmail.com">Maharashtra Airtel </option>
+                                    <option value="@bplmobile.com">Maharashtra BPL Mobile</option>
+                                    <option value="@ideacellular.net">Maharashtra Idea Cellular</option>
+                                    <option value="@airtelmail.com">Mumbai Airtel</option>
+                                    <option value="@bplmobile.com">Mumbai BPL Mobile</option>
+                                    <option value="@airtelmail.com">Punjab Airtel</option>
+                                    <option value="@bplmobile.com">Pondicherry BPL Mobile</option>
+                                    <option value="@airtelmail.com">Tamil Nadu Airtel</option>
+                                    <option value="@bplmobile.com">Tamil BPL Mobile</option>
+                                    <option value="@airsms.com">Tamil Nadu Aircel</option>
+                                    <option value="@escotelmobile.com">Uttar Pradesh(West) Escotel</option>
+                                </select></td>
                         </tr>
-                    </thead>
 
-                    <tr>
-                        <td> Service: </td>
-                        <td><select name="serviceProvider">
-                                <option value="email">email</option>
-                                <option value="@airtelap.com">Andhra Pradesh Airtel</option>
-                                <option value="@ideacellular.net">Andhra Pradesh Idea</option>
-                                <option value="@airtelchennai.com">Chennai Skycell/Airtel</option>
-                                <option value="@rpgmail.net">Chennai RPG Cellular</option>
-                                <option value="@airtelmail.com">Delhi Airtel</option>
-                                <option value="@delhi.hutch.co.in">Delhi Hutch</option>
-                                <option value="@ideacellular.net">Gujarat Idea Cellular</option>
-                                <option value="@airtelmail.com">Gujarat Airtel</option>
-                                <option value="@celforce.com">Gujarat Celforce / Fascel</option>
-                                <option value="@airtelmail.com">Goa Airtel </option>
-                                <option value="@bplmobile.com">Goa BPL Mobile</option>
-                                <option value="@ideacellular.net">Goa Idea Cellular</option>
-                                <option value="@airtelmail.com">Haryana Airtel</option>
-                                <option value="@escotelmobile.com">Haryana Escotel</option>
-                                <option value="@airtelmail.com">Himachal Pradesh Airtel</option>
-                                <option value="@airtelkk.com">Karnataka Airtel</option>
-                                <option value="@airtelkerala.com">Kerala Airtel</option>
-                                <option value="@escotelmobile.com">Kerala Escotel</option>
-                                <option value="@bplmobile.com">Kerala BPL Mobile</option>
-                                <option value="@airtelkol.com">Kolkata Airtel</option>
-                                <option value="@airtelmail.com">Madhya Pradesh Airtel</option>
-                                <option value="@airtelmail.com">Maharashtra Airtel </option>
-                                <option value="@bplmobile.com">Maharashtra BPL Mobile</option>
-                                <option value="@ideacellular.net">Maharashtra Idea Cellular</option>
-                                <option value="@airtelmail.com">Mumbai Airtel</option>
-                                <option value="@bplmobile.com">Mumbai BPL Mobile</option>
-                                <option value="@airtelmail.com">Punjab Airtel</option>
-                                <option value="@bplmobile.com">Pondicherry BPL Mobile</option>
-                                <option value="@airtelmail.com">Tamil Nadu Airtel</option>
-                                <option value="@bplmobile.com">Tamil BPL Mobile</option>
-                                <option value="@airsms.com">Tamil Nadu Aircel</option>
-                                <option value="@escotelmobile.com">Uttar Pradesh(West) Escotel</option>
-                            </select></td>
-                    </tr>
+                        <tr>
+                            <td> Email/Phone:* </td>
 
-                    <tr>
-                        <td> Email/Phone:* </td>
-
-                        <td><input id="emailOrPhone" type="text" size="30"/>
-                            <br> (abc@yahoo.com, 9849098490)
-                        </td>
-                    </tr>
-                    <tr>
-                        <td> Name: </td>
-                        <td><input id="username" type="text" size="30"/></td>
-                    </tr>
-                    <tr>
-                        <td>
-                        </td>
-                        <td>
-                            <input type="button" value="Clear" onclick="clearPerson()"/>
-                            <input type="button" value="Save" onclick="writePerson()"/>
-                            <input type="button" value="Delete" onclick="deletePerson()"/>
-                        </td>
-                    </tr>
-
-                </table>
+                            <td><input id="emailOrPhone" type="text" size="30"/>
+                                <br> (abc@yahoo.com, 9849098490)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td> Name: </td>
+                            <td><input id="username" type="text" size="30"/></td>
+                        </tr>
+                        <tr>
+                            <td>
+                            </td>
+                            <td>
+                                <input type="button" value="Clear" onclick="clearPerson()"/>
+                                <input type="button" value="Save" onclick="writePerson()"/>
+                                <input type="button" value="Delete" onclick="deletePerson()"/>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
             </div>
         </div>
         <jsp:include page="emails_help.jsp" />

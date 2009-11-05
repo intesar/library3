@@ -6,6 +6,7 @@
         background-image:url('../images/topNavBG.png');
         background-repeat:no-repeat;
         width:760px;
+        height:50px;
     }
     #adminDiv {
         top:15px;
@@ -24,9 +25,10 @@
         text-decoration:underline;
         cursor:pointer;
     }
+
 </style>
 
-<div id="mainDiv" align="center" style="font-size:12px;">
+<div id="mainDiv" align="center" style="font-size:20px;">
     <div id="adminDiv" align="center" style="text-decoration:none;">
         <a href="dashboard2.jsp" class="links"><< Home</a>
         &nbsp;&nbsp;

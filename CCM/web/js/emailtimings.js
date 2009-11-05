@@ -11,7 +11,7 @@ jq(document).ready(function() {
                 filter:function(tr) {
                     return (tr.id != "pattern");
                 }
-                });
+            });
             // Create a new set cloned from the pattern row
             var person, id;
             people.sort(function(p1, p2) {
@@ -27,6 +27,15 @@ jq(document).ready(function() {
                 $("pattern" + id).style.display = "";
                 peopleCache[id] = person;
             }
+
+            jq(".editService").click(function () {
+                var x = jq(this).attr("id");
+                editClicked(x);
+            })
+            jq('a[rel*=facebox]').facebox({
+                loading_image : 'loading.gif',
+                close_image   : 'closelabel.gif'
+            })
         });
     }
 
@@ -62,4 +71,6 @@ jq(document).ready(function() {
             }
         });
     }
+
+    jq("form.jqtransform").jqTransform();
 });

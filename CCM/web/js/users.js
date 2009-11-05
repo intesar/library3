@@ -14,7 +14,7 @@ jq(document).ready(function() {
                 filter:function(tr) {
                     return (tr.id != "pattern");
                 }
-                });
+            });
             // Create a new set cloned from the pattern row
             var person, id;
             //people.sort(function(p1, p2) { return p1.macAddress.localeCompare(p2.macAddress); });
@@ -134,4 +134,5 @@ jq(document).ready(function() {
     jq("#createNewManager").click(function() {
         clearPerson();
     })
+    jq("form.jqtransform").jqTransform();
 })

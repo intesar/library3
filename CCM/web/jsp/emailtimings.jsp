@@ -21,6 +21,9 @@
         <script type="text/javascript">
             var jq = jQuery.noConflict();
         </script>
+        <script type="text/javascript" src="../js/jquery.jqtransform.js"></script>
+        <link rel="stylesheet" type="text/css" href="../css/jqtransform.css" media="screen" />
+
         <link rel="stylesheet" type="text/css" href="../css/facebox/facebox.css" media="screen" />
         <link rel="stylesheet" type="text/css" href="../css/blue/style.css" media="print, projection, screen" />
         <script type="text/javascript" src="../js/emailtimings.js"></script>
@@ -56,53 +59,55 @@
 
             </div>
             <div style="display:none" id="emailTiming">
-                <table>
-                    <thead>
+                <form  class="jqtransform" >
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Daily Report</th>
+                                <th>Times</th>
+                                <th></th>
+                            </tr>
+                        </thead>
                         <tr>
-                            <th>Daily Report</th>
-                            <th>Times</th>
-                            <th></th>
+                            <td>
+                                Report Time
+                            </td>
+                            <td>
+                                <select name="reportTime">
+                                    <option value="0"> midnight</option>
+                                    <option value="100">01:00 am</option>
+                                    <option value="200">02:00 am</option>
+                                    <option value="300">03:00 am</option>
+                                    <option value="400">04:00 am</option>
+                                    <option value="500">05:00 am</option>
+                                    <option value="600">06:00 am</option>
+                                    <option value="700">07:00 am</option>
+                                    <option value="800">08:00 am</option>
+                                    <option value="900">09:00 am</option>
+                                    <option value="1000">10:00 am</option>
+                                    <option value="1100">11:00 am</option>
+                                    <option value="1200">noon</option>
+                                    <option value="1300">01:00 pm</option>
+                                    <option value="1400">02:00 pm</option>
+                                    <option value="1500">03:00 pm</option>
+                                    <option value="1600">04:00 pm</option>
+                                    <option value="1700">05:00 pm</option>
+                                    <option value="1800">06:00 pm</option>
+                                    <option value="1900">07:00 pm</option>
+                                    <option value="2000">08:00 pm</option>
+                                    <option value="2100">09:00 pm</option>
+                                    <option value="2200">10:00 pm</option>
+                                    <option value="2300">11:00 pm</option>
+                                </select>
+                            </td>
+
+                            <td>
+                                <input type="button" value="Add" onclick="writePerson()"/>
+                            </td>
+
                         </tr>
-                    </thead>
-                    <tr>
-                        <td>
-                            Report Time
-                        </td>
-                        <td>
-                            <select name="reportTime">
-                                <option value="0"> midnight</option>
-                                <option value="100">01:00 am</option>
-                                <option value="200">02:00 am</option>
-                                <option value="300">03:00 am</option>
-                                <option value="400">04:00 am</option>
-                                <option value="500">05:00 am</option>
-                                <option value="600">06:00 am</option>
-                                <option value="700">07:00 am</option>
-                                <option value="800">08:00 am</option>
-                                <option value="900">09:00 am</option>
-                                <option value="1000">10:00 am</option>
-                                <option value="1100">11:00 am</option>
-                                <option value="1200">noon</option>
-                                <option value="1300">01:00 pm</option>
-                                <option value="1400">02:00 pm</option>
-                                <option value="1500">03:00 pm</option>
-                                <option value="1600">04:00 pm</option>
-                                <option value="1700">05:00 pm</option>
-                                <option value="1800">06:00 pm</option>
-                                <option value="1900">07:00 pm</option>
-                                <option value="2000">08:00 pm</option>
-                                <option value="2100">09:00 pm</option>
-                                <option value="2200">10:00 pm</option>
-                                <option value="2300">11:00 pm</option>
-                            </select>
-                        </td>
-
-                        <td>
-                            <input type="button" value="Add" onclick="writePerson()"/>
-                        </td>
-
-                    </tr>
-                </table>
+                    </table>
+                </form>
             </div>
         </div>
 
