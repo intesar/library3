@@ -130,4 +130,7 @@ jq(document).ready(function() {
         return true;
     }
 
+    jq("form.jqtransform").jqTransform();
+
+
 });

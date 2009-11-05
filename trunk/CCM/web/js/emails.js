@@ -104,4 +104,5 @@ jq(document).ready(function() {
             }
         });
     }
+    jq("form.jqtransform").jqTransform();
 });

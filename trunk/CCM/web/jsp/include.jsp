@@ -59,6 +59,7 @@
         background-image:url('../images/topNavBG.png');
         background-repeat:no-repeat;
         width:760px;
+        height:50px;
     }
     #adminDiv {
         top:15px;
@@ -78,19 +79,19 @@
         cursor:pointer;
     }
 </style>
-<div id="mainDiv" align="center" style="font-size:12px;">
+<div id="mainDiv" align="center" style="font-size:20px;">
     <div id="adminDiv" align="center" style="text-decoration:none;">
-        <a href="dashboard2.jsp" class="links">Home</a>
+        <a href="dashboard2.jsp" class="links">Home</a>        
+        &nbsp;&nbsp;
+        <a href="customer.jsp" >Customer</a>
+        &nbsp;&nbsp;
+        <a href="memberships.jsp" >Members</a>
         &nbsp;&nbsp;
         <a href="systemlease.jsp" >History</a>
         &nbsp;&nbsp;
         <a href="report.jsp" >Billing</a>
         &nbsp;&nbsp;
-        <a href="customer.jsp" >Customer</a>
-        &nbsp;&nbsp;
-        <a href="my_systemlease.jsp" >My-History</a>
-        &nbsp;&nbsp;
-        <a href="memberships.jsp" >Members</a>
+        <a href="my_systemlease.jsp" >My-History</a>        
         &nbsp;&nbsp;
         <a href="systems.jsp" >Manage</a>
         &nbsp;&nbsp;

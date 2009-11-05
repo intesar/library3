@@ -25,6 +25,8 @@
         <script type='text/javascript' src='../dwr/engine.js'></script>
         <script type='text/javascript' src='../dwr/util.js'></script>
         <script type="text/javascript" src="../js/services.js"></script>
+        <script type="text/javascript" src="../js/jquery.jqtransform.js"></script>
+        <link rel="stylesheet" type="text/css" href="../css/jqtransform.css" media="screen" />
         <link rel="stylesheet" type="text/css" href="../css/facebox/facebox.css" media="screen" />
         <link rel="stylesheet" type="text/css" href="../css/blue/style.css" media="print, projection, screen" />
     </head>
@@ -33,7 +35,7 @@
             <jsp:include page="include-manage.jsp" />
             <div style="width:760px" >
                 <div style="font-size:12px" align="right">
-                    <a href="#managerProfile"  rel="facebox" id="createNewManager">Add new service</a>
+                    <a href="#addServiceDiv"  rel="facebox" id="createNewManager">Add new service</a>
                 </div>
                 <table  id="services" cellspacing="1" class="tablesorter">
                     <thead>
@@ -54,38 +56,30 @@
                     </tbody>
                 </table>
                 <div style="display:none" id="addServiceDiv">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>
-                                    Add / Udpate Services
-                                </th>
-                            </tr>
-                        </thead>
-                        <tr>
-                            <td> Service/Product:* </td>
-                            <td><input id="name" type="text" disabled size="25"/>
-                                <br> (eg: printer, dvd burn, potato chips..)
-                            </td>
-                        </tr>
-                        <tr>
-                            <td> Unit Price:* </td>
-                            <td><input id="unitPrice" type="text" size="5" onKeyup="isInteger(this.value);"/>
-                                <br> (eg: 2, 5.5 etc)
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                            </td>
-                            <td>
-                                <button value="New" onclick="clearPerson()" >New</button>
-                                <button value="Save" id="save" onclick="writePerson()" >Save</button>
-                                <button value="Delete" onclick="deletePerson()" >Delete</button>
-                            </td>
-                        </tr>
+                    <form  class="jqtransform" >
+                        <table>
 
-                    </table>
+                            <tr>
+                                <td> <label>Service/Product:*</label> </td>
+                                <td><input id="name" type="text" disabled size="25"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td> <label>Unit Price:*</label> </td>
+                                <td><input id="unitPrice" type="text" size="5" onKeyup="isInteger(this.value);"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                </td>
+                                <td>                                    
+                                    <input type="button" value="Save" id="save" onclick="writePerson()" />
+                                    <input type="button" value="Delete" onclick="deletePerson()" />
+                                </td>
+                            </tr>
+
+                        </table>
+                    </form>
                 </div>
             </div>
 

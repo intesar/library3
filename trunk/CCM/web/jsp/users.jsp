@@ -22,6 +22,9 @@
         <script type='text/javascript' src='../dwr/interface/AjaxAdminService.js'></script>
         <script type='text/javascript' src='../dwr/engine.js'></script>
         <script type='text/javascript' src='../dwr/util.js'></script>
+        <script type="text/javascript" src="../js/jquery.jqtransform.js"></script>
+        <link rel="stylesheet" type="text/css" href="../css/jqtransform.css" media="screen" />
+
         <link rel="stylesheet" type="text/css" href="../css/facebox/facebox.css" media="screen" />
         <link rel="stylesheet" type="text/css" href="../css/blue/style.css" media="print, projection, screen" />
         <script type="text/javascript" src="../js/users.js"></script>
@@ -62,50 +65,52 @@
             </div>
 
             <div style="display:none" id="managerProfile">
-                <table>
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>
+                <form  class="jqtransform" >
+                    <table>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>
 
-                            </th>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tr>
+                            <td>  Name:*  </td>
+                            <td><input id="name" class="name" type="text" size="30"/></td>
                         </tr>
-                    </thead>
-                    <tr>
-                        <td>  Name:*  </td>
-                        <td><input id="name" class="name" type="text" size="30"/></td>
-                    </tr>
-                    <tr>
-                        <td> Email:* </td>
-                        <td><input id="username" class="username" type="text" size="30"/></td>
-                    </tr>
-                    <tr>
-                        <td> Password:* </td>
-                        <td><input id="password" class="password" type="password" size="30"/></td>
-                    </tr>
-                    <tr>
-                        <td> Active </td>
-                        <td><select name="enabledString" class="enabledString">
-                                <option>yes</option>
-                                <option>no</option>
-                            </select>
-                            (To Cancel Account set Active:No)</td>
-                    </tr>
-                    <tr>
-                        <td>  Role </td>
-                        <td><select name="role" class="role">
-                                <option value="admin">Administrator</option>
-                                <option value="employee">Cashier</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>
-                            <input type="button" value="Save" id="saveManager" />
-                        </td>
-                    </tr>
-                </table>
+                        <tr>
+                            <td> Email:* </td>
+                            <td><input id="username" class="username" type="text" size="30"/></td>
+                        </tr>
+                        <tr>
+                            <td> Password:* </td>
+                            <td><input id="password" class="password" type="password" size="30"/></td>
+                        </tr>
+                        <tr>
+                            <td> Active </td>
+                            <td><select name="enabledString" class="enabledString">
+                                    <option>yes</option>
+                                    <option>no</option>
+                                </select>
+                                (To Cancel Account set Active:No)</td>
+                        </tr>
+                        <tr>
+                            <td>  Role </td>
+                            <td><select name="role" class="role">
+                                    <option value="admin">Administrator</option>
+                                    <option value="employee">Cashier</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <input type="button" value="Save" id="saveManager" />
+                            </td>
+                        </tr>
+                    </table>
+                </form>
             </div>
 
         </div>
