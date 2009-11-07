@@ -22,6 +22,8 @@
         <script type='text/javascript' src='../dwr/util.js'></script>
         <script type="text/javascript" src="../js/datepickercontrol.js"></script>
         <link type="text/css" rel="stylesheet" href="../css/datepickercontrol.css">
+        <link rel="stylesheet" href="../css/datepicker.css" type="text/css" />
+        <script type="text/javascript" src="../js/datepicker.js"></script>
         <script type="text/javascript" src="../js/report.js"></script>
     </head>
     <body style="background-image:url('../images/body_background.png'); font-family:arial">
@@ -32,30 +34,12 @@
 
 
         <table align="center">
-
             <tr>
                 <td>
-
-                    <input type="hidden" id="DPC_TODAY_TEXT" value="today">
-                    <input type="hidden" id="DPC_BUTTON_TITLE" value="Open calendar...">
-                    <input type="hidden" id="DPC_MONTH_NAMES" value="['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']">
-                    <input type="hidden" id="DPC_DAY_NAMES" value="['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']">
-
-                    Start-Date    
+                    <input type="text"  id="inputDate" maxlength="40" size="30" readonly>
                 </td>
                 <td>
-                    End-Date
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <input type="text" name="startDate" id="DPC_startDate_YYYY-MM-DD">
-                </td>
-                <td>
-                    <input type="text" name="endDate" id="DPC_endDate_YYYY-MM-DD">
-                </td>
-                <td>
-                    <input type="button" value="Search" id="reportBtn"/>
+                    <input type="submit" value="Search" id="searchBtn"/>
                 </td>
             </tr>
         </table>

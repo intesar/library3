@@ -7,26 +7,47 @@ jq(document).ready(function() {
         dwr.util.setValue("id2", str2);
         dwr.util.setValue("id3", str3);
     }
-    jq('#reportBtn').click(function() {
+    jq('#searchBtn').click(function() {
         execute();
     })
+
+    jq('#inputDate').DatePicker({
+        date:String,
+        format:'Y-m-d',
+        mode:'range',
+        calendars:1,
+        date: jq('#inputDate').val(),
+        //current: jq('#inputDate').val(),
+        starts: 1,
+        position: 'r',
+        //        onBeforeShow: function(){
+        //            jq('#inputDate').DatePickerSetDate(jq('#inputDate').val(), true);
+        //        },
+        onChange: function(formated, dates){
+            jq('#inputDate').val(formated);
+        //$('#inputDate').DatePickerHide();
+        }
+    });
+    jq('#searchBtn').click(function() {
+        var x = jq('#inputDate').DatePickerGetDate(true);
+        jq('#inputDate').val(x);
+        var dt = x.toString().split(",");
+        AjaxAdminService.getReport(dt[0],dt[1], reply1 );
+    });
+    
     getTodaysHistory();
     function getTodaysHistory() {
         var now = new Date();
         var date = now.getFullYear() + "-" + (now.getMonth()+1) + "-" + now.getDate();
-        jq('#DPC_startDate_YYYY-MM-DD').val(date);
-        jq('#DPC_endDate_YYYY-MM-DD').val(date);
-        jq('#reportBtn').click();
+        jq('#inputDate').val(date+","+date);
+        AjaxAdminService.getReport(date,date, reply1 );
     }    
     function execute() {
         dwr.util.useLoadingMessage("Please Wait!");
-        var startDate = document.getElementById("DPC_startDate_YYYY-MM-DD").value;
-        var endDate = document.getElementById("DPC_endDate_YYYY-MM-DD").value;
-        if ( startDate != null && startDate.length >= 9 && endDate != null && endDate.length >= 9 ) {
-            AjaxAdminService.getReport(startDate,endDate, reply1 );
-        } else {
-            alert ( " invalid dates ");
-        }
+        var x = jq('#inputDate').DatePickerGetDate(true);
+        jq('#inputDate').val(x);
+        var dt = x.toString().split(",");
+        AjaxAdminService.getReport(dt[0],dt[1], reply1 );
     }
    
 })
