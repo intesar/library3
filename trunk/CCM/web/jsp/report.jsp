@@ -12,37 +12,17 @@
     <head>
         <title>Report</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-
+        <script type="text/javascript" src="../js/jquery-1.3.2.min.js"></script>
+        <script src="../js/facebox.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            var jq = jQuery.noConflict();
+        </script>
         <script type='text/javascript' src='../dwr/interface/AjaxAdminService.js'></script>
         <script type='text/javascript' src='../dwr/engine.js'></script>
         <script type='text/javascript' src='../dwr/util.js'></script>
         <script type="text/javascript" src="../js/datepickercontrol.js"></script>
         <link type="text/css" rel="stylesheet" href="../css/datepickercontrol.css">
-
-        <script type="text/javascript">
-            function execute() {
-                dwr.util.useLoadingMessage("Please Wait!");
-                var startDate = document.getElementById("DPC_startDate_YYYY-MM-DD").value;
-                var endDate = document.getElementById("DPC_endDate_YYYY-MM-DD").value;
-                if ( startDate != null && startDate.length == 10 && endDate != null && endDate.length == 10 ) {
-                    AjaxAdminService.getReport(startDate,endDate, reply1 );
-                } else {
-                    alert ( " invalid dates ");
-                }
-            }
-            
-            var reply1 = function(data) {
-                var str1= "Total Minutes & Sale Units : " + data[0][0] ;
-                var str2 = "Total Payable Amount : " + data[0][1];
-                var str3 = "Total Amount Received : " + data[0][2];
-                dwr.util.setValue("id1", str1);
-                dwr.util.setValue("id2", str2);
-                dwr.util.setValue("id3", str3);
-            }
-        </script>
-
-
+        <script type="text/javascript" src="../js/report.js"></script>
     </head>
     <body style="background-image:url('../images/body_background.png'); font-family:arial">
 
@@ -69,13 +49,13 @@
             </tr>
             <tr>
                 <td>
-                    <input type="text" name="startDate" id="DPC_startDate_YYYY-MM-DD" readonly> 
+                    <input type="text" name="startDate" id="DPC_startDate_YYYY-MM-DD">
                 </td>
                 <td>
-                    <input type="text" name="endDate" id="DPC_endDate_YYYY-MM-DD" readonly> 
+                    <input type="text" name="endDate" id="DPC_endDate_YYYY-MM-DD">
                 </td>
                 <td>
-                    <input type="submit" value="Search" onclick="execute();"/>
+                    <input type="button" value="Search" id="reportBtn"/>
                 </td>
             </tr>
         </table>
@@ -93,10 +73,6 @@
                 </tr>
             </table>
         </div>
-
-
-
-
         <jsp:include page="report_help.jsp" />      
         <jsp:include page="copyright.jsp" />
     </body>
