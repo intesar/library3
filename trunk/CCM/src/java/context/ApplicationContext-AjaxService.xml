@@ -57,6 +57,7 @@
             <dwr:include method="saveMembershipType" />
             <dwr:include method="getMembershipDiscountses" />
             <dwr:include method="saveMembershipDiscount" />
+            <dwr:include method="getMembers" />
             <dwr:include method="getMemberships" />
             <dwr:include method="saveMembership" />
             <dwr:include method="createMembershipDiscount" />

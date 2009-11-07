@@ -14,7 +14,7 @@ import java.util.List;
  * @author intesar
  */
 public interface MembershipsDao extends GenericDao<Memberships, Integer> {
-    public Memberships findByOrganizationAndEmail (String org, String user);
+    public List<Memberships> findByOrganizationAndEmail (String org, String user);
     public List<Memberships> findByOrganization (String org);
-
+    public Memberships findByOrganizationAndEmailAndActive(String org, String user);
 }

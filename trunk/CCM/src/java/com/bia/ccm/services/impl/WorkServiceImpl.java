@@ -155,7 +155,7 @@ public class WorkServiceImpl implements WorkService {
      */
     private double getDiscountPercentage(String org, String customerEmail, String service) {
         double discountPercentage = 0.0;
-        Memberships membership = membershipsDao.findByOrganizationAndEmail(org, customerEmail);
+        Memberships membership = membershipsDao.findByOrganizationAndEmailAndActive(org, customerEmail);
         if (membership != null && membership.getExpirationDate().after(new Date()) && membership.isIsActive()) {
             MembershipTypes membershipTypes = membershipTypesDao.read(membership.getMembershipType());
             MembershipDiscounts membershipDiscounts = membershipDiscountsDao.findByMembershipTypesIdAndService(membershipTypes.getId(), service);
