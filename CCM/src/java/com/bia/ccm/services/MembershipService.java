@@ -59,7 +59,14 @@ public interface MembershipService {
      * @param user
      * @return
      */
-    Memberships getMembershipsByOrganizationAndUsername(String org, String user);
+//    Memberships getMembershipsByOrganizationAndUsername(String org, String user);
+
+    /**
+     * 
+     * @param email
+     * @param org
+     */
+    public void validateUserMembership(String email, String org);
 
     /**
      * add/update Membership

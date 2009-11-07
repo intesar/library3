@@ -31,6 +31,7 @@ import javax.persistence.Transient;
     @NamedQuery(name = "Memberships.findByCreateDate", query = "SELECT m FROM Memberships m WHERE m.createDate = :createDate"),
     @NamedQuery(name = "Memberships.findByEmail", query = "SELECT m FROM Memberships m WHERE m.email = :email"),
     @NamedQuery(name = "Memberships.findByOrganizationAndEmail", query = "SELECT m FROM Memberships m WHERE m.organization = ?1 AND m.email = ?2 "),
+    @NamedQuery(name = "Memberships.findByOrganizationAndEmailAndActive", query = "SELECT m FROM Memberships m WHERE m.organization = ?1 AND m.email = ?2 AND m.isActive = true"),
     @NamedQuery(name = "Memberships.findByOrganization", query = "SELECT m FROM Memberships m WHERE m.organization = ?1")
 })
 public class Memberships implements Serializable {

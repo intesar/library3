@@ -14,6 +14,7 @@ import com.bia.ccm.entity.SystemLease;
 import com.bia.ccm.entity.Systems;
 import com.bia.ccm.entity.UsageDetail;
 import com.bia.ccm.entity.Users;
+import com.bia.ccm.entity.UsersLight;
 import com.bia.ccm.services.AdminService;
 import com.bia.ccm.services.EMailService;
 import com.bia.ccm.services.MembershipService;
@@ -137,7 +138,7 @@ public class WorkAjaxService {
                 key = key.toLowerCase();
             }
             c = this.workService.getCustomerPic(key);
-        //c.setPassword("Encrypted");
+            //c.setPassword("Encrypted");
         } catch (Exception e) {
             logger.error(e);
         }
@@ -160,7 +161,7 @@ public class WorkAjaxService {
                 key = key.toLowerCase();
             }
             c = this.workService.getCustomer(key);
-        //c.setPassword("Encrypted");
+            //c.setPassword("Encrypted");
         } catch (Exception e) {
             logger.error(e);
         }
@@ -276,6 +277,15 @@ public class WorkAjaxService {
     }
 
     public String saveMembership(Memberships memberships) {
+        UsersLight ul = this.adminService.getUserByUsername(memberships.getEmail());
+        if ( ul == null || ul.getId() == null) {
+            return "No user found with this email";
+        }
+        try {
+            this.membershipService.validateUserMembership(memberships.getEmail(), this.getOrganization().getName());
+        } catch (RuntimeException re) {
+            return re.getMessage();
+        }
         try {
             this.membershipService.saveMembership(memberships, this.getOrganization(), AcegiUtil.getUsername());
             return "Saved Successfully!";
@@ -286,23 +296,31 @@ public class WorkAjaxService {
         }
     }
 
-    public List<Memberships> getMemberships(String key) {
+    public List<Memberships> getMembers() {
+        List<Memberships> list = new ArrayList<Memberships>();
         try {
-            key = SQLInjectionFilterManager.getInstance().filter(key);
-            if (key == null || key.trim().length() < 5) {
-                return this.membershipService.getMembershipsByOrganization(this.getOrganization().getName());
-            } else {
-                List<Memberships> list = new ArrayList<Memberships>();
-                Memberships m = this.membershipService.getMembershipsByOrganizationAndUsername(this.getOrganization().getName(), key);
-                list.add(m);
-                return list;
-            }
-        } catch (Exception e) {
-            logger.error(e);
-            return null;
+            list = this.membershipService.getMembershipsByOrganization(this.getOrganization().getName());
+        } catch (RuntimeException re) {
         }
+        return list;
     }
 
+//    public List<Memberships> getMemberships(String key) {
+//        try {
+//            key = SQLInjectionFilterManager.getInstance().filter(key);
+//            if (key == null || key.trim().length() < 5) {
+//                return this.membershipService.getMembershipsByOrganization(this.getOrganization().getName());
+//            } else {
+//                List<Memberships> list = new ArrayList<Memberships>();
+//                Memberships m = this.membershipService.getMembershipsByOrganizationAndUsername(this.getOrganization().getName(), key);
+//                list.add(m);
+//                return list;
+//            }
+//        } catch (Exception e) {
+//            logger.error(e);
+//            return null;
+//        }
+//    }
     public void setCaseConverter(CaseConverter caseConverter) {
         this.caseConverter = caseConverter;
     }
@@ -322,9 +340,9 @@ public class WorkAjaxService {
 
 //        Users c = new Users(null, "Intesar shannan Mohammed", "intesar.mohammed@bizintelapps.com",
 //                "9-4-62/23 nizam colony, towli chowki", "hyderabad", "500008", "ap", "india", new Date(), "male");
-    // System.out.println ( was.createCustomer());
+        // System.out.println ( was.createCustomer());
 //        System.out.println(was.getCustomer("intesar.mohammed@bizintelapps.com").getName());
-    //System.out.println ( was.getPayableAmount(277));
-    //System.out.println ( was.addService("B/W Print", 3, "2", 9.0, "", 9.0) );
+        //System.out.println ( was.getPayableAmount(277));
+        //System.out.println ( was.addService("B/W Print", 3, "2", 9.0, "", 9.0) );
     }
 }

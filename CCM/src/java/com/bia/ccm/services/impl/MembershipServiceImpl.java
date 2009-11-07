@@ -87,38 +87,47 @@ public class MembershipServiceImpl implements MembershipService {
         return list;
     }
 
+    public void validateUserMembership(String email, String org) {
+        List<Memberships> list = membershipsDao.findByOrganizationAndEmail(org, email);
+        if (list != null && list.size() > 0) {
+            for (Memberships m : list) {
+                if (m.isIsActive()) {
+                    throw new RuntimeException(email + " has an active membership, so you cannot create another membership");
+                }
+            }
+        }
+    }
+
     /**
-     * add/update Membership
-     * if the id is null create a new one else updates the record
+     * 
+     * create a new membership if user doesn't have one
+     * also create an active membership if user only has an inactive membership or send some message back  *
+     *
+     *
      * @param membership
      */
     public void saveMembership(Memberships memberships, Organization org, String cashier) {
         logger.debug("inside saveMembership-------------");
-        if (memberships.getId() == null) {
-            memberships.setCreateDate(new Date());
-            memberships.setCreateUser(cashier);
-            memberships.setStartDate(new Date());
-            logger.debug("inside saveMembership-------------" + org.getName());
-            logger.debug("inside saveMembership-------------" + memberships.getMembershipTypeString());
-            MembershipTypes mt = this.membershipTypesDao.findByOrganizationAndName(org.getName(),
-                    memberships.getMembershipTypeString());
-            int days = mt.getDaysValidFor();
-            logger.debug("inside saveMembership-------------" + days);
-            Calendar c = Calendar.getInstance();
-            c.add(Calendar.DATE, days);
-            logger.debug("inside saveMembership-------------" + c);
-            memberships.setExpirationDate(c.getTime());
-            memberships.setMembershipType(mt.getId());
-            memberships.setOrganization(org.getName());
-            logger.debug("inside saveMembership------------- added all ");
-            this.membershipsDao.create(memberships);
-            String emails[] = {memberships.getEmail(), org.getContactEmail()};
-            this.emailService.sendEmail(emails, getMembershipStringAtContractStart(memberships, org));
-        } else {
-            logger.debug("inside saveMembership------------- else");
-            this.membershipsDao.update(memberships);
-        }
-
+        memberships.setCreateDate(new Date());
+        memberships.setCreateUser(cashier);
+        memberships.setStartDate(new Date());
+        memberships.setIsActive(true);
+        logger.debug("inside saveMembership-------------" + org.getName());
+        logger.debug("inside saveMembership-------------" + memberships.getMembershipTypeString());
+        MembershipTypes mt = this.membershipTypesDao.findByOrganizationAndName(org.getName(),
+                memberships.getMembershipTypeString());
+        int days = mt.getDaysValidFor();
+        logger.debug("inside saveMembership-------------" + days);
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DATE, days);
+        logger.debug("inside saveMembership-------------" + c);
+        memberships.setExpirationDate(c.getTime());
+        memberships.setMembershipType(mt.getId());
+        memberships.setOrganization(org.getName());
+        logger.debug("inside saveMembership------------- added all ");
+        this.membershipsDao.create(memberships);
+        String emails[] = {memberships.getEmail(), org.getContactEmail()};
+        this.emailService.sendEmail(emails, getMembershipStringAtContractStart(memberships, org));
     }
 
     public String getMembershipStringAtContractStart(Memberships memberships, Organization org) {
@@ -153,10 +162,9 @@ public class MembershipServiceImpl implements MembershipService {
      * @param user
      * @return
      */
-    public Memberships getMembershipsByOrganizationAndUsername(String org, String user) {
-        return this.membershipsDao.findByOrganizationAndEmail(org, user);
-    }
-
+//    public Memberships getMembershipsByOrganizationAndUsername(String org, String user) {
+//        //return this.membershipsDao.findByOrganizationAndEmail(org, user);
+//    }
     /**
      * 
      * @param org
@@ -200,7 +208,8 @@ public class MembershipServiceImpl implements MembershipService {
     public void setMembershipsDao(MembershipsDao membershipsDao) {
         this.membershipsDao = membershipsDao;
     }
-     public void setEmailService(EMailService emailService) {
+
+    public void setEmailService(EMailService emailService) {
         this.emailService = emailService;
     }
     private EMailService emailService;
@@ -208,5 +217,4 @@ public class MembershipServiceImpl implements MembershipService {
     private MembershipsDao membershipsDao;
     private MembershipTypesDao membershipTypesDao;
     private MembershipDiscountsDao membershipDiscountsDao;
-    
 }
