@@ -1,11 +1,7 @@
 var peopleCache = { };
 var viewed = null;
-
 jq(document).ready(function() {
     fillTable();
-
-
-
     function fillTable() {
         //dwr.util.useLoadingMessage();
         AjaxAdminService.getAllServices(function(people) {
@@ -41,16 +37,12 @@ jq(document).ready(function() {
         });
         document.getElementById("name").disabled=true;
     }
-
     function editClicked(eleid) {
         // we were an id of the form "edit{id}", eg "edit42". We lookup the "42"
         var person = peopleCache[eleid.substring(4)];
         viewed = person.id;
         dwr.util.setValues(person);
     }
-
-
-
     function writePerson() {
         var person;
 
@@ -76,10 +68,7 @@ jq(document).ready(function() {
         } else {
             alert ( " Name Cannot be Empty! ");
         }
-    }
-    //dwr.engine.endBatch();
-
-
+    }   //dwr.engine.endBatch();
     var reply1 = function (data) {
         clearMessages();
         if ( data == " Service Saved Successful! ") {
@@ -89,9 +78,6 @@ jq(document).ready(function() {
             writeMessage ("failureReply", data );
         }
     }
-
-
-
     function clearPerson() {
         viewed = null;
         dwr.util.setValues({
@@ -129,8 +115,5 @@ jq(document).ready(function() {
         }
         return true;
     }
-
     jq("form.jqtransform").jqTransform();
-
-
 });

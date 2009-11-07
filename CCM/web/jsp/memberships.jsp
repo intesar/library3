@@ -32,72 +32,85 @@
     <body style="background-image:url('../images/body_background.png'); font-family:arial">
         <div align="center">
             <jsp:include page="include.jsp" />
-        </div>
-        <div style="font-size:12px" align="center">
-            <a href="#addMemberDiv"  rel="facebox" id="createNewManager">Add new member</a>
-        </div>
-        <table align="center">
 
-            <thead>
-                <tr>
-                    <th> User  </th>
-                    <th> Membership </th>
-                    <th></th>
-                </tr>
-            </thead>
+            <div style="width:760px" align="center" >
+                <div style="font-size:12px" align="right">
+                    <a href="#addMemberDiv"  rel="facebox" id="addNewMember">Add new member</a>
+                </div>
+                <table align="center"  cellspacing="1" class="tablesorter">
 
-            <tbody id="peoplebody">
-                <tr id="pattern" style="display:none;">
-                    <td><span id="email1"></span></td>
-                    <td><span id="membershipType1"></span></td>
-                    <td>
-                        <input id="edit" type="button" value="Edit" onclick="editClicked(this.id)"/>
-                    </td>
-                </tr>
-            </tbody>
+                    <thead>
+                        <tr>
+                            <th> User  </th>
+                            <th> Membership </th>
+                            <th>Active</th>
+                            <th>Expires On</th>
+                            
+                        </tr>
+                    </thead>
 
-        </table>
-        <div style="display:none" id="addMemberDiv">
-            <form  class="jqtransform" >
-                <table>
-                    <tr>
-                        <td> <label>Username:*</label> </td>
-                        <td><input id="email" type="text" disabled size="25"/></td>
-                    </tr>
-                    <tr>
-                        <td> <label>Membership:*</label> </td>
-                        <td><select id="membershipTypeString" disabled >
-                                <option></option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td> <label>Active:* </label></td>
-                        <td><select id="isActive" disabled>
-                                <option value="true">yes</option>
-                                <option value="false">no</option>
-                            </select></td>
-                    </tr>
-                    <tr>
-                        <td> <label>Start Date:* </label> </td>
-                        <td><input id="startDateString" type="text" disabled size="25"/></td>
-                    </tr>
-                    <tr>
-                        <td> <label>Expiration:* </label></td>
-                        <td><input id="expirationDateString" type="text" disabled size="25"/></td>
-                    </tr>
-                    <tr>
-                        <td>
-                        </td>
-                        <td>
-                            <input type="button" value="New" onclick="clearPerson()" />
-                            <input type="button" value="Save" id="save" onclick="writePerson()" />
-                        </td>
-                    </tr>
+                    <tbody id="peoplebody">
+                        <tr id="pattern" style="display:none;">
+                            <td><span id="email1"></span></td>
+                            <td><span id="membershipType1"></span></td>
+                            <td><span id="isActive1"></span></td>
+                            <td><span id="expirationDateString1"></span></td>
+                            <!--
+                            <td>
+                                <a  href="#addMemberDiv"  rel="facebox"   id="edit" class="editMember" >edit</a>
+                            </td>
+                            -->
+                        </tr>
+                    </tbody>
+
                 </table>
-            </form>
+                <div style="display:none" id="addMemberDiv">                    
+                        <table>
+                            <tr>
+                                <td> <label>Username:*</label> </td>
+                                <td><input id="email" class="email" type="text" size="25"/></td>
+                            </tr>
+                            <tr>
+                                <td> <label>Membership:*</label> </td>
+                                <td><select id="membershipTypeString" class="membershipTypeString">
+                                        <option></option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <!--
+                            <tr>
+                                <td> <label>Active:* </label></td>
+                                <td><select id="isActive" disabled>
+                                        <option value="true" selected>yes</option>
+                                        <option value="false">no</option>
+                                    </select></td>
+                            </tr>
+                            <tr>
+                                <td> <label>Start Date:* </label> </td>
+                                <td><input id="startDateString" type="text" value="Today" disabled size="25"/></td>
+                            </tr>
+                            <tr>
+                                <td> <label>Expiration:* </label></td>
+                                <td><input id="expirationDateString" type="text" value="According to policy" disabled size="25"/></td>
+                            </tr>
+                            -->
+                            <tr>
+                                <td>
+                                </td>
+                                <td>                                    
+                                    <input type="button" value="Save" class="saveBtn"/>
+                                </td>
+                            </tr>
+                        </table>                    
+                </div>
+                <div style="display:none">
+                    <a href="#successMessageDiv"  rel="facebox" class="showSuccessMessageDiv"></a>
+                </div>
+                <div style="display:none" id="successMessageDiv">
+                    Membership added successfully!
+                </div>
+            </div>
         </div>
-
         <jsp:include page="emails_help.jsp" />
         <jsp:include page="copyright.jsp" />
     </body>

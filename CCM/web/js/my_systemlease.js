@@ -1,9 +1,21 @@
+jq(document).ready(function() {
+    
+
+    getTodaysHistory();
+    function getTodaysHistory() {
+        var now = new Date();
+        var date = now.getFullYear() + "-" + (now.getMonth()+1) + "-" + now.getDate();
+        jq('#DPC_startDate_YYYY-MM-DD').val(date);
+        jq('#DPC_endDate_YYYY-MM-DD').val(date);
+        AjaxAdminService.getMySystemLease(date,date, reply1 );
+    }
+});
 function execute() {
     dwr.util.useLoadingMessage("Please wait, Loading");
     //alert ( document.getElementById("startDate").value);
     var startDate = document.getElementById("DPC_startDate_YYYY-MM-DD").value;
     var endDate = document.getElementById("DPC_endDate_YYYY-MM-DD").value;
-    if ( startDate != null && startDate.length == 10 && endDate != null && endDate.length == 10 ) {
+    if ( startDate != null && startDate.length >= 9 && endDate != null && endDate.length >= 9 ) {
         AjaxCustomerService.getMySystemLease(startDate,endDate, reply1 );
     } else {
         alert ( " invalid dates ");
@@ -20,7 +32,7 @@ var reply1 = function(people) {
         filter:function(tr) {
             return (tr.id != "pattern");
         }
-        });
+    });
     // Create a new set cloned from the pattern row
     var person, id;
     if ( people.length == 0) {
@@ -59,4 +71,5 @@ var reply1 = function(people) {
     }
 
 }
-        
+
+    

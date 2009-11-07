@@ -34,15 +34,12 @@
             <jsp:include page="include.jsp" />
         </div>
         <table align="center">
-
             <tr>
                 <td>
-
                     <input type="hidden" id="DPC_TODAY_TEXT" value="today">
                     <input type="hidden" id="DPC_BUTTON_TITLE" value="Open calendar...">
                     <input type="hidden" id="DPC_MONTH_NAMES" value="['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']">
                     <input type="hidden" id="DPC_DAY_NAMES" value="['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']">
-
                     Start Date    
                 </td>
                 <td>
@@ -101,6 +98,5 @@
         </div>
         <jsp:include page="systemlease_help.jsp" />
         <jsp:include page="copyright.jsp" />
-
     </body>
 </html>
