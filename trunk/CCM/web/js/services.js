@@ -26,6 +26,9 @@ jq(document).ready(function() {
                 peopleCache[id] = person;
             }
 
+            jq("#createNewManager").click(function() {
+                clearPerson();
+            })
             jq(".editService").click(function () {
                 var x = jq(this).attr("id");
                 editClicked(x);
@@ -43,9 +46,8 @@ jq(document).ready(function() {
         viewed = person.id;
         dwr.util.setValues(person);
     }
-    function writePerson() {
+    jq("#saveBtn").live("click", function() {
         var person;
-
         if ( viewed == null ) {
             person = {
                 id:viewed,
@@ -55,8 +57,8 @@ jq(document).ready(function() {
         }   else {
             person = peopleCache[viewed];
         }
-
-        dwr.util.getValues(person);
+        person.name = jq(".name")[1].value;
+        person.unitPrice  = jq(".price")[1].value;
         if ( person.name != null && person.name != '' ) {
             if ( person.unitPrice != null && person.unitPrice != "") {
                 AjaxAdminService.saveService(person, reply1);
@@ -69,13 +71,13 @@ jq(document).ready(function() {
             alert ( " Name Cannot be Empty! ");
         }
     }   //dwr.engine.endBatch();
+    );
     var reply1 = function (data) {
-        clearMessages();
         if ( data == " Service Saved Successful! ") {
-            writeMessage ("successReply", data + " at "  + new Date().toLocaleString());
+            jq.facebox("<h2>" + data + "</h2>")
             fillTable();
         } else {
-            writeMessage ("failureReply", data );
+            alert("Error, please try again!");
         }
     }
     function clearPerson() {
@@ -88,18 +90,12 @@ jq(document).ready(function() {
         document.getElementById("name").disabled=false;
 
     }
-    function deletePerson() {
+    jq("#deleteBtn").live("click", function() {
         AjaxAdminService.deleteService(viewed, function(data) {
-            clearMessages();
-            if ( data == " Service Deleted Successful! ") {
-                writeMessage ("successReply", data + " at " + new Date().toLocaleString());
-                fillTable();
-            } else {
-                writeMessage ("failureReply", " You cannot delete this service!");
-            }
+            jq.facebox("<h2>" + data + "</h2>")
             fillTable();
         });
-    }
+    })
     function isInteger(s)
     {
         var i;
@@ -115,5 +111,5 @@ jq(document).ready(function() {
         }
         return true;
     }
-    jq("form.jqtransform").jqTransform();
+    
 });

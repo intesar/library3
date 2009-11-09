@@ -27,9 +27,17 @@ jq(document).ready(function() {
                 });
                 dwr.util.setValue("name1" + id, person.name);
                 dwr.util.setValue("fee1" + id, person.fee);
+                dwr.util.setValue("days1" + id, person.daysValidFor);
                 $("pattern" + id).style.display = "";
                 peopleCache[id] = person;
             }
+            jq(".editMembership").click(function () {
+                var x = jq(this).attr("id");
+                editClicked(x);
+            })
+            jq("#addMembership").click(function() {
+                clearPerson();
+            })
             jq('a[rel*=facebox]').facebox({
                 loading_image : 'loading.gif',
                 close_image   : 'closelabel.gif'
@@ -78,7 +86,7 @@ jq(document).ready(function() {
 
 
 
-    function writePerson() {
+    jq("#saveBtn").live("click", function() {
         var person;
 
         if ( viewed == null ) {
@@ -92,7 +100,9 @@ jq(document).ready(function() {
             person = peopleCache[viewed];
         }
 
-        dwr.util.getValues(person);
+        person.name = jq('.name')[1].value;
+        person.fee = jq('.fee')[1].value;
+        person.daysValidFor = jq('.daysValidFor')[1].value;
         if ( person.name != null && person.name != '' ) {
             if ( person.fee != null && person.fee != "" && person.daysValidFor != null
                 && person.daysValidFor != "") {
@@ -104,7 +114,7 @@ jq(document).ready(function() {
         } else {
             alert ( " Name Cannot be Empty! ");
         }
-    }
+    });
 
     function saveDiscount(eleid) {
         var membershipDiscountId = eleid.substring(4);
@@ -121,13 +131,8 @@ jq(document).ready(function() {
 
     }
     var reply1 = function (data) {
-        clearMessages();
-        if ( data == "Created Successfully!") {
-            writeMessage("successReply", data + " at "  + new Date().toLocaleString());
-            fillTable();
-        } else {
-            writeMessage ("failureReply", "Operation Failed, Please try again!" );
-        }
+        fillTable();
+        jq.facebox("<h2>" + data + "</h2>");
     }
 
     function clearPerson() {
@@ -158,5 +163,4 @@ jq(document).ready(function() {
         return true;
     }
 
-    jq("form.jqtransform").jqTransform();
 })
