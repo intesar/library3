@@ -22,9 +22,6 @@
         <script type='text/javascript' src='../dwr/interface/AjaxAdminService.js'></script>
         <script type='text/javascript' src='../dwr/engine.js'></script>
         <script type='text/javascript' src='../dwr/util.js'></script>
-        <script type="text/javascript" src="../js/jquery.jqtransform.js"></script>
-        <link rel="stylesheet" type="text/css" href="../css/jqtransform.css" media="screen" />
-
         <link rel="stylesheet" type="text/css" href="../css/facebox/facebox.css" media="screen" />
         <link rel="stylesheet" type="text/css" href="../css/blue/style.css" media="print, projection, screen" />
         <script type="text/javascript" src="../js/users.js"></script>
@@ -36,7 +33,7 @@
 
             <div style="width:760px" >
                 <div style="font-size:12px" align="right">
-                    <a href="#managerProfile"  rel="facebox" id="createNewManager">Create a new manager</a>
+                    <a href="#managerProfile"  rel="facebox" id="createNewManager">Add manager</a>
                 </div>
 
                 <table id="managers" cellspacing="1" class="tablesorter">
@@ -56,7 +53,7 @@
                             <td><span id="role1">role</span></td>
                             <td><span id="enabled1">enabled</span></td>
                             <td>
-                                <a href="#managerProfile"  rel="facebox"  class="editManager" id="edit"> edit </a>
+                                <a href="#managerProfile"  rel="facebox"  class="editManager" id="edit"> Edit </a>
                             </td>
                         </tr>
                     </tbody>
@@ -65,55 +62,53 @@
             </div>
 
             <div style="display:none" id="managerProfile">
-                <form  class="jqtransform" >
-                    <table>
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>
+                <table>
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>
 
-                                </th>
-                            </tr>
-                        </thead>
-                        <tr>
-                            <td>  Name:*  </td>
-                            <td><input id="name" class="name" type="text" size="30"/></td>
+                            </th>
                         </tr>
-                        <tr>
-                            <td> Email:* </td>
-                            <td><input id="username" class="username" type="text" size="30"/></td>
-                        </tr>
-                        <tr>
-                            <td> Password:* </td>
-                            <td><input id="password" class="password" type="password" size="30"/></td>
-                        </tr>
-                        <tr>
-                            <td> Active </td>
-                            <td><select name="enabledString" class="enabledString">
-                                    <option>yes</option>
-                                    <option>no</option>
-                                </select>
-                                (To Cancel Account set Active:No)</td>
-                        </tr>
-                        <tr>
-                            <td>  Role </td>
-                            <td><select name="role" class="role">
-                                    <option value="admin">Administrator</option>
-                                    <option value="employee">Cashier</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>
-                                <input type="button" value="Save" id="saveManager" />
-                            </td>
-                        </tr>
-                    </table>
-                </form>
+                    </thead>
+                    <tr>
+                        <td>  Name:*  </td>
+                        <td><input id="name" class="name" type="text" size="30"/></td>
+                    </tr>
+                    <tr>
+                        <td> Email:* </td>
+                        <td><input id="username" class="username" type="text" size="30"/></td>
+                    </tr>
+                    <tr>
+                        <td> Password:* </td>
+                        <td><input id="password" class="password" type="password" size="30"/></td>
+                    </tr>
+                    <tr>
+                        <td> Active </td>
+                        <td><select name="enabledString" class="enabledString">
+                                <option>yes</option>
+                                <option>no</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>  Role </td>
+                        <td><select name="role" class="role">
+                                <option value="admin">Administrator</option>
+                                <option value="employee" selected>Cashier</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <input type="button" value="Save" id="saveManager" />
+                        </td>
+                    </tr>
+                </table>
             </div>
-
         </div>
+
     </body>
 
     <jsp:include page="users_help.jsp" />

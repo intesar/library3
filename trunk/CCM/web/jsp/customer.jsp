@@ -20,13 +20,13 @@
         <script type="text/javascript" src="../js/name_valadation.js"></script>
         <script type="text/javascript" src="../js/datepickercontrol.js"></script>
         <script type="text/javascript" src="../js/jquery-1.3.2.min.js"></script>
-        <script type="text/javascript" src="../js/jquery.jqtransform.js"></script>
+        <script type="text/javascript" src="../js/facebox.js" ></script>
         <script type="text/javascript">
             var jq = jQuery.noConflict();
         </script>        
-        <link rel="stylesheet" type="text/css" href="../css/jqtransform.css" media="screen" />
-        <link type="text/css" rel="stylesheet" href="../css/datepickercontrol.css">
 
+        <link type="text/css" rel="stylesheet" href="../css/datepickercontrol.css">
+        <link rel="stylesheet" type="text/css" href="../css/facebox/facebox.css" media="screen" />
         <script type="text/javascript" src="../js/customer.js"> </script>
 
     </head>
@@ -35,7 +35,6 @@
             <jsp:include page="include.jsp" />
         </div>
         <div align="center">
-            <form  class="jqtransform" >
                 <table>
                     <tr><td>
                             <table align="center" width="300px">
@@ -44,7 +43,7 @@
                                         <th>
                                             Customer Look Up
                                         </th>
-
+                                        <th></th><th></th>
                                     </tr>
                                 </thead>
                                 <tr>
@@ -52,9 +51,10 @@
                                         <input type="text" name="key" id="key" value="" size="30"/>
                                     </td>
                                     <td><input type="button" value="Search" id="searchBtn"/></td>
+                                    <td><a href="javascript:void(0)" id="newBtn" >New user</a></td>
                                 </tr>
                                 <tr>
-                                    <td><img id="image" src="javascript:void(0);"/>  </td>
+                                    <td colspan="3"><img id="image" src="javascript:void(0);"/>  </td>
                                 </tr>
                             </table>
                             <br>
@@ -172,9 +172,7 @@
                                             </tr>
                                             <tr>
                                                 <td colspan="2" align="right">
-                                                    <input type="button" value="New" onclick="clearPerson()"/>
-                                                    <input type="button" value="Save & Verified" onclick="writePerson()"/>
-
+                                                    <input type="button" value="Save" id="saveBtn"/>
                                                 </td>
                                             </tr>
                                         </table>
@@ -182,7 +180,7 @@
                                 </tr>
                             </table>
                 </table>
-            </form>
+            
         </div>
     </body>
 
