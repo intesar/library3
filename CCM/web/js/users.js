@@ -2,10 +2,7 @@ var peopleCache = { };
 var viewed = null;
 var user = null;
 jq(document).ready(function() {
-
     fillTable();
-
-
     function fillTable() {
         //dwr.util.useLoadingMessage();
         AjaxAdminService.getAllUsers(function(people) {
@@ -50,7 +47,6 @@ jq(document).ready(function() {
         });
 
     }
-
     function editClicked(eleid) {
         // we were an id of the form "edit{id}", eg "edit42". We lookup the "42"
         var person = peopleCache[eleid.substring(4)];
@@ -58,7 +54,6 @@ jq(document).ready(function() {
         dwr.util.setValues(person);
         jq("#username").attr("disabled","disabled");
     }
-
     function writePerson() {
         var person;
         if ( viewed == null ) {
@@ -101,17 +96,10 @@ jq(document).ready(function() {
         }
 
     }
-
     var reply1 = function (data) {
-        clearMessages();
-        if ( data == 'Operation succesful!') {
-            writeMessage ("successReply", " Saved/Updated User at " + new Date().toLocaleString() );
-            fillTable();
-        } else {
-            writeMessage ("failureReply", data );
-        }
+        jq.facebox("<h2>"+data+"</h2>")
+        fillTable();
     }
-
     function clearPerson() {
         viewed = null;
         dwr.util.setValues({
@@ -124,15 +112,11 @@ jq(document).ready(function() {
         });
         jq("#username").removeAttr("disabled");
     }
-
     jq("#managers").tablesorter();
-
     jq("#saveManager").live("click", function() {
         writePerson();
     })
-
     jq("#createNewManager").click(function() {
         clearPerson();
     })
-    jq("form.jqtransform").jqTransform();
 })

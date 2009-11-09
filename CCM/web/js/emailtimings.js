@@ -28,9 +28,9 @@ jq(document).ready(function() {
                 peopleCache[id] = person;
             }
 
-            jq(".editService").click(function () {
+            jq(".deleteLink").click(function () {
                 var x = jq(this).attr("id");
-                editClicked(x);
+                deleteClicked(x);
             })
             jq('a[rel*=facebox]').facebox({
                 loading_image : 'loading.gif',
@@ -42,35 +42,22 @@ jq(document).ready(function() {
     function deleteClicked(eleid) {
 
         var emailTime = peopleCache[eleid.substring(6)];
-        //alert ( emailTime.id );
         AjaxAdminService.deleteEmailTimePreference(emailTime, function(data) {
-            if ( data != "Deleted Successfully") {
-                writeMessage("successReply", "Operation Successful!");
-                fillTable();
-            }
-            else {
-                writeMessage ( "failureReply", "Operation Failed, Please try again!" );
-
-            }
+            fillTable();
+            jq.facebox("<h2>" + data + "</h2>");
         });
     }
-    function writePerson() {
+    jq("#addBtn").live("click", function() {
         var person = {
             id:null,
             reportTime:null,
             organization:null
         };
-        dwr.util.getValues(person);
+        person.reportTime = jq('.reportTime')[1].value;
         AjaxAdminService.saveEmailTimePreference(person, function(data) {
-            if ( data == "Added Successfully!") {
-                writeMessage("successReply", "Operation Successful!");
-                fillTable();
-            }
-            else {
-                writeMessage ( "failureReply", "Operation Failed, Please try again!" );
-            }
+            fillTable();
+            jq.facebox("<h2>" + data + "</h2>");
         });
-    }
+    })
 
-    jq("form.jqtransform").jqTransform();
 });

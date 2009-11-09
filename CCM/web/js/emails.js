@@ -3,9 +3,6 @@ var viewed = null;
 
 jq(document).ready(function() {
     fillTable();
-
-
-
     function fillTable() {
         //dwr.util.useLoadingMessage("Please Wait, Loading");
         AjaxAdminService.getAllEmailPreference(function(people) {
@@ -31,14 +28,19 @@ jq(document).ready(function() {
                 $("pattern" + id).style.display = "";
                 peopleCache[id] = person;
             }
+            jq("#addEmail").click(function() {
+               clearPerson();
+               var x = jq("#addEmailDiv");
+               jq.facebox(x);
+            })
             jq(".editEmail").click(function () {
                 var x = jq(this).attr("id");
                 editClicked(x);
             })
-            jq('a[rel*=facebox]').facebox({
-                loading_image : 'loading.gif',
-                close_image   : 'closelabel.gif'
-            })
+//            jq('a[rel*=facebox]').facebox({
+//                loading_image : 'loading.gif',
+//                close_image   : 'closelabel.gif'
+//            })
         });
     }
 
@@ -51,7 +53,7 @@ jq(document).ready(function() {
 
 
 
-    function writePerson() {
+    jq("#saveBtn").live("click", function() {
         var person;
 
         if ( viewed == null ) {
@@ -65,23 +67,18 @@ jq(document).ready(function() {
             person = peopleCache[viewed];
         }
 
-        dwr.util.getValues(person);
-
+        person.username = jq('.username')[1].value;
+        person.emailOrPhone = jq('.emailOrPhone')[1].value;
+        person.serviceProvider = jq('.serviceProvider')[1].value;
         if ( validateEmail(person.emailOrPhone, false, false) || person.emailOrPhone.length >= 10 ) {
-
             AjaxAdminService.saveEmailPreference(person, function(data) {
-                clearMessages();
-                if ( data == "Operation succesful!") {
-                    writeMessage ("successReply", "Created/Updated Email for report"  + " at " + new Date().toLocaleString() );
-                    fillTable();
-                } else {
-                    writeMessage ("failureReply", "Operation Failed, Please try again");
-                }
+                fillTable();
+                jq.facebox("<h2>" + data + "</h2>");
             });
         } else {
             alert ( " not a valid phone no.")
         }
-    }
+    });
 
     function clearPerson() {
         viewed = null;
@@ -92,17 +89,11 @@ jq(document).ready(function() {
             serviceProvider:null
         });
     }
-    function deletePerson() {
+    jq("#deleteBtn").live("click", function() {
         AjaxAdminService.deleteEmail(viewed, function(data) {
-            clearMessages();
-            if ( data == "Deleted Email Successful!") {
-                writeMessage ("successReply", data  + " at " + new Date().toLocaleString());
-                fillTable();
-                clearPerson();
-            } else {
-                writeMessage ("failureReply", " Operation Failed, Please try again!");
-            }
+            jq.facebox("<h2>" + data + "</h2>")
+            fillTable();
         });
-    }
-    jq("form.jqtransform").jqTransform();
+    })
+    
 });

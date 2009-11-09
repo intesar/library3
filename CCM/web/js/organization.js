@@ -9,19 +9,10 @@ jq(document).ready(function() {
         });
     }
 
-
-    function writePerson() {
+    jq("#saveBtn").click(function() {
         dwr.util.getValues(org);
         AjaxAdminService.saveOrganization(org, function (data) {
-            clearMessages();
-            if (  data == 'Operation succesful!') {
-                writeMessage("successReply", " Profile Updated at " + new Date().toLocaleString());
-                fillTable();
-            } else {
-                writeMessage("failureReply", "Please try with different values");
-            }
+            jq.facebox("<h2>" +data+ "</h2>");
         });
-    }
-
-    jq("form.jqtransform").jqTransform();
+    })
 });

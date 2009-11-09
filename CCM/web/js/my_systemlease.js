@@ -13,7 +13,7 @@ jq(document).ready(function() {
         // Create a new set cloned from the pattern row
         var person, id;
         if ( people.length == 0) {
-            writeMessage ( "failureReply", "No recoreds found!");
+            
         } else  {
             //people.sort(function(p1, p2) { return p1.macAddress.localeCompare(p2.macAddress); });
             for (var i = 0; i < people.length; i++) {

@@ -1,7 +1,7 @@
 jq(document).ready(function() {
     var cust = null;
-    function writePerson() {
-        dwr.util.useLoadingMessage("Please Wait Loading....");
+    jq("#saveBtn").click(function() {
+        dwr.util.useLoadingMessage("Please Wait");
         var customer = null;
         if ( cust == null ) {
             customer = {
@@ -55,15 +55,10 @@ jq(document).ready(function() {
             alert ( ' Image type can only be jpg, bmp, png');
         }
     //dwr.engine.endBatch();
-    }
+    });
 
     var reply1 = function (data) {
-        clearMessages();
-        if ( data == "Customer Created Successfully!" ) {
-            writeMessage ("successReply", "Created/Updated Profile at " + new Date().toLocaleString());
-        } else {
-            writeMessage ("failureReply", "Please try again with different values");
-        }
+       jq.facebox("<h2>" +data+ "</h2>")
     }
 
 
@@ -73,7 +68,9 @@ jq(document).ready(function() {
             reply1 );
     }
 
-
+    jq("#newBtn").click(function() {
+        clearPerson();
+    })
 
     function clearPerson() {
         dwr.util.setValues({
@@ -102,6 +99,7 @@ jq(document).ready(function() {
     }
 
     jq("#searchBtn").click(function() {
+        clearPerson();
         search();
     })
 
@@ -112,16 +110,13 @@ jq(document).ready(function() {
 
     var reply2 = function(customer) {
         cust = customer;
-        dwr.util.setValue("image", null);
-        clearMessages();
+        dwr.util.setValue("image", null);        
         if ( customer.id == null ) {
-            writeMessage ("failureReply", "No Match for the Given Email, Please create User Profile " );
-        } else {
-            writeMessage ("successReply", "Found " + customer.name );
+            jq.facebox("No Match for the Given Email, Please create User Profile " );
+        } else {            
             dwr.util.setValues(customer);
         }
     }
 
-    jq("form.jqtransform").jqTransform();
 })
 
