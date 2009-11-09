@@ -25,8 +25,6 @@
         <script type='text/javascript' src='../dwr/engine.js'></script>
         <script type='text/javascript' src='../dwr/util.js'></script>
         <script type="text/javascript" src="../js/services.js"></script>
-        <script type="text/javascript" src="../js/jquery.jqtransform.js"></script>
-        <link rel="stylesheet" type="text/css" href="../css/jqtransform.css" media="screen" />
         <link rel="stylesheet" type="text/css" href="../css/facebox/facebox.css" media="screen" />
         <link rel="stylesheet" type="text/css" href="../css/blue/style.css" media="print, projection, screen" />
     </head>
@@ -50,42 +48,38 @@
                             <td><span id="name1"></span></td>
                             <td><span id="unitPrice1"></span></td>
                             <td>
-                                <a href="#addServiceDiv"  rel="facebox"  class="editService" id="edit"> edit </a>
+                                <a href="#addServiceDiv"  rel="facebox"  class="editService" id="edit"> Edit </a>
                             </td>
                         </tr>
                     </tbody>
                 </table>
                 <div style="display:none" id="addServiceDiv">
-                    <form  class="jqtransform" >
-                        <table>
+                    <table>
 
-                            <tr>
-                                <td> <label>Service/Product:*</label> </td>
-                                <td><input id="name" type="text" disabled size="25"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td> <label>Unit Price:*</label> </td>
-                                <td><input id="unitPrice" type="text" size="5" onKeyup="isInteger(this.value);"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                </td>
-                                <td>                                    
-                                    <input type="button" value="Save" id="save" onclick="writePerson()" />
-                                    <input type="button" value="Delete" onclick="deletePerson()" />
-                                </td>
-                            </tr>
+                        <tr>
+                            <td> <label>Name:*</label> </td>
+                            <td><input id="name" type="text" class="name" disabled size="25"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td> <label>Price:*</label> </td>
+                            <td><input id="unitPrice" type="text" size="10" class="price" onKeyup="isInteger(this.value);"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            </td>
+                            <td>
+                                <input type="button" value="Save" id="saveBtn" />
+                                <input type="button" value="Delete" id="deleteBtn"/>
+                            </td>
+                        </tr>
 
-                        </table>
-                    </form>
+                    </table>
+
                 </div>
             </div>
-
-            <br>
-            <br>
-            <br>
+            
             <jsp:include page="emails_help.jsp" />
             <jsp:include page="copyright.jsp" />
 
