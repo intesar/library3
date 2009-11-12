@@ -80,4 +80,8 @@ JQuery-Plugins
   * http://www.designzzz.com/jquery-css-tooltip-tutorials/
 
 
+tutorial links
+
+  * http://tutsvalley.com/tutorials/7-amazing-presentation-slides-to-teach-you-how-to-code-with-jquery/
+
  
