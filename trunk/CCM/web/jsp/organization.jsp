@@ -1,6 +1,6 @@
 <%-- 
     Document   : organization
-    Created on : Jul 7, 2008, 5:44:10 AM
+    Created on : Jul 7, 3008, 5:44:10 AM
     Author     : intesar
 --%>
 
@@ -12,99 +12,164 @@
     <head>
         <title>Company Details</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <script type='text/javascript' src='../dwr/interface/AjaxAdminService.js'></script>
-        <script type='text/javascript' src='../dwr/engine.js'></script>
-        <script type='text/javascript' src='../dwr/util.js'></script>        
-        <script type="text/javascript" src="../js/jquery-1.3.2.min.js"></script>
-        <script type="text/javascript" src="../js/facebox.js" ></script>
-        <script type="text/javascript">
-            var jq = jQuery.noConflict();
-        </script>
+
         <link rel="stylesheet" type="text/css" href="../css/facebox/facebox.css" media="screen" />
-        <script type="text/javascript" src="../js/organization.js"></script>
+
+        <style>
+            body {
+                color:#333333;
+                font-family:"Lucida Grande","Lucida Sans Unicode",Arial,Verdana,sans-serif;
+                font-size:12px;                
+                font-style:normal;
+                font-variant:normal;
+                font-weight:normal;
+                line-height:18px;
+            }
+            .leftRow {
+                width:300px;
+            }
+            .rightRow {
+                width:400px;
+            }
+            .leftCol {
+                width:130px;
+                color:#000000;
+                font-family:Arial,Helvetica,sans-serif;
+                font-size:1.2em;
+            }
+            label {
+                font-family:arial,sans-serif;
+                font-size:smaller;
+                font-weight:bold;
+            }
+        </style>
     </head>
 
     <body style="background-image:url('../images/body_background.png'); font-family:arial">
         <div align="center">
             <jsp:include page="include-manage.jsp" />
         </div>
-        <table align="center">
-            <thead>
-                <tr>
-                    <th>
-                        Company Details
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tr>
-                <td>
-                    <table align="center">
-
-                        <tr>
-                            <td>Name:</td>
-                            <td><input id="name" type="text" size="20" disabled="disabled" /></td>
-                        </tr>
-                        <tr>
-                            <td>Street:</td>
-                            <td><input type="text" id="street" size="20"/></td>
-                        </tr>
-                        <tr>
-                            <td>City:</td>
-                            <td><input type="text" id="city" size="20"/></td>
-                        </tr>
-                        <tr>
-                            <td>State:</td>
-                            <td><input type="text" id="state" size="20"/></td>
-                        </tr>
-                        <tr>
-                            <td>Zipcode:</td>
-                            <td><input type="text" id="zipcode" size="20"/></td>
-                        </tr>
-                        <tr>
-                            <td>Country:</td>
-                            <td><input type="text" id="country" size="20"/></td>
-                        </tr>
-                    </table>
-
-                </td>
-                <td>
+        <div align="center">
+            <div style="width:760px; background:white" id="viewDiv" >
+                <div>
                     <table>
                         <tr>
-                            <td>CEO</td>
-                            <td><input type="text" id="contactName" size="20"/></td>
-                        </tr>
-                        <tr>
-                            <td>Office Phone</td>
-                            <td><input type="text" id="phone" size="20"/></td>
-                        </tr>
-                        <tr>
-                            <td>Company Email</td>
-                            <td><input type="text" id="contactEmail" size="20"/></td>
-                        </tr>
-                        <tr>
-                            <td>Print Email</td>
-                            <td>(Used for customer printouts) <br>
-                                <input type="text" id="printEmail" size="20"/></td>
-                        </tr>
-                        <tr>
-                            <td>Timings</td>
-                            <td>(eg: mon- sun 9am to 1am) <br>
-                                <textarea id="timings" cols="30" rows="4"></textarea></td>
+                            <td class="leftRow">
+
+                            </td>
+                            <td class="rightRow">
+                                <table style="width:100%">
+                                    <tr><td class="leftCol"><label>Name</label></td><td><span id="name"></span></td>
+                                        <td align="right"><a href="#editDiv"  rel="facebox" id="editBtn">Edit this information</a></td></tr>
+                                </table>
+
+                            </td>
                         </tr>
                     </table>
-                </td>
-            </tr>
+                </div>
+                <hr/>
+                <div>
+                    <table>
+                        <tr>
+                            <td class="leftRow">
+                                Cyber Cafe Address
+                            </td>
+                            <td class="rightRow">
+                                <table>
+                                    <tr><td class="leftCol"><label>Street </label> </td><td><span  id="street" /> </td></tr>
+                                    <tr><td class="leftCol"><label>City </label> </td><td><span  id="city" /></td></tr>
+                                    <tr><td class="leftCol"><label>State</label></td><td><span  id="state" /></td></tr>
+                                    <tr><td class="leftCol"><label>Zipcode</label></td><td><span id="zipcode" /></td></tr>
+                                    <tr><td class="leftCol"><label>Country</label> </td><td><span id="country" /></td></tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <hr/>
+                <div>
+                    <table>
+                        <tr>
+                            <td class="leftRow">
+                                <p>Cyber Cafe Contact Information</p>   
+                            </td>
+                            <td class="rightRow">
+                                <table>
+                                    <tr><td class="leftCol"><label>Contact Person</label></td><td><span id="contactName" /></td></tr>
+                                    <tr><td class="leftCol"> <label>Phone</label></td><td><span id="phone" /></td></tr>
+                                    <tr><td class="leftCol"><label>Email</label></td><td><span id="contactEmail" /></td></tr>
+                                    <tr><td class="leftCol"><label>Printer Email</label></td><td><span id="printEmail" /></td></tr>
+                                    <tr><td class="leftCol"><label>Daily Timings</label></td><td><span id="timings" /></td></tr>
+                                    <tr><td class="leftCol"></td><td></td></tr>
+                                </table>
+                            </td>
+                        </tr>
 
-            <tr>
-                <td >    </td>
-                <td>
-                    <input type="button" value="Save" id="saveBtn"/>
-                </td>
-            </tr>
-        </table>
+                    </table>
+                </div>
+                <hr/>
+
+            </div>
+
+            <div style="width:560px; background:white;display:none"  id="editDiv" align="center">
+                <div>
+                    <div><h2>Company Profile</h2></div>
+                    <table>
+                        <tr>
+                            <td class="rightRow">
+                                <table cellspacing="0" cellpadding="5" border="0">
+                                    <tbody>
+                                        <tr><td class="leftCol"><label>Street </label> </td><td><input type="text" class="street1" size="30"/> </td></tr>
+                                        <tr><td class="leftCol"><label>City </label> </td><td><input type="text" class="city1" size="30"/></td></tr>
+                                        <tr><td class="leftCol"><label>State</label></td><td><input type="text" class="state1" size="30"/></td></tr>
+                                        <tr><td class="leftCol"><label>Zipcode</label></td><td><input type="text" class="zipcode1" size="30"/></td></tr>
+                                        <tr><td class="leftCol"><label>Country</label> </td><td><input type="text" class="country1" size="30"/></td></tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <hr/>
+                <div>
+                    <table>
+                        <tr>
+                            <td class="rightRow" >
+                                <table  cellspacing="0" cellpadding="0">
+                                    <tr><td class="leftCol"><label>Contact Person</label></td><td><input type="text" class="contactName1" size="30"/></td></tr>
+                                    <tr><td class="leftCol"> <label>Phone</label></td><td><input type="text" class="phone1" size="30"/></td></tr>
+                                    <tr><td class="leftCol"><label>Email</label></td><td><input type="text" class="contactEmail1" size="30"/></td></tr>
+                                    <tr><td class="leftCol"><label>Printer Email</label></td><td><input type="text" class="printEmail1" size="30"/></td></tr>
+                                    <tr><td class="leftCol"><label>Timings</label></td><td><textarea class="timings1" cols="25" rows="2"></textarea></td></tr>
+                                </table>
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+                <div>
+                    <table>
+                        <tr><td class="leftRow"></td><td class="rightRow">
+                                <table>
+                                    <tr><td class="leftCol"></td><td><input type="button" value="Save" class="saveBtn"/></td></tr>
+                                </table></td></tr>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
         <jsp:include page="organization_help.jsp" />
         <jsp:include page="copyright.jsp" />
 
+        <script type='text/javascript' src='../dwr/interface/AjaxAdminService.js'></script>
+        <script type='text/javascript' src='../dwr/engine.js'></script>
+        <script type='text/javascript' src='../dwr/util.js'></script>
+        <script type="text/javascript" src="../js/jquery-1.3.2.min.js"></script>
+        <script type="text/javascript" src="../js/facebox.js" ></script>
+        <script type="text/javascript">
+            var jq = jQuery.noConflict();
+        </script>
+        <script type="text/javascript" src="../js/organization.js"></script>
     </body>
 </html>
