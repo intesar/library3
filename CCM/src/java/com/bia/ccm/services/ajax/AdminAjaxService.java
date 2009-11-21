@@ -81,8 +81,8 @@ public class AdminAjaxService {
     public List<Users> getAllUsers() {
         String username = AcegiUtil.getUsername();
         List<Users> users = null;
-        users =  this.adminService.getAllUsers(username);
-        for ( Users u : users ) {
+        users = this.adminService.getAllUsers(username);
+        for (Users u : users) {
             u.setPic(null);
         }
         return users;
@@ -110,6 +110,7 @@ public class AdminAjaxService {
         saveUsers(users);
         return getAllUsers();
     }
+
     public List<EmailPreference> getAllEmailPreference() {
         String username = AcegiUtil.getUsername();
         return this.adminService.getAllEmailPreference(username);
@@ -171,15 +172,14 @@ public class AdminAjaxService {
     }
 
     public String saveOrganization(Organization organization) {
-        String msg = "Operation succesful!";
+        String msg = "Company profile saved successfully!";
         try {
-            organization.setName(SQLInjectionFilterManager.getInstance().filter(organization.getName()));
             String username = AcegiUtil.getUsername();
-            caseConverter.toLowerCase(organization);
             this.adminService.saveOrganization(organization, username);
         } catch (Exception e) {
             logger.error(e);
-            return e.getMessage();
+//            return e.getMessage();
+            msg = "Error please try again!";
         }
         return msg;
     }
@@ -253,7 +253,6 @@ public class AdminAjaxService {
         return this.adminService.getAllServices(org);
     }
 
-    
     public void sendReports() {
         this.adminService.sendReports();
     }
@@ -263,10 +262,7 @@ public class AdminAjaxService {
     }
     private CaseConverter caseConverter;
     protected final Log logger = LogFactory.getLog(getClass());
-    
     private AdminService adminService = (AdminService) ServiceFactory.getService("adminServiceImpl");
-    
-    
 
     public static void main(String[] args) {
         AdminAjaxService aas = new AdminAjaxService();
