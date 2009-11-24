@@ -25,28 +25,30 @@ jq(document).ready(function() {
                 $("pattern" + id).style.display = "";
                 peopleCache[id] = person;
             }
-
-            jq("#createNewManager").click(function() {
-                clearPerson();
-            })
-            jq(".editService").click(function () {
-                var x = jq(this).attr("id");
-                editClicked(x);
-            })
             jq('a[rel*=facebox]').facebox({
                 loading_image : 'loading.gif',
                 close_image   : 'closelabel.gif'
             })
+            jq(".editService").click(function () {
+                jq(".saveBtn").attr('disabled', 'disabled')
+                var x = jq(this).attr("id");
+                editClicked(x);
+            })
         });
-        document.getElementById("name").disabled=true;
+        
     }
+    jq(".ischanged").live("change", function() {
+        jq(".saveBtn").removeAttr('disabled');
+    })
     function editClicked(eleid) {
         // we were an id of the form "edit{id}", eg "edit42". We lookup the "42"
         var person = peopleCache[eleid.substring(4)];
         viewed = person.id;
-        dwr.util.setValues(person);
+        //        dwr.util.setValues(person);
+        jq(".name_")[1].value = person.name;
+        jq(".price_")[1].value = person.unitPrice;
     }
-    jq("#saveBtn").live("click", function() {
+    jq(".saveBtn").live("click", function() {
         var person;
         if ( viewed == null ) {
             person = {
@@ -54,45 +56,37 @@ jq(document).ready(function() {
                 name:null,
                 unitPrice:null
             };
+            person.name = jq(".name")[1].value;
+            person.unitPrice  = jq(".price")[1].value;
         }   else {
             person = peopleCache[viewed];
+            person.name = jq(".name_")[1].value;
+            person.unitPrice  = jq(".price_")[1].value;
         }
-        person.name = jq(".name")[1].value;
-        person.unitPrice  = jq(".price")[1].value;
+        
         if ( person.name != null && person.name != '' ) {
-            if ( person.unitPrice != null && person.unitPrice != "") {
+            if ( person.unitPrice != null && isInteger(person.unitPrice) && person.unitPrice != "" ) {
                 AjaxAdminService.saveService(person, reply1);
-                AjaxWorkService.createMembershipDiscount(person.name);
+            //                AjaxWorkService.createMembershipDiscount(person.name);
             }
             else {
-                alert ( " Unit Price Cannot be Empty! ");
+                alert ( " Price should be a number");
             }
         } else {
-            alert ( " Name Cannot be Empty! ");
+            alert ( " Name cannot be empty ");
         }
     }   //dwr.engine.endBatch();
     );
     var reply1 = function (data) {
-        if ( data == " Service Saved Successful! ") {
-            jq.facebox("<h2>" + data + "</h2>")
-            fillTable();
-        } else {
-            alert("Error, please try again!");
-        }
+        jq.facebox("<div align='center'><h2>" + data + "</h2></div>")
+        fillTable();
     }
-    function clearPerson() {
+    jq("#addService").click(function() {
         viewed = null;
-        dwr.util.setValues({
-            id:null,
-            name:null,
-            unitPrice:null
-        });
-        document.getElementById("name").disabled=false;
-
-    }
+    })
     jq("#deleteBtn").live("click", function() {
         AjaxAdminService.deleteService(viewed, function(data) {
-            jq.facebox("<h2>" + data + "</h2>")
+            jq.facebox("<div align='center'><h2>" + data + "</h2></div>")
             fillTable();
         });
     })
@@ -105,7 +99,7 @@ jq(document).ready(function() {
             var c = s.charAt(i);
             if (isNaN(c) && c != '.')
             {
-                alert("This field Should contain Only number");
+                //                alert("This field Should contain Only number");
                 return false;
             }
         }
