@@ -60,7 +60,7 @@
                             <td class="rightRow">
                                 <table style="width:100%">
                                     <tr><td class="leftCol"><label>Name</label></td><td><span id="name"></span></td>
-                                        <td align="right"><a href="#editDiv"  rel="facebox" id="editBtn">Edit this information</a></td></tr>
+                                        <td align="right"><a href="#editDiv"  rel="facebox" class="editBtn">Edit this information</a></td></tr>
                                 </table>
 
                             </td>
@@ -119,11 +119,11 @@
                             <td class="rightRow">
                                 <table cellspacing="0" cellpadding="5" border="0">
                                     <tbody>
-                                        <tr><td class="leftCol"><label>Street </label> </td><td><input type="text" class="street1" size="30"/> </td></tr>
-                                        <tr><td class="leftCol"><label>City </label> </td><td><input type="text" class="city1" size="30"/></td></tr>
-                                        <tr><td class="leftCol"><label>State</label></td><td><input type="text" class="state1" size="30"/></td></tr>
-                                        <tr><td class="leftCol"><label>Zipcode</label></td><td><input type="text" class="zipcode1" size="30"/></td></tr>
-                                        <tr><td class="leftCol"><label>Country</label> </td><td><input type="text" class="country1" size="30"/></td></tr>
+                                        <tr><td class="leftCol"><label>Street </label> </td><td><input type="text" class="street1 ischanged" size="30"/> </td></tr>
+                                        <tr><td class="leftCol"><label>City </label> </td><td><input type="text" class="city1 ischanged" size="30"/></td></tr>
+                                        <tr><td class="leftCol"><label>State</label></td><td><input type="text" class="state1 ischanged" size="30"/></td></tr>
+                                        <tr><td class="leftCol"><label>Zipcode</label></td><td><input type="text" class="zipcode1 ischanged" size="30"/></td></tr>
+                                        <tr><td class="leftCol"><label>Country</label> </td><td><input type="text" class="country1 ischanged" size="30"/></td></tr>
                                     </tbody>
                                 </table>
                             </td>
@@ -136,11 +136,11 @@
                         <tr>
                             <td class="rightRow" >
                                 <table  cellspacing="0" cellpadding="0">
-                                    <tr><td class="leftCol"><label>Contact Person</label></td><td><input type="text" class="contactName1" size="30"/></td></tr>
-                                    <tr><td class="leftCol"> <label>Phone</label></td><td><input type="text" class="phone1" size="30"/></td></tr>
-                                    <tr><td class="leftCol"><label>Email</label></td><td><input type="text" class="contactEmail1" size="30"/></td></tr>
-                                    <tr><td class="leftCol"><label>Printer Email</label></td><td><input type="text" class="printEmail1" size="30"/></td></tr>
-                                    <tr><td class="leftCol"><label>Timings</label></td><td><textarea class="timings1" cols="25" rows="2"></textarea></td></tr>
+                                    <tr><td class="leftCol"><label>Contact Person</label></td><td><input type="text" class="contactName1 ischanged" size="30"/></td></tr>
+                                    <tr><td class="leftCol"> <label>Phone</label></td><td><input type="text" class="phone1 ischanged" size="30"/></td></tr>
+                                    <tr><td class="leftCol"><label>Email</label></td><td><input type="text" class="contactEmail1 ischanged" size="30"/></td></tr>
+                                    <tr><td class="leftCol"><label>Printer Email</label></td><td><input type="text" class="printEmail1 ischanged" size="30"/></td></tr>
+                                    <tr><td class="leftCol"><label>Timings</label></td><td><textarea class="timings1 ischanged" cols="25" rows="2"></textarea></td></tr>
                                 </table>
                             </td>
                         </tr>
@@ -151,7 +151,7 @@
                     <table>
                         <tr><td class="leftRow"></td><td class="rightRow">
                                 <table>
-                                    <tr><td class="leftCol"></td><td><input type="button" value="Save" class="saveBtn"/></td></tr>
+                                    <tr><td class="leftCol"></td><td><input type="button" value="Save" class="saveBtn" /></td></tr>
                                 </table></td></tr>
                     </table>
                 </div>
@@ -159,12 +159,11 @@
             </div>
         </div>
 
-        <jsp:include page="organization_help.jsp" />
         <jsp:include page="copyright.jsp" />
 
         <script type='text/javascript' src='../dwr/interface/AjaxAdminService.js'></script>
         <script type='text/javascript' src='../dwr/engine.js'></script>
-        <script type='text/javascript' src='../dwr/util.js'></script>
+        <script type='text/javascript' src='../dwr/util.js'></script>        
         <script type="text/javascript" src="../js/jquery-1.3.2.min.js"></script>
         <script type="text/javascript" src="../js/facebox.js" ></script>
         <script type="text/javascript">
