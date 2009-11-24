@@ -14,7 +14,10 @@ jq(document).ready(function() {
         loading_image : 'loading.gif',
         close_image   : 'closelabel.gif'
     })
-    jq("#editBtn").click(function() {
+    jq(".editBtn").click(function() {
+        jq(".saveBtn").attr("disabled", "disabled");
+    })
+    jq(".editBtn").click(function() {
         jq(".street1")[1].value = organization.street;
         jq(".city1")[1].value  = organization.city;
         jq(".zipcode1")[1].value = organization.zipcode;
@@ -26,7 +29,10 @@ jq(document).ready(function() {
         jq(".printEmail1")[1].value = organization.printEmail;
         jq(".timings1")[1].value = organization.timings;
     })
-    
+
+    jq(".ischanged").live("change", function() {
+        jq(".saveBtn").removeAttr('disabled');
+    })
     jq(".saveBtn").live("click", function() {
         organization.street = jq(".street1")[1].value;
         organization.city = jq(".city1")[1].value;
