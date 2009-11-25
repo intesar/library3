@@ -23,9 +23,9 @@ jq(document).ready(function() {
                 });
                 dwr.util.setValue("username1" + id, person.name);
                 if ( person.enabled == true  ) {
-                    dwr.util.setValue("enabled1" + id, 'YES');
+                    dwr.util.setValue("enabled1" + id, 'Y');
                 } else {
-                    dwr.util.setValue("enabled1" + id, 'NO');
+                    dwr.util.setValue("enabled1" + id, 'N');
                 }
                 dwr.util.setValue("role1" + id, person.role);
 
