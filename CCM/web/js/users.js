@@ -121,7 +121,7 @@ jq(document).ready(function() {
             username:null,
             name:null,
             password:null,
-            enabled:null,
+            enabledString:null,
             role:null
         });
         jq("#username").removeAttr("disabled");
