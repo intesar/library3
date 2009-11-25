@@ -53,6 +53,16 @@ jq(document).ready(function() {
         viewed = person.id;
         dwr.util.setValues(person);
         jq("#username").attr("disabled","disabled");
+        if ( person.role == "admin" ) {
+            jq(".role")[0].checked = true;
+        } else {
+            jq(".role")[0].checked = false;
+        }
+        if ( person.enabled == true ) {
+            jq('.enabledString')[0].checked = true;
+        } else {
+            jq('.enabledString')[0].checked = false;
+        }
     }
     function writePerson() {
         var person;
@@ -78,9 +88,13 @@ jq(document).ready(function() {
         //dwr.util.getValues(person);
         person.name = jq(".name")[1].value;
         person.username = jq(".username")[1].value;
-        person.password = jq(".password")[1].value;
-        person.role = jq(".role")[1].value;
-        if ( jq('.enabledString')[1].value == "yes") {
+        person.password = jq(".password")[1].value;        
+        if ( jq(".role")[1].checked ) {
+            person.role = "admin";
+        } else {
+            person.role = "employee";
+        }
+        if ( jq('.enabledString')[1].checked) {
             person.enabled = true;
         } else {
             person.enabled = false;
