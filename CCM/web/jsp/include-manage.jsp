@@ -53,7 +53,7 @@
         &nbsp;&nbsp;
         <a href="services.jsp" >Extras</a>
         &nbsp;&nbsp;
-        <a href="users.jsp" >Manager</a>
+        <a href="users.jsp" >Cashier</a>
         &nbsp;&nbsp;
         <a href="emails.jsp" >Notification</a>
         &nbsp;&nbsp;
