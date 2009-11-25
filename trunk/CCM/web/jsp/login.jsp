@@ -129,7 +129,7 @@
             <tr>
                 <td width="100" height="550" valign="top">
                     <% if (request.getParameter("login_error") != null) {%> <b> <font color=RED size="2"> Invalid Credentials! </font></b> <% }%> 
-                    <form action="j_acegi_security_check" method="POST" id="login_form" >
+                    <form action="/CCM/j_acegi_security_check" method="POST" id="login_form" >
                         <table width="188" border="0" rules="none" align="center" bordercolor="#cc0001" bgcolor="#cc0001">
                             
                             <tr>

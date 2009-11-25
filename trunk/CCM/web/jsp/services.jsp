@@ -12,19 +12,6 @@
     <head>
         <title>Services</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <script type="text/javascript" src="../js/jquery-1.3.2.min.js"></script>
-        <script type="text/javascript" src="../js/jquery.tablesorter.min.js"></script>
-        <script src="../js/facebox.js" type="text/javascript"></script>
-        <script type="text/javascript">
-            var jq = jQuery.noConflict();
-        </script>
-        <script type="text/javascript" src="../js/email_validation.js"></script>
-        <script type="text/javascript" src="../js/name_valadation.js"></script>
-        <script type='text/javascript' src='../dwr/interface/AjaxAdminService.js'></script>
-        <script type='text/javascript' src='../dwr/interface/AjaxWorkService.js'></script>
-        <script type='text/javascript' src='../dwr/engine.js'></script>
-        <script type='text/javascript' src='../dwr/util.js'></script>
-        <script type="text/javascript" src="../js/services.js"></script>
         <link rel="stylesheet" type="text/css" href="../css/facebox/facebox.css" media="screen" />
         <link rel="stylesheet" type="text/css" href="../css/blue/style.css" media="print, projection, screen" />
         <style>
@@ -55,7 +42,7 @@
             <jsp:include page="include-manage.jsp" />
             <div style="width:760px" >
                 <div style="font-size:12px" align="right">
-                    <a href="#addServiceDiv"  rel="facebox" id="addService">Add service</a>
+                    <a href="#addServiceDiv"  rel="facebox" id="addService" class="white">Add service</a>
                 </div>
                 <table  id="services" cellspacing="1" class="tablesorter">
                     <thead>
@@ -93,7 +80,7 @@
                         </tr>
                     </table>
                 </div>
-                
+
                 <div style="display:none" id="editServiceDiv" align="center">
                     <div><h2>Update Service</h2></div>
                     <table>
@@ -119,13 +106,26 @@
                         </tr>
                     </table>
                 </div>
-                
+
             </div>
 
             <jsp:include page="emails_help.jsp" />
             <jsp:include page="copyright.jsp" />
 
         </div>
+
+        <script type="text/javascript" src="../js/jquery-1.3.2.min.js"></script>
+        <script type="text/javascript" src="../js/jquery.tablesorter.min.js"></script>
+        <script src="../js/facebox.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            var jq = jQuery.noConflict();
+        </script>
+        <script type='text/javascript' src='../dwr/interface/AjaxAdminService.js'></script>
+        <script type='text/javascript' src='../dwr/interface/AjaxWorkService.js'></script>
+        <script type='text/javascript' src='../dwr/engine.js'></script>
+        <script type='text/javascript' src='../dwr/util.js'></script>
+        <script type="text/javascript" src="../js/services.js"></script>
+
     </body>
 
 </html>
