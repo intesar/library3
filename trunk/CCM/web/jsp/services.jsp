@@ -14,7 +14,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="../css/facebox/facebox.css" media="screen" />
         <link rel="stylesheet" type="text/css" href="../css/blue/style.css" media="print, projection, screen" />
-        <style>
+        <style type="">
             body {
                 color:#333333;
                 font-family:"Lucida Grande","Lucida Sans Unicode",Arial,Verdana,sans-serif;
