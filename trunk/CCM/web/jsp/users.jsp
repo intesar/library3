@@ -104,7 +104,7 @@
                     <tr><td></td><td>&nbsp;</td></tr>
                     <tr>
                         <td class="leftCol"> <label>Active</label> </td>
-                        <td><input type="checkbox" id="enabledString" class="enabledString"  />
+                        <td><input type="checkbox" class="enabledString" id="enabledString" />
                         </td>
                     </tr>
                     <tr><td></td><td>&nbsp;</td></tr>
