@@ -12,19 +12,38 @@
     <head>
         <title>Managers</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <script type="text/javascript" src="../js/jquery-1.3.2.min.js"></script>
-        <script type="text/javascript" src="../js/jquery.tablesorter.min.js"></script>
-        <script src="../js/facebox.js" type="text/javascript"></script>
-        <script type="text/javascript">
-            var jq = jQuery.noConflict();
-        </script>
-        <script type="text/javascript" src="../js/email_validation.js"></script>
-        <script type='text/javascript' src='../dwr/interface/AjaxAdminService.js'></script>
-        <script type='text/javascript' src='../dwr/engine.js'></script>
-        <script type='text/javascript' src='../dwr/util.js'></script>
+        <style>
+            body {
+                color:#333333;
+                font-family:"Lucida Grande","Lucida Sans Unicode",Arial,Verdana,sans-serif;
+                font-size:12px;
+                font-style:normal;
+                font-variant:normal;
+                font-weight:normal;
+                line-height:18px;
+            }
+            .leftRow {
+                width:300px;
+            }
+            .rightRow {
+                width:400px;
+            }
+            .leftCol {
+                width:130px;
+                color:#000000;
+                font-family:Arial,Helvetica,sans-serif;
+                font-size:1.2em;
+            }
+            label {
+                font-family:arial,sans-serif;
+                font-size:smaller;
+                font-weight:bold;
+            }
+        </style>
+
         <link rel="stylesheet" type="text/css" href="../css/facebox/facebox.css" media="screen" />
         <link rel="stylesheet" type="text/css" href="../css/blue/style.css" media="print, projection, screen" />
-        <script type="text/javascript" src="../js/users.js"></script>
+
     </head>
     <body style="background-image:url('../images/body_background.png'); font-family:arial">
 
@@ -113,4 +132,17 @@
 
     <jsp:include page="users_help.jsp" />
     <jsp:include page="copyright.jsp" />
+
+            <script type="text/javascript" src="../js/jquery-1.3.2.min.js"></script>
+        <script type="text/javascript" src="../js/jquery.tablesorter.min.js"></script>
+        <script src="../js/facebox.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            var jq = jQuery.noConflict();
+        </script>
+        <script type="text/javascript" src="../js/email_validation.js"></script>
+        <script type='text/javascript' src='../dwr/interface/AjaxAdminService.js'></script>
+        <script type='text/javascript' src='../dwr/engine.js'></script>
+        <script type='text/javascript' src='../dwr/util.js'></script>
+        <script type="text/javascript" src="../js/users.js"></script>
+   
 </html>
