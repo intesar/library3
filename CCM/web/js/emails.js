@@ -23,75 +23,59 @@ jq(document).ready(function() {
                 dwr.util.cloneNode("pattern", {
                     idSuffix:id
                 });
-                dwr.util.setValue("username1" + id, person.username);
+                //                dwr.util.setValue("username1" + id, person.username);
                 dwr.util.setValue("email_or_phone" + id, person.emailOrPhone);
                 $("pattern" + id).style.display = "";
                 peopleCache[id] = person;
             }
-            jq("#addEmail").click(function() {
-               clearPerson();
-               var x = jq("#addEmailDiv");
-               jq.facebox(x);
+             
+            jq('a[rel*=facebox]').facebox({
+                loading_image : 'loading.gif',
+                close_image   : 'closelabel.gif'
             })
-            jq(".editEmail").click(function () {
-                var x = jq(this).attr("id");
-                editClicked(x);
-            })
-//            jq('a[rel*=facebox]').facebox({
-//                loading_image : 'loading.gif',
-//                close_image   : 'closelabel.gif'
-//            })
         });
     }
 
-    function editClicked(eleid) {
-        // we were an id of the form "edit{id}", eg "edit42". We lookup the "42"
-        var person = peopleCache[eleid.substring(4)];
-        viewed = person.id;
-        dwr.util.setValues(person);
-    }
 
-
-
-    jq("#saveBtn").live("click", function() {
-        var person;
-
-        if ( viewed == null ) {
-            person = {
-                id:viewed,
-                username:null,
-                emailOrPhone:null,
-                serviceProvider:null
+    jq("#saveEmailBtn").live("click", function() {
+        var _email = jq('.email')[1].value;
+        if ( !validateEmail(_email, true, true) ) {
+            
+        } else {
+            var obj = {
+                id:null,
+                username:'na',
+                emailOrPhone:_email,
+                serviceProvider:'email'
             };
-        }   else {
-            person = peopleCache[viewed];
-        }
-
-        person.username = jq('.username')[1].value;
-        person.emailOrPhone = jq('.emailOrPhone')[1].value;
-        person.serviceProvider = jq('.serviceProvider')[1].value;
-        if ( validateEmail(person.emailOrPhone, false, false) || person.emailOrPhone.length >= 10 ) {
-            AjaxAdminService.saveEmailPreference(person, function(data) {
+            AjaxAdminService.saveEmailPreference(obj, function(data) {
                 fillTable();
                 jq.facebox("<h2>" + data + "</h2>");
             });
-        } else {
-            alert ( " not a valid phone no.")
         }
-    });
+    })
 
-    function clearPerson() {
-        viewed = null;
-        dwr.util.setValues({
-            id:null,
-            username:null,
-            emailOrPhone:null,
-            serviceProvider:null
-        });
-    }
-    jq("#deleteBtn").live("click", function() {
-        AjaxAdminService.deleteEmail(viewed, function(data) {
-            jq.facebox("<h2>" + data + "</h2>")
+    jq("#savePhoneBtn").live("click", function() {
+        var _phone = jq('.phone')[1].value;
+        if ( _phone.length < 10 ) {
+            alert("Invalid phone no.");
+        } else {
+            var obj = {
+                id:null,
+                username:'na',
+                emailOrPhone:_phone,
+                serviceProvider:jq('.serviceProvider')[1].value
+            };
+            AjaxAdminService.saveEmailPreference(obj, function(data) {
+                fillTable();
+                jq.facebox("<h2>" + data + "</h2>");
+            });
+        }
+    })
+   
+    jq(".deleteEmail").live("click", function() {
+        AjaxAdminService.deleteEmail(jq(this).attr('id').substring(11), function(data) {
+            jq.facebox("<h2>" + data + "</h2>");
             fillTable();
         });
     })

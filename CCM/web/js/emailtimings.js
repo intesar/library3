@@ -2,14 +2,12 @@ var peopleCache = { };
 var viewed = null;
 jq(document).ready(function() {
     fillTable();
-
-
     function fillTable() {
         AjaxAdminService.getAllEmailTimePreference(function(people) {
             // Delete all the rows except for the "pattern" row
-            dwr.util.removeAllRows("peoplebody", {
+            dwr.util.removeAllRows("timeBody", {
                 filter:function(tr) {
-                    return (tr.id != "pattern");
+                    return (tr.id != "tbRow");
                 }
             });
             // Create a new set cloned from the pattern row
@@ -20,11 +18,11 @@ jq(document).ready(function() {
             for (var i = 0; i < people.length; i++) {
                 person = people[i];
                 id = person.id;
-                dwr.util.cloneNode("pattern", {
+                dwr.util.cloneNode("tbRow", {
                     idSuffix:id
                 });
                 dwr.util.setValue("reporttime" + id, person.reportTime);
-                $("pattern" + id).style.display = "";
+                $("tbRow" + id).style.display = "";
                 peopleCache[id] = person;
             }
 
