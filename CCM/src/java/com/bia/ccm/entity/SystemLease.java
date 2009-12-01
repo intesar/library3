@@ -35,7 +35,7 @@ import javax.persistence.Transient;
     @NamedQuery(name = "SystemLease.findByIsEndContractNotified", query = "SELECT s FROM SystemLease s where s.isEndContractNotified = ?1 and s.isFinished = true ")
 })
 @NamedNativeQueries({
-    @NamedNativeQuery(name = "SystemLease.findReportBetweenDates", query = "SELECT  sum(total_minutes_used) as total_minutes_used, sum(payable_amount) as payable_amount, sum(amount_paid) as amount_paid FROM system_lease s where (start_time >= ?1 and end_time <= ?2)  and system in (select id from systems where organization = ?3 )")
+    @NamedNativeQuery(name = "SystemLease.findReportBetweenDates", query = "SELECT  service, sum(total_minutes_used) as total_minutes_used, sum(payable_amount) as payable_amount, sum(amount_paid) as amount_paid FROM system_lease s where (start_time >= ?1 and end_time <= ?2)  and system in (select id from systems where organization = ?3 ) group by service")
 })
 public class SystemLease implements Serializable {
 

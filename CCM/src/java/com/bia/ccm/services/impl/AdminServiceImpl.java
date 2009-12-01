@@ -117,7 +117,7 @@ public class AdminServiceImpl implements AdminService {
                 this.authoritiesDao.create(a2);
                 // storing pass in UsersPass
                 String encryptedPass = this.stringEncryptor.encrypt(password);
-                String resetCode = this.stringEncryptor.encrypt( username + Calendar.getInstance().getFirstDayOfWeek());
+                String resetCode = this.stringEncryptor.encrypt(username + Calendar.getInstance().getFirstDayOfWeek());
                 UsersPass usersPass = new UsersPass(null, users.getUsername(),
                         encryptedPass, true, resetCode, new Date());
                 usersPassDao.create(usersPass);
@@ -260,13 +260,24 @@ public class AdminServiceImpl implements AdminService {
 
     public List getReport(
             Date startDate, Date endDate, String org) {
-        startDate.setHours(0);
-        startDate.setMinutes(0);
-        endDate.setHours(23);
-        endDate.setMinutes(59);
-        return this.systemLeaseDao.findReportBetweenDates(startDate, endDate, org);
+        Calendar sDate = Calendar.getInstance();
+        sDate.setTime(startDate);
+        sDate.set(Calendar.HOUR, 0);
+        sDate.set(Calendar.MINUTE, 0);
+
+        Calendar eDate = Calendar.getInstance();
+        eDate.setTime(endDate);
+        eDate.set(Calendar.HOUR, 23);
+        eDate.set(Calendar.MINUTE, 59);
+
+//        startDate.setHours(0);
+//        startDate.setMinutes(0);
+//        endDate.setHours(23);
+//        endDate.setMinutes(59);
+        return systemLeaseDao.findReportBetweenDates(sDate.getTime(), eDate.getTime(), org);
     }
 
+    @Override
     public void saveService(Services service) {
         if (service.getId() == null) {
             this.servicesDao.create(service);
@@ -275,10 +286,14 @@ public class AdminServiceImpl implements AdminService {
         }
     }
 
-    public void deleteService(Integer id) {
+    @Override
+    public void deleteService(Integer id, String org) {
         Services services = this.servicesDao.read(id);
-        //this.servicesDao.update(services);
-        this.servicesDao.delete(services);
+        if (org.equals(services.getOrganization())) {
+            servicesDao.delete(services);
+        } else {
+            throw new RuntimeException("error");
+        }
     }
 
     public List<Services> getAllServices(String org) {
@@ -326,6 +341,7 @@ public class AdminServiceImpl implements AdminService {
         return u;
     }
     // getters & setters
+
     public void setUsersDao(UsersDao usersDao) {
         this.usersDao = usersDao;
     }
@@ -390,5 +406,4 @@ public class AdminServiceImpl implements AdminService {
     private ServicesDao servicesDao;
     private PasswordEncryptor passwordEncryptor;
     private PBEStringEncryptor stringEncryptor;
-    
 }
