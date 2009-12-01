@@ -220,32 +220,24 @@ public class AdminAjaxService {
 
     public String saveService(Services service) {
         try {
-            String msg = " Service Saved Successful! ";
-            if (service.getOrganization() == null || service.getOrganization().length() <= 0) {
-                service.setOrganization(this.getOrganization().getName());
-            }
-            service.setName(SQLInjectionFilterManager.getInstance().filter(service.getName()));
-            service.setName(service.getName().toLowerCase());
-            this.adminService.saveService(service);
-            return msg;
+            service.setOrganization(this.getOrganization().getName());
+            adminService.saveService(service);
+            return " Service saved successful! ";
         } catch (Exception e) {
-            logger.error(e.getMessage());
-            return e.getMessage();
+            logger.error(e);
+            return "Error please try again!";
         }
     }
 
     public String deleteService(Integer id) {
         try {
-            if (id == null || id <= 0) {
-                return "Id is null";
-            }
-            String msg = " Service Deleted Successful! ";
-            this.adminService.deleteService(id);
-            return msg;
+//            System.out.println ( "delete");
+            adminService.deleteService(id, getOrganization().getName());
+//            return "Service deleted successful!";
         } catch (Exception e) {
-            logger.error(e.getMessage());
-            return e.getMessage();
+            logger.error(e);
         }
+        return "Service deleted successful!";
     }
 
     public List<Services> getAllServices() {

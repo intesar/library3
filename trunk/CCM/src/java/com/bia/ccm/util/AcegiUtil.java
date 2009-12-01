@@ -22,9 +22,9 @@ public class AcegiUtil {
             username = SecurityContextHolder.getContext().getAuthentication().getName();
         } catch (NullPointerException npe) {
         }
-        if (username == null) {
-            return "admin";
-        }
+//        if (username == null) {
+//            return "admin";
+//        }
         return username;
     }
 

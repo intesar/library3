@@ -63,7 +63,7 @@ public interface AdminService {
 
     public void saveService(Services service);
 
-    public void deleteService(Integer id);
+    public void deleteService(Integer id, String org);
 
     public List<Services> getAllServices(String org);
     

@@ -84,7 +84,7 @@ public class WorkServiceImpl implements WorkService {
         system.setStartTime(new Date());
         this.systemsDao.update(system);
         SystemLease systemLease = new SystemLease(null, new Date(), cashier, system.getId(), false);
-        systemLease.setService("computer " + system.getName());
+        systemLease.setService("computer");
         systemLease.setLeaseHolderName(leaseHolder);
         systemLease.setSystemNo(system.getName());
         this.systemLeaseDao.create(systemLease);
