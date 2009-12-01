@@ -6,35 +6,36 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+    "http://www.w3.org/TR/html4/loose.dtd">
 
-<jsp:include page="table_style.jsp" ></jsp:include>
+
 
 <html>
     <head>
         <title>FaceGuard</title>
-        <style>
-            a:link    {color:black; text-decoration:none; font-size:8.5pt}
-            a:hover   {color:black; text-decoration:none;
-                font-size:8.5pt}
-            a:active  {color:black; text-decoration:none; font-size:8.5pt}
-            a:visited {color:black; text-decoration:none; font-size:8.5pt}
+        <style type="">          
+            body {
+                color:#333333;
+                font-family:"Lucida Grande","Lucida Sans Unicode",Arial,Verdana,sans-serif;
+                font-size:12px;
+                font-style:normal;
+                font-variant:normal;
+                font-weight:normal;
+                line-height:18px;
+            }
+
+            label {
+                font-family:arial,sans-serif;                
+                font-weight:bold;
+            }
         </style>
-        <style>
-            a:link    {color:black; text-decoration:none; font-size:8.5pt}
-            a:hover   {color:black; text-decoration:none;
-                font-size:8.5pt}
-            a:active  {color:black; text-decoration:none; font-size:8.5pt}
-            a:visited {color:black; text-decoration:none; font-size:8.5pt}
-            .style16 {color: #FFFFFF}
-        </style>
-        
-        
+
+
         <script type='text/javascript' src='../dwr/interface/AjaxUserService.js'></script>
         <script type='text/javascript' src='../dwr/engine.js'></script>
         <script type="text/javascript" src="../js/email_validation.js"></script>
         <script type='text/javascript' src='../dwr/util.js'></script>
-        
+
         <script type="text/javascript"> 
             
             function recoverPassword() {
@@ -43,12 +44,13 @@
                 email = dwr.util.getValue("email");
                 if ( validateEmail(email, true, true) ) {
                     AjaxUserService.forgotPassword(email, function(data) {
+                        dwr.util.setValue("email1", dwr.util.getValue("email"));
                         alert ( data ) ;
                     });
                 }
             }
             function resetPassword() {
-            dwr.util.useLoadingMessage("Please Wait, Loading...");
+                dwr.util.useLoadingMessage("Please Wait, Loading...");
                 var e = dwr.util.getValue("email1");
                 var a = dwr.util.getValue("activationCode");
                 var p = dwr.util.getValue("password");
@@ -63,69 +65,49 @@
                         }
                     });
                 }
-                
-                
             }
         </script>
     </head>
     <body>
-        <table align="center" border="0" width="50%" bgcolor="#C00" style="color:#FFF;
-        background:#C00;
-        border-collapse:collapse;
-        width:370px;        
-        border:5px solid #900;" >
-            <thead>
+        <br/>
+        <div id="step1" align="center">
+            <h2>Step 1</h2>
+            <table>
                 <tr>
-                    <th></th>
-                    <th>Help me with Password Reset</th>
+                    <td><label>Email</label></td>
+                    <td><input type="text" name="email" value="" size="40"/></td>
                 </tr>
-            </thead>
-            <tr>
-                <td>Username/Email:</td>
-                <td><input type="text" name="email" value="" /></td>                
-            </tr>
-            <tr>
-                <td></td>
-                <td><input type="submit" value="Send Activation Code to My Email" onclick="recoverPassword();"/></td>
-            </tr>
-            <tr>
-                <td>
-                    <a href="login.jsp">Login Page</a>
-                </td>
-            </tr>
-        </table>
+                <tr>
+                    <td></td>
+                    <td><input type="submit" value="Send Activation Code" onclick="recoverPassword();"/></td>
+                </tr>               
+            </table>
+        </div>
         <br>
-        <table align="center" border="0" width="50%" bgcolor="#C00" style="color:#FFF;
-        background:#C00;
-        border-collapse:collapse;
-        width:370px;        
-        border:5px solid #900;" >
-            <thead>
+        <div id="step2" align="center">
+            <h2>Step 2</h2>
+            <table>
                 <tr>
-                    <th></th>
-                    <th>Have Activation Code</th>
+                    <td><label></label></td>
+                    <td><input type="hidden" name="email1" value="" size="40" /></td>
                 </tr>
-            </thead>
-            <tr>
-                <td>Username/Email:*</td>
-                <td><input type="text" name="email1" value="" /></td>                
-            </tr>
-            <tr>
-                <td>Activation Code:*</td>
-                <td><input type="text" name="activationCode" value="" /></td>                
-            </tr>
-            <tr>
-                <td>Password:*</td>
-                <td><input type="password" name="password" value="" /></td>                
-            </tr>
-            <tr>
-                <td>Confirm Password:*</td>
-                <td><input type="password" name="confirmPassword" value="" /></td>                
-            </tr>
-            <tr>
-                <td></td>
-                <td><input type="submit" value="Reset My Password" onclick="resetPassword();"/></td>               
-            </tr>
-        </table>
+                <tr>
+                    <td><label>Activation Code</label></td>
+                    <td><input type="text" name="activationCode" value="" size="40" /></td>
+                </tr>
+                <tr>
+                    <td><label>Password</label></td>
+                    <td><input type="password" name="password" value="" size="40" /></td>
+                </tr>
+                <tr>
+                    <td><label>Confirm Password</label></td>
+                    <td><input type="password" name="confirmPassword" value="" size="40" /></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input type="submit" value="Save & Login" onclick="resetPassword();"/></td>
+                </tr>
+            </table>
+        </div>
     </body>
 </html>

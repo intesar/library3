@@ -51,7 +51,7 @@
         <script type='text/javascript' src='../dwr/engine.js'></script>
         <script type="text/javascript" src="../js/email_validation.js"></script>
         <script type='text/javascript' src='../dwr/util.js'></script>
-        
+
         <script type="text/javascript"> 
             var email = "";
             var password = "";
@@ -61,9 +61,9 @@
                 var u = dwr.util.getValue("email");
                 var p = dwr.util.getValue("password");
                 var cp = dwr.util.getValue("confirmPassword");
-                var minutes = dwr.util.getValue("minutes");
-                var rate = dwr.util.getValue("rate");
-                var maxSystems = dwr.util.getValue("maxSystems");
+                var minutes = 60;//dwr.util.getValue("minutes");
+                var rate = 20;//dwr.util.getValue("rate");
+                var maxSystems = 10;//dwr.util.getValue("maxSystems");
                 //alert ( c + u + p + cp);
                 if ( c != null && c != "" && p != null && p != "" && p == cp) {
                     if ( validateEmail(u, true, true) ) {
@@ -87,7 +87,7 @@
                 }                
             }
         </script>
-        
+
         <script type="text/javascript">
             function redirectIfIE() {
                 //var browser=navigator.appName;
@@ -95,10 +95,10 @@
                 //var isFaceGuard = location.href.toString().search(regex);
                 
                 //if ( browser == 'Microsoft Internet Explorer'  && isFaceGuard != -1 ) {
-                    //alert ( " Your are using IE, Please Enable Popups & Wait while we redirect you!");
-                    //var strUrl = "http://biadevbox.homelinux.com:8080/CCM/";
-                    //window.open(strUrl);
-                    //window.close();
+                //alert ( " Your are using IE, Please Enable Popups & Wait while we redirect you!");
+                //var strUrl = "http://biadevbox.homelinux.com:8080/CCM/";
+                //window.open(strUrl);
+                //window.close();
                 //}
             }
             function submitForm() {
@@ -112,13 +112,13 @@
                 //    var strUrl = "http://biadevbox.homelinux.com:8080/CCM/j_acegi_security_check?j_garbage=abcdexehrelasdjf232343lkajflskdjfalsdfjasldkfjasldkfjalsdkjf&j_username=" + email + "&j_password=" + password;
                 //    window.open(strUrl);
                 //} else {
-                    location.href="/CCM/j_acegi_security_check?j_garbage=abcdexehrelasdjf232343lkajflskdjfalsdfjasldkfjasldkfjalsdkjf&j_username=" + email + "&j_password=" + password;
+                location.href="/CCM/j_acegi_security_check?j_garbage=abcdexehrelasdjf232343lkajflskdjfalsdfjasldkfjasldkfjalsdkjf&j_username=" + email + "&j_password=" + password;
                 //}
             }  
         </script>
-        
+
     </head>
-    
+
     <body>
         <table width="830" height="28" border="0" align="center" bordercolor="#cc0001" bgcolor="#cc0001" >
             <tr>
@@ -131,29 +131,21 @@
                     <% if (request.getParameter("login_error") != null) {%> <b> <font color=RED size="2"> Invalid Credentials! </font></b> <% }%> 
                     <form action="/CCM/j_acegi_security_check" method="POST" id="login_form" >
                         <table width="188" border="0" rules="none" align="center" bordercolor="#cc0001" bgcolor="#cc0001">
-                            
+
                             <tr>
                                 <td width="185" valign="top"><span class="style28">Email:</span></td>
                             </tr>
-                            <tr>
-                                
+                            <tr>                                
                                 <td valign="top">
-                                    <label>
-                                        <span class="style28"><img src="PNG-Others-Edit_Users.ico-32x32.png" alt="login" width="34" height="29" align="middle" /></span>
-                                        <input type="text" name='j_username' size="19" />
-                                    </label>
+                                    <input type="text" name='j_username' size="19" />
                                 </td>
                             </tr>
                             <tr>
                                 <td valign="top" class="style28">Password:</td>
-                                
                             </tr>
                             <tr>
                                 <td valign="top">
-                                    <label>
-                                        <span class="style28"><img src="Locker.png" width="34" height="30" align="middle" /></span>
-                                        <input type="password" name='j_password' size="19" />
-                                    </label>
+                                    <input type="password" name='j_password' size="19" />
                                 </td>
                             </tr>
                             <tr align="right">
@@ -167,7 +159,7 @@
                             </tr>
                         </table>
                     </form>
-                <p>&nbsp;</p></td>
+                    <p>&nbsp;</p></td>
                 <td width="700" valign="top"><table width="632" height="119" border="1" rules="none" bordercolor="#587498" bgcolor="#ffffff" >
                         <tr>
                             <td width="192" height="115"><img src="FG_RED.png" width="200" height="105" />
@@ -176,7 +168,7 @@
                                 <p align="center" class="style25"><span class="style14">FaceGuard is Web Based Cyber Cafe Manager Suite</span> </p>
                                 <p align="center" class="style25"><span class="style14">Guards you from Cyber Terror</span></p>
                                 <p align="center" class="style25"><span class="style14"> Life Time Free if registered before Dec 31 2008 (India)</span></p>                                
-                            <p align="center" class="style13">_____________________________________________________</p></td>
+                                <p align="center" class="style13">_____________________________________________________</p></td>
                         </tr>
                     </table>
                     <table width="636" height="306" border="1"  bordercolor="#587498"  bgcolor="#ffffff" rules="none">
@@ -185,7 +177,7 @@
                                     <tr>
                                         <th width="233"><div align="left">
                                                 <p> Product Features....</p>
-                                        </div></th>
+                                            </div></th>
                                     </tr>
                                     <tr>
                                         <td><div align="left"><img src="right.jpg" width="24" height="23" /><span class="style25">Compliance with Cyber Laws</span></div></td>
@@ -207,15 +199,15 @@
                                     </tr>
                                     <tr>
                                         <td>&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <div align="right"><span class="style33">&nbsp;<a href="http://faceguard.bizintelapps.com"><strong>Read more...</strong></a>. </span></div></td>
+                                            <div align="right"><span class="style33">&nbsp;<a href="http://faceguard.bizintelapps.com"><strong>Read more...</strong></a>. </span></div></td>
                                     </tr>
                                 </table>
-                            <p align="center" class="style3"> <a href="customer_registration.jsp">Customer Self Registration</a> </p></td>
+                                <p align="center" class="style3"> <a href="customer_registration.jsp">Customer Self Registration</a> </p></td>
                             <td width="394"><table width="333" border="1" align="center" bordercolor="#000000" bgcolor="#cc0001" rules="none">
                                     <tr>
                                         <td colspan="2"><p style="color:#FFFFFF" align="center"><strong class="style25">Sign up for FaceGuard.</strong><br />
-                                            <span class="style25">It's free and anyone can join.</span></p>
-                                        <div id="reg_subhead"></div></td>
+                                                <span class="style25">It's free and anyone can join.</span></p>
+                                            <div id="reg_subhead"></div></td>
                                     </tr>
                                     <tr>
                                         <td width="139"><div align="right" class="style26" style="color:#FFFFFF">Cyber Cafe Name: * </div></td>
@@ -226,7 +218,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td><div align="right" class="style26" style="color:#FFFFFF">Username/Email: * </div></td>
+                                        <td><div align="right" class="style26" style="color:#FFFFFF">Email: * </div></td>
                                         <td><input type="text" name="email"  size="19" /></td>
                                     </tr>
                                     <tr>
@@ -237,6 +229,7 @@
                                         <td><div align="right" class="style26" style="color:#FFFFFF">Confirm Password: * </div></td>
                                         <td><input type="password" name="confirmPassword" size="19" /></td>
                                     </tr>
+                                    <!--
                                     <tr>
                                         <td><div align="right" class="style26" style="color:#FFFFFF">Rate: * </div></td>
                                         <td>
@@ -283,7 +276,8 @@
                                                 </select>
                                             </label>
                                         </td>
-                                    </tr>
+                                    </tr>                               
+
                                     <tr>
                                         <td><div align="right" class="style26" style="color:#FFFFFF">Max Computers: * </div></td>
                                         <td>
@@ -298,42 +292,36 @@
                                                 </select>
                                             </label>
                                         </td>
-                                    </tr>
+                                    </tr> -->
                                     <tr>
                                         <td>&nbsp;</td>
-                                        <td>
-                                            <label></label>
-                                            <div align="center"><img src="button1over.png" width="156" height="21" onclick="createAccount();"/>
-                                            </div>
+                                        <td>                                            
+                                            <div align="center">
+                                                <input type="button" value="Register" onclick="createAccount();" />                                             </div>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>&nbsp;</td>
                                         <td><span class="style4" style="color:#FFFFFF">By clicking Sign Up, you are indicating that you have read and agree to the </span><span class="style4"><a href="http://faceguard.bizintelapps.com/">Terms of use and Privacy Policy.</a></span><span class="style4" style="color:#FFFFFF"> </span></td>
                                     </tr>
-                            </table></td>
+                                </table></td>
                         </tr>
                     </table>      
                     <div align="center">
-                        <a href="http://faceguard.bizintelapps.com/" class="style9">Home Page</a> | 
                         <a href="http://faceguard.bizintelapps.com/" class="style9">Features</a> | 
                         <a href="http://faceguard.bizintelapps.com/" class="style9">Customer</a> 
                         <a href="http://faceguard.bizintelapps.com/" class="style9">Testimonials</a> | 
                         <a href="http://faceguard.bizintelapps.com/" class="style9">Client</a> 
                         <a href="http://faceguard.bizintelapps.com/" class="style9">Software</a> | 
                         <a href="http://faceguard.bizintelapps.com/" class="style9">Suggestion</a> | 
-                        <a href="http://faceguard.bizintelapps.com/" class="style9"> Benifits</a> |
                         <a href="http://faceguard.bizintelapps.com/" class="style9">Tutorials</a> 
-                        <a href="http://faceguard.bizintelapps.com/" class="style9">And Demo</a> | 
-                        <a href="http://faceguard.bizintelapps.com/" class="style9">Live</a> 
-                        <a href="http://faceguard.bizintelapps.com/" class="style9">Chat</a> 
-                        
+                        <a href="http://faceguard.bizintelapps.com/" class="style9">And Demo</a>                        
                     </div>
-                    <p align="center" class="style9"> <a href="http://faceguard.bizintelapps.com/index.php?option=com_contact&view=contact&id=1%3Acontact-bizintelapps&catid=12%3Acontacts&Itemid=62" class="style9">Contact Us</a> | USA 733.699.7898 | India 40.65764414</p>
+                    <p align="center" class="style9"> <a href="http://faceguard.bizintelapps.com/index.php?option=com_contact&view=contact&id=1%3Acontact-bizintelapps&catid=12%3Acontacts&Itemid=62" class="style9">Contact Us</a> | 1-773-216-5478 </p>
                     <p align="center" class="style10 style2" >
-                <span class="style2">&copy;</span> <span class="style2">Copyrights</span> <span class="style2"><a href="http://www.bizintelapps.com">BizIntelApps</a></span> <span class="style2">2008</span> <span class="style2">All</span> <span class="style2">Rights</span> <span class="style2">Reserved</span>. </p>    </td>
+                        <span class="style2">&copy;</span> <span class="style2">Copyrights</span> <span class="style2"><a href="http://www.bizintelapps.com">BizIntelApps</a></span> <span class="style2">2009</span> <span class="style2">All</span> <span class="style2">Rights</span> <span class="style2">Reserved</span>. </p>    </td>
             </tr>
         </table>
-        
+
     </body>
 </html>
