@@ -1,6 +1,6 @@
 <%@page import="com.bia.ccm.util.AcegiUtil" %>
 <style>
-#mainDiv {
+    #mainDiv {
         background-image:url('../images/topNavBG.png');
         background-repeat:no-repeat;
         width:760px;
@@ -47,7 +47,7 @@
 
 <div id="mainDiv" align="center" style="font-size:20px;">
     <div id="adminDiv" align="center" style="text-decoration:none;">
-        <a href="dashboard2.jsp" class="links"><< Home</a>
+
         &nbsp;&nbsp;
         <a href="systems.jsp" >PC</a>
         &nbsp;&nbsp;
@@ -61,11 +61,8 @@
     </div>
 </div>
 <div id="welcomeDiv" >
-    <span>
-        Hi
-    </span>
-    <span><%= AcegiUtil.getUsername().split("@")[0] %></span>
-    <span>
-        | <a href="../j_acegi_logout" >Log out</a>
-    </span>
+    <span>Hi</span>
+    <span><%= AcegiUtil.getUsername().split("@")[0]%></span>
+    <span> | <a href="dashboard2.jsp" class="links"> Home</a></span>
+    <span> | <a href="../j_acegi_logout" >Log out</a></span>
 </div>

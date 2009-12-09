@@ -106,12 +106,7 @@
                         </tr>
                     </table>
                 </div>
-
             </div>
-
-            <jsp:include page="emails_help.jsp" />
-            <jsp:include page="copyright.jsp" />
-
         </div>
 
         <script type="text/javascript" src="../js/jquery-1.3.2.min.js"></script>

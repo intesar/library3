@@ -239,7 +239,5 @@
             window.onload = fillTable();
         </script>
     </body>
-    <jsp:include page="systems_help.jsp" />
-    <jsp:include page="copyright.jsp" />
 
 </html>

@@ -185,5 +185,4 @@
     </body>
 
     <jsp:include page="customer_help.jsp" />
-    <jsp:include page="copyright.jsp" />
 </html>
