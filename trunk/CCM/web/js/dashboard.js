@@ -1,6 +1,8 @@
 var _report;
 jq(document).ready(function() {
-
+    jq('#addServiceDiv').live("click", function() {
+        populateSystemNos();
+    })
     jq('a[rel*=facebox]').facebox({
         loading_image : 'loading.gif',
         close_image   : 'closelabel.gif'
@@ -69,10 +71,8 @@ jq(document).ready(function() {
                     peopleCache[id] = person;
                     systems1[i] = person;
                     if(person.isAvailable == true){
-                        document.getElementById('edit'+id).disabled=false;
                         document.getElementById('deta'+id).disabled=true;
                     } else {
-                        document.getElementById('edit'+id).disabled=true;
                         document.getElementById('deta'+id).disabled=false;
                         usedSystemList[i] = person;
                     }
@@ -87,18 +87,19 @@ jq(document).ready(function() {
         });
     }
 
+    jq('.systemRow').live("click", function() {
+        var id = jq(this).parentNode.id;
+        assignSystem(id);
+    })
     function assignSystem(eleid) {
-        var system = peopleCache[eleid.substring(4)];
-        var leaseHolder = dwr.util.getValue("key");
+        var system = peopleCache[eleid.substring(7)];
+        var leaseHolder = "intesar@ymail.com";//dwr.util.getValue("key");
         if ( validateEmail(leaseHolder, true, true) ) {
-            clearMessages();
             AjaxWorkService.leaseSystem(system.id, leaseHolder, function(data) {
-                if ( data == 'Assigned Successfully!') {
-                    writeMessage("successReply", data +  " at " + new Date().toLocaleString());
+                if ( data == 'Assigned Successfully!') {                    
                     fillTable();
-                    dwr.util.setValue("key", "");
                 } else {
-                    writeMessage("failureReply", "Please try again!");
+                    alert('error')
                 }
             } );
         }
@@ -142,13 +143,12 @@ jq(document).ready(function() {
                 $("detail" + id).style.display = "";
                 total += systemLease.payableAmount;
             }
-            dwr.util.setValue("paidAmount", total);
-            
             document.getElementById("paidButton").disabled = false;
             populateSystemNos ();
             dwr.util.setValue("systemNos", system.name);
             jq.facebox(jq("#detailDiv").html());
-            jq(".paidAmount")[1].value = total;
+            jq(".totalPayableAmount")[1].value = total;
+            jq(".paidAmount")[1].value = total;            
         });
         
     }
@@ -176,23 +176,27 @@ jq(document).ready(function() {
             writeMessage("failureReply", data);
         }
     }
+    jq('.paidButton').live("click", function() {
+        paid();
+    })
     function paid () {
         var system = peopleCache[paidId];
-        document.getElementById("paidButton").disabled = false;
-        clearMessages();
+        //        document.getElementById("paidButton").disabled = false;
+        //        clearMessages();
         AjaxWorkService.chargePayment(system.id, function(data) {
-            if ( data == 'Payment Successful!' ) {
-                writeMessage("successReply", data + ", System : " + system.name + " at " + new Date().toLocaleString());
+            if ( data == 'Payment Successful!' ) {                
                 fillTable();
-                dwr.util.removeAllRows("detailbody", {
-                    filter:function(tr) {
-                        return (tr.id != "detail");
-                    }
-                });
-                document.getElementById("paidButton").disabled = true;
+                jq.facebox(data);
+
+            //                dwr.util.removeAllRows("detailbody", {
+            //                    filter:function(tr) {
+            //                        return (tr.id != "detail");
+            //                    }
+            //                });
+            //                document.getElementById("paidButton").disabled = true;
             } else {
-                writeMessage("failureReply", data);
-            }
+        //                writeMessage("failureReply", data);
+        }
         } );
     }
     function clearPerson() {

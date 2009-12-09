@@ -137,7 +137,7 @@
                             </tr>
                             <tr>                                
                                 <td valign="top">
-                                    <input type="text" name='j_username' size="19" />
+                                    <input type="text" name='j_username' size="24" />
                                 </td>
                             </tr>
                             <tr>
@@ -145,7 +145,7 @@
                             </tr>
                             <tr>
                                 <td valign="top">
-                                    <input type="password" name='j_password' size="19" />
+                                    <input type="password" name='j_password' size="24" />
                                 </td>
                             </tr>
                             <tr align="right">
@@ -155,7 +155,7 @@
                                 </td>                                
                             </tr>                            
                             <tr>
-                                <td valign="top" class="style30"><strong><strong><strong><img src="Tag_32.png" width="32" height="32" align="absmiddle" /></strong></strong><a href="forgotpassword.jsp" style="color:white">Forgot Password ?</a></strong></td>
+                                <td valign="top" class="style30"><strong><strong><strong></strong></strong><a href="forgotpassword.jsp" style="color:white">Forgot Password ?</a></strong></td>
                             </tr>
                         </table>
                     </form>
@@ -205,9 +205,9 @@
                                 <p align="center" class="style3"> <a href="customer_registration.jsp">Customer Self Registration</a> </p></td>
                             <td width="394"><table width="333" border="1" align="center" bordercolor="#000000" bgcolor="#cc0001" rules="none">
                                     <tr>
-                                        <td colspan="2"><p style="color:#FFFFFF" align="center"><strong class="style25">Sign up for FaceGuard.</strong><br />
-                                                <span class="style25">It's free and anyone can join.</span></p>
-                                            <div id="reg_subhead"></div></td>
+                                        <td colspan="2"><p style="color:#FFFFFF" align="center"><strong class="style25">Sign up</strong><br />
+
+                                                <div id="reg_subhead"></div></td>
                                     </tr>
                                     <tr>
                                         <td width="139"><div align="right" class="style26" style="color:#FFFFFF">Cyber Cafe Name: * </div></td>
@@ -296,14 +296,10 @@
                                     <tr>
                                         <td>&nbsp;</td>
                                         <td>                                            
-                                            <div align="center">
-                                                <input type="button" value="Register" onclick="createAccount();" />                                             </div>
+                                            <input type="button" value="Register & Login" onclick="createAccount();" />                                             </div>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>&nbsp;</td>
-                                        <td><span class="style4" style="color:#FFFFFF">By clicking Sign Up, you are indicating that you have read and agree to the </span><span class="style4"><a href="http://faceguard.bizintelapps.com/">Terms of use and Privacy Policy.</a></span><span class="style4" style="color:#FFFFFF"> </span></td>
-                                    </tr>
+                                   
                                 </table></td>
                         </tr>
                     </table>      
@@ -317,9 +313,7 @@
                         <a href="http://faceguard.bizintelapps.com/" class="style9">Tutorials</a> 
                         <a href="http://faceguard.bizintelapps.com/" class="style9">And Demo</a>                        
                     </div>
-                    <p align="center" class="style9"> <a href="http://faceguard.bizintelapps.com/index.php?option=com_contact&view=contact&id=1%3Acontact-bizintelapps&catid=12%3Acontacts&Itemid=62" class="style9">Contact Us</a> | 1-773-216-5478 </p>
-                    <p align="center" class="style10 style2" >
-                        <span class="style2">&copy;</span> <span class="style2">Copyrights</span> <span class="style2"><a href="http://www.bizintelapps.com">BizIntelApps</a></span> <span class="style2">2009</span> <span class="style2">All</span> <span class="style2">Rights</span> <span class="style2">Reserved</span>. </p>    </td>
+
             </tr>
         </table>
 

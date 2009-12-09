@@ -100,8 +100,7 @@
             </div>
         </div>
 
-        <jsp:include page="emailtimings_help.jsp" />
-        <jsp:include page="copyright.jsp" />
+        
 
     </body>
 

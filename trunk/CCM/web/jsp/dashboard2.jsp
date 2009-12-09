@@ -43,9 +43,6 @@
         <div align="center">
             <jsp:include page="include.jsp" />
             <div style="width:760px" >
-                <div style="font-size:12px" align="right">
-                    <a href="#addServiceDiv"  rel="facebox">Add Service</a>
-                </div>
 
                 <div style="display:none">
                     <table>
@@ -62,6 +59,9 @@
                 <table style="background-color:white">
                     <tr>
                         <td class="leftCol">
+                            <div style="font-size:12px" align="right">
+                                <a href="#addServiceDiv"  rel="facebox">Add Service</a>
+                            </div>
                             <div>
                                 <table  cellspacing="1" class="tablesorter">
                                     <thead>
@@ -83,12 +83,12 @@
                                     </thead>
                                     <tbody  id="peoplebody" >
                                         <tr id="pattern" style="display:none;">
-                                            <td><span id="name"></span></td>
-                                            <td><span id="currentUserEmail"></span></td>
-                                            <td><span id="startTimeString1"></span></td>
-                                            <td><span id="payable1"></span></td>
+                                            <td class="systemRow" ><span id="name"></span></td>
+                                            <td class="systemRow" > <span id="currentUserEmail"></span></td>
+                                            <td class="systemRow" ><span id="startTimeString1"></span></td>
+                                            <td class="systemRow" ><span id="payable1"></span></td>
                                             <td>
-                                                <a href="javascript:void(0);" id="edit">Assign</a> &nbsp; &nbsp; <a href="javascript:void(0);" onclick="fetchDetail(this.id);"  id="deta" class="detail">Details</a>
+                                                <a href="javascript:void(0);" onclick="fetchDetail(this.id);"  id="deta" class="detail">Details</a>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -104,59 +104,54 @@
                                     </thead>
                                     <tbody id="serviceBody">                                        
                                     </tbody>
-                                     <tfoot id="serviceFoot">
+                                    <tfoot id="serviceFoot">
                                     </tfoot>
                                 </table>
                             </div>
                         </td>
                     </tr>
                 </table>
-
             </div>
         </div>
 
         <div id="detailDiv" style="display:none">
-            <table   cellspacing="1" class="tablesorter">
+            <table style='width:95%' class="tablesorter">
                 <thead>
-                    <tr>
-                        <th>
-                            Service
-                        </th>
-                        <th>
-                            Time
-                        </th>
-
-                        <th>
-                            Units
-                        </th>
-                        <th>
-                            Payable
-                        </th>
-                    </tr>
+                    <tr><th>Service</th><th>Time</th><th>Units</th><th>Payable</th></tr>
                 </thead>
                 <tbody  id="detailbody" >
                     <tr id="detail" >
                         <td><span id="service"></span></td>
                         <td><span id="startTimeString"></span></td>
-                        <td><span id="totalMinutesUsed">Total</span></td>
+                        <td><span id="totalMinutesUsed"></span></td>
                         <td><span id="payableAmount">
-                                <input type="text" id="paidAmount" value="" class="paidAmount" disabled="disabled" size="4" />
-                                <button value="Paid" onclick="paid();"  id="paidButton" disabled="disabled">Paid</button> </span> </td>
+                            </span>
+                        </td>
                     </tr>
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <td></td><td></td><td>Total</td><td><input type="text" disabled class="totalPayableAmount" size="8"/></td>
+                    </tr>                    
+                </tfoot>
             </table>
+            <table>
+                <tr>
+                    <td>Paid Amount</td><td><input type="text" id="paidAmount" class="paidAmount"/></td>
+                </tr>
+                <tr>
+                    <td>Comments</td><td><textarea id="paymentComment" class="paymentComment" rows="2" cols="30"></textarea> </td>
+                </tr>
+                <tr>
+                    <td></td><td><button value="Paid" id="paidButton" class="paidButton" >Paid</button></td>
+                </tr>
+            </table>
+
         </div>
 
-        <div id="addServiceDiv" style="display:none">
-            <table title="Extra Sale" cellspacing="1">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Extra Sales /</th>
-                        <th>Services</th>
-                        <th></th>
-                    </tr>
-                </thead>
+        <div id="addServiceDiv" style="display:none" align="center">
+            <h2>Extras</h2>
+            <table title="Extra Sale" cellspacing="1">                
                 <tr>
                     <td>Service</td>
                     <td><select name="services" id="services" onfocus="populateSystemNos();"><option></option>
@@ -177,11 +172,10 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td><input type="submit" value="Add/Charge" onclick="addService();" /></td>
+                    <td><input type="submit" value="Paid" onclick="addService();" /></td>
                 </tr>
             </table>
         </div>
-        <jsp:include page="copyright.jsp" />
 
         <script type="text/javascript" src="../js/jquery-1.3.2.min.js"></script>
         <script type="text/javascript" src="../js/jquery.tablesorter.min.js"></script>

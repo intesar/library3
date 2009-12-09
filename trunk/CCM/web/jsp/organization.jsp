@@ -159,7 +159,7 @@
             </div>
         </div>
 
-        <jsp:include page="copyright.jsp" />
+        
 
         <script type='text/javascript' src='../dwr/interface/AjaxAdminService.js'></script>
         <script type='text/javascript' src='../dwr/engine.js'></script>

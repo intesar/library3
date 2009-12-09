@@ -120,9 +120,6 @@
 
     </body>
 
-    <jsp:include page="users_help.jsp" />
-    <jsp:include page="copyright.jsp" />
-
     <script type="text/javascript" src="../js/jquery-1.3.2.min.js"></script>
     <script type="text/javascript" src="../js/jquery.tablesorter.min.js"></script>
     <script src="../js/facebox.js" type="text/javascript"></script>
