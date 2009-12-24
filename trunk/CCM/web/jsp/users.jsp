@@ -50,20 +50,19 @@
         <div align="center">
             <jsp:include page="include-manage.jsp" />
 
-            <div style="width:760px" >
-                <div style="font-size:12px" align="right">
-                    <a href="#managerProfile"  rel="facebox" id="createNewManager" class="white">Add cashier</a>
+            <div style="width:760px;background-color:white" align="center" >
+                <div style="font-size:12px;width:90%" align="right">
+                    <a href="#managerProfile"  rel="facebox" id="createNewManager" class="">Add cashier</a>
                 </div>
-                <table id="managers" cellspacing="1" class="tablesorter">
+                <table id="managers" cellspacing="1" class="" style="width:100%">
                     <thead>
-                        <tr>
+                        <tr align="left">
                             <th>Name</th>
                             <th>Role</th>
                             <th>Active</th>
                             <th></th>
                         </tr>
                     </thead>
-
                     <tbody id="peoplebody">
                         <tr id="pattern" style="display:none;">
                             <td><span id="username1">name</span></td>
@@ -74,7 +73,6 @@
                             </td>
                         </tr>
                     </tbody>
-
                 </table>
             </div>
 
@@ -121,7 +119,6 @@
     </body>
 
     <script type="text/javascript" src="../js/jquery-1.3.2.min.js"></script>
-    <script type="text/javascript" src="../js/jquery.tablesorter.min.js"></script>
     <script src="../js/facebox.js" type="text/javascript"></script>
     <script type="text/javascript">
         var jq = jQuery.noConflict();
