@@ -44,6 +44,19 @@
         text-decoration:underline;
         cursor:pointer;
     }
+    #welcomeDiv a{
+        font-weight:normal;
+        font-size:13px;
+        color:white;
+        cursor:pointer;
+        text-decoration:none;
+        font-family:Arial, Hevelectica, sans-serif;
+
+    }
+    #welcomeDiv a:hover {
+        border-bottom:1px dotted #FFFFFF;
+        cursor:pointer;
+    }
 </style>
 
 <div id="mainDiv" align="center" style="font-size:20px;">
