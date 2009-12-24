@@ -67,12 +67,18 @@
                     <table>
                         <tr>
                             <td class="leftCol"> <label>Name</label> </td>
-                            <td><input id="name" type="text" class="name" size="25" /></td>
+                            <td><input type="text" class="name" size="25" />  &nbsp; <label>( eg Color Print )</label></td>
                         </tr>
                         <tr><td></td><td>&nbsp;</td></tr>
                         <tr>
                             <td class="leftCol"> <label>Price</label> </td>
-                            <td><input id="unitPrice" type="text" size="10" class="price"/></td>
+                            <td><input type="text" size="10" class="price"/>&nbsp; <label>/ 1 unit</label>  &nbsp; <label>( eg 5.00 )</label></td>
+                        </tr>
+                        <tr><td></td><td>&nbsp;</td></tr>
+                        <tr><td colspan="2"><label>Optional (eg 10 or more prints will cost 4.50 / print)</label></td></tr>
+                        <tr>
+                            <td class=""> <label>Min. Units</label> </td>
+                            <td><input class="saleTwoUnits" type="text" size="10" class=""/>&nbsp; <label>Price</label> &nbsp;<input class="saleTwoPrice" type="text" size="10" class=""/>&nbsp;<label>/ 1 unit</label></td>
                         </tr>
                         <tr><td></td><td>&nbsp;</td></tr>
                         <tr>
@@ -94,6 +100,12 @@
                             <td class="leftCol"> <label>Price</label> </td>
                             <td><input type="text" class="price_ ischanged"  size="10" />
                             </td>
+                        </tr>
+                        <tr><td></td><td>&nbsp;</td></tr>
+                        <tr><td colspan="2"><label>Optional (eg 10 or more prints will cost 4.50 / print)</label></td></tr>
+                        <tr>
+                            <td class=""> <label>Min. Units</label> </td>
+                            <td><input class="saleTwoUnits_ ischanged" type="text" size="10" class=""/>&nbsp; <label>Price</label> &nbsp;<input class="saleTwoPrice_ ischanged" type="text" size="10" class=""/>&nbsp;<label>/ 1 unit</label></td>
                         </tr>
                         <tr><td></td><td>&nbsp;</td></tr>
                         <tr>

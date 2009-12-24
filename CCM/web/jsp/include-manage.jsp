@@ -64,7 +64,7 @@
         &nbsp;&nbsp;
         <a href="systems.jsp" >PC</a>
         &nbsp;&nbsp;
-        <a href="services.jsp" >Extras</a>
+        <a href="services.jsp" >Products</a>
         &nbsp;&nbsp;
         <a href="users.jsp" >Cashier</a>
         &nbsp;&nbsp;

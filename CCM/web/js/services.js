@@ -47,21 +47,28 @@ jq(document).ready(function() {
         //        dwr.util.setValues(person);
         jq(".name_")[1].value = person.name;
         jq(".price_")[1].value = person.unitPrice;
+        jq(".saleTwoUnits_")[1].value = person.saleTwoUnits;
+        jq(".saleTwoPrice_")[1].value = person.saleTwoPrice;
     }
     jq(".saveBtn").live("click", function() {
-        var person;
-        if ( viewed == null ) {
-            person = {
-                id:viewed,
-                name:null,
-                unitPrice:null
-            };
-            person.name = jq(".name")[1].value;
-            person.unitPrice  = jq(".price")[1].value;
-        }   else {
+        var person = {
+            id:viewed,
+            name:null,
+            unitPrice:null,
+            saleTwoUnits:null,
+            saleTwoPrice:null
+        };
+        if ( viewed != null ) {
             person = peopleCache[viewed];
             person.name = jq(".name_")[1].value;
             person.unitPrice  = jq(".price_")[1].value;
+            person.saleTwoUnits = jq(".saleTwoUnits_")[1].value;
+            person.saleTwoPrice = jq(".saleTwoPrice_")[1].value;
+        } else {
+            person.name = jq(".name")[1].value;
+            person.unitPrice  = jq(".price")[1].value;
+            person.saleTwoUnits = jq(".saleTwoUnits")[1].value;
+            person.saleTwoPrice = jq(".saleTwoPrice")[1].value;
         }
         
         if ( person.name != null && person.name != '' ) {
