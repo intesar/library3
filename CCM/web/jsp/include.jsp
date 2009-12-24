@@ -58,7 +58,7 @@
     </span>
     <span><%= AcegiUtil.getUsername().split("@")[0]%></span>
     <% if (role.equals("admin")) {%>
-    <span> | <a href="systems.jsp" >Admin</a> </span>
+    <span> | <a href="services.jsp" >Admin</a> </span>
     <% }%>
     <span>
         | <a href="../j_acegi_logout" >Log out</a>

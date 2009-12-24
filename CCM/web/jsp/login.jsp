@@ -63,7 +63,7 @@
                 var cp = dwr.util.getValue("confirmPassword");
                 var minutes = 60;//dwr.util.getValue("minutes");
                 var rate = 20;//dwr.util.getValue("rate");
-                var maxSystems = 10;//dwr.util.getValue("maxSystems");
+                var maxSystems = 15;//dwr.util.getValue("maxSystems");
                 //alert ( c + u + p + cp);
                 if ( c != null && c != "" && p != null && p != "" && p == cp) {
                     if ( validateEmail(u, true, true) ) {

@@ -4,7 +4,7 @@ jq(document).ready(function() {
     fillTable();
     function fillTable() {
         //dwr.util.useLoadingMessage();
-        AjaxAdminService.getAllServices(function(people) {
+        AjaxAdminService.getAllServices(function(prodcuts) {
             // Delete all the rows except for the "pattern" row
             dwr.util.removeAllRows("peoplebody", {
                 filter:function(tr) {
@@ -14,8 +14,8 @@ jq(document).ready(function() {
             // Create a new set cloned from the pattern row
             var person, id;
             //people.sort(function(p1, p2) { return p1.macAddress.localeCompare(p2.macAddress); });
-            for (var i = 0; i < people.length; i++) {
-                person = people[i];
+            for (var i = 0; i < prodcuts.length; i++) {
+                person = prodcuts[i];
                 id = person.id;
                 dwr.util.cloneNode("pattern", {
                     idSuffix:id
@@ -42,38 +42,55 @@ jq(document).ready(function() {
     })
     function editClicked(eleid) {
         // we were an id of the form "edit{id}", eg "edit42". We lookup the "42"
-        var person = peopleCache[eleid.substring(4)];
+        var id = eleid.substring(4);
+        var person = peopleCache[id];
         viewed = person.id;
-        //        dwr.util.setValues(person);
-        jq(".name_")[1].value = person.name;
-        jq(".price_")[1].value = person.unitPrice;
-        jq(".saleTwoUnits_")[1].value = person.saleTwoUnits;
-        jq(".saleTwoPrice_")[1].value = person.saleTwoPrice;
+        if ( id == -5 ) {
+            jq("#editComputer").click();
+            jq(".compFirstPrice")[1].value = person.unitPrice;
+            jq(".compFirstMins")[1].value = person.units;
+            jq(".compSecondPrice")[1].value = person.saleTwoPrice;
+            jq(".compSecondMins")[1].value = person.saleTwoUnits;
+        } else {
+            jq(".name_")[1].value = person.name;
+            jq(".price_")[1].value = person.unitPrice;
+            jq(".saleTwoUnits_")[1].value = person.saleTwoUnits;
+            jq(".saleTwoPrice_")[1].value = person.saleTwoPrice;
+        }
     }
+    jq(".saveCompBtn").live("click", function() {
+        var product = peopleCache[viewed];
+        product.units = jq(".compFirstMins")[1].value;
+        product.unitPrice  = jq(".compFirstPrice")[1].value;
+        product.saleTwoUnits = jq(".compSecondMins")[1].value;
+        product.saleTwoPrice = jq(".compSecondPrice")[1].value;
+        AjaxAdminService.saveService(product, reply1);
+    })
     jq(".saveBtn").live("click", function() {
-        var person = {
+        var product = {
             id:viewed,
             name:null,
+            units:1,
             unitPrice:null,
             saleTwoUnits:null,
             saleTwoPrice:null
         };
         if ( viewed != null ) {
-            person = peopleCache[viewed];
-            person.name = jq(".name_")[1].value;
-            person.unitPrice  = jq(".price_")[1].value;
-            person.saleTwoUnits = jq(".saleTwoUnits_")[1].value;
-            person.saleTwoPrice = jq(".saleTwoPrice_")[1].value;
+            product = peopleCache[viewed];
+            product.name = jq(".name_")[1].value;
+            product.unitPrice  = jq(".price_")[1].value;
+            product.saleTwoUnits = jq(".saleTwoUnits_")[1].value;
+            product.saleTwoPrice = jq(".saleTwoPrice_")[1].value;
         } else {
-            person.name = jq(".name")[1].value;
-            person.unitPrice  = jq(".price")[1].value;
-            person.saleTwoUnits = jq(".saleTwoUnits")[1].value;
-            person.saleTwoPrice = jq(".saleTwoPrice")[1].value;
+            product.name = jq(".name")[1].value;
+            product.unitPrice  = jq(".price")[1].value;
+            product.saleTwoUnits = jq(".saleTwoUnits")[1].value;
+            product.saleTwoPrice = jq(".saleTwoPrice")[1].value;
         }
         
-        if ( person.name != null && person.name != '' ) {
-            if ( person.unitPrice != null && isInteger(person.unitPrice) && person.unitPrice != "" ) {
-                AjaxAdminService.saveService(person, reply1);
+        if ( product.name != null && product.name != '' ) {
+            if ( product.unitPrice != null && isInteger(product.unitPrice) && product.unitPrice != "" ) {
+                AjaxAdminService.saveService(product, reply1);
             //                AjaxWorkService.createMembershipDiscount(person.name);
             }
             else {
