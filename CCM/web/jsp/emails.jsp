@@ -29,6 +29,12 @@
             .rightRow {
                 width:400px;
             }
+            .leftCol1 {
+                width:200px;
+            }
+            .leftCol2 {
+                width:100px;
+            }
             .leftCol {
                 width:90px;
                 color:#000000;
@@ -50,7 +56,7 @@
                 <tr>
                     <td>
                         <div>
-                            <a href="#addEmailDiv"  rel="facebox" id="addEmail">Add email</a> |
+                            <a href="#addEmailDiv"  rel="facebox" id="addEmail">Add email</a> &nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
                             <a href="#addPhoneDiv"  rel="facebox" id="addPhone">Add phone</a>
                         </div>
                     </td>
@@ -60,7 +66,7 @@
                         </div>
                     </td>
                 </tr>
-                <tr>
+                <tr style="vertical-align: top">
                     <td>
                         <div>
                             <div>
@@ -69,7 +75,7 @@
                                 <table id="emails" cellspacing="1" class="">
                                     <tbody id="peoplebody">
                                         <tr id="pattern" style="display:none;">
-                                            <td><span id="email_or_phone">emailOrPhone</span></td>
+                                            <td class="leftCol1"><span id="email_or_phone">emailOrPhone</span></td>
                                             <td>
                                                 <a href="javascript:void(0);" class="deleteEmail" id="deleteEmail"> X </a>
                                             </td>
@@ -81,10 +87,7 @@
                                 <table>
                                     <tr>
                                         <td  class="leftCol"> <label>Phone</label> </td>
-
-                                        <td><input id="phone" class="phone" type="text" size="30"/>
-
-                                        </td>
+                                        <td><input id="phone" class="phone" type="text" size="30"/></td>
                                     </tr>
                                     <tr><td></td><td>&nbsp;</td></tr>
                                     <tr>
@@ -138,10 +141,7 @@
                                 <table>
                                     <tr>
                                         <td  class="leftCol"> <label>Email</label> </td>
-
-                                        <td><input id="email" class="email" type="text" size="30"/>
-
-                                        </td>
+                                        <td><input id="email" class="email" type="text" size="30"/> </td>
                                     </tr>
                                     <tr><td></td><td>&nbsp;</td></tr>
                                     <tr>
@@ -160,7 +160,7 @@
                             <table id="emailtimings" cellspacing="1" class="">
                                 <tbody id="timeBody">
                                     <tr id="tbRow" style="display:none;">
-                                        <td><span id="reporttime">reportTime</span></td>
+                                        <td class="leftCol2"><span id="reporttime">reportTime</span></td>
                                         <td>
                                             <a href="javascript:void(0)" class="deleteLink" id="delete"> X </a>
                                         </td>
@@ -169,39 +169,38 @@
                             </table>
                         </div>
                         <div style="display:none" id="addTimeDiv">
-                            <table>
-                                <tr>
-                                    <td>
-                                        Report Time
-                                    </td>
+                            <table align="center">
+                                <tr>                                    
                                     <td>
                                         <select name="reportTime" class="reportTime">
-                                            <option value="0"> midnight</option>
-                                            <option value="100">01:00 am</option>
-                                            <option value="200">02:00 am</option>
-                                            <option value="300">03:00 am</option>
-                                            <option value="400">04:00 am</option>
-                                            <option value="500">05:00 am</option>
-                                            <option value="600">06:00 am</option>
-                                            <option value="700">07:00 am</option>
-                                            <option value="800">08:00 am</option>
-                                            <option value="900">09:00 am</option>
-                                            <option value="1000">10:00 am</option>
-                                            <option value="1100">11:00 am</option>
-                                            <option value="1200">noon</option>
-                                            <option value="1300">01:00 pm</option>
-                                            <option value="1400">02:00 pm</option>
-                                            <option value="1500">03:00 pm</option>
-                                            <option value="1600">04:00 pm</option>
-                                            <option value="1700">05:00 pm</option>
-                                            <option value="1800">06:00 pm</option>
-                                            <option value="1900">07:00 pm</option>
-                                            <option value="2000">08:00 pm</option>
-                                            <option value="2100">09:00 pm</option>
-                                            <option value="2200">10:00 pm</option>
-                                            <option value="2300">11:00 pm</option>
+                                            <option value="-1"> ----- Select Time ----</option>
+                                            <option value="0"> Midnight </option>
+                                            <option value="100">01:00 AM</option>
+                                            <option value="200">02:00 AM</option>
+                                            <option value="300">03:00 AM</option>
+                                            <option value="400">04:00 AM</option>
+                                            <option value="500">05:00 AM</option>
+                                            <option value="600">06:00 AM</option>
+                                            <option value="700">07:00 AM</option>
+                                            <option value="800">08:00 AM</option>
+                                            <option value="900">09:00 AM</option>
+                                            <option value="1000">10:00 AM</option>
+                                            <option value="1100">11:00 AM</option>
+                                            <option value="1200">Noon</option>
+                                            <option value="1300">01:00 PM</option>
+                                            <option value="1400">02:00 PM</option>
+                                            <option value="1500">03:00 PM</option>
+                                            <option value="1600">04:00 PM</option>
+                                            <option value="1700">05:00 PM</option>
+                                            <option value="1800">06:00 PM</option>
+                                            <option value="1900">07:00 PM</option>
+                                            <option value="2000">08:00 PM</option>
+                                            <option value="2100">09:00 PM</option>
+                                            <option value="2200">10:00 PM</option>
+                                            <option value="2300">11:00 PM</option>
                                         </select>
                                     </td>
+                                    <td>&nbsp;&nbsp;&nbsp;</td>
                                     <td>
                                         <input type="button" value="Add" id="addBtn"/>
                                     </td>
