@@ -68,14 +68,14 @@ jq(document).ready(function() {
             };
             AjaxAdminService.saveEmailPreference(obj, function(data) {
                 fillTable();
-                jq.facebox("<h2>" + data + "</h2>");
+//                jq.facebox("<h2>" + data + "</h2>");
             });
         }
     })
    
     jq(".deleteEmail").live("click", function() {
         AjaxAdminService.deleteEmail(jq(this).attr('id').substring(11), function(data) {
-            jq.facebox("<h2>" + data + "</h2>");
+//            jq.facebox("<h2>" + data + "</h2>");
             fillTable();
         });
     })
