@@ -278,7 +278,32 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    /**
+     *  service contains ( name, organization, unitPrice, saleTwoUnits, saleTwoPrice, saleTwoEnabled )
+     *
+     *  unitPrice is for one unit of product or service
+     *  if admin sets saleTwoUnits > 1 and saleTwoPrice > 0 then make saleTwoEnabled to true
+     *    it means that if there is sale of product or services >= saleTwoUnits
+     *    then apply saleTwoPrice per unit
+     *    eg name = color print, organzation = sample, unitPrice = 5.00
+     *           saleTwoEnabled = true, saleTwoUnits = 10, saleTwoPrice = 4
+     *     case 1 user request for 4 copies 4 * 5.00 = 20.00
+     *     case 2 user request for 20 copes 20 * 4.00 = 800.00
+     *
+     */
     public void saveService(Services service) {
+        // validation logic
+        if ( service.getName() == null || service.getName().trim().length() < 1 )
+            throw new RuntimeException ( " name cannot be empty ");
+        if ( service.getUnitPrice() < 0 )
+            throw new RuntimeException ( " Unit price cannot be less then zero ");
+        if ( service.getSaleTwoUnits() != null && service.getSaleTwoUnits() > 1
+                && service.getSaleTwoPrice() != null && service.getSaleTwoPrice() > 0.0 ) {
+            service.setSaleTwoEnabled(true);
+        } else {
+            service.setSaleTwoEnabled(false);
+        }
+
         if (service.getId() == null) {
             this.servicesDao.create(service);
         } else {
