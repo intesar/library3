@@ -20,7 +20,6 @@ import com.bia.ccm.util.ServiceFactory;
 import com.bia.converter.CaseConverter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -48,9 +47,18 @@ public class AdminAjaxService {
 
     public String updateRentalPrice(int mims, double rate, Integer lmins, Double lrate) {
         String msg = "Price Updated Successful!";
+        if (logger.isDebugEnabled()) {
+            logger.debug("updateRentalPrice ------ ");
+        }
         String username = AcegiUtil.getUsername();
-        if (mims < 0 || rate < 0.0 || (lmins != null & lmins < 0) || (lrate != null && lrate < 0.0)) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("updateRentalPrice ------ " + username);
+        }
+        if (mims < 0 || rate < 0.0 || (lmins != null && lmins < 0) || (lrate != null && lrate < 0.0)) {
             return "We are keeping an eye on you! ";
+        }
+        if (logger.isDebugEnabled()) {
+            logger.debug("updateRentalPrice ------ after validation");
         }
         try {
             this.adminService.updateRentalPrice(mims, rate, lmins, lrate, username);
@@ -219,6 +227,19 @@ public class AdminAjaxService {
     }
 
     public String saveService(Services service) {
+        if (service.getId() == -5) {
+            if (logger.isDebugEnabled()) {
+                logger.debug("computer rate save ------ " + service.getUnits() + "  " + service.getUnitPrice());
+                logger.debug("computer rate ------ " + service.getSaleTwoUnits() + " " + service.getSaleTwoPrice());
+            }
+            try {
+                this.updateRentalPrice(service.getUnits(), service.getUnitPrice(),
+                        service.getSaleTwoUnits(), service.getSaleTwoPrice());
+                return " Updated rates successfully ! ";
+            } catch (NullPointerException ex) {
+                ex.printStackTrace();
+            }
+        }
         try {
             service.setOrganization(this.getOrganization().getName());
             adminService.saveService(service);
@@ -240,9 +261,23 @@ public class AdminAjaxService {
         return "Service deleted successful!";
     }
 
+    /**
+     * add computer as service to this list
+     * @return
+     */
     public List<Services> getAllServices() {
         String org = this.getOrganization().getName();
-        return this.adminService.getAllServices(org);
+        List<Services> list = this.adminService.getAllServices(org);
+        Systems system = this.adminService.getSystem(org);
+        Services s = new Services();
+        s.setId(-5);
+        s.setName("Computer");
+        s.setUnits(system.getMinimumMinutes());
+        s.setUnitPrice(system.getMinuteRate());
+        s.setSaleTwoUnits(system.getLowerMinimumMinutes());
+        s.setSaleTwoPrice(system.getLowerMinuteRate());
+        list.add(s);
+        return list;
     }
 
     public void sendReports() {

@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  *
@@ -48,6 +49,8 @@ public class Services implements Serializable {
     private Integer saleTwoUnits;
     @Column(name = "sale_two_price")
     private Double saleTwoPrice;
+    @Column(name = "units", nullable = false)
+    private Integer units = 1;
 
     public Services() {
     }
@@ -125,6 +128,14 @@ public class Services implements Serializable {
 
     public void setSaleTwoUnits(Integer saleTwoUnits) {
         this.saleTwoUnits = saleTwoUnits;
+    }
+
+    public Integer getUnits() {
+        return units;
+    }
+
+    public void setUnits(Integer units) {
+        this.units = units;
     }
 
     @Override
