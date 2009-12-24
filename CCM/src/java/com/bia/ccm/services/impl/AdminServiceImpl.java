@@ -325,6 +325,10 @@ public class AdminServiceImpl implements AdminService {
         return this.servicesDao.findByOrganization(org);
     }
 
+    public Systems getSystem(String org) {
+        return this.systemsDao.findBySystemNameAndOrganization(1, org);
+    }
+
     public void sendReports() {
         List<Organization> orgs = this.organizationDao.readAll().getResults();
         for (Organization organization : orgs) {

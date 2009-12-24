@@ -126,7 +126,7 @@ public class UserServiceImpl implements UserService {
             this.servicesDao.create(s5);
             //Double minuteRate = Double.parseDouble("" + minutes + "." + rate);
             for (int i = 1; i <=
-                    50; i++) {
+                    20; i++) {
                 boolean enabled = false;
                 if (i <= maxSystems) {
                     enabled = true;

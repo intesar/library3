@@ -66,6 +66,8 @@ public interface AdminService {
     public void deleteService(Integer id, String org);
 
     public List<Services> getAllServices(String org);
+
+    public Systems getSystem(String org);
     
     void sendReports();
     
