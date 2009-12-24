@@ -21,7 +21,7 @@
         color:#FFFFFF;
     }
     a {        
-        text-decoration:none;
+        
     }
     .white {
         color:#FFFFFF;
@@ -29,6 +29,7 @@
     }
     #welcomeDiv a {
         color:#FFFFFF;
+        text-decoration:none;
     }
     #adminDiv a{
         font-weight:normal;
@@ -47,7 +48,6 @@
 
 <div id="mainDiv" align="center" style="font-size:20px;">
     <div id="adminDiv" align="center" style="text-decoration:none;">
-
         &nbsp;&nbsp;
         <a href="systems.jsp" >PC</a>
         &nbsp;&nbsp;
