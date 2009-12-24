@@ -98,8 +98,7 @@
                         <tr><td></td><td>&nbsp;</td></tr>
                         <tr>
                             <td class="leftCol"> <label>Price</label> </td>
-                            <td><input type="text" class="price_ ischanged"  size="10" />
-                            </td>
+                            <td><input type="text" class="price_ ischanged"  size="10" />&nbsp; <label>/ 1 unit</label> </td>
                         </tr>
                         <tr><td></td><td>&nbsp;</td></tr>
                         <tr><td colspan="2"><label>Optional (eg 10 or more prints will cost 4.50 / print)</label></td></tr>
@@ -114,6 +113,36 @@
                             <td>
                                 <input type="button" value="Save" class="saveBtn" />
                                 <input type="button" value="Delete" id="deleteBtn"/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div style="display:none"> <a href="#editComputerDiv"  rel="facebox"  class="" id="editComputer"> computer </a> </div>
+                <div style="display:none" id="editComputerDiv" align="center">
+                    <div><h2>Computer Billing Rate</h2></div>
+                    <table>                        
+                        <tr><td></td><td>&nbsp;</td><td></td><td></td></tr>
+                        <tr><td></td><td colspan="3"><label>(eg Rs 10 for 30 mins)</label></td></tr>
+                        <tr>
+                            <td class="leftCol"> <label>Rate</label> </td>
+                            <td><input type="text" class="compFirstPrice ischanged"  size="10" />
+                            <td><label> for first </label> </td>
+                            <td><input type="text" class="compFirstMins ischanged"  size="10" /> <label>&nbsp; Mins</label> </td>
+                        </tr>
+                        <tr><td></td><td>&nbsp;</td><td></td><td></td></tr>
+                        <tr><td></td><td colspan="3"><label>Optional (eg Rs 15 for 60 mins)</label></td></tr>
+                        <tr>
+                            <td class=""> <label>Rate</label> </td>
+                            <td><input type="text" class="compSecondPrice ischanged"  size="10" />
+                            <td><label> for Next </label> </td>
+                            <td><input type="text" class="compSecondMins ischanged"  size="10" /> <label>&nbsp; Mins</label> </td>
+                        </tr>
+                        <tr><td></td><td>&nbsp;</td><td></td><td></td></tr>
+                        <tr>
+                            <td>
+                            </td>
+                            <td>
+                                <input type="button" value="Save" class="saveCompBtn" />
                             </td>
                         </tr>
                     </table>

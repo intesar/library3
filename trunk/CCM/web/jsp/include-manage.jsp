@@ -62,13 +62,11 @@
 <div id="mainDiv" align="center" style="font-size:20px;">
     <div id="adminDiv" align="center" style="text-decoration:none;">
         &nbsp;&nbsp;
-        <a href="systems.jsp" >PC</a>
-        &nbsp;&nbsp;
         <a href="services.jsp" >Products</a>
         &nbsp;&nbsp;
         <a href="users.jsp" >Cashier</a>
         &nbsp;&nbsp;
-        <a href="emails.jsp" >Notification</a>
+        <a href="emails.jsp" >Reports</a>
         &nbsp;&nbsp;
         <a href="organization.jsp" >Profile</a>
     </div>
