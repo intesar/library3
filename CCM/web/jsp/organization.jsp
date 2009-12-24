@@ -12,10 +12,8 @@
     <head>
         <title>Company Details</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
         <link rel="stylesheet" type="text/css" href="../css/facebox/facebox.css" media="screen" />
-
-        <style>
+        <style type="">
             body {
                 color:#333333;
                 font-family:"Lucida Grande","Lucida Sans Unicode",Arial,Verdana,sans-serif;
@@ -62,7 +60,6 @@
                                     <tr><td class="leftCol"><label>Name</label></td><td><span id="name"></span></td>
                                         <td align="right"><a href="#editDiv"  rel="facebox" class="editBtn">Edit this information</a></td></tr>
                                 </table>
-
                             </td>
                         </tr>
                     </table>
@@ -104,13 +101,10 @@
                                 </table>
                             </td>
                         </tr>
-
                     </table>
                 </div>
                 <hr/>
-
             </div>
-
             <div style="width:560px; background:white;display:none"  id="editDiv" align="center">
                 <div>
                     <div><h2>Company Profile</h2></div>
@@ -141,6 +135,7 @@
                                     <tr><td class="leftCol"><label>Email</label></td><td><input type="text" class="contactEmail1 ischanged" size="30"/></td></tr>
                                     <tr><td class="leftCol"><label>Printer Email</label></td><td><input type="text" class="printEmail1 ischanged" size="30"/></td></tr>
                                     <tr><td class="leftCol"><label>Timings</label></td><td><textarea class="timings1 ischanged" cols="25" rows="2"></textarea></td></tr>
+                                    <tr><td></td><td>(e.g. Mon-Fri 9AM - 11PM, Sat-Sun 9AM-1AM)</td></tr>
                                 </table>
                             </td>
                         </tr>
@@ -149,17 +144,19 @@
                 </div>
                 <div>
                     <table>
-                        <tr><td class="leftRow"></td><td class="rightRow">
+                        <tr>
+                            <td class="leftRow"></td><td class="rightRow">
                                 <table>
                                     <tr><td class="leftCol"></td><td><input type="button" value="Save" class="saveBtn" /></td></tr>
-                                </table></td></tr>
+                                </table>
+                            </td>
+                        </tr>
                     </table>
                 </div>
-
             </div>
         </div>
 
-        
+
 
         <script type='text/javascript' src='../dwr/interface/AjaxAdminService.js'></script>
         <script type='text/javascript' src='../dwr/engine.js'></script>
