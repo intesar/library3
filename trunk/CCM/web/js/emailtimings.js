@@ -21,7 +21,7 @@ jq(document).ready(function() {
                 dwr.util.cloneNode("tbRow", {
                     idSuffix:id
                 });
-                dwr.util.setValue("reporttime" + id, person.reportTime);
+                dwr.util.setValue("reporttime" + id, formatTime(person.reportTime));
                 $("tbRow" + id).style.display = "";
                 peopleCache[id] = person;
             }
@@ -37,12 +37,19 @@ jq(document).ready(function() {
         });
     }
 
+    function formatTime(time) {
+        if ( time == 0 ) return "Midnight";
+        else if (time == 1200 ) return "Noon";
+        else if ( time <= 900 ) return "0" + (time / 100 ) + ":00 AM";
+        else if ( time <= 1100 ) return (time / 100 ) + ":00 AM";
+        else if (time <= 2100) return "0" + (( time / 100 ) - 12) + ":00 PM";
+        else return ( time / 100 ) - 12 + ":00 PM";
+    }
     function deleteClicked(eleid) {
-
         var emailTime = peopleCache[eleid.substring(6)];
         AjaxAdminService.deleteEmailTimePreference(emailTime, function(data) {
             fillTable();
-            jq.facebox("<h2>" + data + "</h2>");
+//            jq.facebox("<h2>" + data + "</h2>");
         });
     }
     jq("#addBtn").live("click", function() {
@@ -52,9 +59,10 @@ jq(document).ready(function() {
             organization:null
         };
         person.reportTime = jq('.reportTime')[1].value;
+        if ( person.reportTime == -1 ) return;
         AjaxAdminService.saveEmailTimePreference(person, function(data) {
             fillTable();
-            jq.facebox("<h2>" + data + "</h2>");
+//            jq.facebox("<h2>" + data + "</h2>");
         });
     })
 
