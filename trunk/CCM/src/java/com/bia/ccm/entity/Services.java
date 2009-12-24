@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.bia.ccm.entity;
 
 import java.io.Serializable;
@@ -22,13 +21,14 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "services")
 @NamedQueries({
-    @NamedQuery(name = "Services.findByName", query = "SELECT s FROM Services s WHERE s.name = :name"), 
-    @NamedQuery(name = "Services.findByUnitPrice", query = "SELECT s FROM Services s WHERE s.unitPrice = :unitPrice"), 
+    @NamedQuery(name = "Services.findByName", query = "SELECT s FROM Services s WHERE s.name = :name"),
+    @NamedQuery(name = "Services.findByUnitPrice", query = "SELECT s FROM Services s WHERE s.unitPrice = :unitPrice"),
     @NamedQuery(name = "Services.findByDescription", query = "SELECT s FROM Services s WHERE s.description = :description"),
-    @NamedQuery(name = "Services.findByOrganization", query = "SELECT s FROM Services s WHERE s.organization = ?1 "), 
+    @NamedQuery(name = "Services.findByOrganization", query = "SELECT s FROM Services s WHERE s.organization = ?1 "),
     @NamedQuery(name = "Services.findById", query = "SELECT s FROM Services s WHERE s.id = :id")
 })
 public class Services implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Column(name = "name", nullable = false)
     private String name;
@@ -42,6 +42,12 @@ public class Services implements Serializable {
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(name = "sale_two_enabled", nullable = false)
+    private boolean saleTwoEnabled;
+    @Column(name = "sale_two_units")
+    private Integer saleTwoUnits;
+    @Column(name = "sale_two_price")
+    private Double saleTwoPrice;
 
     public Services() {
     }
@@ -97,6 +103,30 @@ public class Services implements Serializable {
         this.id = id;
     }
 
+    public boolean isSaleTwoEnabled() {
+        return saleTwoEnabled;
+    }
+
+    public void setSaleTwoEnabled(boolean saleTwoEnabled) {
+        this.saleTwoEnabled = saleTwoEnabled;
+    }
+
+    public Double getSaleTwoPrice() {
+        return saleTwoPrice;
+    }
+
+    public void setSaleTwoPrice(Double saleTwoPrice) {
+        this.saleTwoPrice = saleTwoPrice;
+    }
+
+    public Integer getSaleTwoUnits() {
+        return saleTwoUnits;
+    }
+
+    public void setSaleTwoUnits(Integer saleTwoUnits) {
+        this.saleTwoUnits = saleTwoUnits;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -121,5 +151,4 @@ public class Services implements Serializable {
     public String toString() {
         return "com.bia.ccm.entity.Services[id=" + id + "]";
     }
-
 }
