@@ -37,7 +37,7 @@ jq(document).ready(function() {
     var usedSystemList = { };
     function fillTable() {
         //dwr.util.useLoadingMessage("Please Wait, Loading...");
-        AjaxWorkService.getActiveSystems(function(people) {
+        AjaxWorkService.getActiveSystems(function(systems) {
             usedSystemList = { };
             // Delete all the rows except for the "pattern" row
             dwr.util.removeAllRows("peoplebody", {
@@ -48,12 +48,12 @@ jq(document).ready(function() {
             // Create a new set cloned from the pattern row
             var person, id;
 
-            people.sort(function(p1, p2) {
+            systems.sort(function(p1, p2) {
                 return p1.name - p2.name;
             });
-            systemLength = people.length;
-            for (var i = 0; i < people.length; i++) {
-                person = people[i];
+            systemLength = systems.length;
+            for (var i = 0; i < systems.length; i++) {
+                person = systems[i];
                 if ( person.enabled == true ) {
                     id = person.id;
                     dwr.util.cloneNode("pattern", {
@@ -66,6 +66,8 @@ jq(document).ready(function() {
                         maxLength = maxLength <= 14 ? maxLength : 14;
                         dwr.util.setValue("currentUserEmail" + id, email.toString().substring(0,maxLength));
                         dwr.util.setValue("startTimeString1" + id, person.startTimeString);
+                        jq("#detailsDiv" + id).show();
+                        jq("#assignDiv" + id).hide();
                     }
                     $("pattern" + id).style.display = "";
                     peopleCache[id] = person;
@@ -87,16 +89,32 @@ jq(document).ready(function() {
         });
     }
 
-    jq('.systemRow').live("click", function() {
-        var id = jq(this).parentNode.id;
-        assignSystem(id);
+//    jq('.systemRow').live("click", function() {
+//        var id = jq(this).parentNode.id;
+//        assignSystem(id);
+//    })
+
+    jq('.assign').live('click', function() {
+        //assignSystem(this.id);
+        // set all values in assignUserDiv
+        //load div in facebox
+        var id = this.id.substring(4);
+        var system = peopleCache[id];
+        jq('.computerNo').text(system.id);
+        jq('.computerName').text(system.name);
+        jq('.name_').value='';
+        jq.facebox(jq("#assignUserDiv").html());
     })
-    function assignSystem(eleid) {
-        var system = peopleCache[eleid.substring(7)];
-        var leaseHolder = "intesar@ymail.com";//dwr.util.getValue("key");
+    jq('.assignToUserBtn').live('click', function() {
+        assignSystem(jq('.computerNo')[1].innerHTML, jq('.name_')[1].value);
+    })
+    function assignSystem(computerNo, leaseHolder) {
+        //var system = peopleCache[computerNo];
+        //var leaseHolder = user;//"intesar@ymail.com";//dwr.util.getValue("key");
         if ( validateEmail(leaseHolder, true, true) ) {
-            AjaxWorkService.leaseSystem(system.id, leaseHolder, function(data) {
-                if ( data == 'Assigned Successfully!') {                    
+            AjaxWorkService.leaseSystem(computerNo, leaseHolder, function(data) {
+                if ( data == 'Assigned Successfully!' || true) {
+                    jq('.close').click();
                     fillTable();
                 } else {
                     alert('error')

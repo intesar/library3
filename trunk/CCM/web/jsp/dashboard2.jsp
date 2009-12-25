@@ -34,6 +34,30 @@
                 font-family:Arial,Helvetica,sans-serif;
                 font-size:1.2em;
             }
+            .links a{
+                cursor:pointer;
+                text-decoration:none;
+                color: green;
+            }
+            .links a:hover {
+                border-bottom:1px dotted #FFFFFF;
+                cursor:pointer;
+            }
+            .links1 a{
+                cursor:pointer;
+                text-decoration:none;
+                color: red;
+            }
+            .links1 a:hover {
+                border-bottom:1px dotted #FFFFFF;
+                cursor:pointer;
+            }
+            
+            label {
+                width:150px;
+                font-family:arial,sans-serif;
+                font-weight:bold;
+            }
         </style>
         <link rel="stylesheet" type="text/css" href="../css/facebox/facebox.css" media="screen" />
         <link rel="stylesheet" type="text/css" href="../css/blue/style.css" media="print, projection, screen" />
@@ -88,7 +112,8 @@
                                             <td class="systemRow" ><span id="startTimeString1"></span></td>
                                             <td class="systemRow" ><span id="payable1"></span></td>
                                             <td>
-                                                <a href="javascript:void(0);" onclick="fetchDetail(this.id);"  id="deta" class="detail">Details</a>
+                                                <div class="links" id="assignDiv"><a href="javascript:void(0);" id="aeta" class="assign">Assign</a></div>
+                                                <div class="links1" style="display:none" id="detailsDiv"><a href="javascript:void(0);" id="deta" class="detail">Details</a></div>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -149,6 +174,18 @@
 
         </div>
 
+        <div id="assignUserDiv" style="display:none" align="center">
+            <div align="center" style="width:100%">
+                <table  style="width:100%">
+                    <tr><td colspan="2">&nbsp;</td</tr>
+                    <tr><td><label>Computer <span style="display:none" class="computerNo" /></label></td><td><label> # <span class="computerName"/> </label></td></tr>
+                    <tr><td colspan="2">&nbsp;</td</tr>
+                    <tr><td><label>Customer Email</label></td><td><input type="text" class="name_" /></td></tr>                    
+                    <tr><td colspan="2">&nbsp;</td</tr>
+                    <tr><td></td><td><input type="submit" value="Assign" class="assignToUserBtn" /></td></tr>
+                </table>
+            </div>
+        </div>
         <div id="addServiceDiv" style="display:none" align="center">
             <h2>Extras</h2>
             <table title="Extra Sale" cellspacing="1">                
