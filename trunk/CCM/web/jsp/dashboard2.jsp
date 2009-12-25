@@ -140,6 +140,11 @@
         </div>
 
         <div id="detailDiv" style="display:none">
+            <table align="center">
+                <tr><th>User</th><th><span class="username_" /></th></tr>
+                <tr><th>Computer</th><th> # <span class="computerNo_" /></th></tr>
+            </table>
+            <br/>
             <table style='width:95%' class="tablesorter">
                 <thead>
                     <tr><th>Service</th><th>Time</th><th>Units</th><th>Payable</th></tr>

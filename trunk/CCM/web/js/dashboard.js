@@ -89,10 +89,10 @@ jq(document).ready(function() {
         });
     }
 
-//    jq('.systemRow').live("click", function() {
-//        var id = jq(this).parentNode.id;
-//        assignSystem(id);
-//    })
+    //    jq('.systemRow').live("click", function() {
+    //        var id = jq(this).parentNode.id;
+    //        assignSystem(id);
+    //    })
 
     jq('.assign').live('click', function() {
         //assignSystem(this.id);
@@ -166,7 +166,9 @@ jq(document).ready(function() {
             dwr.util.setValue("systemNos", system.name);
             jq.facebox(jq("#detailDiv").html());
             jq(".totalPayableAmount")[1].value = total;
-            jq(".paidAmount")[1].value = total;            
+            jq(".paidAmount")[1].value = total;
+            jq(".username_")[1].value = system.currentUserEmail;
+            jq(".computerNo_")[1].value= system.id;
         });
         
     }
