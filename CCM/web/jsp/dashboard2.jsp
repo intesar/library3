@@ -52,7 +52,7 @@
                 border-bottom:1px dotted #FFFFFF;
                 cursor:pointer;
             }
-            
+
             label {
                 width:150px;
                 font-family:arial,sans-serif;
@@ -84,7 +84,8 @@
                     <tr>
                         <td class="leftCol">
                             <div style="font-size:12px" align="right">
-                                <a href="#addServiceDiv"  rel="facebox">Add Service</a>
+                                <a href="javascript:void(0);" id="addServiceLink">Extra Sale</a>
+                                <a style="display:none" id="addServiceDivLink" href="#addServiceDiv"  rel="facebox">Extra Sale</a>
                             </div>
                             <div>
                                 <table  cellspacing="1" class="tablesorter">
@@ -139,10 +140,15 @@
             </div>
         </div>
 
+        <div style="display: none">
+            <a href="#detailDiv" rel="facebox"  class="detailDivLink">ignore</a>
+        </div>
+
         <div id="detailDiv" style="display:none">
+
             <table align="center">
-                <tr><th>User</th><th><span class="username_" /></th></tr>
-                <tr><th>Computer</th><th> # <span class="computerNo_" /></th></tr>
+                <tr><th style="width:100px">User</th><th><label><span class="username_" > </span></label></th></tr>
+                <tr><th>Computer</th><th> <label style="font-size: 2em"> # <span class="computerNo_" /></label></th></tr>
             </table>
             <br/>
             <table style='width:95%' class="tablesorter">
@@ -160,17 +166,18 @@
                     </tr>
                 </tbody>
                 <tfoot>
+                    <tr><td colspan="4">&nbsp;</td></tr>
                     <tr>
-                        <td></td><td></td><td>Total</td><td><input type="text" disabled class="totalPayableAmount" size="8"/></td>
+                        <td></td><td></td><td><label style="font-size: 2em" >Total</label></td><td><label style="font-size: 3em" class="totalPayableAmount" /></td>
                     </tr>                    
                 </tfoot>
             </table>
-            <table>
+            <table align="center">
                 <tr>
-                    <td>Paid Amount</td><td><input type="text" id="paidAmount" class="paidAmount"/></td>
+                    <td style="width:100px"><label>Amount Paid</label></td><td><input type="text" id="paidAmount" class="paidAmount" size="8"/></td>
                 </tr>
                 <tr>
-                    <td>Comments</td><td><textarea id="paymentComment" class="paymentComment" rows="2" cols="30"></textarea> </td>
+                    <td><label>Comments</label></td><td><textarea id="paymentComment" class="paymentComment" rows="2" cols="25"></textarea> </td>
                 </tr>
                 <tr>
                     <td></td><td><button value="Paid" id="paidButton" class="paidButton" >Paid</button></td>
@@ -183,38 +190,43 @@
             <div align="center" style="width:100%">
                 <table  style="width:100%">
                     <tr><td colspan="2">&nbsp;</td</tr>
-                    <tr><td><label>Computer <span style="display:none" class="computerNo" /></label></td><td><label> # <span class="computerName"/> </label></td></tr>
+                    <tr><td><label>Computer <span style="display:none" class="computerNo" /></label></td><td><label style="font-size: 3em"> # <span class="computerName"/> </label></td></tr>
                     <tr><td colspan="2">&nbsp;</td</tr>
-                    <tr><td><label>Customer Email</label></td><td><input type="text" class="name_" /></td></tr>                    
+                    <tr><td><label>Customer Email</label></td><td><input type="text" class="name_" size="30" /></td></tr>
                     <tr><td colspan="2">&nbsp;</td</tr>
-                    <tr><td></td><td><input type="submit" value="Assign" class="assignToUserBtn" /></td></tr>
+                    <tr><td></td><td><input type="submit" value="Assign Computer" class="assignToUserBtn" /></td></tr>
                 </table>
             </div>
         </div>
         <div id="addServiceDiv" style="display:none" align="center">
-            <h2>Extras</h2>
-            <table title="Extra Sale" cellspacing="1">                
+            <table title="Extra Sale" cellspacing="1">
                 <tr>
-                    <td>Service</td>
-                    <td><select name="services" id="services" onfocus="populateSystemNos();"><option></option>
+                    <td style="width: 100px"><label>Product</label></td>
+                    <td><select name="services" id="services" class="services"><option></option>
                         </select></td>
-                    <td>Units*</td>
+                </tr>
+                <tr><td></td><td>&nbsp;</td></tr>
+                <tr>
+                    <td><label>Qty</label></td>
                     <td>
-                        <input type=text name="units" value="" size="4" class="cleardefault" onchange="updatePrice();" onKeyup="isInteger(this.value);updatePrice();">
+                        <input type=text name="units" class="units" value="" size="4" >
                     </td>
                 </tr>
+                <tr><td></td><td>&nbsp;</td></tr>
                 <tr>
-                    <td>Add To</td>
-                    <td><select name="systemNos" id="systemNos"><option></option>
-                        </select></td>
-                    <td>Payable Amount*</td>
-                    <td><input type=text name="payableAmount1" value="" size="4" class="cleardefault" onKeyup="isInteger(this.value)" disabled></td>
+                    <td><label>Payable Amount</label></td>
+                    <td><label style="font-size: 2em"><span class="payableAmount1" /></label></td>
                 </tr>
+                <tr><td></td><td>&nbsp;</td></tr>
+                <tr>
+                    <td><label>Customer</label></td>
+                    <td><select name="systemNos" id="systemNos" class="systemNos"><option></option>
+                        </select></td>
+                </tr>
+                <tr><td></td><td>&nbsp;</td></tr>
                 <tr>
                     <td></td>
-                    <td></td>
-                    <td></td>
-                    <td><input type="submit" value="Paid" onclick="addService();" /></td>
+                    <td><input type="submit" value="Submit" class="saveExtraSale" /></td>
                 </tr>
             </table>
         </div>

@@ -130,33 +130,34 @@
                 <td width="100" height="550" valign="top">
                     <% if (request.getParameter("login_error") != null) {%> <b> <font color=RED size="2"> Invalid Credentials! </font></b> <% }%> 
                     <form action="/CCM/j_acegi_security_check" method="POST" id="login_form" >
-                        <table width="188" border="0" rules="none" align="center" bordercolor="#cc0001" bgcolor="#cc0001">
-
-                            <tr>
-                                <td width="185" valign="top"><span class="style28">Email:</span></td>
-                            </tr>
-                            <tr>                                
-                                <td valign="top">
-                                    <input type="text" name='j_username' size="24" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td valign="top" class="style28">Password:</td>
-                            </tr>
-                            <tr>
-                                <td valign="top">
-                                    <input type="password" name='j_password' size="24" />
-                                </td>
-                            </tr>
-                            <tr align="right">
-                                <td valign="top" align="center">
-                                    <input type="button" value="Sign In " name="Sign In" onclick="submitForm();"/>
-                                    <input type="submit" style="visibility:hidden" />                                    
-                                </td>                                
-                            </tr>                            
-                            <tr>
-                                <td valign="top" class="style30"><strong><strong><strong></strong></strong><a href="forgotpassword.jsp" style="color:white">Forgot Password ?</a></strong></td>
-                            </tr>
+                        <table width="188px" border="0" rules="none" align="center" bordercolor="#cc0001" bgcolor="#cc0001">
+                            <tbody width="90%">
+                                <tr>
+                                    <td width="185" valign="top"><span class="style28">Email:</span></td>
+                                </tr>
+                                <tr>
+                                    <td valign="top">
+                                        <input type="text" name='j_username' size="24" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td valign="top" class="style28">Password:</td>
+                                </tr>
+                                <tr>
+                                    <td valign="top">
+                                        <input type="password" name='j_password' size="24" />
+                                    </td>
+                                </tr>
+                                <tr align="right">
+                                    <td valign="top" align="center">
+                                        <input type="button" value="Sign In " name="Sign In" onclick="submitForm();"/>
+                                        <input type="submit" style="visibility:hidden" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td valign="top" class="style30"><strong><strong><strong></strong></strong><a href="forgotpassword.jsp" style="color:white">Forgot Password ?</a></strong></td>
+                                </tr>
+                            </tbody>
                         </table>
                     </form>
                     <p>&nbsp;</p></td>
@@ -299,7 +300,7 @@
                                             <input type="button" value="Register & Login" onclick="createAccount();" />                                             </div>
                                         </td>
                                     </tr>
-                                   
+
                                 </table></td>
                         </tr>
                     </table>      

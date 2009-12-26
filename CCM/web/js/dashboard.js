@@ -1,8 +1,10 @@
 var _report;
 jq(document).ready(function() {
-    jq('#addServiceDiv').live("click", function() {
+    jq("#addServiceLink").click(function() {
         populateSystemNos();
+        jq("#addServiceDivLink").click();
     })
+   
     jq('a[rel*=facebox]').facebox({
         loading_image : 'loading.gif',
         close_image   : 'closelabel.gif'
@@ -124,22 +126,23 @@ jq(document).ready(function() {
     }
     var paidId = null;
     jq(".detail").live("click", function() {
-        fetchDetail(jq(this).attr("id"))
+        var id = this.id.substring(4);
+        fetchDetail(id)
     })
-    function fetchDetail(eleid) {
-        var system = null;
-        var systemName = null;
-        if (!isNaN(eleid)   ) {
-            systemName = parseInt(eleid);
-            for ( var i = 0; i <= systems1.length; i++ ) {
-                var s = systems1[i];
-                if ( s != null && s.name == systemName ) {
-                    system = s;
-                }
-            }
-        } else {
-            system = peopleCache[eleid.substring(4)];
-        }
+    function fetchDetail(id) {
+        var system = peopleCache[id];
+        //        var systemName = null;
+        //        if (!isNaN(id)   ) {
+        //            systemName = parseInt(id);
+        //            for ( var i = 0; i <= systems1.length; i++ ) {
+        //                var s = systems1[i];
+        //                if ( s != null && s.name == systemName ) {
+        //                    system = s;
+        //                }
+        //            }
+        //        } else {
+        //            system = peopleCache[id.substring(4)];
+        //        }
         paidId = system.id;
         AjaxWorkService.getSystemLease(system.id, function(lease){
             dwr.util.removeAllRows("detailbody", {
@@ -161,22 +164,27 @@ jq(document).ready(function() {
                 $("detail" + id).style.display = "";
                 total += systemLease.payableAmount;
             }
-            document.getElementById("paidButton").disabled = false;
-            populateSystemNos ();
-            dwr.util.setValue("systemNos", system.name);
-            jq.facebox(jq("#detailDiv").html());
-            jq(".totalPayableAmount")[1].value = total;
+            //            document.getElementById("paidButton").disabled = false;
+            //            populateSystemNos ();
+            //            dwr.util.setValue("systemNos", system.name);
+            jq(".detailDivLink").click();
+            jq(".totalPayableAmount")[1].innerHTML = total;
             jq(".paidAmount")[1].value = total;
-            jq(".username_")[1].value = system.currentUserEmail;
-            jq(".computerNo_")[1].value= system.id;
+            jq(".username_")[1].innerHTML = system.currentUserEmail;
+            jq(".computerNo_")[1].innerHTML = system.name;
         });
         
     }
+    jq('.saveExtraSale').live("click", function() {
+        addService();
+    })
+    var _systemNos;
     function addService() {
-        var s = dwr.util.getValue ("services");
-        var u = dwr.util.getValue ("units");
-        var e = dwr.util.getValue ("systemNos");
-        var p = dwr.util.getValue ("payableAmount1");
+        var s = jq(".services")[1].value;
+        var u = jq(".units")[1].value;
+        var e = jq(".systemNos")[1].value;
+        _systemNos = e;
+        var p = jq(".payableAmount1")[1].innerHTML;
         var a = p;
         if ( u != null && u > 0 && p != null && p > 0) {
             AjaxWorkService.addService(s,u,e,p,'',a, replyService);
@@ -185,15 +193,14 @@ jq(document).ready(function() {
         }
     }
     var replyService = function (data) {
-        clearMessages();
         if (  data == 'Service Added Successfully') {
-            writeMessage("successReply", data + " to : " + dwr.util.getValue("systemNos") + " at " + new Date().toLocaleString());
-            if ( dwr.util.getValue("systemNos") != 'Walk-in Customer') {
-                fetchDetail (  dwr.util.getValue("systemNos"));
+            jq.facebox("<h2>" + data + "</h2>");
+            if ( _systemNos != 'Walk-in Customer') {
+//                fetchDetail (_systemNos);
             }
-            clearPerson();
+//            clearPerson();
         } else {
-            writeMessage("failureReply", data);
+            jq.facebox("<h2>" + data + "</h2>");
         }
     }
     jq('.paidButton').live("click", function() {
@@ -206,7 +213,7 @@ jq(document).ready(function() {
         AjaxWorkService.chargePayment(system.id, function(data) {
             if ( data == 'Payment Successful!' ) {                
                 fillTable();
-                jq.facebox(data);
+                jq.facebox('<h2>' + data + '</h2>');
 
             //                dwr.util.removeAllRows("detailbody", {
             //                    filter:function(tr) {
@@ -242,12 +249,15 @@ jq(document).ready(function() {
         return true;
     }
 
+    jq(".units").live("change", function() {
+        updatePrice();
+    })
     function updatePrice() {
-        var s = dwr.util.getValue("services");
-        var u = dwr.util.getValue("units");
+        var s = jq(".services")[1].value;
+        var u = jq(".units")[1].value;
         for ( var i = 0; i < services.length; i++ ) {
             if ( services[i].name == s ) {
-                dwr.util.setValue("payableAmount1", services[i].unitPrice * u );
+                jq(".payableAmount1")[1].innerHTML = services[i].unitPrice * u;
             }
         }
     }
