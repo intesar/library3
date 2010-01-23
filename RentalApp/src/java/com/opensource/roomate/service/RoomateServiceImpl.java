@@ -226,7 +226,6 @@ public class RoomateServiceImpl implements RoomateService {
         fullTextQuery.setSort(sort);
         fullTextQuery.setFirstResult(currentPage);
         fullTextQuery.setMaxResults(pageSize);
-        // execute search
         List<Post> result = fullTextQuery.getResultList();
         return result;
     }
@@ -243,9 +242,9 @@ public class RoomateServiceImpl implements RoomateService {
     }
 
     private void printReport() {
-        EntityManagerFactoryImpl empImpl = (EntityManagerFactoryImpl) emf;
-        System.out.println(" statistics start..");
-        System.out.println(empImpl.getSessionFactory().getStatistics());
-        System.out.println(" statistics end..");
+//        EntityManagerFactoryImpl empImpl = (EntityManagerFactoryImpl) emf;
+//        System.out.println(" statistics start..");
+//        System.out.println(empImpl.getSessionFactory().getStatistics());
+//        System.out.println(" statistics end..");
     }
 }
