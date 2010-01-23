@@ -69,6 +69,8 @@ public class RoomateServiceImpl implements RoomateService {
             post1.setZipcode(post.getZipcode());
             post1.setRent(post.getRent());
             post1.setRentalType(post.getRentalType());
+            post1.setBeds(post.getBeds());
+            post1.setArea(post.getArea());
             post1.setComment(post.getComment());
             post1.setUpdateIp(ip);
             post1.setUpdateDate(new Date());
