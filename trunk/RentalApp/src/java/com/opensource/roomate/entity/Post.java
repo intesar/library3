@@ -4,8 +4,6 @@ package com.opensource.roomate.entity;
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
-
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -156,6 +154,12 @@ public class Post implements Serializable {
     private String emailTransient;
     @Column(name = "report_abuse")
     private int reportAbuse;
+    @RemoteProperty
+    @Column(name = "beds")
+    private String beds;
+    @RemoteProperty
+    @Column(name = "area")
+    private Integer area;
 
     public Post() {
     }
@@ -384,6 +388,22 @@ public class Post implements Serializable {
 
     public void setReportAbuse(int reportAbuse) {
         this.reportAbuse = reportAbuse;
+    }
+
+    public Integer getArea() {
+        return area;
+    }
+
+    public void setArea(Integer area) {
+        this.area = area;
+    }
+
+    public String getBeds() {
+        return beds;
+    }
+
+    public void setBeds(String beds) {
+        this.beds = beds;
     }
 
     @Override
