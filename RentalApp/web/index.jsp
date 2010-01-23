@@ -32,10 +32,13 @@
             #loadingDiv {margin-left: 45%; margin-top: 20%}
             .smallLabel {
                 color:#666666;
-                font-size:84%;
+                font-size:100%;
             }
             #searchDiv {
                 margin-top: 0px;
+            }
+            .tableStyle, tr {
+                height:30px;
             }
         </style>
 
@@ -54,70 +57,103 @@
 
             <div id="searchDiv" align="center">
                 <input type="text" id="keyword" class="defaultText" title="type any part of Address and press enter" dojoType="dijit.form.TextBox" style="width: 30em; height:2em" /> &nbsp;
-                <button id="searchButton" dojoType="dijit.form.Button" class="">Search</button>
+                <button id="searchButton" dojoType="dijit.form.Button" class="">Search</button>&nbsp;&nbsp;
+                <a href="javascript:void(0)" id="searchAdvLink">Advanced Search</a>
+            </div>
+
+            <div dojoType="dijit.Dialog" id="advancedSearchDiv" title="Advanced Search" class="soria">
+                <table class="tableStyle" cellspacing="10px">
+                    <tr><td><span class="smallLabel">City</span></td><td><input type="text" id="cityAdv" dojoType="dijit.form.ValidationTextBox" trim="true" required="true"  invalidMessage="Invalid city." style="width: 20em; height:1.7em"/></td></tr>
+                    <tr><td><span class="smallLabel">Max Rent</span></td><td><input type="text" id="rentAdv" dojoType="dijit.form.NumberTextBox" required="false" constraints="{min:0,max:200000,places:0, fractional:true}" style="width: 20em; height:1.7em"/></td></tr>
+                    <tr><td><span class="smallLabel">Type</span></td><td><select dojoType="dijit.form.ComboBox" id="rentalTypeAdv" style="width: 200px;">
+                                <option selected>
+                                    All
+                                </option>
+                                <option>
+                                    Shared
+                                </option>
+                                <option>
+                                    Shared - Seperate room
+                                </option>
+                                <option>
+                                    New Rental
+                                </option>
+                                <option>
+                                    Commercial
+                                </option>
+                            </select></td></tr>
+                    <tr><td></td><td><button dojoType="dijit.form.Button" class="soria" id="searchAdvButton" style="width:100px">Search</button></td></tr>
+                </table>
             </div>
 
             <div dojoType="dijit.Dialog" id="post" title="New Post" class="soria">
-                <form dojoType="dijit.form.Form">
-                    <table>
-                        <tr><td colspan="2" align="center"><label>Contact information</label></td></tr>
-                        <tr><td><span class="smallLabel" >Name</span></td><td><input type="text" id="postedBy" dojoType="dijit.form.TextBox" trim="true" style="width: 20em; height:1.7em"/></td></tr>
-                        <tr><td>&nbsp;</td><td></td></tr>
-                        <tr><td><span class="smallLabel" >Email</span>&nbsp;&nbsp;<span style="color:red">*</span></td><td><input type="text" id="emailTransient" dojoType="dijit.form.ValidationTextBox" trim="true" required="true"  invalidMessage="Invalid Email" style="width: 20em; height:1.7em"/>&nbsp;&nbsp;<a class="smallLabel" id="whyEmail" href="javascript:void(0);">?</a></td></tr>
-                        <tr><td>&nbsp;</td><td></td></tr>
-                        <tr><td><span class="smallLabel" >Phone</span></td><td><input type="text" id="phone" dojoType="dijit.form.TextBox" trim="true" required="true"  style="width: 20em; height:1.7em"/>&nbsp;&nbsp;<a class="smallLabel" id="whyPhone" href="javascript:void(0);">?</a></td></tr>
-                        <tr><td>&nbsp;</td><td></td></tr>
-                        <tr><td colspan="2" align="center"><label>Rental Address</label></td></tr>
-                        <tr><td><span class="smallLabel">Street</span></td><td><input type="text" id="addressLine" dojoType="dijit.form.TextBox" trim="true" style="width: 20em; height:1.7em"/></td></tr>
-                        <tr><td>&nbsp;</td><td></td></tr>
-                        <tr><td><span class="smallLabel" >City</span>&nbsp;<span style="color:red">*</span>&nbsp; / &nbsp; <span class="smallLabel" >Zip</span>&nbsp;<span style="color:red">*</span>&nbsp;</td>
-                            <td><input type="text" id="city" dojoType="dijit.form.ValidationTextBox" trim="true" required="true"  invalidMessage="Invalid city." style="width: 10em; height:1.7em"/>
-                                &nbsp;&nbsp;<input type="text" id="zipcode" dojoType="dijit.form.ValidationTextBox" trim="true" required="true"  invalidMessage="Invalid zipcode." regExp="\d{5}" style="width: 9em; height:1.7em"/></td></tr>
-                        <tr><td>&nbsp;</td><td></td></tr>
-                        <tr><td><span class="smallLabel" >Rent</span>&nbsp;<span style="color:red">*</span>&nbsp;</td>
-                            <td><input type="text" id="rent" dojoType="dijit.form.NumberTextBox"
-                                       required="true" constraints="{min:0,max:200000,places:0, fractional:true}" invalidMessage="Invalid amount." style="width: 7em; height:1.7em"/>&nbsp;&nbsp;
-                                <select dojoType="dijit.form.ComboBox" id="currency" style="width: 80px;display: none">
-                                    <option selected>
-                                        USD
-                                    </option>
-                                    <option>
-                                        INR
-                                    </option>
-                                    <option>
-                                        Local
-                                    </option>
-                                </select>
-                                &nbsp;<a class="smallLabel" id="whyRent" href="javascript:void(0);">?</a>
-                            </td></tr>
-                        <tr><td>&nbsp;</td><td></td></tr>
-                        <tr><td><span class="smallLabel" >Rental Type</span>&nbsp;</td>
-                            <td> <select dojoType="dijit.form.ComboBox" id="rentalType" style="width: 150px;">
-                                    <option selected>
-                                        All
-                                    </option>
-                                    <option>
-                                        Shared
-                                    </option>
-                                    <option>
-                                        Shared - Seperate room
-                                    </option>
-                                    <option>
-                                        New Lease
-                                    </option>
-                                </select>
-                            </td></tr>
-                            <%--
-                            <tr><td>&nbsp;</td><td></td></tr>
-                            <tr><td>Looking for</td><td><select id="sex" dojoType="dijit.form.ComboBox"><option selected>Brother</option><option>Sister</option><option>Any</option></select></td></tr>
-                            --%>
-                        <tr><td>&nbsp;</td><td></td></tr>
-                        <tr><td colspan="2"> <textarea id="comment" dojoType="dijit.form.SimpleTextarea" rows="2" cols="50" style="width:300px;">Comments...</textarea></td></tr>
-                        <tr><td>&nbsp;</td><td></td></tr>
-                        <tr><td></td><td><button dojoType="dijit.form.Button" id="newPostClearButton" class="tundra">Clear</button>&nbsp;&nbsp;&nbsp;&nbsp;<button dojoType="dijit.form.Button" class="soria" id="newPostSaveButton" style="width:100px">Save</button></td></tr>
-
-                    </table>
-                </form>
+                <table class="tableStyle" >
+                    <tr><td colspan="2" align="center">Contact information</td></tr>
+                    <tr><td><span class="smallLabel" >Name</span></td><td><input type="text" id="postedBy" dojoType="dijit.form.TextBox" trim="true" style="width: 20em; height:1.7em"/></td></tr>
+                    <tr><td><span class="smallLabel" >Email</span>&nbsp;&nbsp;<span style="color:red">*</span></td><td><input type="text" id="emailTransient" dojoType="dijit.form.ValidationTextBox" trim="true" required="true"  invalidMessage="Invalid Email" style="width: 20em; height:1.7em"/>&nbsp;&nbsp;<a class="smallLabel" id="whyEmail" href="javascript:void(0);">?</a></td></tr>
+                    <tr><td><span class="smallLabel" >Phone</span></td><td><input type="text" id="phone" dojoType="dijit.form.TextBox" trim="true" required="true"  style="width: 20em; height:1.7em"/>&nbsp;&nbsp;<a class="smallLabel" id="whyPhone" href="javascript:void(0);">?</a></td></tr>
+                    <tr><td colspan="2" align="center">Rental Address</td></tr>
+                    <tr><td><span class="smallLabel">Street</span></td><td><input type="text" id="addressLine" dojoType="dijit.form.TextBox" trim="true" style="width: 20em; height:1.7em"/></td></tr>
+                    <tr><td><span class="smallLabel" >City</span>&nbsp;<span style="color:red">*</span>&nbsp; / &nbsp; <span class="smallLabel" >Zip</span>&nbsp;<span style="color:red">*</span>&nbsp;</td>
+                        <td><input type="text" id="city" dojoType="dijit.form.ValidationTextBox" trim="true" required="true"  invalidMessage="Invalid city." style="width: 10em; height:1.7em"/>
+                            &nbsp;&nbsp;<input type="text" id="zipcode" dojoType="dijit.form.ValidationTextBox" trim="true" required="true"  invalidMessage="Invalid zipcode." style="width: 9em; height:1.7em"/></td></tr>
+                    <tr><td></td><td></td></tr>
+                    <tr><td><span class="smallLabel" >Rent</span>&nbsp;<span style="color:red">*</span>&nbsp;</td>
+                        <td><input type="text" id="rent" dojoType="dijit.form.NumberTextBox"
+                                   required="true" constraints="{min:0,max:200000,places:0, fractional:true}" invalidMessage="Invalid amount." style="width: 7em; height:1.7em"/>&nbsp;&nbsp;
+                            <select dojoType="dijit.form.ComboBox" id="currency" style="width: 80px;display: none">
+                                <option selected>
+                                    USD
+                                </option>
+                                <option>
+                                    INR
+                                </option>
+                                <option>
+                                    Local
+                                </option>
+                            </select>
+                            &nbsp;<a class="smallLabel" id="whyRent" href="javascript:void(0);">?</a>
+                        </td></tr>
+                    <tr><td><span class="smallLabel" >Rental Type</span>&nbsp;</td>
+                        <td> <select dojoType="dijit.form.ComboBox" id="rentalType" style="width: 200px;">
+                                <option selected>
+                                    All
+                                </option>
+                                <option>
+                                    Shared
+                                </option>
+                                <option>
+                                    Shared - Seperate room
+                                </option>
+                                <option>
+                                    New Rental
+                                </option>
+                                <option>
+                                    Commercial
+                                </option>
+                            </select>
+                        </td></tr>
+                    <tr><td><span class="smallLabel">Beds</span></td><td>
+                            <select dojoType="dijit.form.ComboBox" id="beds" style="width: 100px;">
+                                <option selected value="0">
+                                    Studio+
+                                </option>
+                                <option value="1">
+                                    1+
+                                </option>
+                                <option value="2">
+                                    2+
+                                </option>
+                                <option value="3">
+                                    3+
+                                </option>
+                            </select></td></tr>
+                    <tr><td><span class="smallLabel">Area</span></td><td>
+                            <input type="text" id="area" dojoType="dijit.form.ValidationTextBox" trim="true" required="false"  invalidMessage="Invalid" style="width: 9em; height:1.7em"/> &nbsp; <span class="smallLabel"> sq ft</span>
+                        </td></tr>
+                    <tr><td colspan="2"> <textarea id="comment" dojoType="dijit.form.SimpleTextarea" rows="2" cols="50" style="width:300px;">Comments...</textarea></td></tr>
+                    <tr><td></td><td><button dojoType="dijit.form.Button" id="newPostClearButton" class="tundra">Clear</button>&nbsp;&nbsp;&nbsp;&nbsp;<button dojoType="dijit.form.Button" class="soria" id="newPostSaveButton" style="width:100px">Save</button></td></tr>
+                </table>
             </div>
 
             <br/><br/>
@@ -146,10 +182,10 @@
             </div>
 
             <div dojoType="dijit.Dialog" id="postDetails" title="Post Details" class="soria">
-                <table cellspacing="10px">
+                <table>
                     <tr><td><span class="smallLabel">Posted By </span></td><td><span id="postedByDetail"></span>&nbsp; &nbsp;(<span id="dateDetail"></span>)</td></tr>
                     <tr><td><span class="smallLabel">Phone </span></td><td><span id="phoneDetail"></span> </td></tr>
-                    <tr><td><span class="smallLabel">Type </span></td><td><span id="rentalTypeDetail"></span></td></tr>
+                    <tr><td><span class="smallLabel">Type </span></td><td><span id="rentalTypeDetail"></span> &nbsp; &nbsp; <span id="typeDetailMore"></span></td></tr>
                     <tr><td><span class="smallLabel">Rent </span></td><td><span id="rentDetail" ></span>  &nbsp; <span id="currencyDetail"></span> </td></tr>
                     <tr><td><span class="smallLabel">Address </span></td><td><span id="addressLineDetail" ></span> &nbsp; &nbsp; <span id="cityDetail" ></span> &nbsp; &nbsp; <span id="zipcodeDetail" ></span></td></tr>
                     <tr><td colspan="2"><span class="smallLabel">Comments </span></td></tr>
@@ -169,7 +205,7 @@
                 <br/>
                 <div align="center" id="prevNextDiv">
                     <a href="javascript:void(0);" id="prev">Prev</a> &nbsp; &nbsp;
-                    <a href="javascript:void(0);" id="next">Next</a> &nbsp; &nbsp;&nbsp;
+                    <a href="javascript:void(0);" id="next">Next</a> &nbsp; &nbsp; &nbsp;
                 </div>
                 <div  align="right" >
                     <span style="font-size: smaller">

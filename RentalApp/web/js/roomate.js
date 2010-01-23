@@ -98,6 +98,8 @@ function urlCheck() {
         search()
     } else if ( url.match("newPost")) {
         dijit.byId('post').show()
+    } else if ( url.match("advancedSearch")) {
+        dijit.byId("advancedSearchDiv").show()
     }
 }
 function bindObjects () {
@@ -156,6 +158,8 @@ function bindObjects () {
             }
         })
     })
+    dojo.connect(dojo.byId("searchAdvLink"), 'onclick', searchAdvShow)
+    dojo.connect(dijit.byId("rentalType"), 'onChange', rentalTypeChange)
     // tool tips
     new dijit.Tooltip({
         connectId: ["whyEmail"],
@@ -171,6 +175,7 @@ function bindObjects () {
     })
     //report abuse
     dojo.connect(dijit.byId("reportAbuseButton"), 'onClick', reportAbuse)
+    dojo.connect(dijit.byId("searchAdvButton"), 'onClick', searchAdvFtn)
 
 }
 function search() {
@@ -257,6 +262,8 @@ function displayDetailGrid(row) {
     dojo.byId("dateDetail").innerHTML = '' + post.date + ''
     dojo.byId("phoneDetail").innerHTML = '' + post.phone + ''
     dojo.byId("rentalTypeDetail").innerHTML = '' + post.rentalType + ''
+    var x = post.rentalType == 'Commercial' ? post.area + 'Sq Ft' : post.beds > '0' ? post.beds + '+' + ' Bed' : post.beds == 0 ? 'Studio' : ''
+    dojo.byId("typeDetailMore").innerHTML = x
     dojo.byId("addressLineDetail").innerHTML = '' + post.addressLine + ''
     dojo.byId("cityDetail").innerHTML = '' + post.city + ''
     dojo.byId("zipcodeDetail").innerHTML = '' + post.zipcode + ''
@@ -313,7 +320,9 @@ function clear() {
         city:null,
         zipcode:null,
         rent:null,
-        rentalType:false,
+        rentalType:'All',
+        beds:'Studio+',
+        area:null,
         comment:null
     };
     dwr.util.setValues(post);
@@ -331,6 +340,8 @@ function post() {
         rent:null,
         currency:null,
         rentalType:null,
+        beds:null,
+        area:null,
         comment:null
     };
     dwr.util.getValues(post);
@@ -388,4 +399,20 @@ function reportAbuse() {
     dijit.byId('reportAbuseDiv').hide()
     RoomateAjaxService.reportAbuse(post_id[0], reportType, function(data) {        
         })
+}
+function rentalTypeChange() {
+//    var x = dijit.byId("rentalType").value
+//    dojo.byId('areaTr').style.display='none'
+//    dojo.byId('bedsTr').style.display='block'
+//    if ( x == 'Commercial' ) {
+//        dojo.byId('areaTr').style.display='block'
+//        dojo.byId('bedsTr').style.display='none'
+//    }
+}
+function searchAdvShow() {
+    dijit.byId("advancedSearchDiv").show()
+    parent.location.hash = "advancedSearch"
+}
+function searchAdvFtn() {
+    alert('hi')
 }
