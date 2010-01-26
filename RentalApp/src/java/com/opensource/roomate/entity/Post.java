@@ -60,6 +60,7 @@ filters = {
     @NamedQuery(name = "Post.findAll", query = "SELECT p FROM Post p"),
     @NamedQuery(name = "Post.findById", query = "SELECT p FROM Post p WHERE p.id = ?1"),
     @NamedQuery(name = "Post.findByEmailAndPostDate", query = "SELECT p FROM Post p WHERE p.email = ?1 AND p.postDate = ?2"),
+    @NamedQuery(name = "Post.findByCityZipcodeRentAndType", query = "SELECT p FROM Post p WHERE (p.city LIKE ?1 or p.zipcode LIKE ?2) AND p.rent <= ?3 AND p.rentalType LIKE ?4"),
     @NamedQuery(name = "Post.findByEmaiAndId", query = "SELECT p FROM Post p WHERE p.email = ?1 AND p.id = ?2")
 })
 public class Post implements Serializable {

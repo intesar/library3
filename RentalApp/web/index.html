@@ -6,12 +6,11 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Roomates</title>
-
-        <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.4.0/dijit/themes/tundra/tundra.css" />
-        <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.4.0/dijit/themes/soria/soria.css" />
         <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.4.0/dojo/resources/dojo.css"/>
+        <!--<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.4.0/dijit/themes/tundra/tundra.css" />-->
+        <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.4.0/dijit/themes/soria/soria.css" />
         <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.4.0/dojox/grid/resources/Grid.css"/>
-        <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.4.0/dojox/grid/resources/tundraGrid.css"/>
+        <!--<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.4.0/dojox/grid/resources/tundraGrid.css"/>-->
         <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.4.0/dojox/grid/resources/soriaGrid.css"/>
         <style  media="screen" type="text/css">
             .dojoxGrid table { margin: 0; text-align:center }
@@ -35,27 +34,22 @@
         </style>
 
     </head>
-    <body class="tundra">
+    <body class="soria">
         <div id="loadingDiv">
             <p>Loading . . .</p>
         </div>
         <div id="bodyDiv" style="display:none">
-
             <div align="right" style="margin-top:10px; margin-right:30px">
                 <a href="JavaScript:void(0)" id="newPostLink" > Post Your Ad for Free</a>&nbsp;&nbsp;
             </div>
-
-            <br/>
-
             <div id="searchDiv" align="center">
                 <table>
                     <tr><td><span class="smallLabel">search by city zipcode tags (eg. new york)</span></td><td></td><td></td></tr>
                     <tr><td><input type="text" id="keyword" class="defaultText" title="type any part of Address and press enter" dojoType="dijit.form.TextBox" style="width: 30em; height:2em" /></td>
                         <td><button id="searchButton" dojoType="dijit.form.Button" class="">Search</button></td>
                         <td><a href="javascript:void(0)" id="searchAdvLink">Advanced Search</a></td></tr>
-                </table>     
+                </table>
             </div>
-
             <div dojoType="dijit.Dialog" id="advancedSearchDiv" title="Advanced Search" class="soria">
                 <table class="tableStyle" cellspacing="10px">
                     <tr><td><span class="smallLabel">City</span></td><td><input type="text" id="cityAdv" dojoType="dijit.form.ValidationTextBox" trim="true" style="width: 15em; height:1.7em"/></td></tr>
@@ -82,7 +76,6 @@
                     <tr><td></td><td><button dojoType="dijit.form.Button" class="soria" id="searchAdvButton" style="width:100px">Search</button></td></tr>
                 </table>
             </div>
-
             <div dojoType="dijit.Dialog" id="post" title="New Post" class="soria">
                 <table class="tableStyle" >
                     <tr><td colspan="2" align="center">Contact information</td></tr>
@@ -151,8 +144,8 @@
                     <tr><td colspan="2"> <textarea id="comment" dojoType="dijit.form.SimpleTextarea" rows="2" cols="50" style="width:300px;">Comments...</textarea></td></tr>
                     <tr><td></td><td><button dojoType="dijit.form.Button" id="newPostClearButton" class="tundra">Clear</button>&nbsp;&nbsp;&nbsp;&nbsp;<button dojoType="dijit.form.Button" class="soria" id="newPostSaveButton" style="width:100px">Save</button></td></tr>
                 </table>
-            </div>
-            <br/>
+            </div><br/>
+            <div id="container" ></div>
             <div id="paginationDiv" align="right" style="display:none;width: 90%">
                 <span class="smallLabel" id="startPagination"></span>
                 <span class="smallLabel">-</span>
@@ -161,10 +154,7 @@
                 <span class="smallLabel" id="totalPagination"></span>&nbsp;&nbsp;
                 <a href="javascript:void(0)" id="prevPagination">Prev</a>&nbsp;
                 <a href="javascript:void(0)" id="nextPagination">Next</a>
-            </div> <br/>
-            <div id="container" ></div>
-
-
+            </div>
             <div  dojoType="dijit.Dialog" title="No matching records found!" id="noResultDiv">
                 <input type="text" id="keywordNoResult" class="" title="" dojoType="dijit.form.TextBox" style="width: 25em; height:2em" />
                 <button id="searchAgainButton" dojoType="dijit.form.Button" class="soria">Search Again!</button><br/>
@@ -178,14 +168,12 @@
                 <button id="subscribeButton" dojoType="dijit.form.Button" >Save</button>
 
             </div>
-
             <div  dojoType="dijit.Dialog" title="Post successfull" id="postSuccessMsgDiv">
                 <h2>Your Ad posted successfully!</h2>
                 <div align="center">
                     <button id="postSuccessMsgButton" dojoType="dijit.form.Button" class="soria">Close</button>
                 </div>
             </div>
-
             <div dojoType="dijit.Dialog" id="postDetails" title="Post Details" class="soria">
                 <table class="tableStyle">
                     <tr><td><span class="smallLabel">Posted By </span></td><td><span id="postedByDetail"></span>&nbsp; &nbsp;(<span id="dateDetail"></span>)</td></tr>
@@ -219,7 +207,6 @@
                 </div>
                 <br/>
             </div>
-
             <div dojoType="dijit.Dialog" title="Report Abuse" id="reportAbuseDiv" style="width:200px" class="soria">
                 <input id="abuseType1" dojoType="dijit.form.CheckBox" value="In appropriate content" /> <span>In appropriate content</span><br/><br/>
                 <input id="abuseType2" dojoType="dijit.form.CheckBox" value="Spam" /> <span>Spam</span><br/><br/>

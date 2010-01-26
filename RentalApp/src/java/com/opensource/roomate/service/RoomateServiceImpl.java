@@ -22,7 +22,7 @@ import org.apache.lucene.search.SortField;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.FullTextQuery;
 import org.apache.log4j.Logger;
-import org.hibernate.ejb.EntityManagerFactoryImpl;
+import org.hibernate.search.jpa.Search;
 
 /**
  *
@@ -144,7 +144,7 @@ public class RoomateServiceImpl implements RoomateService {
     }
 
     @Override
-    public List<Post> searchById(Long id) {
+    public ResultDto searchById(Long id) {
         List list = new ArrayList();
         EntityManager em = emf.createEntityManager();
         try {
@@ -156,27 +156,46 @@ public class RoomateServiceImpl implements RoomateService {
         } finally {
             em.close();
         }
-        return list;
+        return new ResultDto(list, 0, 1, 1);
     }
 
     @Override
-    public List<Post> search(String keywords, int currentPage, int pageSize) {
+    public ResultDto search(String keywords, int currentPage, int pageSize) {
         List<Post> list = new ArrayList<Post>();
         try {
             // create native Lucene query
             String[] fields = new String[]{"id", "postedBy", "phone", "postDate", "sex", "rent", "addressLine", "city", "zipcode", "country", "comment"};
             MultiFieldQueryParser parser = new MultiFieldQueryParser(fields, new StandardAnalyzer());
             org.apache.lucene.search.Query query = parser.parse(keywords);
-            list = executeLuceneQuery(query, currentPage, pageSize);
-            printReport();
+            return executeLuceneQuery(query, currentPage, pageSize);
+//            printReport();
         } catch (ParseException e) {
             logger.warn(e);
         }
-        return list;
+        return new ResultDto(list, currentPage, pageSize, 0);
     }
 
     @Override
-    public List<Post> searchByEmailAndId(String email, long id) {
+    public List<Post> searchByCityZipcodeRentAndType(String city, String zipcode, Double maxRent, String type, int currentPage, int pageSize) {
+        List<Post> list = new ArrayList<Post>();
+        EntityManager em = emf.createEntityManager();
+        try {
+            String allTypes = "Shared, Shared - Seperate room, New Rental, Commercial";
+            String types = type.equals("All") ? allTypes : type;
+            list = em.createNamedQuery("Post.findByCityZipcodeRentAndType").setParameter(1, city).setParameter(2, zipcode).setParameter(3, maxRent).setParameter(4, types).getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.warn(e);
+        } finally {
+            em.close();
+        }
+        return list;
+
+
+    }
+
+    @Override
+    public ResultDto searchByEmailAndId(String email, long id) {
         List list = new ArrayList();
         EntityManager em = emf.createEntityManager();
         try {
@@ -188,7 +207,7 @@ public class RoomateServiceImpl implements RoomateService {
         } finally {
             em.close();
         }
-        return list;
+        return new ResultDto(list, 0, 1, 1);
     }
 
     @Override
@@ -217,9 +236,25 @@ public class RoomateServiceImpl implements RoomateService {
             em.close();
         }
     }
+
+    public void reIndex() {
+        EntityManager em = emf.createEntityManager();
+        try {
+            List<Post> list = em.createNamedQuery("Post.findAll").getResultList();
+            FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(em);
+            for (Post p : list) {
+                fullTextEntityManager.index(p);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.warn(e);
+        } finally {
+            em.close();
+        }
+    }
     // ------------------------------------------------------------------------//
 
-    private List<Post> executeLuceneQuery(Query query, int currentPage, int pageSize) {
+    private ResultDto executeLuceneQuery(Query query, int currentPage, int pageSize) {
         EntityManager em = emf.createEntityManager();
         FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
         FullTextQuery fullTextQuery = fullTextEntityManager.createFullTextQuery(query, Post.class);
@@ -229,7 +264,8 @@ public class RoomateServiceImpl implements RoomateService {
         fullTextQuery.setFirstResult(currentPage);
         fullTextQuery.setMaxResults(pageSize);
         List<Post> result = fullTextQuery.getResultList();
-        return result;
+        int total = fullTextQuery.getResultSize();
+        return new ResultDto(result, currentPage, pageSize, total);
     }
 
     private void sendMail(String email, Date postDate) {

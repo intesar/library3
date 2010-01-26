@@ -45,7 +45,7 @@ public class RoomateServiceImplTest {
         post.setCountry("usa");
         post.setPostedBy("Intesar shannan Mohammed");
         post.setPostDate(new Date());
-        post.setEmail("mdshannan@gmail.com");
+        post.setEmailTransient("mdshannan@gmail.com");
         post.setPhone("773-216-5478");
         post.setRent(600.00);
         post.setSex("brother");
@@ -58,14 +58,14 @@ public class RoomateServiceImplTest {
     @Test
     public void testSearch() {
         RoomateServiceImpl impl = new RoomateServiceImpl();
-        List<Post> posts = impl.search("santa clara", 0, 100);
-        Assert.assertTrue(posts.size() > 0);
+        ResultDto posts = impl.search("santa clara", 0, 100);
+        Assert.assertTrue(posts.getList().size() > 0);
         
         EntityManagerFactoryImpl empImpl = (EntityManagerFactoryImpl) emf;
         System.out.println(empImpl.getSessionFactory().getStatistics());
 
         posts = impl.search("santa clara", 0, 100);
-        Assert.assertTrue(posts.size() > 0);
+        Assert.assertTrue(posts.getList().size() > 0);
 
 
         System.out.println(empImpl.getSessionFactory().getStatistics());
@@ -75,14 +75,22 @@ public class RoomateServiceImplTest {
     @Test
     public void testSearchById() {
         RoomateServiceImpl impl = new RoomateServiceImpl();
-        List<Post> posts = impl.searchById(27L);
-        Assert.assertTrue(posts.size() > 0);
+        ResultDto dto = impl.searchById(27L);
+        Assert.assertTrue(dto.getList().size() > 0);
     }
 
     @Test
     public void testSendMessage() {
         RoomateServiceImpl impl = new RoomateServiceImpl();
         impl.sendMessage(27L, "Hello, can you call me on 773-216-5478", "local");
+    }
+
+    @Test
+    public void testSearchByCityZipcodeRentAndType() {
+         RoomateServiceImpl impl = new RoomateServiceImpl();
+        List<Post> list = impl.searchByCityZipcodeRentAndType("santa clara", "95050", 5000.0, "All", 0, 20);
+        Assert.assertTrue(list != null);
+        System.out.println ( list.size());
     }
 
     @Test

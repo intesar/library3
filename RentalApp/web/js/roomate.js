@@ -24,8 +24,10 @@ var geoip_region_name;
 var geoip_postal_code;
 var current_row;
 var post_id;
-var ZERO = 0
-var FIFTY = 50
+var START = 0
+var MAX = 15
+var SIZE = 15
+var TOTAL
 var gridInstantiated = false
 var mode = 'normal';
 var email_1 =''
@@ -87,7 +89,7 @@ function urlCheck() {
     } else if ( url.match('id=') ) {
         var id = url.split("=")[1]
         RoomateAjaxService.searchById(id, function(data) {
-            if ( data[0] == null ) {
+            if ( data.list[0] == null ) {
                 return;
             }
             displayResults(data)
@@ -118,7 +120,10 @@ function bindObjects () {
             searchAgain();
         }
     });
-    dojo.connect(dijit.byId("searchButton"), 'onClick', search);
+    dojo.connect(dijit.byId("searchButton"), 'onClick', searchDelegate);
+    dojo.connect(dojo.byId("prevPagination"), 'onclick', searchPrev);
+    dojo.connect(dojo.byId("nextPagination"), 'onclick', searchNext);
+
     dojo.connect(dojo.byId("newPostLink"), 'onclick', function() {
         dijit.byId('post').show()
         parent.location.hash = 'newPost'
@@ -178,29 +183,32 @@ function bindObjects () {
     dojo.connect(dijit.byId("searchAdvButton"), 'onClick', searchAdvFtn)
 
 }
+function searchDelegate() {
+    START = 0
+    MAX = SIZE
+    search()
+}
 function search() {
     var keyword = document.getElementById('keyword').value;
     if ( keyword == null || keyword.length <= 0 ) return
     dwr.util.useLoadingMessage('searching ...')
-    RoomateAjaxService.search(keyword, ZERO, FIFTY, displayResults);
+    RoomateAjaxService.search(keyword, START, MAX, displayResults);
     parent.location.hash = ''
 }
 function searchAgain() {
     dojo.byId('keyword').value = dojo.byId('keywordNoResult').value;
+    START = 0
+    MAX = SIZE
     search()
     dijit.byId('noResultDiv').hide();
 }
 function displayGrid() {
     var layout =  [
-    //        {
-    //        cells:[[
-
     {
         field: "addressLine",
         name: "Address",
         width: "25%"
     },
-
     {
         field: "city",
         name: "City",
@@ -226,8 +234,6 @@ function displayGrid() {
         name: "Date",
         width: "9%"
     }
-    //        ]]
-    //    }
     ];
     var cfg = {
         query: {
@@ -240,13 +246,14 @@ function displayGrid() {
         rowsPerPage: 20,
         rowSelector: '40px',
         structure: layout,
-        style: "width: 90%; height:700px; font-size: 14px;"
+        style: "width: 90%; height:400px; font-size: 14px;"
     };
     widget = new dojox.grid.DataGrid(cfg, dojo.byId("container"));
     widget.startup();
 }
 function registerDetailGrid() {
     dojo.connect(widget, "onClick", function(e) {
+        //alert(e.rowIndex)
         var row = e.rowIndex        
         displayDetailGrid(row)
     });
@@ -262,7 +269,7 @@ function displayDetailGrid(row) {
     dojo.byId("dateDetail").innerHTML = '' + post.date + ''
     dojo.byId("phoneDetail").innerHTML = '' + post.phone + ''
     dojo.byId("rentalTypeDetail").innerHTML = '' + post.rentalType + ''
-    var x = post.rentalType == 'Commercial' ? post.area + 'Sq Ft' : post.beds > '0' ? post.beds + '+' + ' Bed' : post.beds == 0 ? 'Studio' : ''
+    var x = post.rentalType == 'Commercial' ? post.area + 'Sq Ft' : post.beds > '0' ? post.beds + '+' + ' Bed' : post.beds == 0 ? 'Studio+' : ''
     dojo.byId("typeDetailMore").innerHTML = x
     dojo.byId("addressLineDetail").innerHTML = '' + post.addressLine + ''
     dojo.byId("cityDetail").innerHTML = '' + post.city + ''
@@ -288,8 +295,9 @@ function displayDetailGrid(row) {
     parent.location.hash = "id=" + post.id;
 }
 function displayResults(posts) {
-    if ( posts.length < 1 ) {
+    if ( posts.list.length < 1 ) {
         dojo.byId('keywordNoResult').value = dojo.byId('keyword').value
+        dojo.byId('subscribeKeyword').value = dojo.byId('keyword').value
         dijit.byId('noResultDiv').show();
     }
     else {        
@@ -301,13 +309,39 @@ function displayResults(posts) {
         var gridData = {
             identifier: "id",
             label: "ID",
-            items: posts
+            items: posts.list
         }
         itemFileWriteStore = new dojo.data.ItemFileWriteStore({
             data: gridData
         });
         widget.setStore(itemFileWriteStore);
+        paginationFtn(posts.start, posts.list.length, posts.total)
         parent.location.hash = "searchKey" + "=" + dojo.byId('keyword').value
+    }
+}
+function paginationFtn(start, max, total) {
+    TOTAL = total
+    dojo.byId('paginationDiv').style.display = 'block'
+    //    dojo.byId('prevPagination').style.display = 'none'
+    //    dojo.byId('nextPagination').disabled = 'false'
+    dojo.byId('startPagination').innerHTML=start + 1
+    dojo.byId('maxPagination').innerHTML=max + start
+    dojo.byId('totalPagination').innerHTML=total
+//    if ( max < total ) dojo.byId('nextPagination').style.display = 'block'
+//    if ( start > 0 ) dojo.byId('prevPagination').disabled = 'disabled'
+}
+function searchPrev() {
+    if ( START > 0 ) {
+        START = START > SIZE ? START - SIZE : 0
+        MAX = SIZE //MAX - SIZE > 0 ? MAX - SIZE : SIZE
+        search()
+    }
+}
+function searchNext() {
+    if ( START + SIZE < TOTAL ) {
+        START = START + SIZE
+        MAX = SIZE //MAX + SIZE < TOTAL ? MAX + SIZE : TOTAL
+        search()
     }
 }
 function clear() {
@@ -414,5 +448,10 @@ function searchAdvShow() {
     parent.location.hash = "advancedSearch"
 }
 function searchAdvFtn() {
-    alert('hi')
+    //    RoomateAjaxService.searchByCityZipcodeRentAndType(dijit.byId("cityAdv").value,dijit.byId("zipcodeAdv").value,dijit.byId("rentAdv").value,dijit.byId("rentalTypeAdv").value, START, MAX, displayResults);
+    var allTypes = 'Shared Seperate room Rental'
+    var types = dijit.byId("rentalTypeAdv").value == 'All' ? allTypes : dijit.byId("rentalTypeAdv").value
+    dojo.byId('keyword').value = dijit.byId("cityAdv").value + ' ' + dijit.byId("zipcodeAdv").value + ' ' + dijit.byId("rentAdv").value + ' ' + types
+    search()
+    dijit.byId("advancedSearchDiv").hide()
 }
