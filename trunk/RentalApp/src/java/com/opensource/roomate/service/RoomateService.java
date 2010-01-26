@@ -24,11 +24,13 @@ public interface RoomateService {
 
     void subscribeUser(String email, String keywords, String ip);
 
-    List<Post> search(String keywords, int currentPage, int pageSize);
+    ResultDto search(String keywords, int currentPage, int pageSize);
 
-    List<Post> searchById(Long id);
+    List<Post> searchByCityZipcodeRentAndType(String city, String zipcode, Double maxRent, String type, int currentPage, int pageSize);
 
-    List<Post> searchByEmailAndId(String email, long id);
+    ResultDto searchById(Long id);
+
+    ResultDto searchByEmailAndId(String email, long id);
 
     /**
      * records a abuse report
@@ -38,4 +40,6 @@ public interface RoomateService {
      * @param reportIp
      */
     void reportAbuse(Long postId, String reportType, String reportIp );
+
+    void reIndex();
 }

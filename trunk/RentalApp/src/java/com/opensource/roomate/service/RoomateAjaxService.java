@@ -71,21 +71,26 @@ public class RoomateAjaxService {
     }
 
     @RemoteMethod
-    public static List<Post> search(String key, int start, int max) {
-        Date st = new Date();
-        List<Post> list = roomateService.search(key, start, max);
-        Date ed = new Date();
-        System.out.println(" Duration ------------ " + (ed.getTime() - st.getTime()));
-        return list;
+    public static ResultDto search(String key, int start, int max) {
+//        Date st = new Date();
+        return roomateService.search(key, start, max);
+//        Date ed = new Date();
+//        System.out.println(" Duration ------------ " + (ed.getTime() - st.getTime()));
+//        return list;
     }
 
     @RemoteMethod
-    public static List<Post> searchById(long id) {
+    public List<Post> searchByCityZipcodeRentAndType(String city, String zipcode, Double maxRent, String type, int currentPage, int pageSize) {
+        return roomateService.searchByCityZipcodeRentAndType(city, zipcode, maxRent, type, currentPage, pageSize);
+    }
+
+    @RemoteMethod
+    public static ResultDto searchById(long id) {
         return roomateService.searchById(id);
     }
 
     @RemoteMethod
-    public static List<Post> searchByEmailAndId(String email, long id) {
+    public static ResultDto searchByEmailAndId(String email, long id) {
         return roomateService.searchByEmailAndId(email, id);
     }
 
@@ -93,5 +98,10 @@ public class RoomateAjaxService {
     public static int reportAbuse(long postId, String reportType, HttpServletRequest request) {
         roomateService.reportAbuse(postId, reportType, request.getRemoteAddr());
         return 1;
+    }
+
+    @RemoteMethod
+    public static void reIndex() {
+        roomateService.reIndex();
     }
 }
