@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.opensource.roomate.service;
+package com.opensource.roomate.service.util;
 
 import com.opensource.roomate.entity.Post;
 

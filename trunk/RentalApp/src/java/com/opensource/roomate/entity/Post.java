@@ -29,6 +29,7 @@ import org.hibernate.search.annotations.AnalyzerDef;
 import org.hibernate.search.annotations.DateBridge;
 import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.FieldBridge;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.Parameter;
@@ -78,23 +79,23 @@ public class Post implements Serializable {
     @Column(name = "posted_by")
     private String postedBy;
 //    @RemoteProperty
-    @Field(index = Index.TOKENIZED, store = Store.NO)
+    @Field(index = Index.UN_TOKENIZED, store = Store.NO)
     @Basic(optional = false)
     @Column(name = "email")
     private String email;
     @RemoteProperty
-    @Field(index = Index.TOKENIZED, store = Store.NO)
+    @Field(index = Index.UN_TOKENIZED, store = Store.NO)
     @Column(name = "phone")
     private String phone;
     @RemoteProperty
     @Field(index = Index.UN_TOKENIZED, store = Store.YES)
-    @DateBridge(resolution = Resolution.MILLISECOND)
+    @DateBridge(resolution = Resolution.HOUR)
     @Basic(optional = false)
     @Column(name = "post_date")
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date postDate;
     @RemoteProperty
-    @Field(index = Index.TOKENIZED, store = Store.NO)
+    @Field(index = Index.UN_TOKENIZED, store = Store.NO)
     @Column(name = "sex")
     private String sex;
     @RemoteProperty
@@ -103,11 +104,11 @@ public class Post implements Serializable {
     @Column(name = "rent")
     private Double rent;
     @RemoteProperty
-    @Field(index = Index.TOKENIZED, store = Store.NO)
+    @Field(index = Index.UN_TOKENIZED, store = Store.NO)
     @Column(name = "currency")
     private String currency;
     @RemoteProperty
-    @Field(index = Index.TOKENIZED, store = Store.NO)
+    @Field(index = Index.UN_TOKENIZED, store = Store.NO)
     @Basic(optional = false)
     @Column(name = "rental_type")
     private String rentalType;
@@ -116,15 +117,15 @@ public class Post implements Serializable {
     @Column(name = "address_line")
     private String addressLine;
     @RemoteProperty
-    @Field(index = Index.TOKENIZED, store = Store.NO)
+    @Field(index = Index.UN_TOKENIZED, store = Store.NO)
     @Column(name = "city")
     private String city;
     @RemoteProperty
-    @Field(index = Index.TOKENIZED, store = Store.NO)
+    @Field(index = Index.UN_TOKENIZED, store = Store.NO)
     @Column(name = "zipcode")
     private String zipcode;
     @RemoteProperty
-    @Field(index = Index.TOKENIZED, store = Store.NO)
+    @Field(index = Index.UN_TOKENIZED, store = Store.NO)
     @Column(name = "country")
     private String country;
     @RemoteProperty

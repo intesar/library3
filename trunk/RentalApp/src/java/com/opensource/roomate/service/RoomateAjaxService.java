@@ -4,6 +4,7 @@
  */
 package com.opensource.roomate.service;
 
+import com.opensource.roomate.entity.ResultDto;
 import com.opensource.roomate.entity.Post;
 import java.util.Date;
 import java.util.List;
