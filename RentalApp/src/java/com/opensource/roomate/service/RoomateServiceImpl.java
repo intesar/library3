@@ -1,5 +1,9 @@
 package com.opensource.roomate.service;
 
+import com.opensource.roomate.entity.ResultDto;
+import com.opensource.roomate.service.util.NewPostAlert;
+import com.opensource.roomate.service.util.MessageAlert;
+import com.opensource.roomate.service.util.ReportAbuseAlert;
 import com.opensource.roomate.entity.Post;
 import com.opensource.roomate.entity.PostMessage;
 import com.opensource.roomate.entity.PostReportAbuse;
@@ -258,7 +262,6 @@ public class RoomateServiceImpl implements RoomateService {
         EntityManager em = emf.createEntityManager();
         FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
         FullTextQuery fullTextQuery = fullTextEntityManager.createFullTextQuery(query, Post.class);
-//        int resultSize = fullTextQuery.getResultSize();
         org.apache.lucene.search.Sort sort = new Sort(new SortField("postDate", true));
         fullTextQuery.setSort(sort);
         fullTextQuery.setFirstResult(currentPage);
