@@ -20,7 +20,7 @@
             <param-value>
                 com.opensource.roomate.service.RoomateAjaxService,
                 com.opensource.roomate.entity.Post,
-                com.opensource.roomate.service.ResultDto
+                com.opensource.roomate.entity.ResultDto
             </param-value>
         </init-param>
     </servlet>
