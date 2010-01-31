@@ -99,16 +99,20 @@ public class Post implements Serializable {
     @Column(name = "sex")
     private String sex;
     @RemoteProperty
-    @Field(index = Index.TOKENIZED, store = Store.NO)
+    //@Field(index = Index.TOKENIZED, store = Store.NO)
     @Basic(optional = false)
     @Column(name = "rent")
     private Double rent;
+    @Field(index = Index.TOKENIZED, store = Store.YES)
+    @Basic(optional = false)
+    @Column(name = "rent_category")
+    private Integer rentCategory;
     @RemoteProperty
-    @Field(index = Index.UN_TOKENIZED, store = Store.NO)
+    @Field(index = Index.TOKENIZED, store = Store.NO)
     @Column(name = "currency")
     private String currency;
     @RemoteProperty
-    @Field(index = Index.UN_TOKENIZED, store = Store.NO)
+    @Field(index = Index.TOKENIZED, store = Store.YES)
     @Basic(optional = false)
     @Column(name = "rental_type")
     private String rentalType;
@@ -117,11 +121,11 @@ public class Post implements Serializable {
     @Column(name = "address_line")
     private String addressLine;
     @RemoteProperty
-    @Field(index = Index.UN_TOKENIZED, store = Store.NO)
+    @Field(index = Index.TOKENIZED, store = Store.NO)
     @Column(name = "city")
     private String city;
     @RemoteProperty
-    @Field(index = Index.UN_TOKENIZED, store = Store.NO)
+    @Field(index = Index.TOKENIZED, store = Store.YES)
     @Column(name = "zipcode")
     private String zipcode;
     @RemoteProperty
@@ -157,6 +161,7 @@ public class Post implements Serializable {
     @Column(name = "report_abuse")
     private int reportAbuse;
     @RemoteProperty
+    @Field(index = Index.UN_TOKENIZED, store = Store.NO)
     @Column(name = "beds")
     private String beds;
     @RemoteProperty
@@ -233,6 +238,14 @@ public class Post implements Serializable {
 
     public void setRent(Double rent) {
         this.rent = rent;
+    }
+
+    public Integer getRentCategory() {
+        return rentCategory;
+    }
+
+    public void setRentCategory(Integer rentCategory) {
+        this.rentCategory = rentCategory;
     }
 
     public String getCurrency() {

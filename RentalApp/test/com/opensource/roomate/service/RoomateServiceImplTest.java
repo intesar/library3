@@ -53,13 +53,13 @@ public class RoomateServiceImplTest {
         post.setZipcode("19200");
 
         RoomateServiceImpl impl = new RoomateServiceImpl();
-        impl.addPost(post, "local");
+        //impl.addPost(post, "local");
     }
 
     @Test
     public void testSearch() {
         RoomateServiceImpl impl = new RoomateServiceImpl();
-        //impl.reIndex();
+        impl.reIndex();
         ResultDto posts = impl.search("chicago", 0, 100);
         Assert.assertTrue(posts.getList().size() > 0);
         logger.info("--- chicago --");
@@ -77,6 +77,28 @@ public class RoomateServiceImplTest {
 
     }
 
+     @Test
+    public void testSearchAdv() {
+        RoomateServiceImpl impl = new RoomateServiceImpl();
+        //impl.reIndex();
+        ResultDto posts = impl.search("rentalType:Shared AND city:san jose AND rentCategory:600", 0, 100);
+        //Assert.assertTrue(posts.getList().size() > 0);
+        //logger.info("--- rentalType --");
+        //logger.info("--- rentalType --" + posts.getList().size());
+        //EntityManagerFactoryImpl empImpl = (EntityManagerFactoryImpl) emf;
+        //System.out.println(empImpl.getSessionFactory().getStatistics());
+
+        //posts = impl.search("chicago", 0, 100);
+        Assert.assertTrue(posts.getList().size() > 0);
+        System.out.println("-----" + posts.getList().size());
+        for (Post p : posts.getList()) {
+            System.out.println("--- " + p.getId());
+        }
+
+        //System.out.println(empImpl.getSessionFactory().getStatistics());
+
+    }
+
     //@Test
     public void testSearchById() {
         RoomateServiceImpl impl = new RoomateServiceImpl();
@@ -90,13 +112,7 @@ public class RoomateServiceImplTest {
         impl.sendMessage(27L, "Hello, can you call me on 773-216-5478", "local");
     }
 
-    //@Test
-    public void testSearchByCityZipcodeRentAndType() {
-        RoomateServiceImpl impl = new RoomateServiceImpl();
-        List<Post> list = impl.searchByCityZipcodeRentAndType("santa clara", "95050", 5000.0, "All", 0, 20);
-        Assert.assertTrue(list != null);
-        System.out.println(list.size());
-    }
+   
 
     //@Test
     public void testFindPostByDateAndEmail() {

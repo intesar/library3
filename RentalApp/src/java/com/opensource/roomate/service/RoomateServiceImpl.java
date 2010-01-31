@@ -48,6 +48,7 @@ public class RoomateServiceImpl implements RoomateService {
             post.setCreateIp(ip);
             post.setCreateDate(new Date());
             post.setPostDate(new Date());
+            post.setRentCategory(calculateRange(post.getRent()));
             em.persist(post);
             em.getTransaction().commit();
             sendMail(post.getEmail(), post.getPostDate());
@@ -168,8 +169,10 @@ public class RoomateServiceImpl implements RoomateService {
         List<Post> list = new ArrayList<Post>();
         try {
             // create native Lucene query
-            String[] fields = new String[]{"id", "postedBy", "phone", "postDate", "sex", "rent", "addressLine", "city", "zipcode", "country", "comment"};
+            String[] fields = new String[]{"id", "postedBy", "phone", "postDate", "sex", "rent", "rentalType", "rentCategory", "addressLine", "city", "zipcode", "country", "comment"};
             MultiFieldQueryParser parser = new MultiFieldQueryParser(fields, new StandardAnalyzer());
+//            org.apache.lucene.queryParser.QueryParser parser =
+//                    new QueryParser("id", new StopAnalyzer());
             org.apache.lucene.search.Query query = parser.parse(keywords);
             return executeLuceneQuery(query, currentPage, pageSize);
 //            printReport();
@@ -179,25 +182,7 @@ public class RoomateServiceImpl implements RoomateService {
         return new ResultDto(list, currentPage, pageSize, 0);
     }
 
-    @Override
-    public List<Post> searchByCityZipcodeRentAndType(String city, String zipcode, Double maxRent, String type, int currentPage, int pageSize) {
-        List<Post> list = new ArrayList<Post>();
-        EntityManager em = emf.createEntityManager();
-        try {
-            String allTypes = "Shared, Shared - Seperate room, New Rental, Commercial";
-            String types = type.equals("All") ? allTypes : type;
-            list = em.createNamedQuery("Post.findByCityZipcodeRentAndType").setParameter(1, city).setParameter(2, zipcode).setParameter(3, maxRent).setParameter(4, types).getResultList();
-        } catch (Exception e) {
-            e.printStackTrace();
-            logger.warn(e);
-        } finally {
-            em.close();
-        }
-        return list;
-
-
-    }
-
+    
     @Override
     public ResultDto searchByEmailAndId(String email, long id) {
         List list = new ArrayList();
@@ -287,5 +272,54 @@ public class RoomateServiceImpl implements RoomateService {
 //        System.out.println(" statistics start..");
 //        System.out.println(empImpl.getSessionFactory().getStatistics());
 //        System.out.println(" statistics end..");
+    }
+
+    /**
+     * 1 - 100 = 100
+     * 101 - 200 = 200
+     * 201 - 400 = 400
+     * 401 - 600 = 600
+     * 601 - 800 = 800
+     * 801 - 1000 = 1000
+     * 1001 - 1200 = 1200
+     * 1201 - 1400 = 1400
+     * 1401 - 1600 = 1600
+     * 1601 - 1800 = 1800
+     * 1801 - 2000 = 2000
+     * 2001 - 2500 = 2500
+     * 2501 - 3000 = 3000
+     * @param rent
+     * @return
+     */
+    public static int calculateRange(Double rent) {
+        if (rent == null || rent == 0) {
+            return 0;
+        } else if (rent <= 100) {
+            return 100;
+        } else if (rent <= 200) {
+            return 200;
+        } else if (rent <= 400) {
+            return 400;
+        } else if (rent <= 600) {
+            return 600;
+        } else if (rent <= 800) {
+            return 800;
+        } else if (rent <= 1000) {
+            return 1000;
+        } else if (rent <= 1200) {
+            return 1200;
+        } else if (rent <= 1400) {
+            return 1400;
+        } else if (rent <= 1600) {
+            return 1600;
+        } else if (rent <= 1800) {
+            return 1800;
+        } else if (rent <= 2000) {
+            return 2000;
+        } else if (rent <= 2500) {
+            return 2500;
+        } else {
+            return 3000;
+        }
     }
 }

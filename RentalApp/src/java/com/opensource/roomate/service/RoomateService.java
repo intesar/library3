@@ -27,8 +27,6 @@ public interface RoomateService {
 
     ResultDto search(String keywords, int currentPage, int pageSize);
 
-    List<Post> searchByCityZipcodeRentAndType(String city, String zipcode, Double maxRent, String type, int currentPage, int pageSize);
-
     ResultDto searchById(Long id);
 
     ResultDto searchByEmailAndId(String email, long id);
