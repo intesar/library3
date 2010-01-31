@@ -448,10 +448,29 @@ function searchAdvShow() {
     parent.location.hash = "advancedSearch"
 }
 function searchAdvFtn() {
-    //    RoomateAjaxService.searchByCityZipcodeRentAndType(dijit.byId("cityAdv").value,dijit.byId("zipcodeAdv").value,dijit.byId("rentAdv").value,dijit.byId("rentalTypeAdv").value, START, MAX, displayResults);
-    var allTypes = 'Shared Seperate room Rental'
-    var types = dijit.byId("rentalTypeAdv").value == 'All' ? allTypes : dijit.byId("rentalTypeAdv").value
-    dojo.byId('keyword').value = dijit.byId("cityAdv").value + ' ' + dijit.byId("zipcodeAdv").value + ' ' + dijit.byId("rentAdv").value + ' ' + types
-    search()
+    var cityAdv_ = dijit.byId('cityAdv').attr('value')
+    var zipcodeAdv_ = dijit.byId('zipcodeAdv').attr('value')
+    //var radiusAdv_ = dijit.byId('radiusAdv').attr('item').value
+    var rentAdv_ = dijit.byId('rentAdv').attr('item')
+    var rentalTypeAdv_ = dijit.byId('rentalTypeAdv').attr('item')
+    
+    
     dijit.byId("advancedSearchDiv").hide()
+    var ql = "";
+    // create native Lucene query
+    if ( cityAdv_.length > 0 )
+        ql = "city:" + cityAdv_;
+    else if ( zipcodeAdv_.length >= 5)
+        ql = "zipcode:" + zipcodeAdv_;
+
+    if ( rentAdv_ != null && rentAdv_.value > 0 )
+        ql += " AND rentCategory:" + rentAdv_.value;
+
+    if (rentalTypeAdv_ != null && rentalTypeAdv_.value.length > 0)
+        ql += " AND rentalType:"  + rentalTypeAdv_.value;
+    dojo.byId('keyword').value = ql
+    START = 0
+    search()
+
+//RoomateAjaxService.advancedSearch(dijit.byId("cityAdv").value,dijit.byId("zipcodeAdv").value,dijit.byId("radiusAdv").value,dijit.byId("rentAdv").value,dijit.byId("rentalTypeAdv").value, 0, MAX, displayResults);
 }

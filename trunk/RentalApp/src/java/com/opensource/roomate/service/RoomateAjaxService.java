@@ -81,11 +81,6 @@ public class RoomateAjaxService {
     }
 
     @RemoteMethod
-    public List<Post> searchByCityZipcodeRentAndType(String city, String zipcode, Double maxRent, String type, int currentPage, int pageSize) {
-        return roomateService.searchByCityZipcodeRentAndType(city, zipcode, maxRent, type, currentPage, pageSize);
-    }
-
-    @RemoteMethod
     public static ResultDto searchById(long id) {
         return roomateService.searchById(id);
     }

@@ -36,7 +36,7 @@
     </head>
     <body class="soria">
         <div id="loadingDiv">
-            <p>Loading . . .</p>
+            <label class="smallLabel">Loading . . .</label>
         </div>
         <div id="bodyDiv" style="display:none">
             <div align="right" style="margin-top:10px; margin-right:30px">
@@ -52,25 +52,78 @@
             </div>
             <div dojoType="dijit.Dialog" id="advancedSearchDiv" title="Advanced Search" class="soria">
                 <table class="tableStyle" cellspacing="10px">
-                    <tr><td><span class="smallLabel">City</span></td><td><input type="text" id="cityAdv" dojoType="dijit.form.ValidationTextBox" trim="true" style="width: 15em; height:1.7em"/></td></tr>
-                    <tr><td><span class="smallLabel"></span></td><td align="center"><span class="smallLabel">--OR--</span></td></tr>
-                    <tr><td><span class="smallLabel">Zipcode</span></td><td><input type="text" id="zipcodeAdv" dojoType="dijit.form.ValidationTextBox" trim="true" style="width: 12em; height:1.7em"/></td></tr>
-                    <tr><td><span class="smallLabel">Max Rent</span></td><td><input type="text" id="rentAdv" dojoType="dijit.form.NumberTextBox" required="false" constraints="{min:0,max:200000,places:0, fractional:true}" style="width: 12em; height:1.7em"/></td></tr>
-                    <tr><td><span class="smallLabel">Type</span></td><td><select dojoType="dijit.form.ComboBox" id="rentalTypeAdv" style="width: 200px;">
-                                <option selected>
-                                    All
+                    <tr><td><span class="smallLabel">City</span></td><td><input type="text" id="cityAdv" dojoType="dijit.form.ValidationTextBox" trim="true" style="width: 15em; height:1.7em"/>&nbsp; <label class="smallLabel"> or </label> </td></tr>
+                    <tr><td><span class="smallLabel">Zipcode</span></td><td><input type="text" id="zipcodeAdv" dojoType="dijit.form.ValidationTextBox" trim="true" style="width: 15em; height:1.7em"/>
+                        <select id="radiusAdv" dojoType="dijit.form.ComboBox" style="width: 120px;">
+                            <option selected value="0">
+                                    0 Mile Radius
                                 </option>
-                                <option>
+                                <option value="5">
+                                    5 Miles Radius
+                                </option>
+                                <option value="10">
+                                    10 Miles Radius
+                                </option>
+                                <option value="25">
+                                    25 Miles Radius
+                                </option>
+                            </select></td></tr>
+                    <tr><td><span class="smallLabel">Rent</span></td><td><select id="rentAdv" dojoType="dijit.form.ComboBox" style="width: 180px;">
+                                <option selected value="0">
+                                    Any
+                                </option>
+                                <option value="100">
+                                    < $100
+                                </option>
+                                <option value="200">
+                                    $101 - $200
+                                </option>
+                                <option value="400">
+                                    $201 - $400
+                                </option>
+                                <option value="600">
+                                    $401 - $600
+                                </option>
+                                <option value="800">
+                                    $601 - $800
+                                </option>
+                                <option value="1000">
+                                    $801 - $1000
+                                </option>
+                                <option value="1200">
+                                    $1001 - $1200
+                                </option>
+                                <option value="1400">
+                                    $1201 - $1400
+                                </option>
+                                <option value="1600">
+                                    $1401 - $1600
+                                </option>
+                                <option value="1800">
+                                    $1601 - $1800
+                                </option>
+                                <option value="2000">
+                                    $1801 - $2000
+                                </option>
+                                <option value="2500">
+                                    $2001 - $2500
+                                </option>
+                                <option value="3000">
+                                    > $2500
+                                </option>
+                            </select></td></tr>
+                    <tr><td><span class="smallLabel">Type</span></td><td><select dojoType="dijit.form.ComboBox" id="rentalTypeAdv" style="width: 180px;">
+                                <option selected value="">
+                                    Any
+                                </option>
+                                <option value="Shared">
                                     Shared
                                 </option>
-                                <option>
-                                    Shared Seperate room
+                                <option value="Shared-Seperate-room">
+                                    Shared - Seperate room
                                 </option>
-                                <option>
+                                <option value="New-Rental">
                                     New Rental
-                                </option>
-                                <option>
-                                    Commercial
                                 </option>
                             </select></td></tr>
                     <tr><td></td><td><button dojoType="dijit.form.Button" class="soria" id="searchAdvButton" style="width:100px">Search</button></td></tr>
@@ -113,13 +166,10 @@
                                     Shared
                                 </option>
                                 <option>
-                                    Shared - Seperate room
+                                    Shared-Seperate-room
                                 </option>
                                 <option>
-                                    New Rental
-                                </option>
-                                <option>
-                                    Commercial
+                                    New-Rental
                                 </option>
                             </select>
                         </td></tr>
@@ -138,9 +188,9 @@
                                     3+
                                 </option>
                             </select></td></tr>
-                    <tr><td><span class="smallLabel">Area</span></td><td>
+                    <!--<tr><td><span class="smallLabel">Area</span></td><td>
                             <input type="text" id="area" dojoType="dijit.form.ValidationTextBox" trim="true" required="false"  invalidMessage="Invalid" style="width: 9em; height:1.7em"/> &nbsp; <span class="smallLabel"> sq ft</span>
-                        </td></tr>
+                        </td></tr>-->
                     <tr><td colspan="2"> <textarea id="comment" dojoType="dijit.form.SimpleTextarea" rows="2" cols="50" style="width:300px;">Comments...</textarea></td></tr>
                     <tr><td></td><td><button dojoType="dijit.form.Button" id="newPostClearButton" class="tundra">Clear</button>&nbsp;&nbsp;&nbsp;&nbsp;<button dojoType="dijit.form.Button" class="soria" id="newPostSaveButton" style="width:100px">Save</button></td></tr>
                 </table>
