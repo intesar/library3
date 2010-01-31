@@ -6,6 +6,7 @@ import com.opensource.roomate.service.util.MessageAlert;
 import com.opensource.roomate.service.util.ReportAbuseAlert;
 import com.opensource.roomate.entity.Post;
 import com.opensource.roomate.entity.PostMessage;
+import com.opensource.roomate.entity.PostRemoved;
 import com.opensource.roomate.entity.PostReportAbuse;
 import com.opensource.roomate.entity.SubscribeUser;
 import java.util.ArrayList;
@@ -99,6 +100,9 @@ public class RoomateServiceImpl implements RoomateService {
             post1.setDeleteIp(ip);
             post1.setDeleteDate(new Date());
             em.merge(post1);
+            PostRemoved pr = new PostRemoved();
+            copy(post1, pr);
+            em.persist(pr);
             em.remove(post1);
             em.getTransaction().commit();
         } catch (Exception e) {
@@ -321,5 +325,33 @@ public class RoomateServiceImpl implements RoomateService {
         } else {
             return 3000;
         }
+    }
+
+    public void copy(Post p, PostRemoved pr) {
+        pr.setAddressLine(p.getAddressLine());
+        pr.setArea(p.getArea());
+        pr.setBeds(p.getBeds());
+        pr.setCity(p.getCity());
+        pr.setComment(p.getComment());
+        pr.setCountry(p.getCountry());
+        pr.setCreateDate(p.getCreateDate());
+        pr.setCreateIp(p.getCreateIp());
+        pr.setCurrency(p.getCurrency());
+        pr.setDate(p.getDate());
+        pr.setDeleteDate(p.getDeleteDate());
+        pr.setDeleteIp(p.getDeleteIp());
+        pr.setEmail(p.getEmail());
+        pr.setId(p.getId());
+        pr.setPhone(p.getPhone());
+        pr.setPostDate(p.getPostDate());
+        pr.setPostedBy(p.getPostedBy());
+        pr.setRent(p.getRent());
+        pr.setRentCategory(p.getRentCategory());
+        pr.setRentalType(p.getRentalType());
+        pr.setReportAbuse(p.getReportAbuse());
+        pr.setSex(p.getSex());
+        pr.setUpdateDate(p.getUpdateDate());
+        pr.setUpdateIp(p.getUpdateIp());
+        pr.setZipcode(pr.getZipcode());
     }
 }
