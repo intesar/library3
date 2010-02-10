@@ -173,7 +173,7 @@ public class RoomateServiceImpl implements RoomateService {
         List<Post> list = new ArrayList<Post>();
         try {
             // create native Lucene query
-            String[] fields = new String[]{"id", "postedBy", "phone", "postDate", "sex", "rent", "rentalType", "rentCategory", "addressLine", "city", "zipcode", "country", "comment"};
+            String[] fields = new String[]{"id", "postedBy", "phone", "postDate", "sex", "rentalType", "rentCategory", "addressLine", "city", "zipcode", "country", "comment"};
             MultiFieldQueryParser parser = new MultiFieldQueryParser(fields, new StandardAnalyzer());
 //            org.apache.lucene.queryParser.QueryParser parser =
 //                    new QueryParser("id", new StopAnalyzer());
@@ -186,7 +186,6 @@ public class RoomateServiceImpl implements RoomateService {
         return new ResultDto(list, currentPage, pageSize, 0);
     }
 
-    
     @Override
     public ResultDto searchByEmailAndId(String email, long id) {
         List list = new ArrayList();
@@ -236,6 +235,7 @@ public class RoomateServiceImpl implements RoomateService {
             List<Post> list = em.createNamedQuery("Post.findAll").getResultList();
             FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(em);
             for (Post p : list) {
+                p.setRentCategory(calculateRange(p.getRent()));
                 fullTextEntityManager.index(p);
             }
         } catch (Exception e) {
@@ -296,35 +296,8 @@ public class RoomateServiceImpl implements RoomateService {
      * @return
      */
     public static int calculateRange(Double rent) {
-        if (rent == null || rent == 0) {
-            return 0;
-        } else if (rent <= 100) {
-            return 100;
-        } else if (rent <= 200) {
-            return 200;
-        } else if (rent <= 400) {
-            return 400;
-        } else if (rent <= 600) {
-            return 600;
-        } else if (rent <= 800) {
-            return 800;
-        } else if (rent <= 1000) {
-            return 1000;
-        } else if (rent <= 1200) {
-            return 1200;
-        } else if (rent <= 1400) {
-            return 1400;
-        } else if (rent <= 1600) {
-            return 1600;
-        } else if (rent <= 1800) {
-            return 1800;
-        } else if (rent <= 2000) {
-            return 2000;
-        } else if (rent <= 2500) {
-            return 2500;
-        } else {
-            return 3000;
-        }
+        if ( rent == null ) return 0;
+        return (int)Math.ceil(rent / 100) ;
     }
 
     public void copy(Post p, PostRemoved pr) {
