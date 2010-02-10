@@ -75,7 +75,7 @@ function urlCheck() {
         email_1 = _email1
         postId_1 = _id1
         RoomateAjaxService.searchByEmailAndId(_email1, _id1, function(data) {
-            if ( data[0] == null ) {
+            if ( data.list[0] == null ) {
                 alert("No records found!")
                 return;
             }
