@@ -117,4 +117,6 @@ public class RoomateServiceImplTest {
     //@Test
     public void testFindPostByDateAndEmail() {
     }
+
+   
 }
