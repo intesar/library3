@@ -1,4 +1,3 @@
-
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 
@@ -18,7 +17,7 @@
             .borderContainerTwo { width: 100%; height: 100%; }
             .centerdiv { text-align:center }
             label {font-weight:bold}
-            #mytable {margin-left: 40px;}
+            #mytable {margin-left: 40px;cursor:pointer}
             .dojoxGrid table { margin: 0; margin-left: 0px}
             #loadingDiv {margin-left: 45%; margin-top: 20%}
             .smallLabel {
@@ -53,9 +52,9 @@
             <div dojoType="dijit.Dialog" id="advancedSearchDiv" title="Advanced Search" class="soria">
                 <table class="tableStyle" cellspacing="10px">
                     <tr><td><span class="smallLabel">City</span></td><td><input type="text" id="cityAdv" dojoType="dijit.form.ValidationTextBox" trim="true" style="width: 15em; height:1.7em"/>&nbsp; <label class="smallLabel"> or </label> </td></tr>
-                    <tr><td><span class="smallLabel">Zipcode</span></td><td><input type="text" id="zipcodeAdv" dojoType="dijit.form.ValidationTextBox" trim="true" style="width: 15em; height:1.7em"/>
-                        <select id="radiusAdv" dojoType="dijit.form.ComboBox" style="width: 120px;">
-                            <option selected value="0">
+                    <tr><td><span class="smallLabel">Zipcode</span></td><td><input type="text" id="zipcodeAdv" dojoType="dijit.form.ValidationTextBox" trim="true" style="width: 12em; height:1.7em"/>
+                            <select id="radiusAdv" dojoType="dijit.form.ComboBox" style="width: 120px;">
+                                <option selected value="0">
                                     0 Mile Radius
                                 </option>
                                 <option value="5">
@@ -68,50 +67,39 @@
                                     25 Miles Radius
                                 </option>
                             </select></td></tr>
-                    <tr><td><span class="smallLabel">Rent</span></td><td><select id="rentAdv" dojoType="dijit.form.ComboBox" style="width: 180px;">
-                                <option selected value="0">
-                                    Any
-                                </option>
-                                <option value="100">
-                                    < $100
-                                </option>
-                                <option value="200">
-                                    $101 - $200
-                                </option>
-                                <option value="400">
-                                    $201 - $400
-                                </option>
-                                <option value="600">
-                                    $401 - $600
-                                </option>
-                                <option value="800">
-                                    $601 - $800
-                                </option>
-                                <option value="1000">
-                                    $801 - $1000
-                                </option>
-                                <option value="1200">
-                                    $1001 - $1200
-                                </option>
-                                <option value="1400">
-                                    $1201 - $1400
-                                </option>
-                                <option value="1600">
-                                    $1401 - $1600
-                                </option>
-                                <option value="1800">
-                                    $1601 - $1800
-                                </option>
-                                <option value="2000">
-                                    $1801 - $2000
-                                </option>
-                                <option value="2500">
-                                    $2001 - $2500
-                                </option>
-                                <option value="3000">
-                                    > $2500
-                                </option>
-                            </select></td></tr>
+                    <tr><td><span class="smallLabel">Rent</span></td><td>
+                            <select id="rentMinAdv" dojoType="dijit.form.ComboBox" style="width: 90px;">
+                                <option selected value="1">$1</option>
+                                <option value="2">$101</option>
+                                <option value="3">$201</option>
+                                <option value="4">$301</option>
+                                <option value="5">$401</option>
+                                <option value="6">$501</option>
+                                <option value="7">$601</option>
+                                <option value="8">$701</option>
+                                <option value="9">$801</option>
+                                <option value="10">$901</option>
+                                <option value="12">$1101</option>
+                                <option value="15">$1401</option>
+                                <option value="20">$1901</option>
+                            </select>
+                            <select id="rentMaxAdv" dojoType="dijit.form.ComboBox" style="width: 90px;">
+                                <option selected value="1">$100</option>
+                                <option value="2">$200</option>
+                                <option value="3">$300</option>
+                                <option value="4">$400</option>
+                                <option value="5">$500</option>
+                                <option value="6">$600</option>
+                                <option value="7">$700</option>
+                                <option value="8">$800</option>
+                                <option value="9">$900</option>
+                                <option value="10">$1000</option>
+                                <option value="12">$1200</option>
+                                <option value="15">$1500</option>
+                                <option value="20">$2000</option>
+                                <option value="30">$3000</option>
+                            </select>
+                        </td></tr>
                     <tr><td><span class="smallLabel">Type</span></td><td><select dojoType="dijit.form.ComboBox" id="rentalTypeAdv" style="width: 180px;">
                                 <option selected value="">
                                     Any
@@ -195,7 +183,7 @@
                     <tr><td></td><td><button dojoType="dijit.form.Button" id="newPostClearButton" class="tundra">Clear</button>&nbsp;&nbsp;&nbsp;&nbsp;<button dojoType="dijit.form.Button" class="soria" id="newPostSaveButton" style="width:100px">Save</button></td></tr>
                 </table>
             </div><br/>
-            <div id="container" ></div>
+            <div id="container" style="cursor:pointer"></div>
             <div id="paginationDiv" align="right" style="display:none;width: 90%">
                 <span class="smallLabel" id="startPagination"></span>
                 <span class="smallLabel">-</span>
