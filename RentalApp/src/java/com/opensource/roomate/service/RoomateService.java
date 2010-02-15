@@ -4,9 +4,9 @@
  */
 package com.opensource.roomate.service;
 
+import com.opensource.roomate.entity.ContactUs;
 import com.opensource.roomate.entity.ResultDto;
 import com.opensource.roomate.entity.Post;
-import java.util.List;
 
 /**
  *
@@ -41,4 +41,6 @@ public interface RoomateService {
     void reportAbuse(Long postId, String reportType, String reportIp );
 
     void reIndex();
+
+    void contactUs(ContactUs contactUs);
 }

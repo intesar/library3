@@ -1,5 +1,6 @@
 package com.opensource.roomate.service;
 
+import com.opensource.roomate.entity.ContactUs;
 import com.opensource.roomate.entity.ResultDto;
 import com.opensource.roomate.service.util.NewPostAlert;
 import com.opensource.roomate.service.util.MessageAlert;
@@ -9,6 +10,7 @@ import com.opensource.roomate.entity.PostMessage;
 import com.opensource.roomate.entity.PostRemoved;
 import com.opensource.roomate.entity.PostReportAbuse;
 import com.opensource.roomate.entity.SubscribeUser;
+import com.opensource.roomate.service.util.ContactUsAlert;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -122,8 +124,8 @@ public class RoomateServiceImpl implements RoomateService {
             Post post = (Post) em.find(Post.class, postId);
             PostMessage pm = new PostMessage(null, message, new Date(), ip, new Date(), post);
             em.persist(pm);
-            MessageAlert er = new MessageAlert(post.getEmail(), post.getId(), message);
-            pool.execute(er);
+            Runnable runnable = new MessageAlert(post.getEmail(), post.getId(), message);
+            pool.execute(runnable);
             em.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -216,8 +218,8 @@ public class RoomateServiceImpl implements RoomateService {
             if (post.getReportAbuse() > 1) {
                 List<PostReportAbuse> list = em.createNamedQuery("PostReportAbuse.findByPostId").setParameter("postId", post.getId()).getResultList();
                 list.add(pm);
-                ReportAbuseAlert er = new ReportAbuseAlert(post.getId(), list);
-                pool.execute(er);
+                Runnable runnable  = new ReportAbuseAlert(post.getId(), list);
+                pool.execute(runnable);
             }
             em.getTransaction().commit();
         } catch (Exception e) {
@@ -229,6 +231,7 @@ public class RoomateServiceImpl implements RoomateService {
         }
     }
 
+    @Override
     public void reIndex() {
         EntityManager em = emf.createEntityManager();
         try {
@@ -240,6 +243,25 @@ public class RoomateServiceImpl implements RoomateService {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            logger.warn(e);
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public void contactUs(ContactUs contactUs) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(contactUs);
+            // alerting admin
+            Runnable runnable = new ContactUsAlert(contactUs);
+            pool.execute(runnable);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            em.getTransaction().rollback();
             logger.warn(e);
         } finally {
             em.close();
@@ -296,8 +318,10 @@ public class RoomateServiceImpl implements RoomateService {
      * @return
      */
     private static int calculateRange(Double rent) {
-        if ( rent == null ) return 0;
-        return (int)Math.ceil(rent / 100) ;
+        if (rent == null) {
+            return 0;
+        }
+        return (int) Math.ceil(rent / 100);
     }
 
     private void copy(Post p, PostRemoved pr) {
