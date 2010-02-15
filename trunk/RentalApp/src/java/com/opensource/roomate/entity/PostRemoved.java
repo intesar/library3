@@ -15,124 +15,61 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.Transient;
-import org.apache.solr.analysis.LowerCaseFilterFactory;
-import org.apache.solr.analysis.SnowballPorterFilterFactory;
-import org.apache.solr.analysis.StandardTokenizerFactory;
-import org.directwebremoting.annotations.DataTransferObject;
-import org.directwebremoting.annotations.RemoteProperty;
-import org.hibernate.search.annotations.AnalyzerDef;
-import org.hibernate.search.annotations.DateBridge;
-import org.hibernate.search.annotations.DocumentId;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.FieldBridge;
-import org.hibernate.search.annotations.Index;
-import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.Parameter;
-import org.hibernate.search.annotations.Resolution;
-import org.hibernate.search.annotations.Store;
-import org.hibernate.search.annotations.TokenFilterDef;
-import org.hibernate.search.annotations.TokenizerDef;
 
 /**
  *
  * @author  intesar shannan mohammed
  *  mdshannan@gmail.com
  */
-@DataTransferObject
-@Indexed
-@AnalyzerDef(name = "customanalyzer",
-tokenizer =
-@TokenizerDef(factory = StandardTokenizerFactory.class),
-filters = {
-    @TokenFilterDef(factory = LowerCaseFilterFactory.class),
-    @TokenFilterDef(factory = SnowballPorterFilterFactory.class, params = {
-        @Parameter(name = "language", value = "English")
-    })
-})
 @Entity
-@org.hibernate.annotations.Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE)
 @Table(name = "post_removed")
-
 public class PostRemoved implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @RemoteProperty
-    @DocumentId
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @RemoteProperty
-    @Field(index = Index.TOKENIZED, store = Store.NO)
     @Column(name = "posted_by")
     private String postedBy;
-//    @RemoteProperty
-    @Field(index = Index.UN_TOKENIZED, store = Store.NO)
     @Basic(optional = false)
     @Column(name = "email")
     private String email;
-    @RemoteProperty
-    @Field(index = Index.UN_TOKENIZED, store = Store.NO)
     @Column(name = "phone")
     private String phone;
-    @RemoteProperty
-    @Field(index = Index.UN_TOKENIZED, store = Store.YES)
-    @DateBridge(resolution = Resolution.HOUR)
     @Basic(optional = false)
     @Column(name = "post_date")
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date postDate;
-    @RemoteProperty
-    @Field(index = Index.UN_TOKENIZED, store = Store.NO)
     @Column(name = "sex")
     private String sex;
-    @RemoteProperty
-    //@Field(index = Index.TOKENIZED, store = Store.NO)
     @Basic(optional = false)
     @Column(name = "rent")
     private Double rent;
-    @Field(index = Index.TOKENIZED, store = Store.YES)
     @Basic(optional = false)
     @Column(name = "rent_category")
     private Integer rentCategory;
-    @RemoteProperty
-    @Field(index = Index.TOKENIZED, store = Store.NO)
     @Column(name = "currency")
     private String currency;
-    @RemoteProperty
-    @Field(index = Index.TOKENIZED, store = Store.YES)
     @Basic(optional = false)
     @Column(name = "rental_type")
     private String rentalType;
-    @RemoteProperty
-    @Field(index = Index.TOKENIZED, store = Store.NO)
     @Column(name = "address_line")
     private String addressLine;
-    @RemoteProperty
-    @Field(index = Index.TOKENIZED, store = Store.NO)
     @Column(name = "city")
     private String city;
-    @RemoteProperty
-    @Field(index = Index.TOKENIZED, store = Store.YES)
     @Column(name = "zipcode")
     private String zipcode;
-    @RemoteProperty
-    @Field(index = Index.UN_TOKENIZED, store = Store.NO)
     @Column(name = "country")
     private String country;
-    @RemoteProperty
-    @Field(index = Index.TOKENIZED, store = Store.NO)
     @Lob
     @Column(name = "comment")
     private String comment;
     @Transient
-    @RemoteProperty
     private String date;
     @Column(name = "create_ip")
     private String createIp;
@@ -150,15 +87,11 @@ public class PostRemoved implements Serializable {
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date deleteDate;
     @Transient
-    @RemoteProperty
     private String emailTransient;
     @Column(name = "report_abuse")
     private int reportAbuse;
-    @RemoteProperty
-    @Field(index = Index.UN_TOKENIZED, store = Store.NO)
     @Column(name = "beds")
     private String beds;
-    @RemoteProperty
     @Column(name = "area")
     private Integer area;
 
