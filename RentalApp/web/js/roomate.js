@@ -100,7 +100,9 @@ function urlCheck() {
         search()
     } else if ( url.match("newPost")) {
         dijit.byId('post').show()
-    } else if ( url.match("advancedSearch")) {
+    } else if (url.match("contactUs")) {
+        dijit.byId('contactUsDiv').show()
+    }else if ( url.match("advancedSearch")) {
         dijit.byId("advancedSearchDiv").show()
     }
 }
@@ -123,7 +125,11 @@ function bindObjects () {
     dojo.connect(dijit.byId("searchButton"), 'onClick', searchDelegate);
     dojo.connect(dojo.byId("prevPagination"), 'onclick', searchPrev);
     dojo.connect(dojo.byId("nextPagination"), 'onclick', searchNext);
-
+    dojo.connect(dojo.byId("contactUsLink"), 'onclick', function() {
+        dijit.byId('contactUsDiv').show()
+        parent.location.hash = 'contactUs'
+    })
+    dojo.connect(dijit.byId("submitContactUs"), 'onClick', submitContactUs)
     dojo.connect(dojo.byId("newPostLink"), 'onclick', function() {
         dijit.byId('post').show()
         parent.location.hash = 'newPost'
@@ -178,6 +184,7 @@ function bindObjects () {
         connectId: ["whyRent"],
         label: "Approximate, Inclusive of all utilities!"
     })
+    
     //report abuse
     dojo.connect(dijit.byId("reportAbuseButton"), 'onClick', reportAbuse)
     dojo.connect(dijit.byId("searchAdvButton"), 'onClick', searchAdvFtn)
@@ -203,21 +210,21 @@ function searchAgain() {
     dijit.byId('noResultDiv').hide();
 }
 function displayGrid() {
-    var layout =  [
-    {
-        field: "addressLine",
-        name: "Address",
-        width: "25%"
-    },
+    var layout =  [    
     {
         field: "city",
         name: "City",
-        width: "15%"
+        width: "20%"
+    },
+    {
+        field: "zipcode",
+        name: "Zipcode",
+        width: "10%"
     },
     {
         field: "rentalType",
         name: "Type",
-        width: "9%"
+        width: "10%"
     },
     {
         field: "rent",
@@ -227,12 +234,12 @@ function displayGrid() {
     {
         field: "phone",
         name: "Phone",
-        width: "12%"
+        width: "10%"
     },
     {
         field: "date",
         name: "Date",
-        width: "9%"
+        width: "10%"
     }
     ];
     var cfg = {
@@ -246,7 +253,7 @@ function displayGrid() {
         rowsPerPage: 20,
         rowSelector: '40px',
         structure: layout,
-        style: "width: 90%; height:400px; font-size: 14px;"
+        style: "width: 750px; height:400px; font-size: 14px;"
     };
     widget = new dojox.grid.DataGrid(cfg, dojo.byId("container"));
     widget.startup();
@@ -304,7 +311,7 @@ function displayResults(posts) {
         if ( !gridInstantiated ) {
             displayGrid()
             registerDetailGrid()
-            gridInstantiated = true;            
+            gridInstantiated = true;
         }
         var gridData = {
             identifier: "id",
@@ -370,16 +377,18 @@ function post() {
         addressLine:null,
         city:null,
         zipcode:null,
-        sex:null,
+        sex:'NA',
         rent:null,
-        currency:null,
+        currency:'USD',
         rentalType:null,
         beds:null,
         area:null,
         comment:null
     };
     dwr.util.getValues(post);
-    post.rent = dijit.byId('rent').value;
+    //post.rent = dijit.byId('rent').value;
+    post.rentalType = dijit.byId("rentalType").attr('item').value
+    post.beds = dijit.byId("beds").attr('item').value
     dwr.util.useLoadingMessage('saving ...');
     if ( mode == 'update') {
         mode = '';
@@ -473,4 +482,13 @@ function searchAdvFtn() {
     search()
 
 //RoomateAjaxService.advancedSearch(dijit.byId("cityAdv").value,dijit.byId("zipcodeAdv").value,dijit.byId("radiusAdv").value,dijit.byId("rentAdv").value,dijit.byId("rentalTypeAdv").value, 0, MAX, displayResults);
+}
+function submitContactUs() {
+    RoomateAjaxService.contactUs( dijit.byId("nameContausUs").value,dijit.byId("emailContactUs").value,dijit.byId("typeContactUs").value,dijit.byId("commentContactUs").value, function(reply) {
+        if ( reply == 1 ) {
+            dijit.byId('contactUsDiv').hide()
+            alert ("Thanks for contacting us!")
+        }
+        else alert("Error, Please try later")
+    })
 }
