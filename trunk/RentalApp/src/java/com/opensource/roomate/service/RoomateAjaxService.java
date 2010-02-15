@@ -4,10 +4,10 @@
  */
 package com.opensource.roomate.service;
 
+import com.opensource.roomate.entity.ContactUs;
 import com.opensource.roomate.entity.ResultDto;
 import com.opensource.roomate.entity.Post;
 import java.util.Date;
-import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.directwebremoting.annotations.RemoteMethod;
 import org.directwebremoting.annotations.RemoteProxy;
@@ -99,5 +99,16 @@ public class RoomateAjaxService {
     @RemoteMethod
     public static void reIndex() {
         roomateService.reIndex();
+    }
+
+    @RemoteMethod
+    public static int contactUs(String name, String email, String type, String comment, HttpServletRequest request) {
+        try {
+            ContactUs contactUs = new ContactUs(name, email, type, comment, new Date(), request.getRemoteAddr());
+            roomateService.contactUs(contactUs);
+            return 1;
+        } catch (RuntimeException re) {
+            return 0;
+        }
     }
 }
