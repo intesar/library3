@@ -295,12 +295,12 @@ public class RoomateServiceImpl implements RoomateService {
      * @param rent
      * @return
      */
-    public static int calculateRange(Double rent) {
+    private static int calculateRange(Double rent) {
         if ( rent == null ) return 0;
         return (int)Math.ceil(rent / 100) ;
     }
 
-    public void copy(Post p, PostRemoved pr) {
+    private void copy(Post p, PostRemoved pr) {
         pr.setAddressLine(p.getAddressLine());
         pr.setArea(p.getArea());
         pr.setBeds(p.getBeds());
