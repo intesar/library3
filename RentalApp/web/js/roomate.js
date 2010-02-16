@@ -364,7 +364,8 @@ function clear() {
         rentalType:'All',
         beds:'Studio+',
         area:null,
-        comment:null
+        comment:null,
+        youtubeLink:null
     };
     dwr.util.setValues(post);
 }
@@ -383,12 +384,15 @@ function post() {
         rentalType:null,
         beds:null,
         area:null,
-        comment:null
+        comment:null,
+        youtubeLink:null
     };
     dwr.util.getValues(post);
     //post.rent = dijit.byId('rent').value;
-    post.rentalType = dijit.byId("rentalType").attr('item').value
-    post.beds = dijit.byId("beds").attr('item').value
+    var obj1 = dijit.byId("rentalType").attr('item')
+    post.rentalType = obj1 != null ? obj1.value : 0
+    var obj2 = dijit.byId("beds").attr('item')
+    post.beds = obj2 != null ? obj2.value : 0
     dwr.util.useLoadingMessage('saving ...');
     if ( mode == 'update') {
         mode = '';
