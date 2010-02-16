@@ -167,6 +167,9 @@ public class Post implements Serializable {
     @RemoteProperty
     @Column(name = "area")
     private Integer area;
+    @RemoteProperty
+    @Column(name = "youtube_link")
+    private String youtubeLink;
 
     public Post() {
     }
@@ -419,6 +422,14 @@ public class Post implements Serializable {
 
     public void setBeds(String beds) {
         this.beds = beds;
+    }
+
+    public String getYoutubeLink() {
+        return youtubeLink;
+    }
+
+    public void setYoutubeLink(String youtubeLink) {
+        this.youtubeLink = youtubeLink;
     }
 
     @Override

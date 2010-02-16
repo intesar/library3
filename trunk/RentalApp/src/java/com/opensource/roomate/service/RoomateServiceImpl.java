@@ -349,6 +349,7 @@ public class RoomateServiceImpl implements RoomateService {
         pr.setSex(p.getSex());
         pr.setUpdateDate(p.getUpdateDate());
         pr.setUpdateIp(p.getUpdateIp());
-        pr.setZipcode(pr.getZipcode());
+        pr.setZipcode(p.getZipcode());
+        pr.setYoutubeLink(p.getYoutubeLink());
     }
 }

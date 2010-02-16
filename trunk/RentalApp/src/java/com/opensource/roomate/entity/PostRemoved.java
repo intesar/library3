@@ -94,6 +94,8 @@ public class PostRemoved implements Serializable {
     private String beds;
     @Column(name = "area")
     private Integer area;
+    @Column(name = "youtube_link")
+    private String youtubeLink;
 
     public PostRemoved() {
     }
@@ -346,6 +348,14 @@ public class PostRemoved implements Serializable {
 
     public void setBeds(String beds) {
         this.beds = beds;
+    }
+
+    public String getYoutubeLink() {
+        return youtubeLink;
+    }
+
+    public void setYoutubeLink(String youtubeLink) {
+        this.youtubeLink = youtubeLink;
     }
 
     @Override
