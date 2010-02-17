@@ -184,7 +184,10 @@ function bindObjects () {
         connectId: ["whyRent"],
         label: "Approximate, Inclusive of all utilities!"
     })
-    
+    new dijit.Tooltip({
+        connectId:["whyStreet"],
+        label: "Street or Nearest intersection or Landmark"
+    })
     //report abuse
     dojo.connect(dijit.byId("reportAbuseButton"), 'onClick', reportAbuse)
     dojo.connect(dijit.byId("searchAdvButton"), 'onClick', searchAdvFtn)
