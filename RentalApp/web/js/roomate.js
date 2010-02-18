@@ -8,12 +8,12 @@ dojo.require("dijit.form.ValidationTextBox");
 //dojo.require("dijit.form.CurrencyTextBox");
 dojo.require("dijit.form.SimpleTextarea");
 dojo.require("dijit.form.ComboBox");
-//dojo.require("dijit.layout.ContentPane");
-//dojo.require("dijit.layout.BorderContainer");
 dojo.require("dijit.form.NumberTextBox");
 dojo.require("dijit.form.Form");
 dojo.require("dijit.form.CheckBox");
 dojo.require("dojox.analytics.Urchin");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.layout.BorderContainer");
 
 var widget;
 var geoip_country_code;
@@ -109,6 +109,7 @@ function urlCheck() {
 function bindObjects () {
     dojo.byId('loadingDiv').style.display='none'
     dojo.byId('bodyDiv').style.display='block'
+    dojo.byId('topDiv').style.display='block'
     new dojox.analytics.Urchin({
         acct:"UA-6815540-4"
     });
@@ -256,7 +257,7 @@ function displayGrid() {
         rowsPerPage: 20,
         rowSelector: '40px',
         structure: layout,
-        style: "width: 750px; height:400px; font-size: 14px;"
+        style: "height:90%; font-size: 14px;"
     };
     widget = new dojox.grid.DataGrid(cfg, dojo.byId("container"));
     widget.startup();
