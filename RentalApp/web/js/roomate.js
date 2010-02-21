@@ -110,6 +110,7 @@ function bindObjects () {
     dojo.byId('loadingDiv').style.display='none'
     dojo.byId('bodyDiv').style.display='block'
     dojo.byId('topDiv').style.display='block'
+    dojo.byId('copyright').style.display='block'
     new dojox.analytics.Urchin({
         acct:"UA-6815540-4"
     });
@@ -266,6 +267,7 @@ function displayGrid() {
         rowsPerPage: 15,
         rowSelector: '40px',
         structure: layout,
+        noDataMessage:'<H2> No Results to display </H2><H3> Add more cities and zipcodes (e.g san jose san francisco 95050 95040) </H3>',
         style: "height:85%; font-size: 14px;"
     };
     widget = new dojox.grid.DataGrid(cfg, dojo.byId("container"));
@@ -315,30 +317,34 @@ function displayDetailGrid(row) {
     parent.location.hash = "id=" + post.id;
 }
 function displayResults(posts) {
-    if ( posts.list.length < 1 ) {
-        //dojo.byId('keywordNoResult').value = dojo.byId('keyword').value
-        //dojo.byId('subscribeKeyword').value = dojo.byId('keyword').value
-        dojo.byId('noResultDiv').style.display = 'block'
+    if ( posts.total == 0 ) {
+        dojo.byId('myFilter').style.display='none'
+        dojo.byId('priceFilter').style.display='none'
+        dojo.byId('typeFilter').style.display='none'
+        dojo.byId('distanceFilter').style.display='none'
     }
     else {
-        dojo.byId('noResultDiv').style.display = 'none'
-        if ( !gridInstantiated ) {
-            displayGrid()
-            registerDetailGrid()
-            gridInstantiated = true;
-        }
-        var gridData = {
-            identifier: "id",
-            label: "ID",
-            items: posts.list
-        }
-        itemFileWriteStore = new dojo.data.ItemFileWriteStore({
-            data: gridData
-        });
-        widget.setStore(itemFileWriteStore);
-        paginationFtn(posts.start, posts.list.length, posts.total)
-        parent.location.hash = "searchKey" + "=" + dojo.byId('keyword').value
+        dojo.byId('myFilter').style.display='block'
+        dojo.byId('priceFilter').style.display='block'
+        dojo.byId('typeFilter').style.display='block'
+        dojo.byId('distanceFilter').style.display='block'
     }
+    if ( !gridInstantiated ) {
+        displayGrid()
+        registerDetailGrid()
+        gridInstantiated = true;
+    }
+    var gridData = {
+        identifier: "id",
+        label: "ID",
+        items: posts.list
+    }
+    itemFileWriteStore = new dojo.data.ItemFileWriteStore({
+        data: gridData
+    });
+    widget.setStore(itemFileWriteStore);
+    paginationFtn(posts.start, posts.list.length, posts.total)
+    parent.location.hash = "searchKey" + "=" + dojo.byId('keyword').value
 }
 function paginationFtn(start, max, total) {
     TOTAL = total
