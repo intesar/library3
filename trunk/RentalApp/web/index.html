@@ -87,34 +87,40 @@
             <div dojoType="dijit.layout.BorderContainer" liveSplitters="false" design="sidebar"  region="center" id="mainSplit">
                 <div dojoType="dijit.layout.ContentPane" minSize="20" style="width: 300px;" region="leading" splitter="true">
                     <div dojoType="dijit.layout.ContentPane" minSize="20" style="height: 25%;" region="leading" splitter="true">
-                        <div class="left50"> <h4>Filter</h4></div>
+                        <div class="left50" id="myFilter" style="display:none"> <h4>Filter</h4></div>
                     </div>
                     <div dojoType="dijit.layout.ContentPane" minSize="20" style="height: 25%;" region="leading" splitter="true">
-                        <div class="left50"> <h4>Price</h4></div>
-                        <div class="left50">
-                            <span><a href="javascript:void(0)" id="filterRent300" class="links">Up to $300</a></span> <br/>
-                            <span><a href="javascript:void(0)" id="filterRent500" class="links">$301 - $500</a></span> <br/>
-                            <span><a href="javascript:void(0)" id="filterRent1000" class="links">$501 - $1,000</a></span> <br/>
-                            <span><a href="javascript:void(0)" id="filterRentAbove1000" class="links">$1,000 +</a></span> <br/>
-                        </div>
-                    </div>
-                    <div dojoType="dijit.layout.ContentPane" minSize="20" style="height: 25%;" region="leading" splitter="true">
-                        <div dojoType="dijit.layout.ContentPane" minSize="20" style="height: 30%;" region="leading" splitter="true">
-                            <div class="left50"><h4>Type</h4></div>
+                        <div id="priceFilter" style="display:none">
+                            <div class="left50"> <h4>Price</h4></div>
                             <div class="left50">
-                                <span><a href="javascript:void(0)" id="filterTypeShared" class="links">Shared</a></span> <br/>
-                                <span><a href="javascript:void(0)" id="filterTypeSharedRoom" class="links">Shared - Seperate room</a></span> <br/>
-                                <span><a href="javascript:void(0)" id="filterTypeNewRental" class="links">New Rental</a></span> <br/>
+                                <span><a href="javascript:void(0)" id="filterRent300" class="links">Up to $300</a></span> <br/>
+                                <span><a href="javascript:void(0)" id="filterRent500" class="links">$301 - $500</a></span> <br/>
+                                <span><a href="javascript:void(0)" id="filterRent1000" class="links">$501 - $1,000</a></span> <br/>
+                                <span><a href="javascript:void(0)" id="filterRentAbove1000" class="links">$1,000 +</a></span> <br/>
                             </div>
                         </div>
                     </div>
                     <div dojoType="dijit.layout.ContentPane" minSize="20" style="height: 25%;" region="leading" splitter="true">
-                        <div class="left50"><h4>Distance</h4></div>
-                        <div class="left50">
-                            <span><a href="javascript:void(0)" id="filterDistance5" class="links">5 Miles Radius</a></span> <br/>
-                            <span><a href="javascript:void(0)" id="filterDistance10" class="links">10 Miles Radius</a></span> <br/>
-                            <span><a href="javascript:void(0)" id="filterDistance15" class="links">15 Miles Radius</a></span> <br/>
-                            <span><a href="javascript:void(0)" id="filterDistance25" class="links">25 Miles Radius</a></span> <br/>
+                        <div dojoType="dijit.layout.ContentPane" minSize="20" style="height: 30%;" region="leading" splitter="true">
+                            <div id="typeFilter" style="display:none">
+                                <div class="left50"><h4>Type</h4></div>
+                                <div class="left50">
+                                    <span><a href="javascript:void(0)" id="filterTypeShared" class="links">Shared</a></span> <br/>
+                                    <span><a href="javascript:void(0)" id="filterTypeSharedRoom" class="links">Shared - Seperate room</a></span> <br/>
+                                    <span><a href="javascript:void(0)" id="filterTypeNewRental" class="links">New Rental</a></span> <br/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div dojoType="dijit.layout.ContentPane" minSize="20" style="height: 25%;" region="leading" splitter="true">
+                        <div id="distanceFilter" style="display:none">
+                            <div class="left50"><h4>Distance</h4></div>
+                            <div class="left50">
+                                <span><a href="javascript:void(0)" id="filterDistance5" class="links">5 Miles Radius</a></span> <br/>
+                                <span><a href="javascript:void(0)" id="filterDistance10" class="links">10 Miles Radius</a></span> <br/>
+                                <span><a href="javascript:void(0)" id="filterDistance15" class="links">15 Miles Radius</a></span> <br/>
+                                <span><a href="javascript:void(0)" id="filterDistance25" class="links">25 Miles Radius</a></span> <br/>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -126,7 +132,7 @@
                     </div>
                     <div id="paginationDiv" style="display:none">
                         <div style="margin-bottom: 10px; margin-left: 20px">
-                            <div align="right" style="margin-right: 20%">
+                            <div align="right" style="margin-right: 20%" id="paginationDisplayDiv">
                                 <span class="smallLabel" >Displaying </span> &nbsp;&nbsp;
                                 <span class="smallLabel" id="startPagination"></span>
                                 <span class="smallLabel">-</span>
@@ -146,7 +152,7 @@
                 </div>                
             </div>
             <div dojoType="dijit.layout.ContentPane" region="bottom" tabStrip="true">
-                <div align="center">
+                <div align="center" style="display:none" id="copyright">
                     &copy; 2010 &nbsp;&nbsp; <a href="aboutUs.html" > Room-Share.com </a> &nbsp;&nbsp; | &nbsp;&nbsp;<a href="aboutUs.html" >About Us</a>
                 </div>
             </div>
