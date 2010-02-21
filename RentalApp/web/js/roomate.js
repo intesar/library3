@@ -25,8 +25,8 @@ var geoip_postal_code;
 var current_row;
 var post_id;
 var START = 0
-var MAX = 15
-var SIZE = 15
+var MAX = 10
+var SIZE = 10
 var TOTAL
 var gridInstantiated = false
 var mode = 'normal';
@@ -170,7 +170,7 @@ function bindObjects () {
             }
         })
     })
-    dojo.connect(dojo.byId("searchAdvLink"), 'onclick', searchAdvShow)
+    //dojo.connect(dojo.byId("searchAdvLink"), 'onclick', searchAdvShow)
     dojo.connect(dijit.byId("rentalType"), 'onChange', rentalTypeChange)
     // tool tips
     new dijit.Tooltip({
@@ -188,6 +188,10 @@ function bindObjects () {
     new dijit.Tooltip({
         connectId:["whyStreet"],
         label: "Street or Nearest intersection or Landmark"
+    })
+    new dijit.Tooltip({
+        connectId:["whyEmailAlert"],
+        label: "You can cancel email alerts at anytime."
     })
     //report abuse
     dojo.connect(dijit.byId("reportAbuseButton"), 'onClick', reportAbuse)
@@ -214,7 +218,12 @@ function searchAgain() {
     dijit.byId('noResultDiv').hide();
 }
 function displayGrid() {
-    var layout =  [    
+    var layout =  [
+    {
+        field:"addressLine",
+        name: "Address",
+        width: "20%"
+    },
     {
         field: "city",
         name: "City",
@@ -254,10 +263,10 @@ function displayGrid() {
         jsId: "mytable",
         widgetId: "mytable",
         clientSort: true,
-        rowsPerPage: 20,
+        rowsPerPage: 15,
         rowSelector: '40px',
         structure: layout,
-        style: "height:90%; font-size: 14px;"
+        style: "height:85%; font-size: 14px;"
     };
     widget = new dojox.grid.DataGrid(cfg, dojo.byId("container"));
     widget.startup();
@@ -307,11 +316,12 @@ function displayDetailGrid(row) {
 }
 function displayResults(posts) {
     if ( posts.list.length < 1 ) {
-        dojo.byId('keywordNoResult').value = dojo.byId('keyword').value
-        dojo.byId('subscribeKeyword').value = dojo.byId('keyword').value
-        dijit.byId('noResultDiv').show();
+        //dojo.byId('keywordNoResult').value = dojo.byId('keyword').value
+        //dojo.byId('subscribeKeyword').value = dojo.byId('keyword').value
+        dojo.byId('noResultDiv').style.display = 'block'
     }
-    else {        
+    else {
+        dojo.byId('noResultDiv').style.display = 'none'
         if ( !gridInstantiated ) {
             displayGrid()
             registerDetailGrid()
@@ -408,8 +418,8 @@ function post() {
 function reply (data) {
     if ( data == 1 ) {
         dijit.byId('post').hide();
-        //dijit.byId('postSuccessMsgDiv').show();
-        clear();
+        dijit.byId('postSuccessMsgDiv').show();
+    //clear();
     }
     else if ( data == -1) {
         alert ('Error, please try again')
@@ -460,10 +470,10 @@ function rentalTypeChange() {
 //        dojo.byId('bedsTr').style.display='none'
 //    }
 }
-function searchAdvShow() {
-    dijit.byId("advancedSearchDiv").show()
-    parent.location.hash = "advancedSearch"
-}
+//function searchAdvShow() {
+//    dijit.byId("advancedSearchDiv").show()
+//    parent.location.hash = "advancedSearch"
+//}
 function searchAdvFtn() {
     var cityAdv_ = dijit.byId('cityAdv').attr('value')
     var zipcodeAdv_ = dijit.byId('zipcodeAdv').attr('value')
