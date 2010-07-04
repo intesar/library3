@@ -4,12 +4,9 @@
  */
 package com.opensource.roomate.service.util;
 
-
 import com.sun.mail.smtp.SMTPSendFailedException;
 import java.security.Security;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -17,6 +14,7 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -24,24 +22,27 @@ import javax.mail.internet.MimeMessage;
  */
 public class EmailServiceImpl implements EmailService {
 
+    @Override
     public void SendMail(String[] sendTo) {
         try {
             Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
             sendSSMessage(sendTo, EMAIL_SUBJECT_TEXT, EMAIL_MESSAGE_TEXT, EMAIL_FROM_ADDRESS);
         } catch (MessagingException ex) {
-            Logger.getLogger(EmailServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            logger.warn(ex.getMessage(), ex);
         }
     }
 
+    @Override
     public void sendEmail(String[] toAddress, String body) {
         try {
             Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
             sendSSMessage(toAddress, EMAIL_SUBJECT_TEXT, body, EMAIL_FROM_ADDRESS);
         } catch (MessagingException ex) {
-            Logger.getLogger(EmailServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            logger.warn(ex.getMessage(), ex);
         }
     }
 
+    @Override
     public void sendEmail(String[] toAddress, String subject, String body) {
         try {
             Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
@@ -50,31 +51,40 @@ public class EmailServiceImpl implements EmailService {
             }
             sendSSMessage(toAddress, subject, body, EMAIL_FROM_ADDRESS);
         } catch (MessagingException ex) {
-            Logger.getLogger(EmailServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            logger.warn(ex.getMessage(), ex);
         }
     }
 
+    @Override
     public void sendEmail(String toAddress, String body) {
         try {
             String[] to = {toAddress};
             Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
             sendSSMessage(to, EMAIL_SUBJECT_TEXT, body, EMAIL_FROM_ADDRESS);
         } catch (MessagingException ex) {
-            ex.printStackTrace();
-            Logger.getLogger(EmailServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            logger.warn(ex.getMessage(), ex);
         }
     }
 
+    @Override
     public void sendEmail(String toAddress, String subject, String body) {
         try {
             String[] to = {toAddress};
             Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
             sendSSMessage(to, subject, body, EMAIL_FROM_ADDRESS);
         } catch (MessagingException ex) {
-            Logger.getLogger(EmailServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            logger.warn(ex.getMessage(), ex);
         }
     }
 
+    /**
+     * 
+     * @param recipients
+     * @param subject
+     * @param message
+     * @param from
+     * @throws MessagingException
+     */
     private void sendSSMessage(String recipients[], String subject,
             String message, String from) throws MessagingException {
 
@@ -128,18 +138,14 @@ public class EmailServiceImpl implements EmailService {
         msg.setContent(message, EMAIL_CONTENT_TYPE);
         try {
             Transport.send(msg);
-        } catch (SMTPSendFailedException e) {
+        } catch (SMTPSendFailedException ex) {
             errorCount++;
-            e.printStackTrace();
-        } catch (RuntimeException re) {
-            re.printStackTrace();
+            logger.warn(ex.getMessage(), ex);
+        } catch (RuntimeException ex) {
+            logger.warn(ex.getMessage(), ex);
         }
     }
     private int errorCount = 0;
-
-    public static void main(String[] args) {
-        EmailService es = new EmailServiceImpl();
-        es.sendEmail("mdshannan@gmail.com", "testing");
-    }
+    protected static Logger logger = Logger.getLogger(EmailServiceImpl.class);
 }
 

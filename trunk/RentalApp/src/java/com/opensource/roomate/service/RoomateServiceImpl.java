@@ -38,9 +38,9 @@ import org.hibernate.search.jpa.Search;
  */
 public class RoomateServiceImpl implements RoomateService {
 
-    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("Roomate");
-    static Logger logger = Logger.getLogger(RoomateServiceImpl.class);
-    private ExecutorService pool = Executors.newFixedThreadPool(5);
+    protected EntityManagerFactory emf = Persistence.createEntityManagerFactory("Roomate");
+    protected static Logger logger = Logger.getLogger(RoomateServiceImpl.class);
+    protected ExecutorService pool = Executors.newFixedThreadPool(5);
 
     @Override
     public void addPost(Post post, String ip) {
@@ -55,10 +55,10 @@ public class RoomateServiceImpl implements RoomateService {
             em.persist(post);
             em.getTransaction().commit();
             sendMail(post.getEmail(), post.getPostDate());
-        } catch (Exception e) {
-            e.printStackTrace();
-            logger.warn(e);
+        } catch (RuntimeException e) {
             em.getTransaction().rollback();
+            logger.warn("error adding new Post", e);
+            throw e;
         } finally {
             em.close();
         }
@@ -84,10 +84,10 @@ public class RoomateServiceImpl implements RoomateService {
             post1.setUpdateDate(new Date());
             em.merge(post1);
             em.getTransaction().commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            logger.warn(e);
+        } catch (RuntimeException e) {
             em.getTransaction().rollback();
+            logger.warn("error updating Post", e);
+            throw e;
         } finally {
             em.close();
         }
@@ -107,10 +107,10 @@ public class RoomateServiceImpl implements RoomateService {
             em.persist(pr);
             em.remove(post1);
             em.getTransaction().commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            logger.warn(e);
+        } catch (RuntimeException e) {
             em.getTransaction().rollback();
+            logger.warn("error deleting Post", e);
+            throw e;
         } finally {
             em.close();
         }
@@ -127,10 +127,10 @@ public class RoomateServiceImpl implements RoomateService {
             Runnable runnable = new MessageAlert(post.getEmail(), post.getId(), message);
             pool.execute(runnable);
             em.getTransaction().commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            logger.warn(e);
+        } catch (RuntimeException e) {
             em.getTransaction().rollback();
+            logger.warn("error sending message to a post", e);
+            throw e;
         } finally {
             em.close();
         }
@@ -145,10 +145,10 @@ public class RoomateServiceImpl implements RoomateService {
             em.persist(su);
             em.getTransaction().commit();
 //            sendMail(post.getEmail(), post.getPostDate());
-        } catch (Exception e) {
-            e.printStackTrace();
-            logger.warn(e);
+        } catch (RuntimeException e) {
             em.getTransaction().rollback();
+            logger.warn("error on subscribing user", e);
+            throw e;
         } finally {
             em.close();
         }
@@ -161,9 +161,8 @@ public class RoomateServiceImpl implements RoomateService {
         try {
             Post post = (Post) em.createNamedQuery("Post.findById").setParameter(1, id).getSingleResult();
             list.add(post);
-        } catch (Exception e) {
-            e.printStackTrace();
-            logger.warn(e);
+        } catch (RuntimeException e) {
+            logger.warn("error searching Post by id", e);
         } finally {
             em.close();
         }
@@ -183,7 +182,7 @@ public class RoomateServiceImpl implements RoomateService {
             return executeLuceneQuery(query, currentPage, pageSize);
 //            printReport();
         } catch (ParseException e) {
-            logger.warn(e);
+            logger.warn("error on search with keywords :" + keywords, e);
         }
         return new ResultDto(list, currentPage, pageSize, 0);
     }
@@ -196,8 +195,7 @@ public class RoomateServiceImpl implements RoomateService {
             Post post = (Post) em.createNamedQuery("Post.findByEmaiAndId").setParameter(1, email).setParameter(2, id).getSingleResult();
             list.add(post);
         } catch (Exception e) {
-            e.printStackTrace();
-            logger.warn(e);
+            logger.warn("error searching by Email :" + email, e);
         } finally {
             em.close();
         }
@@ -222,10 +220,10 @@ public class RoomateServiceImpl implements RoomateService {
                 pool.execute(runnable);
             }
             em.getTransaction().commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            logger.warn(e);
+        } catch (RuntimeException e) {
             em.getTransaction().rollback();
+            logger.warn("error on reporting abuse", e);
+            throw e;
         } finally {
             em.close();
         }
@@ -241,9 +239,9 @@ public class RoomateServiceImpl implements RoomateService {
                 p.setRentCategory(calculateRange(p.getRent()));
                 fullTextEntityManager.index(p);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            logger.warn(e);
+        } catch (RuntimeException e) {
+            logger.warn("error on reindexing", e);
+            throw e;
         } finally {
             em.close();
         }
@@ -259,10 +257,10 @@ public class RoomateServiceImpl implements RoomateService {
             Runnable runnable = new ContactUsAlert(contactUs);
             pool.execute(runnable);
             em.getTransaction().commit();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (RuntimeException e) {
             em.getTransaction().rollback();
-            logger.warn(e);
+            logger.warn("error contact us", e);
+            throw e;
         } finally {
             em.close();
         }
@@ -288,6 +286,7 @@ public class RoomateServiceImpl implements RoomateService {
             Post p = (Post) em.createNamedQuery("Post.findByEmailAndPostDate").setParameter(1, email).setParameter(2, postDate, TemporalType.TIMESTAMP).getSingleResult();
             pool.execute(new NewPostAlert(p.getEmail(), p.getId()));
         } catch (Exception e) {
+            logger.warn("error sending mail", e);
         } finally {
             em.close();
         }

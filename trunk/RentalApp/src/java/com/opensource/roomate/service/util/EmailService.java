@@ -33,13 +33,39 @@ public interface EmailService {
             + " <br/> <br/> <br/> For any queries reach us at info@bizintelapps.com "
             + "<br/> <br/>Thanks , <br/>The BizIntelApps, Roomate Team ";
 
+    /**
+     *
+     * @param sendTo
+     */
     void SendMail(String[] sendTo);
 
+    /**
+     *
+     * @param toAddress
+     * @param body
+     */
     void sendEmail(String toAddress, String body);
 
+    /**
+     *
+     * @param toAddress
+     * @param body
+     */
     void sendEmail(String[] toAddress, String body);
 
+    /**
+     *
+     * @param toAddress
+     * @param subject
+     * @param body
+     */
     void sendEmail(String toAddress, String subject, String body);
 
+    /**
+     *
+     * @param toAddress
+     * @param subject
+     * @param body
+     */
     void sendEmail(String[] toAddress, String subject, String body);
 }
