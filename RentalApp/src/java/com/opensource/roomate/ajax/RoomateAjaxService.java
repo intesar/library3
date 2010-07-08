@@ -2,11 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.opensource.roomate.service;
+package com.opensource.roomate.ajax;
 
 import com.opensource.roomate.entity.ContactUs;
 import com.opensource.roomate.entity.ResultDto;
 import com.opensource.roomate.entity.Post;
+import com.opensource.roomate.service.RoomateService;
+import com.opensource.roomate.service.RoomateServiceImpl;
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
@@ -126,11 +128,7 @@ public class RoomateAjaxService {
      */
     @RemoteMethod
     public static ResultDto search(String key, int start, int max) {
-//        Date st = new Date();
         return roomateService.search(key, start, max);
-//        Date ed = new Date();
-//        System.out.println(" Duration ------------ " + (ed.getTime() - st.getTime()));
-//        return list;
     }
 
     /**
