@@ -18,7 +18,7 @@
         <init-param>
             <param-name>classes</param-name>
             <param-value>
-                com.opensource.roomate.service.RoomateAjaxService,
+                com.opensource.roomate.ajax.RoomateAjaxService,
                 com.opensource.roomate.entity.Post,
                 com.opensource.roomate.entity.ResultDto
             </param-value>
