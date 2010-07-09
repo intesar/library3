@@ -8,12 +8,13 @@
     <welcome-file-list>
         <welcome-file>jsp/login.jsp</welcome-file>
     </welcome-file-list>
-    
+    <!--
     <servlet>
         <servlet-name>context</servlet-name>
         <servlet-class>org.springframework.web.context.ContextLoaderServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
+    -->
     <servlet>
         <servlet-name>dwr-invoker</servlet-name>
         <servlet-class>org.directwebremoting.spring.DwrSpringServlet</servlet-class>
@@ -26,7 +27,7 @@
         <servlet-name>dwr-invoker</servlet-name>
         <url-pattern>/dwr/*</url-pattern>
     </servlet-mapping>
-    
+    <!--
      <servlet>
         <servlet-name>statusCheckServices</servlet-name>
         <servlet-class>org.springframework.web.context.support.HttpRequestHandlerServlet</servlet-class>
@@ -35,6 +36,7 @@
         <servlet-name>statusCheckServices</servlet-name>
         <url-pattern>/remoting/StatusCheckService</url-pattern>
     </servlet-mapping>
+    -->
     
      <!-- 1. Setup two parameters:          -->
     <!--    a) Acegi's configuration file  -->
