@@ -25,7 +25,7 @@
     -->
     <bean id="emailServiceImpl" class="com.bia.ccm.services.impl.EMailServiceImpl" />
     <bean id="caseConverterImpl" class="com.bia.converter.CaseConverterImpl" />
-    <bean id="userAjaxService" class="com.bia.ccm.services.ajax.UserAjaxService" >
+    <bean id="userAjaxService" class="com.bia.ccm.ajax.UserAjaxService" >
         <dwr:remote javascript="AjaxUserService">
             <dwr:include method="forgotPassword" />
             <dwr:include method="resetPassword" />
@@ -38,7 +38,7 @@
         <property name="caseConverter" ref="caseConverterImpl" />
         <property name="emailService" ref="emailServiceImpl" />
     </bean>
-    <bean id="workAjaxService" class="com.bia.ccm.services.ajax.WorkAjaxService" >
+    <bean id="workAjaxService" class="com.bia.ccm.ajax.WorkAjaxService" >
         <dwr:remote javascript="AjaxWorkService">
             <dwr:include method="getActiveSystems" />
             <dwr:include method="getSystemByNameAndOrganization" />
@@ -65,7 +65,7 @@
         <property name="caseConverter" ref="caseConverterImpl" />
         <property name="emailService" ref="emailServiceImpl" />
     </bean>
-    <bean id="adminAjaxService" class="com.bia.ccm.services.ajax.AdminAjaxService" >
+    <bean id="adminAjaxService" class="com.bia.ccm.ajax.AdminAjaxService" >
         <dwr:remote javascript="AjaxAdminService">
             <dwr:include method="getAllSystems" />
             <dwr:include method="saveSystems" />
@@ -90,7 +90,7 @@
         </dwr:remote>
         <property name="caseConverter" ref="caseConverterImpl" />
     </bean>
-    <bean id="customerAjaxService" class="com.bia.ccm.services.ajax.CustomerAjaxService" >
+    <bean id="customerAjaxService" class="com.bia.ccm.ajax.CustomerAjaxService" >
         <dwr:remote javascript="AjaxCustomerService">
             <dwr:include method="getMySystemLease" />
         </dwr:remote>
