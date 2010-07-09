@@ -47,75 +47,7 @@
             .style35 {font-size: 12px; color: #ffffff; }
             -->
         </style>
-        <script type='text/javascript' src='../dwr/interface/AjaxUserService.js'></script>
-        <script type='text/javascript' src='../dwr/engine.js'></script>
-        <script type="text/javascript" src="../js/email_validation.js"></script>
-        <script type='text/javascript' src='../dwr/util.js'></script>
 
-        <script type="text/javascript"> 
-            var email = "";
-            var password = "";
-            function createAccount() {
-                dwr.util.useLoadingMessage("Please wait while we create your account!");
-                var c = dwr.util.getValue("companyName");
-                var u = dwr.util.getValue("email");
-                var p = dwr.util.getValue("password");
-                var cp = dwr.util.getValue("confirmPassword");
-                var minutes = 60;//dwr.util.getValue("minutes");
-                var rate = 20;//dwr.util.getValue("rate");
-                var maxSystems = 15;//dwr.util.getValue("maxSystems");
-                //alert ( c + u + p + cp);
-                if ( c != null && c != "" && p != null && p != "" && p == cp) {
-                    if ( validateEmail(u, true, true) ) {
-                        email = u;
-                        password = p;
-                        AjaxUserService.registerNewOrganization ( c, "hyd", u, p, minutes, rate, maxSystems, reply1);
-                    }
-                } else {
-                    alert ( " Company Name, Password Cannot be Empty Or \n\ " +
-                        " Password & ConfirmPassword donot match ");
-                }
-        
-            } 
-               
-            var reply1 = function ( data ) {            
-                if ( data == 'Please login with your email and password') {                        
-                    //alert ( 'Congratulation Your Account is Created Successfully!' );
-                    location.href="/CCM/j_acegi_security_check?j_garbage=abcdexehrelasdjf232343lkajflskdjfalsdfjasldkfjasldkfjalsdkjf&j_username=" + email + "&j_password=" + password;
-                } else {                    
-                    alert ( data );
-                }                
-            }
-        </script>
-
-        <script type="text/javascript">
-            function redirectIfIE() {
-                //var browser=navigator.appName;
-                //var regex = "faceguard";
-                //var isFaceGuard = location.href.toString().search(regex);
-                
-                //if ( browser == 'Microsoft Internet Explorer'  && isFaceGuard != -1 ) {
-                //alert ( " Your are using IE, Please Enable Popups & Wait while we redirect you!");
-                //var strUrl = "http://biadevbox.homelinux.com:8080/CCM/";
-                //window.open(strUrl);
-                //window.close();
-                //}
-            }
-            function submitForm() {
-                //var browser=navigator.appName;   
-                //var regex = "faceguard";
-                //var isFaceGuard = location.href.toString().search(regex);
-                var email = dwr.util.getValue("j_username");
-                var password = dwr.util.getValue("j_password");
-                //if ( browser == 'Microsoft Internet Explorer' && isFaceGuard != -1 ) {
-                //    alert ( " Your are using IE, Please Enable Popups & Wait while we redirect you!");
-                //    var strUrl = "http://biadevbox.homelinux.com:8080/CCM/j_acegi_security_check?j_garbage=abcdexehrelasdjf232343lkajflskdjfalsdfjasldkfjasldkfjalsdkjf&j_username=" + email + "&j_password=" + password;
-                //    window.open(strUrl);
-                //} else {
-                location.href="/CCM/j_acegi_security_check?j_garbage=abcdexehrelasdjf232343lkajflskdjfalsdfjasldkfjasldkfjalsdkjf&j_username=" + email + "&j_password=" + password;
-                //}
-            }  
-        </script>
 
     </head>
 
@@ -319,4 +251,74 @@
         </table>
 
     </body>
+
+    <script type='text/javascript' src='/CCM/dwr/interface/AjaxUserService.js'></script>
+    <script type='text/javascript' src='/CCM/dwr/engine.js'></script>
+    <script type="text/javascript" src="/CCM/js/email_validation.js"></script>
+    <script type='text/javascript' src='/CCM/dwr/util.js'></script>
+
+    <script type="text/javascript">
+        var email = "";
+        var password = "";
+        function createAccount() {
+            dwr.util.useLoadingMessage("Please wait while we create your account!");
+            var c = dwr.util.getValue("companyName");
+            var u = dwr.util.getValue("email");
+            var p = dwr.util.getValue("password");
+            var cp = dwr.util.getValue("confirmPassword");
+            var minutes = 60;//dwr.util.getValue("minutes");
+            var rate = 20;//dwr.util.getValue("rate");
+            var maxSystems = 15;//dwr.util.getValue("maxSystems");
+            //alert ( c + u + p + cp);
+            if ( c != null && c != "" && p != null && p != "" && p == cp) {
+                if ( validateEmail(u, true, true) ) {
+                    email = u;
+                    password = p;
+                    AjaxUserService.registerNewOrganization ( c, "hyd", u, p, minutes, rate, maxSystems, reply1);
+                }
+            } else {
+                alert ( " Company Name, Password Cannot be Empty Or \n\ " +
+                    " Password & ConfirmPassword donot match ");
+            }
+
+        }
+
+        var reply1 = function ( data ) {
+            if ( data == 'Please login with your email and password') {
+                //alert ( 'Congratulation Your Account is Created Successfully!' );
+                location.href="/CCM/j_acegi_security_check?j_garbage=abcdexehrelasdjf232343lkajflskdjfalsdfjasldkfjasldkfjalsdkjf&j_username=" + email + "&j_password=" + password;
+            } else {
+                alert ( data );
+            }
+        }
+    </script>
+
+    <script type="text/javascript">
+        function redirectIfIE() {
+            //var browser=navigator.appName;
+            //var regex = "faceguard";
+            //var isFaceGuard = location.href.toString().search(regex);
+
+            //if ( browser == 'Microsoft Internet Explorer'  && isFaceGuard != -1 ) {
+            //alert ( " Your are using IE, Please Enable Popups & Wait while we redirect you!");
+            //var strUrl = "http://biadevbox.homelinux.com:8080/CCM/";
+            //window.open(strUrl);
+            //window.close();
+            //}
+        }
+        function submitForm() {
+            //var browser=navigator.appName;
+            //var regex = "faceguard";
+            //var isFaceGuard = location.href.toString().search(regex);
+            var email = dwr.util.getValue("j_username");
+            var password = dwr.util.getValue("j_password");
+            //if ( browser == 'Microsoft Internet Explorer' && isFaceGuard != -1 ) {
+            //    alert ( " Your are using IE, Please Enable Popups & Wait while we redirect you!");
+            //    var strUrl = "http://biadevbox.homelinux.com:8080/CCM/j_acegi_security_check?j_garbage=abcdexehrelasdjf232343lkajflskdjfalsdfjasldkfjasldkfjalsdkjf&j_username=" + email + "&j_password=" + password;
+            //    window.open(strUrl);
+            //} else {
+            location.href="/CCM/j_acegi_security_check?j_garbage=abcdexehrelasdjf232343lkajflskdjfalsdfjasldkfjasldkfjalsdkjf&j_username=" + email + "&j_password=" + password;
+            //}
+        }
+    </script>
 </html>
