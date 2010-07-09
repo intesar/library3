@@ -86,8 +86,7 @@ public class UserAjaxService {
 
             return str;
         } catch (Exception e) {
-            e.printStackTrace();
-            logger.debug(e);
+            logger.warn(e.getMessage(), e);
             return "Error creating new organization, try registering with different Email or Organization Name";
         }
 

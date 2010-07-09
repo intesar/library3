@@ -14,13 +14,13 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
     </bean>
     
     <aop:config>
-        <!--
-        <aop:pointcut id="serviceMethods" expression="execution(* com.bia.counsellingapp.services.*.*(..))"/>
-        -->
+        
+        <aop:pointcut id="serviceMethods" expression="execution(* com.bia.ccm.services.*.*(..))"/>
+        
         <!-- aop will intercept any request to all instance defined in this package -->
-        
-        <aop:pointcut id="serviceMethods" expression="within(com.bia.ccm.services..*)"/>
-        
+        <!--
+        <aop:pointcut id="serviceMethods" expression="within(com.bia.ccm.services.*.*(..))"/>
+        -->
         <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethods"/>
     </aop:config>
     
