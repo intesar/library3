@@ -91,6 +91,7 @@ public class UserServiceImpl implements UserService {
 
     public void registerNewOrganization(String organizationName, String city,
             String email, String password, Integer minutes, Integer rate, Integer maxSystems) {
+
         Organization o = new Organization(organizationName, (short) 1, null, city,
                 email, city, null, "india", email, "Silver Member", "ccm", 0, new Date(), "self");
         o.setContactEmail(email);

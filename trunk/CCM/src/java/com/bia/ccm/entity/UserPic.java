@@ -9,6 +9,8 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
@@ -33,6 +35,7 @@ public class UserPic implements Serializable {
     private byte[] pic;
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
     @JoinColumn(name = "user", referencedColumnName = "id")
     @OneToOne (fetch=FetchType.EAGER)
