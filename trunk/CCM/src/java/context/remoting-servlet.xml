@@ -10,9 +10,9 @@
 
 
 
-    <bean id="statusCheckService" class="com.bia.ccm.services.remote.impl.StatusCheckServiceImpl"/>
+    <bean id="statusCheckService" class="com.bia.ccm.remote.impl.StatusCheckServiceImpl"/>
     <bean name="/StatusCheckService"   class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
         <property name="service" ref="statusCheckService"/>
-        <property name="serviceInterface" value="com.bia.ccm.services.remote.StatusCheckService"/>
+        <property name="serviceInterface" value="com.bia.ccm.remote.StatusCheckService"/>
     </bean>
 </beans>
