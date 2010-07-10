@@ -15,6 +15,8 @@ import com.bia.ccm.entity.Systems;
 import com.bia.ccm.entity.UsageDetail;
 import com.bia.ccm.entity.Users;
 import com.bia.ccm.entity.UsersLight;
+import com.bia.ccm.exceptions.InvalidInputException;
+import com.bia.ccm.exceptions.NoRoleException;
 import com.bia.ccm.services.AdminService;
 import com.bia.ccm.services.EMailService;
 import com.bia.ccm.services.MembershipService;
@@ -48,23 +50,28 @@ public class WorkAjaxService {
         return this.workService.getSystemByNameAndOrganization(systemNo, username);
     }
 
-    public String leaseSystem(int systemId, String leaseHolder) {
+    public int leaseSystem(int systemId, String leaseHolder) {
         try {
             if (leaseHolder != null) {
                 leaseHolder = SQLInjectionFilterManager.getInstance().filter(leaseHolder);
                 leaseHolder = leaseHolder.toLowerCase();
             }
             this.workService.leaseSystem(systemId, leaseHolder, AcegiUtil.getUsername());
-        } catch (Exception e) {
-            e.printStackTrace();
-            logger.error(e);
-            return e.getMessage();
+            return 1;
+        } catch (InvalidInputException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -2;
+        } catch (NoRoleException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -3;
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -1;
         }
-        return "Assigned Successfully!";
 
     }
 
-    public String addService(String service, Long units, String user, Double payableAmount,
+    public int addService(String service, Long units, String user, Double payableAmount,
             String comments, Double paidAmount) {
         String msg = "Service Added Successfully";
         String agent = AcegiUtil.getUsername();
@@ -73,14 +80,19 @@ public class WorkAjaxService {
             user = SQLInjectionFilterManager.getInstance().filter(user);
             comments = SQLInjectionFilterManager.getInstance().filter(comments);
             if (units <= 0 || payableAmount <= 0 || paidAmount <= 0) {
-                return "We are keeping an Eye on you! ";
+                //return "We are keeping an Eye on you! ";
             }
             this.workService.addService(service, units, user, payableAmount, comments, paidAmount, agent);
-            return msg;
-        } catch (Exception e) {
-            //e.printStackTrace();
-            logger.error(e);
-            return e.getMessage();
+            return 1;
+        } catch (InvalidInputException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -2;
+        } catch (NoRoleException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -3;
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -1;
         }
 
     }
@@ -89,21 +101,26 @@ public class WorkAjaxService {
         return this.workService.getPayableAmount(id);
     }
 
-    public String unleaseSystem(int systemId, double paidAmount) {
+    public int unleaseSystem(int systemId, double paidAmount) {
         try {
             if (systemId <= 0 || paidAmount <= 0) {
-                return "We are keeping an Eye on you! ";
+                //return "We are keeping an Eye on you! ";
             }
             this.workService.unleaseSystem(systemId, paidAmount, AcegiUtil.getUsername());
-        } catch (Exception e) {
-            //e.printStackTrace();
-            logger.error(e);
-            return e.getMessage();
+            return 1;
+        } catch (InvalidInputException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -2;
+        } catch (NoRoleException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -3;
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -1;
         }
-        return "Assigned Successfully!";
     }
 
-    public String createCustomer(Users c) {
+    public int createCustomer(Users c) {
 
         String msg = "Customer Created Successfully!";
         try {
@@ -118,16 +135,17 @@ public class WorkAjaxService {
             caseConverter.toLowerCase(c, "password");
             this.workService.createCutomer(c, u);
             emailService.sendEmail(c.getEmail(), "Welcome to FaceGuard, username / password : " + c.getUsername() + " / " + c.getPassword());
-        } catch (RuntimeException re) {
-            logger.error(re);
-            //re.printStackTrace();
-            msg = re.getMessage();
-        } catch (Exception e) {
-            //e.printStackTrace();
-            logger.error(e);
-            msg = e.getMessage();
+            return 1;
+        } catch (InvalidInputException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -2;
+        } catch (NoRoleException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -3;
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -1;
         }
-        return msg;
     }
 
     public Users getUserWithPic(String key) {
@@ -139,8 +157,8 @@ public class WorkAjaxService {
             }
             c = this.workService.getCustomerPic(key);
             //c.setPassword("Encrypted");
-        } catch (Exception e) {
-            logger.error(e);
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage(), ex);
         }
         if (c == null) {
             c = new Users();
@@ -162,8 +180,8 @@ public class WorkAjaxService {
             }
             c = this.workService.getCustomer(key);
             //c.setPassword("Encrypted");
-        } catch (Exception e) {
-            logger.error(e);
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage(), ex);
         }
         if (c == null) {
             c = new Users();
@@ -179,18 +197,21 @@ public class WorkAjaxService {
     }
 
     //public String addSuggestion()
-    public String chargePayment(int systemId) {
+    public int chargePayment(int systemId) {
         String msg = "Payment Successful!";
         try {
             workService.chargePayment(systemId, AcegiUtil.getUsername());
-        } catch (RuntimeException re) {
-            logger.error(re.getMessage());
-            return re.getMessage();
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-            return e.getMessage();
+            return 1;
+        } catch (InvalidInputException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -2;
+        } catch (NoRoleException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -3;
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -1;
         }
-        return msg;
     }
 
     public Organization getOrganization() {
@@ -204,12 +225,12 @@ public class WorkAjaxService {
         return list;
     }
 
-    public String saveMembershipType(MembershipTypes membershipTypes) {
+    public int saveMembershipType(MembershipTypes membershipTypes) {
         try {
-            if (membershipTypes == null || membershipTypes.getName() == null ||
-                    membershipTypes.getName().trim().length() <= 0 ||
-                    membershipTypes.getFee() <= 0.0 || membershipTypes.getDaysValidFor() <= 0) {
-                return "Invalid Inputs!";
+            if (membershipTypes == null || membershipTypes.getName() == null
+                    || membershipTypes.getName().trim().length() <= 0
+                    || membershipTypes.getFee() <= 0.0 || membershipTypes.getDaysValidFor() <= 0) {
+                //return "Invalid Inputs!";
             }
             Organization o = this.getOrganization();
             if (membershipTypes.getId() == null) {
@@ -235,10 +256,16 @@ public class WorkAjaxService {
             } else {
                 this.membershipService.saveMembershipType(membershipTypes);
             }
-            return "Created Successfully!";
-        } catch (Exception e) {
-            logger.error(e);
-            return "Error, Please check your inputs or Try later!";
+            return 1;
+        } catch (InvalidInputException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -2;
+        } catch (NoRoleException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -3;
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -1;
         }
     }
 
@@ -261,38 +288,46 @@ public class WorkAjaxService {
         }
     }
 
-    public String saveMembershipDiscount(int membershipDiscountId, double discountPercentage) {
+    public int saveMembershipDiscount(int membershipDiscountId, double discountPercentage) {
         try {
             if (discountPercentage < 0.0 || discountPercentage > 100.0) {
-                return "Discount Percentage cannot be Negative or Greater than 100!";
+                //return "Discount Percentage cannot be Negative or Greater than 100!";
             }
             MembershipDiscounts discounts = this.membershipService.getMembershipDiscountsById(membershipDiscountId);
             discounts.setDiscountPercentage(discountPercentage);
             this.membershipService.saveMembershipDiscounts(discounts);
-            return "Saved Successfully!";
-        } catch (Exception e) {
-            logger.error(e);
-            return "Error, Please try again!";
+            return 1;
+        } catch (InvalidInputException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -2;
+        } catch (NoRoleException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -3;
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -1;
         }
     }
 
-    public String saveMembership(Memberships memberships) {
+    public int saveMembership(Memberships memberships) {
         UsersLight ul = this.adminService.getUserByUsername(memberships.getEmail());
-        if ( ul == null || ul.getId() == null) {
-            return "No user found with this email";
+        if (ul == null || ul.getId() == null) {
+            //return "No user found with this email";
         }
         try {
             this.membershipService.validateUserMembership(memberships.getEmail(), this.getOrganization().getName());
-        } catch (RuntimeException re) {
-            return re.getMessage();
-        }
-        try {
+
             this.membershipService.saveMembership(memberships, this.getOrganization(), AcegiUtil.getUsername());
-            return "Saved Successfully!";
-        } catch (Exception e) {
-            e.printStackTrace();
-            logger.error(e);
-            return "Error, Try again!";
+            return 1;
+        } catch (InvalidInputException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -2;
+        } catch (NoRoleException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -3;
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -1;
         }
     }
 

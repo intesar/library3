@@ -6,21 +6,25 @@ package com.bia.ccm.util;
 
 import org.acegisecurity.GrantedAuthority;
 import org.acegisecurity.context.SecurityContextHolder;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  *
  * @author intesar
  */
 public class AcegiUtil {
+    protected static final Log logger = LogFactory.getLog(AcegiUtil.class);
 
     /*
      *  returns logged in user
      */
-    public static final String getUsername() {
+    public static String getUsername() {
         String username = null;
         try {
             username = SecurityContextHolder.getContext().getAuthentication().getName();
-        } catch (NullPointerException npe) {
+        } catch (NullPointerException ex) {
+            logger.warn(ex.getMessage(), ex);
         }
 //        if (username == null) {
 //            return "admin";
@@ -28,12 +32,12 @@ public class AcegiUtil {
         return username;
     }
 
-    public static final boolean isAdmin() {
+    public static boolean isAdmin() {
         GrantedAuthority[] authorities = null;
         try {
             authorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-        } catch (Exception e) {
-            // logger
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage(), ex);
         }
         if (authorities != null) {
             for (GrantedAuthority a : authorities) {
@@ -45,7 +49,7 @@ public class AcegiUtil {
         return false;
     }
 
-    public static final String getUserRole() {
+    public static String getUserRole() {
         GrantedAuthority[] authorities = null;
         try {
             authorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
@@ -71,4 +75,6 @@ public class AcegiUtil {
             return "customer";
         }
     }
+
+
 }

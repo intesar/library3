@@ -13,6 +13,8 @@ import com.bia.ccm.entity.SystemLease;
 import com.bia.ccm.entity.Systems;
 import com.bia.ccm.entity.Users;
 import com.bia.ccm.entity.UsersLight;
+import com.bia.ccm.exceptions.InvalidInputException;
+import com.bia.ccm.exceptions.NoRoleException;
 import com.bia.ccm.services.AdminService;
 import com.bia.ccm.util.AcegiUtil;
 import com.bia.ccm.util.ServiceFactory;
@@ -22,8 +24,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -34,58 +35,108 @@ import org.apache.commons.logging.LogFactory;
  */
 public class AdminAjaxService {
 
-    public String deleteEmail(int id) {
-        String msg = "Deleted Email Successful!";
+    /**
+     *   Response codes
+     *   1 == Operation Successfully executed
+     *  -1 == Operation execution failed, no reason specified, ask user to try again
+     *  -2 == Operation not executed, because of invalid input
+     *  -3 == Operation failed (User doesn't have appropriate roles on data), if user believes he has roles ask him to refresh page or relogin
+     *
+     */
+    /**
+     * only Owner can delete Notification Email
+     * @param id
+     * @param request set my DWR, used for getting IP Address
+     * @return
+     */
+    public int deleteEmail(int id, HttpServletRequest request) {
         try {
             this.adminService.deleteEmail(id);
-            return msg;
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-            return e.getMessage();
+            return 1;
+        } catch (InvalidInputException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -2;
+        } catch (NoRoleException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -3;
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -1;
         }
     }
 
-    public String updateRentalPrice(int mims, double rate, Integer lmins, Double lrate) {
-        String msg = "Price Updated Successful!";
-        if (logger.isDebugEnabled()) {
-            logger.debug("updateRentalPrice ------ ");
+    /**
+     *
+     * @param mims
+     * @param rate
+     * @param lmins
+     * @param lrate
+     * @return
+     */
+    public int updateRentalPrice(int mims, double rate, Integer lmins, Double lrate) {
+        if (logger.isTraceEnabled()) {
+            logger.trace("updateRentalPrice ------ ");
         }
         String username = AcegiUtil.getUsername();
-        if (logger.isDebugEnabled()) {
-            logger.debug("updateRentalPrice ------ " + username);
+        if (logger.isTraceEnabled()) {
+            logger.trace("updateRentalPrice ------ " + username);
         }
         if (mims < 0 || rate < 0.0 || (lmins != null && lmins < 0) || (lrate != null && lrate < 0.0)) {
-            return "We are keeping an eye on you! ";
+            //return "We are keeping an eye on you! ";
         }
-        if (logger.isDebugEnabled()) {
-            logger.debug("updateRentalPrice ------ after validation");
+        if (logger.isTraceEnabled()) {
+            logger.trace("updateRentalPrice ------ after validation");
         }
         try {
             this.adminService.updateRentalPrice(mims, rate, lmins, lrate, username);
-            return msg;
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-            return e.getMessage();
+            return 1;
+        } catch (InvalidInputException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -2;
+        } catch (NoRoleException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -3;
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -1;
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Systems> getAllSystems() {
         String username = AcegiUtil.getUsername();
         return this.adminService.getAllSystems(username);
     }
 
-    public String saveSystems(Systems systems) {
-        String msg = "Operation succesful!";
+    /**
+     *
+     * @param systems
+     * @return
+     */
+    public int saveSystems(Systems systems) {
         try {
             String username = AcegiUtil.getUsername();
             this.adminService.saveSystem(systems, username);
-        } catch (Exception e) {
-            logger.error(e);
-            return e.getMessage();
+            return 1;
+        } catch (InvalidInputException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -2;
+        } catch (NoRoleException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -3;
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -1;
         }
-        return msg;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Users> getAllUsers() {
         String username = AcegiUtil.getUsername();
         List<Users> users = null;
@@ -96,36 +147,58 @@ public class AdminAjaxService {
         return users;
     }
 
-    public String saveUsers(Users users) {
-        logger.debug("inside ------------------ save users ");
-        String msg = "Operation succesful!";
+    /**
+     *
+     * @param users
+     * @return
+     */
+    public int saveUsers(Users users) {
+        logger.trace("inside ------------------ save users ");
         users.setEmail(SQLInjectionFilterManager.getInstance().filter(users.getEmail()));
         users.setUsername(SQLInjectionFilterManager.getInstance().filter(users.getUsername()));
-        logger.debug("inside ------------------ save users1 ");
+        logger.trace("inside ------------------ save users1 ");
         try {
             String username = AcegiUtil.getUsername();
             this.adminService.saveUser(users, username);
-            logger.debug("inside ------------------ save users 2 ");
-        } catch (Exception e) {
-            logger.error(e);
-            logger.debug("inside ------------------ save users 3 " + e.getMessage());
-            return e.getMessage();
+            logger.trace("inside ------------------ save users 2 ");
+            return 1;
+        } catch (InvalidInputException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -2;
+        } catch (NoRoleException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -3;
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -1;
         }
-        return msg;
     }
 
+    /**
+     *
+     * @param users
+     * @return
+     */
     public List<Users> saveAndGetUsers(Users users) {
         saveUsers(users);
         return getAllUsers();
     }
 
+    /**
+     *
+     * @return
+     */
     public List<EmailPreference> getAllEmailPreference() {
         String username = AcegiUtil.getUsername();
         return this.adminService.getAllEmailPreference(username);
     }
 
-    public String saveEmailPreference(EmailPreference emailPreference) {
-        String msg = "Operation succesful!";
+    /**
+     *
+     * @param emailPreference
+     * @return
+     */
+    public int saveEmailPreference(EmailPreference emailPreference) {
         try {
             String username = AcegiUtil.getUsername();
             emailPreference.setEmailOrPhone(SQLInjectionFilterManager.getInstance().filter(emailPreference.getEmailOrPhone()));
@@ -134,36 +207,58 @@ public class AdminAjaxService {
                 emailPreference.setUsername(emailPreference.getUsername().toLowerCase());
             }
             this.adminService.saveEmailPreference(emailPreference, username);
-        } catch (Exception e) {
-            logger.error(e);
-            return e.getMessage();
+            return 1;
+        } catch (InvalidInputException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -2;
+        } catch (NoRoleException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -3;
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -1;
         }
-        return msg;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<EmailTimePreference> getAllEmailTimePreference() {
         String username = AcegiUtil.getUsername();
         return this.adminService.getAllEmailTimePreference(username);
     }
 
-    public String saveEmailTimePreference(EmailTimePreference emailTimePreference) {
+    public int saveEmailTimePreference(EmailTimePreference emailTimePreference) {
         String username = AcegiUtil.getUsername();
         try {
             this.adminService.saveEmailTimePreference(emailTimePreference, username);
-            return "Added Successfully!";
-        } catch (Exception e) {
-            logger.error(e);
-            return e.getMessage();
+            return 1;
+        } catch (InvalidInputException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -2;
+        } catch (NoRoleException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -3;
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -1;
         }
     }
 
-    public String deleteEmailTimePreference(EmailTimePreference emailTimePreference) {
+    public int deleteEmailTimePreference(EmailTimePreference emailTimePreference) {
         try {
             this.adminService.deleteEmailTimePreference(emailTimePreference);
-            return "Deleted Successfully";
-        } catch (Exception e) {
-            logger.error(e);
-            return e.getMessage();
+            return 1;
+        } catch (InvalidInputException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -2;
+        } catch (NoRoleException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -3;
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -1;
         }
     }
 
@@ -179,17 +274,22 @@ public class AdminAjaxService {
         return this.adminService.getOrganization(username);
     }
 
-    public String saveOrganization(Organization organization) {
+    public int saveOrganization(Organization organization) {
         String msg = "Company profile saved successfully!";
         try {
             String username = AcegiUtil.getUsername();
             this.adminService.saveOrganization(organization, username);
-        } catch (Exception e) {
-            logger.error(e);
-//            return e.getMessage();
-            msg = "Error please try again!";
+            return 1;
+        } catch (InvalidInputException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -2;
+        } catch (NoRoleException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -3;
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -1;
         }
-        return msg;
     }
 
     public List<SystemLease> getSystemLease(String startDateString, String endDateString) {
@@ -204,7 +304,7 @@ public class AdminAjaxService {
             endDate = sdf.parse(endDateString);
             return this.adminService.getSystemLease(startDate, endDate, u.getOrganization());
         } catch (ParseException ex) {
-            Logger.getLogger(AdminAjaxService.class.getName()).log(Level.SEVERE, null, ex);
+            logger.warn(ex.getMessage(), ex);
             return null;
         }
 
@@ -215,50 +315,58 @@ public class AdminAjaxService {
         try {
             Date startDate = sdf.parse(startDateString);
             Date endDate = sdf.parse(endDateString);
-            logger.debug(startDate + " " + endDate);
+            logger.trace(startDate + " " + endDate);
             String username = AcegiUtil.getUsername();
             UsersLight u = this.adminService.getUserByUsername(username);
             return this.adminService.getReport(startDate, endDate, u.getOrganization());
         } catch (ParseException ex) {
-            Logger.getLogger(AdminAjaxService.class.getName()).log(Level.SEVERE, null, ex);
+            logger.warn(ex.getMessage(), ex);
             return null;
         }
 
     }
 
-    public String saveService(Services service) {
-        if (service.getId() == -5) {
-            if (logger.isDebugEnabled()) {
-                logger.debug("computer rate save ------ " + service.getUnits() + "  " + service.getUnitPrice());
-                logger.debug("computer rate ------ " + service.getSaleTwoUnits() + " " + service.getSaleTwoPrice());
-            }
-            try {
+    public int saveService(Services service) {
+        try {
+            if (service.getId() == -5) {
+                if (logger.isTraceEnabled()) {
+                    logger.trace("computer rate save ------ " + service.getUnits() + "  " + service.getUnitPrice());
+                    logger.trace("computer rate ------ " + service.getSaleTwoUnits() + " " + service.getSaleTwoPrice());
+                }
+
                 this.updateRentalPrice(service.getUnits(), service.getUnitPrice(),
                         service.getSaleTwoUnits(), service.getSaleTwoPrice());
-                return " Updated rates successfully ! ";
-            } catch (NullPointerException ex) {
-                ex.printStackTrace();
+
             }
-        }
-        try {
             service.setOrganization(this.getOrganization().getName());
             adminService.saveService(service);
-            return " Service saved successful! ";
-        } catch (Exception e) {
-            logger.error(e);
-            return "Error please try again!";
+            return 1;
+        } catch (InvalidInputException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -2;
+        } catch (NoRoleException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -3;
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -1;
         }
     }
 
-    public String deleteService(Integer id) {
+    public int deleteService(Integer id) {
         try {
-//            System.out.println ( "delete");
             adminService.deleteService(id, getOrganization().getName());
-//            return "Service deleted successful!";
-        } catch (Exception e) {
-            logger.error(e);
+            return 1;
+        } catch (InvalidInputException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -2;
+        } catch (NoRoleException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -3;
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -1;
         }
-        return "Service deleted successful!";
     }
 
     /**
@@ -280,8 +388,20 @@ public class AdminAjaxService {
         return list;
     }
 
-    public void sendReports() {
-        this.adminService.sendReports();
+    public int sendReports() {
+        try {
+            this.adminService.sendReports();
+            return 1;
+        } catch (InvalidInputException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -2;
+        } catch (NoRoleException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -3;
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -1;
+        }
     }
 
     public void setCaseConverter(CaseConverter caseConverter) {

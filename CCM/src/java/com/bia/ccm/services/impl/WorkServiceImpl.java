@@ -52,6 +52,7 @@ import org.jasypt.util.password.PasswordEncryptor;
  */
 public class WorkServiceImpl implements WorkService {
 
+    @Override
     public String getUserEmailByMacAddress(String macAddress) {
         Systems system = this.systemsDao.findByMacAddress(macAddress);
         logger.info("--------------" + system);
@@ -67,16 +68,19 @@ public class WorkServiceImpl implements WorkService {
         return "faceguard@bizintelapps.com";
     }
 
+    @Override
     public List<Systems> getActiveSystems(String username) {
         UsersLight u = this.usersLightDao.findByUsername(username);
         return this.systemsDao.findByOrganization(u.getOrganization());
     }
 
+    @Override
     public Systems getSystemByNameAndOrganization(int systemNo, String username) {
         UsersLight u = this.usersLightDao.findByUsername(username);
         return this.systemsDao.findBySystemNameAndOrganization(systemNo, u.getOrganization());
     }
 
+    @Override
     public void leaseSystem(int id, String leaseHolder, String cashier) {
         Systems system = this.systemsDao.read(id);
         system.setIsAvailable(false);
@@ -101,6 +105,7 @@ public class WorkServiceImpl implements WorkService {
      *   Payable Amount
      *   System Name
      */
+    @Override
     public List<SystemLease> getSystemLease(int id) {
         List<SystemLease> list = this.systemLeaseDao.findBySystemIdAndFinished(id);
         for (SystemLease s : list) {
@@ -111,6 +116,7 @@ public class WorkServiceImpl implements WorkService {
         return list;
     }
 
+    @Override
     public void chargePayment(int systemId, String agent) {
         Systems s = systemsDao.read(systemId);
         UsersLight u = this.usersLightDao.findByUsername(agent);
@@ -283,6 +289,7 @@ public class WorkServiceImpl implements WorkService {
         return ud;
     }
 
+    @Override
     public void unleaseSystem(int id, double amountPaid, String cashier) {
         Systems system = this.systemsDao.read(id);
         system.setIsAvailable(true);
@@ -317,6 +324,7 @@ public class WorkServiceImpl implements WorkService {
      * @param macAddress
      * @return
      */
+    @Override
     public Integer getSystemStatus(String macAddress) {
         Integer status = new Integer(0);
         logger.debug("inside system status ");
@@ -342,19 +350,17 @@ public class WorkServiceImpl implements WorkService {
                 status = 1;
             }
             logger.debug("status " + status);
-        } catch (NullPointerException npe) {
-            logger.error(npe);
-            npe.printStackTrace();
-        } catch (RuntimeException re) {
-            logger.error(re);
-            re.printStackTrace();
-        } catch (Exception e) {
-            logger.error(e);
-            e.printStackTrace();
+        } catch (NullPointerException ex) {
+            logger.warn(ex.getMessage(), ex);
+        } catch (RuntimeException ex) {
+            logger.warn(ex.getMessage(), ex);
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage(), ex);
         }
         return status;
     }
 
+    @Override
     public void createCutomer(Users customer, Users createUser) {
 
         if (customer.getId() == null) {
@@ -404,11 +410,13 @@ public class WorkServiceImpl implements WorkService {
         }
     }
 
+    @Override
     public List<Services> getAllServices(String username) {
         UsersLight u = this.usersLightDao.findByUsername(username);
         return this.servicesDao.findByOrganization(u.getOrganization());
     }
 
+    @Override
     public void notifyCustomersAtContractStart() {
         long start = 0;
         int limit = 100;
@@ -427,15 +435,15 @@ public class WorkServiceImpl implements WorkService {
                     }
                     sl.setIsStartContractNotified(true);
                     this.systemLeaseDao.update(sl);
-                } catch (RuntimeException re) {
-                    re.printStackTrace();
-                    logger.error(re);
+                } catch (RuntimeException ex) {
+                    logger.warn(ex.getMessage(), ex);
                 }
             }
         }
 
     }
 
+    @Override
     public void notifyCustomersAtContractEnd() {
         long start = 0;
         int limit = 100;
@@ -456,14 +464,14 @@ public class WorkServiceImpl implements WorkService {
                     }
                     sl.setIsEndContractNotified(true);
                     this.systemLeaseDao.update(sl);
-                } catch (RuntimeException re) {
-                    re.printStackTrace();
-                    logger.error(re);
+                } catch (RuntimeException ex) {
+                    logger.warn(ex.getMessage(), ex);
                 }
             }
         }
     }
 
+    @Override
     public Users getCustomerPic(String key) {
         Users u = this.usersDao.findByKey(key);
         if (u.getPic() != null) {
@@ -472,10 +480,12 @@ public class WorkServiceImpl implements WorkService {
         return u;
     }
 
+    @Override
     public Users getCustomer(String key) {
         return this.usersDao.findByKey(key);
     }
 
+    @Override
     public Users getCustomerWithPic(String key) {
         Users u = this.usersDao.findByKey(key);
         //u.setImage(this.byteArrayToBufferedImage(u.getUserPic().getPic()));
@@ -487,7 +497,7 @@ public class WorkServiceImpl implements WorkService {
             BufferedImage image = ImageIO.read(new ByteArrayInputStream(bytes));
             return image;
         } catch (IOException ex) {
-            ex.printStackTrace();
+            logger.warn(ex.getMessage(), ex);
         }
         return null;
     }
@@ -543,7 +553,7 @@ public class WorkServiceImpl implements WorkService {
 
 
         } catch (IOException ex) {
-            ex.printStackTrace();
+            logger.warn(ex.getMessage(), ex);
 
         }
         return null;

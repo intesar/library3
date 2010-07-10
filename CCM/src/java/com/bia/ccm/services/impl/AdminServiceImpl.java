@@ -44,11 +44,13 @@ public class AdminServiceImpl implements AdminService {
 
     protected final Log logger = LogFactory.getLog(getClass());
 
+    @Override
     public void deleteEmail(int id) {
         EmailPreference email = this.emailPreferenceDao.read(id);
         this.emailPreferenceDao.delete(email);
     }
 
+    @Override
     public void updateRentalPrice(int mims, double rate, Integer lmins, Double lrate, String username) {
         UsersLight u = this.usersLightDao.findByUsername(username);
         String org = u.getOrganization();
@@ -64,125 +66,112 @@ public class AdminServiceImpl implements AdminService {
         }
     }
 
+    @Override
     public List<Systems> getAllSystems(String username) {
         UsersLight u = this.usersLightDao.findByUsername(username);
         return this.systemsDao.findByOrganization(u.getOrganization());
     }
 
+    @Override
     public void saveSystem(Systems systems, String username) {
         UsersLight u = this.usersLightDao.findByUsername(username);
-        try {
-            if (systems != null && systems.getId() == null) {
-                systems.setOrganization(u.getOrganization());
-                systems.setCreateDate(new Date());
-                systems.setCreateUser(username);
-                systems.setIsAvailable(true);
-                systems.setIsShutdown(false);
-                this.systemsDao.create(systems);
-            } else if (systems != null && systems.getId() != null) {
-                this.systemsDao.update(systems);
-
-            } else {
-                throw new RuntimeException("Please check inputs");
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        if (systems != null && systems.getId() == null) {
+            systems.setOrganization(u.getOrganization());
+            systems.setCreateDate(new Date());
+            systems.setCreateUser(username);
+            systems.setIsAvailable(true);
+            systems.setIsShutdown(false);
+            this.systemsDao.create(systems);
+        } else if (systems != null && systems.getId() != null) {
+            this.systemsDao.update(systems);
         }
-
     }
 
+    @Override
     public List<Users> getAllUsers(String username) {
         UsersLight u = this.usersLightDao.findByUsername(username);
         return this.usersDao.findByOrganization(u.getOrganization());
     }
 
+    @Override
     public void saveUser(Users users, String username) {
         UsersLight u = this.usersLightDao.findByUsername(username);
-        try {
-            if (users != null && users.getId() == null) {
-                users.setOrganization(u.getOrganization());
-                users.setCreateDate(new Date());
-                users.setCreateUser(username);
-                users.setEmail(users.getUsername());
-                String password = users.getPassword();
-                users.setPassword(passwordEncryptor.encryptPassword(users.getPassword()));
-                this.usersDao.create(users);
-                UsersLight ul = new UsersLight(users.getUsername(), u.getOrganization());
-                this.usersLightDao.create(ul);
-                if (users.getRole().equalsIgnoreCase("admin")) {
-                    Authorities a1 = new Authorities(users.getUsername(), "ROLE_ADMIN");
-                    this.authoritiesDao.create(a1);
-                }
-                Authorities a2 = new Authorities(users.getUsername(), "ROLE_USER");
-                this.authoritiesDao.create(a2);
-                // storing pass in UsersPass
-                String encryptedPass = this.stringEncryptor.encrypt(password);
-                String resetCode = this.stringEncryptor.encrypt(username + Calendar.getInstance().getFirstDayOfWeek());
-                UsersPass usersPass = new UsersPass(null, users.getUsername(),
-                        encryptedPass, true, resetCode, new Date());
-                usersPassDao.create(usersPass);
-                emailService.sendEmail(u.getUsername(), "Welcome to FaceGuard, username / password : " + u.getUsername() + " / " + password);
-            } else if (users != null && users.getId() != null) {
-                this.usersDao.update(users);
-                if (users.getRole().equalsIgnoreCase("employee")) {
-                    Authorities a1 = this.authoritiesDao.read(new AuthoritiesPK(users.getUsername(), "ROLE_ADMIN"));
-                    if (a1 != null) {
-                        this.authoritiesDao.delete(a1);
-                    }
-                } else if (users.getRole().equalsIgnoreCase("admin")) {
-                    AuthoritiesPK authPK = new AuthoritiesPK(users.getUsername(), "ROLE_ADMIN");
-                    Authorities a2 = this.authoritiesDao.read(authPK);
-                    if (a2 == null) {
-                        a2 = new Authorities(authPK);
-                        this.authoritiesDao.create(a2);
-                    }
-                }
-            } else {
-                throw new RuntimeException("Please check inputs");
+
+        if (users != null && users.getId() == null) {
+            users.setOrganization(u.getOrganization());
+            users.setCreateDate(new Date());
+            users.setCreateUser(username);
+            users.setEmail(users.getUsername());
+            String password = users.getPassword();
+            users.setPassword(passwordEncryptor.encryptPassword(users.getPassword()));
+            this.usersDao.create(users);
+            UsersLight ul = new UsersLight(users.getUsername(), u.getOrganization());
+            this.usersLightDao.create(ul);
+            if (users.getRole().equalsIgnoreCase("admin")) {
+                Authorities a1 = new Authorities(users.getUsername(), "ROLE_ADMIN");
+                this.authoritiesDao.create(a1);
             }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+            Authorities a2 = new Authorities(users.getUsername(), "ROLE_USER");
+            this.authoritiesDao.create(a2);
+            // storing pass in UsersPass
+            String encryptedPass = this.stringEncryptor.encrypt(password);
+            String resetCode = this.stringEncryptor.encrypt(username + Calendar.getInstance().getFirstDayOfWeek());
+            UsersPass usersPass = new UsersPass(null, users.getUsername(),
+                    encryptedPass, true, resetCode, new Date());
+            usersPassDao.create(usersPass);
+            emailService.sendEmail(u.getUsername(), "Welcome to FaceGuard, username / password : " + u.getUsername() + " / " + password);
+        } else if (users != null && users.getId() != null) {
+            this.usersDao.update(users);
+            if (users.getRole().equalsIgnoreCase("employee")) {
+                Authorities a1 = this.authoritiesDao.read(new AuthoritiesPK(users.getUsername(), "ROLE_ADMIN"));
+                if (a1 != null) {
+                    this.authoritiesDao.delete(a1);
+                }
+            } else if (users.getRole().equalsIgnoreCase("admin")) {
+                AuthoritiesPK authPK = new AuthoritiesPK(users.getUsername(), "ROLE_ADMIN");
+                Authorities a2 = this.authoritiesDao.read(authPK);
+                if (a2 == null) {
+                    a2 = new Authorities(authPK);
+                    this.authoritiesDao.create(a2);
+                }
+            }
         }
 
 
     }
 
+    @Override
     public List<EmailPreference> getAllEmailPreference(String username) {
         UsersLight u = this.usersLightDao.findByUsername(username);
         return this.emailPreferenceDao.findByOrganization(u.getOrganization());
     }
 
+    @Override
     public List<EmailPreference> getAllOrganizationEmailPreference(String org) {
         return this.emailPreferenceDao.findByOrganization(org);
     }
 
+    @Override
     public void saveEmailPreference(
             EmailPreference emailPreference, String username) {
         UsersLight u = this.usersLightDao.findByUsername(username);
-        try {
-            if (emailPreference != null && emailPreference.getId() == null) {
-                emailPreference.setOrganization(u.getOrganization());
+        if (emailPreference != null && emailPreference.getId() == null) {
+            emailPreference.setOrganization(u.getOrganization());
 
-                this.emailPreferenceDao.create(emailPreference);
-            } else if (emailPreference != null && emailPreference.getId() != null) {
-                this.emailPreferenceDao.update(emailPreference);
+            this.emailPreferenceDao.create(emailPreference);
+        } else if (emailPreference != null && emailPreference.getId() != null) {
+            this.emailPreferenceDao.update(emailPreference);
 
-            } else {
-                throw new RuntimeException("Please check inputs");
-            }
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
         }
-
-
     }
 
+    @Override
     public List<EmailTimePreference> getAllEmailTimePreference(String username) {
         UsersLight u = this.usersLightDao.findByUsername(username);
         return this.emailTimePreferenceDao.findByOrganization(u.getOrganization());
     }
 
+    @Override
     public void saveEmailTimePreference(
             EmailTimePreference emailTimePreference, String username) {
         UsersLight u = this.usersLightDao.findByUsername(username);
@@ -203,11 +192,13 @@ public class AdminServiceImpl implements AdminService {
 //        }
     }
 
+    @Override
     public void deleteEmailTimePreference(EmailTimePreference emailTimePreference) {
         emailTimePreference = this.emailTimePreferenceDao.read(emailTimePreference.getId());
         this.emailTimePreferenceDao.delete(emailTimePreference);
     }
 
+    @Override
     public List<SystemLease> getAllSystemLease(String username) {
         UsersLight u = this.usersLightDao.findByUsername(username);
         return this.systemLeaseDao.findByOrganization(u.getOrganization());
@@ -218,29 +209,26 @@ public class AdminServiceImpl implements AdminService {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    @Override
     public Organization getOrganization(
             String username) {
         UsersLight u = this.usersLightDao.findByUsername(username);
         return this.organizationDao.findByOrganization(u.getOrganization());
     }
 
+    @Override
     public void saveOrganization(
             Organization organization, String username) {
         UsersLight u = this.usersLightDao.findByUsername(username);
-        try {
-            if (organization != null) {
-                this.organizationDao.update(organization);
-            } else {
-                throw new RuntimeException("Please check inputs");
-            }
 
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        if (organization != null) {
+            this.organizationDao.update(organization);
         }
 
 
     }
 
+    @Override
     public List<SystemLease> getSystemLease(Date startDate, Date endDate, String org) {
         startDate.setHours(0);
         startDate.setMinutes(0);
@@ -258,6 +246,7 @@ public class AdminServiceImpl implements AdminService {
         return this.systemLeaseDao.findByUsernameAndStartEndDates(username, startDate, endDate);
     }
 
+    @Override
     public List getReport(
             Date startDate, Date endDate, String org) {
         Calendar sDate = Calendar.getInstance();
@@ -293,12 +282,14 @@ public class AdminServiceImpl implements AdminService {
      */
     public void saveService(Services service) {
         // validation logic
-        if ( service.getName() == null || service.getName().trim().length() < 1 )
-            throw new RuntimeException ( " name cannot be empty ");
-        if ( service.getUnitPrice() < 0 )
-            throw new RuntimeException ( " Unit price cannot be less then zero ");
-        if ( service.getSaleTwoUnits() != null && service.getSaleTwoUnits() > 1
-                && service.getSaleTwoPrice() != null && service.getSaleTwoPrice() > 0.0 ) {
+        if (service.getName() == null || service.getName().trim().length() < 1) {
+            throw new RuntimeException(" name cannot be empty ");
+        }
+        if (service.getUnitPrice() < 0) {
+            throw new RuntimeException(" Unit price cannot be less then zero ");
+        }
+        if (service.getSaleTwoUnits() != null && service.getSaleTwoUnits() > 1
+                && service.getSaleTwoPrice() != null && service.getSaleTwoPrice() > 0.0) {
             service.setSaleTwoEnabled(true);
         } else {
             service.setSaleTwoEnabled(false);
@@ -321,14 +312,17 @@ public class AdminServiceImpl implements AdminService {
         }
     }
 
+    @Override
     public List<Services> getAllServices(String org) {
         return this.servicesDao.findByOrganization(org);
     }
 
+    @Override
     public Systems getSystem(String org) {
         return this.systemsDao.findBySystemNameAndOrganization(1, org);
     }
 
+    @Override
     public void sendReports() {
         List<Organization> orgs = this.organizationDao.readAll().getResults();
         for (Organization organization : orgs) {
@@ -361,10 +355,12 @@ public class AdminServiceImpl implements AdminService {
         }
     }
 
+    @Override
     public List<EmailTimePreference> getEmailTimePreferences(short time) {
         return this.emailTimePreferenceDao.findByReportTime(time);
     }
 
+    @Override
     public UsersLight getUserByUsername(String username) {
         UsersLight u = this.usersLightDao.findByUsername(username);
         return u;

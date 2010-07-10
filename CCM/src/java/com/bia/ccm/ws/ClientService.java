@@ -41,9 +41,8 @@ public class ClientService {
         String email = "faceguard@bizintelapps.com";
         try {
             email = this.workService.getUserEmailByMacAddress(macAddress);
-        } catch (Exception e) {
-
-            e.printStackTrace();
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage(), ex);
         }
         return email;
     }

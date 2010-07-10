@@ -6,6 +6,8 @@ package com.bia.ccm.ajax;
 
 import com.abbhsoft.sqlInjectionFilter.SQLInjectionFilterManager;
 import com.bia.ccm.entity.Users;
+import com.bia.ccm.exceptions.InvalidInputException;
+import com.bia.ccm.exceptions.NoRoleException;
 import com.bia.ccm.services.EMailService;
 import com.bia.ccm.services.UserService;
 import com.bia.ccm.services.WorkService;
@@ -27,30 +29,42 @@ public class UserAjaxService {
         return this.userService.getUserRole(username);
     }
 
-    public String resetPassword(String email, String activationCode, String password) {
-        String str = "successful";
+    public int resetPassword(String email, String activationCode, String password) {
         try {
             email = SQLInjectionFilterManager.getInstance().filter(email);
             //activationCode  = SQLInjectionFilterManager.getInstance().filter(activationCode);            
             this.userService.resetPassword(email, activationCode, password);
-        } catch ( RuntimeException re) {
-            logger.error(re);
-            str = "please check your inputs!";
+            return 1;
+        } catch (InvalidInputException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -2;
+        } catch (NoRoleException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -3;
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -1;
         }
-        return str;
     }
-    public String forgotPassword(String email) {
+
+    public int forgotPassword(String email) {
 
         email = SQLInjectionFilterManager.getInstance().filter(email);
 
         String msg = " Please check your email for your password! ";
         try {
             this.userService.forgotPassword(email.toLowerCase());
-        } catch (RuntimeException re) {
-            logger.error(re);
-            msg = re.getMessage();
+            return 1;
+        } catch (InvalidInputException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -2;
+        } catch (NoRoleException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -3;
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -1;
         }
-        return msg;
 
     }
 
@@ -62,7 +76,7 @@ public class UserAjaxService {
         return AcegiUtil.getUserRole();
     }
 
-    public String registerNewOrganization(String organizationName, String city,
+    public int registerNewOrganization(String organizationName, String city,
             String email, String password, Integer minutes, Integer rate, Integer maxSystems) {
         if (organizationName != null) {
             organizationName = SQLInjectionFilterManager.getInstance().filter(organizationName);
@@ -83,16 +97,21 @@ public class UserAjaxService {
             this.userService.registerNewOrganization(organizationName,
                     city, email, password, minutes, rate, maxSystems);
             emailService.sendEmail(email, "Welcome to FaceGuard, username / password : " + email + " / " + password);
-
-            return str;
-        } catch (Exception e) {
-            logger.warn(e.getMessage(), e);
-            return "Error creating new organization, try registering with different Email or Organization Name";
+            return 1;
+        } catch (InvalidInputException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -2;
+        } catch (NoRoleException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -3;
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -1;
         }
 
     }
 
-    public String createCustomer(Users c) {
+    public int createCustomer(Users c) {
 
         String msg = "Customer Created Successfully!";
         try {
@@ -103,26 +122,28 @@ public class UserAjaxService {
             c.setEmail(SQLInjectionFilterManager.getInstance().filter(c.getEmail()));
             c.setUsername(SQLInjectionFilterManager.getInstance().filter(c.getUsername()));
             caseConverter.toLowerCase(c);
-            logger.info("________________________ before create _________________");            
+            logger.info("________________________ before create _________________");
             this.workService.createCutomer(c, null);
             logger.info("________________________ after create _________________");
             emailService.sendEmail(c.getEmail(), "Welcome to FaceGuard, username / password : " + c.getUsername() + " / " + c.getPassword());
-        } catch (RuntimeException re) {
-            logger.error(re);
-            re.printStackTrace();
-            msg = re.getMessage();
-        } catch (Exception e) {
-            e.printStackTrace();
-            logger.error(e);
-            msg = e.getMessage();
+            return 1;
+        } catch (InvalidInputException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -2;
+        } catch (NoRoleException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -3;
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -1;
         }
-        return msg;
     }
-    
+
     public void setCaseConverter(CaseConverter caseConverter) {
         this.caseConverter = caseConverter;
     }
-     public void setEmailService(EMailService emailService) {
+
+    public void setEmailService(EMailService emailService) {
         this.emailService = emailService;
     }
     private EMailService emailService;
@@ -130,7 +151,6 @@ public class UserAjaxService {
     protected final Log logger = LogFactory.getLog(getClass());
     protected UserService userService = (UserService) ServiceFactory.getService("userServiceImpl");
     private WorkService workService = (WorkService) ServiceFactory.getService("workServiceImpl");
-    
 
     public static void main(String[] args) {
         UserAjaxService uas = new UserAjaxService();
