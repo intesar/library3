@@ -85,6 +85,8 @@ public class SystemLease implements Serializable {
     private Double discounts;
     @Column(name = "comments")
     private String comments;
+    @Column(name = "ip")
+    private String ip;
     @Version
     private int version;
 
@@ -268,6 +270,15 @@ public class SystemLease implements Serializable {
     public void setDiscounts(Double discounts) {
         this.discounts = discounts;
     }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
 
     public int getVersion() {
         return version;

@@ -108,6 +108,8 @@ public class Users implements Serializable {
     private boolean isVerified = false;
     @Column(name = "verified_by")
     private String verifiedBy;
+    @Column(name = "ip")
+    private String ip;
     @Version
     private int version;
 
@@ -429,6 +431,16 @@ public class Users implements Serializable {
     public void setVerifiedBy(String verifiedBy) {
         this.verifiedBy = verifiedBy;
     }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
+
 
 //    public UserPic getUserPic() {
 //        return userPic;

@@ -156,13 +156,13 @@ http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
             <value>com.mysql.jdbc.Driver</value>
         </property>
         <property name="url">
-            <value>jdbc:mysql:///ccm1</value>
+            <value>jdbc:mysql:///ccm</value>
         </property>
         <property name="username">
             <value>root</value>
         </property>
         <property name="password">
-            <value>Abbh1234</value>
+            <value></value>
         </property>
     </bean>
     <bean id="httpRequestAccessDecisionManager"

@@ -56,6 +56,8 @@ public class MembershipTypes implements Serializable {
     @JoinColumn(name = "organization", referencedColumnName = "name")
     @ManyToOne
     private Organization organization;
+    @Column(name = "ip")
+    private String ip;
     @Version
     private int version;
 
@@ -137,6 +139,16 @@ public class MembershipTypes implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
+    
 
     public int getVersion() {
         return version;

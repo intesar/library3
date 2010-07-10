@@ -84,6 +84,8 @@ public class Systems implements Serializable {
     private Date startTime;
     @Transient
     private String startTimeString;
+    @Column(name = "ip")
+    private String ip;
     @Version
     private int version;
 
@@ -104,6 +106,23 @@ public class Systems implements Serializable {
         this.minuteRate = minuteRate;
         this.enabled = enabled;
         this.macAddress = organization + name;
+    }
+
+    public Systems(Integer id, int name, String organization, boolean isAvailable,
+            Date expectedFreeTime, Integer minimumMinutes, double minuteRate, boolean enabled,
+            String createUser, Date createDate, String ip) {
+        this.id = id;
+        this.name = name;
+        this.organization = organization;
+        this.isAvailable = isAvailable;
+        this.expectedFreeTime = expectedFreeTime;
+        this.minimumMinutes = minimumMinutes;
+        this.minuteRate = minuteRate;
+        this.enabled = enabled;
+        this.macAddress = organization + name;
+        this.createUser = createUser;
+        this.createDate = createDate;
+        this.ip = ip;
     }
 
     public Integer getId() {
@@ -297,6 +316,15 @@ public class Systems implements Serializable {
     public void setStartTimeString(String startTimeString) {
         this.startTimeString = startTimeString;
     }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
 
     public int getVersion() {
         return version;
