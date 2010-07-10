@@ -14,6 +14,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.persistence.Version;
 
 /**
  *
@@ -51,6 +52,8 @@ public class Services implements Serializable {
     private Double saleTwoPrice;
     @Column(name = "units", nullable = false)
     private Integer units = 1;
+    @Version
+    private int version;
 
     public Services() {
     }
@@ -136,6 +139,14 @@ public class Services implements Serializable {
 
     public void setUnits(Integer units) {
         this.units = units;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
     }
 
     @Override

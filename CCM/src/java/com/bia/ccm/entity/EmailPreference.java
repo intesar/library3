@@ -16,6 +16,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
 
 /**
  *
@@ -31,7 +32,7 @@ public class EmailPreference implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(name = "username", nullable = false)
     private String username;
@@ -46,6 +47,8 @@ public class EmailPreference implements Serializable {
     @Column(name = "create_date")
     @Temporal(TemporalType.DATE)
     private Date createDate;
+    @Version
+    private int version;
 
     public EmailPreference() {
     }
@@ -115,6 +118,14 @@ public class EmailPreference implements Serializable {
 
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
     }
 
     @Override

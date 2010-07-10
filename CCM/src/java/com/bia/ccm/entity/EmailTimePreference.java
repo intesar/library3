@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.bia.ccm.entity;
 
 import java.io.Serializable;
@@ -17,6 +16,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
 
 /**
  *
@@ -25,15 +25,16 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "email_time_preference")
 @NamedQueries({
-@NamedQuery(name = "EmailTimePreference.findByOrganization", query = "select s from EmailTimePreference s where s.organization = ?1  "),
-@NamedQuery(name = "EmailTimePreference.findByOrganizationAndReportTime", query = "select s from EmailTimePreference s where s.organization = ?1 and s.reportTime = ?2 "),
-@NamedQuery(name = "EmailTimePreference.findByReportTime", query = "SELECT s FROM EmailTimePreference s where s.reportTime = ?1 ")
+    @NamedQuery(name = "EmailTimePreference.findByOrganization", query = "select s from EmailTimePreference s where s.organization = ?1  "),
+    @NamedQuery(name = "EmailTimePreference.findByOrganizationAndReportTime", query = "select s from EmailTimePreference s where s.organization = ?1 and s.reportTime = ?2 "),
+    @NamedQuery(name = "EmailTimePreference.findByReportTime", query = "SELECT s FROM EmailTimePreference s where s.reportTime = ?1 ")
 })
 public class EmailTimePreference implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(name = "report_time", nullable = false)
     private short reportTime;
@@ -44,6 +45,8 @@ public class EmailTimePreference implements Serializable {
     @Column(name = "create_date")
     @Temporal(TemporalType.DATE)
     private Date createDate;
+    @Version
+    private int version;
 
     public EmailTimePreference() {
     }
@@ -98,6 +101,14 @@ public class EmailTimePreference implements Serializable {
         this.createDate = createDate;
     }
 
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -121,5 +132,4 @@ public class EmailTimePreference implements Serializable {
     public String toString() {
         return "com.bia.ccm.entity.EmailTimePreference[id=" + id + "]";
     }
-
 }

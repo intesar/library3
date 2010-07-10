@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.bia.ccm.entity;
 
 import java.io.Serializable;
@@ -17,6 +16,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
 
 /**
  *
@@ -25,7 +25,7 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "users_pass")
 @NamedQueries({
-    @NamedQuery(name = "UsersPass.findById", query = "SELECT u FROM UsersPass u WHERE u.id = :id"), 
+    @NamedQuery(name = "UsersPass.findById", query = "SELECT u FROM UsersPass u WHERE u.id = :id"),
     @NamedQuery(name = "UsersPass.findByUsername", query = "SELECT u FROM UsersPass u WHERE u.username = :username"),
     @NamedQuery(name = "UsersPass.findByPassword", query = "SELECT u FROM UsersPass u WHERE u.password = :password"),
     @NamedQuery(name = "UsersPass.findByEnabled", query = "SELECT u FROM UsersPass u WHERE u.enabled = :enabled"),
@@ -34,10 +34,11 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "UsersPass.findByUsernameAndEnabled", query = "SELECT u FROM UsersPass u WHERE u.username = ?1 and u.enabled = ?2")
 })
 public class UsersPass implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(name = "username", nullable = false)
     private String username;
@@ -50,6 +51,8 @@ public class UsersPass implements Serializable {
     @Column(name = "create_date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date createDate;
+    @Version
+    private int version;
 
     public UsersPass() {
     }
@@ -115,6 +118,14 @@ public class UsersPass implements Serializable {
         this.createDate = createDate;
     }
 
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -138,5 +149,4 @@ public class UsersPass implements Serializable {
     public String toString() {
         return "com.UsersPass[id=" + id + "]";
     }
-
 }

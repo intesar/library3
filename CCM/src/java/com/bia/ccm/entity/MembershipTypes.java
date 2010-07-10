@@ -5,9 +5,7 @@
 package com.bia.ccm.entity;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,10 +15,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
 
 /**
  *
@@ -42,7 +40,7 @@ public class MembershipTypes implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(name = "name", nullable = false)
     private String name;
@@ -54,10 +52,12 @@ public class MembershipTypes implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createDate;
     @Column(name = "create_user", nullable = false)
-    private String createUser;   
+    private String createUser;
     @JoinColumn(name = "organization", referencedColumnName = "name")
     @ManyToOne
     private Organization organization;
+    @Version
+    private int version;
 
     public MembershipTypes() {
     }
@@ -130,15 +130,20 @@ public class MembershipTypes implements Serializable {
 //    public void setMembershipDiscountsCollection(Collection<MembershipDiscounts> membershipDiscountsCollection) {
 //        this.membershipDiscountsCollection = membershipDiscountsCollection;
 //    }
-
-  
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
     }
 
     @Override

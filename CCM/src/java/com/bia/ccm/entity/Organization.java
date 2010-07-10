@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.bia.ccm.entity;
 
 import java.io.Serializable;
@@ -15,6 +14,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
 
 /**
  *
@@ -23,9 +23,10 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "organization")
 @NamedQueries({
-    @NamedQuery(name="Organization.findByOrganization", query="select s from Organization s where s.name = ?1 ")
+    @NamedQuery(name = "Organization.findByOrganization", query = "select s from Organization s where s.name = ?1 ")
 })
 public class Organization implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "name", nullable = false)
@@ -70,10 +71,12 @@ public class Organization implements Serializable {
     @Column(name = "create_date")
     @Temporal(TemporalType.DATE)
     private Date createDate;
-    @Column ( name="timings")
+    @Column(name = "timings")
     private String timings;
-    @Column (name="print_email")
+    @Column(name = "print_email")
     private String printEmail;
+    @Version
+    private int version;
 
     public Organization() {
     }
@@ -275,7 +278,14 @@ public class Organization implements Serializable {
         this.timings = timings;
     }
 
-    
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -299,5 +309,4 @@ public class Organization implements Serializable {
     public String toString() {
         return "com.bia.ccm.entity.Organization[name=" + name + "]";
     }
-
 }
