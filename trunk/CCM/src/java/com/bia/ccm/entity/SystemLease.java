@@ -20,6 +20,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.persistence.Version;
 
 /**
  *
@@ -44,7 +45,7 @@ public class SystemLease implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(name = "lease_holder_name")
     private String leaseHolderName;
@@ -80,10 +81,12 @@ public class SystemLease implements Serializable {
     private Boolean isStartContractNotified = false;
     @Column(name = "is_end_contract_notified")
     private Boolean isEndContractNotified = false;
-    @Column(name="discounts")
+    @Column(name = "discounts")
     private Double discounts;
-    @Column(name="comments")
+    @Column(name = "comments")
     private String comments;
+    @Version
+    private int version;
 
     public SystemLease() {
     }
@@ -169,7 +172,7 @@ public class SystemLease implements Serializable {
 //        Long st = this.startTime.getTime();
 //        Long et = new Date().getTime();
 //        return (et - st) / (1000 * 60);
-    //return totalMinutesUsed;
+        //return totalMinutesUsed;
     }
 
     public void setTotalMinutesUsed(Long totalMinutesUsed) {
@@ -266,7 +269,14 @@ public class SystemLease implements Serializable {
         this.discounts = discounts;
     }
 
-    
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -288,13 +298,13 @@ public class SystemLease implements Serializable {
 
     @Override
     public String toString() {
-        return " System No : " + this.getSystemNo() + " <br> " +
-                " Admin Issued At Kiosk : " + this.getIssueAgent() + " <br> " +
-                " Start Time : " + this.getStartTimeString() + " <br> " +
-                " End Time : " + this.getEndTimeString() + " <br> " +
-                " User when returning at Kiosk : " + this.getReturnAgent() + " <br> " +
-                " Total Minutes : " + this.getTotalMinutesUsed() + " <br> " +
-                " Total Payable : " + this.getPayableAmount() + " <br> " +
-                " Paid Amount : " + this.getAmountPaid();
+        return " System No : " + this.getSystemNo() + " <br> "
+                + " Admin Issued At Kiosk : " + this.getIssueAgent() + " <br> "
+                + " Start Time : " + this.getStartTimeString() + " <br> "
+                + " End Time : " + this.getEndTimeString() + " <br> "
+                + " User when returning at Kiosk : " + this.getReturnAgent() + " <br> "
+                + " Total Minutes : " + this.getTotalMinutesUsed() + " <br> "
+                + " Total Payable : " + this.getPayableAmount() + " <br> "
+                + " Paid Amount : " + this.getAmountPaid();
     }
 }

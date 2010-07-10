@@ -18,6 +18,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.persistence.Version;
 
 /**
  *
@@ -36,7 +37,7 @@ public class Systems implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(name = "name", nullable = false)
     private int name;
@@ -83,6 +84,8 @@ public class Systems implements Serializable {
     private Date startTime;
     @Transient
     private String startTimeString;
+    @Version
+    private int version;
 
     public Systems() {
     }
@@ -174,8 +177,6 @@ public class Systems implements Serializable {
     public void setLowerMinuteRate(Double lowerMinuteRate) {
         this.lowerMinuteRate = lowerMinuteRate;
     }
-    
-    
 
     public boolean getEnabled() {
         return enabled;
@@ -297,7 +298,15 @@ public class Systems implements Serializable {
         this.startTimeString = startTimeString;
     }
 
-        @Override
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
+
+    @Override
     public int hashCode() {
         int hash = 0;
         hash += (id != null ? id.hashCode() : 0);

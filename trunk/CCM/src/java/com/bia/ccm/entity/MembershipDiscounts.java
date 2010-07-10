@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.bia.ccm.entity;
 
 import java.io.Serializable;
@@ -19,6 +18,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
 
 /**
  *
@@ -28,18 +28,19 @@ import javax.persistence.TemporalType;
 @Table(name = "membership_discounts")
 @NamedQueries({
     @NamedQuery(name = "MembershipDiscounts.findById", query = "SELECT m FROM MembershipDiscounts m WHERE m.id = :id"),
-    @NamedQuery(name = "MembershipDiscounts.findByService", query = "SELECT m FROM MembershipDiscounts m WHERE m.service = :service"), 
-    @NamedQuery(name = "MembershipDiscounts.findByDiscountPercentage", query = "SELECT m FROM MembershipDiscounts m WHERE m.discountPercentage = :discountPercentage"), 
+    @NamedQuery(name = "MembershipDiscounts.findByService", query = "SELECT m FROM MembershipDiscounts m WHERE m.service = :service"),
+    @NamedQuery(name = "MembershipDiscounts.findByDiscountPercentage", query = "SELECT m FROM MembershipDiscounts m WHERE m.discountPercentage = :discountPercentage"),
     @NamedQuery(name = "MembershipDiscounts.findByCreateDate", query = "SELECT m FROM MembershipDiscounts m WHERE m.createDate = :createDate"),
     @NamedQuery(name = "MembershipDiscounts.findByCreateUser", query = "SELECT m FROM MembershipDiscounts m WHERE m.createUser = :createUser"),
     @NamedQuery(name = "MembershipDiscounts.findByMembershipTypesId", query = "SELECT m FROM MembershipDiscounts m WHERE m.membershipType.id = ?1 "),
     @NamedQuery(name = "MembershipDiscounts.findByMembershipTypesIdAndService", query = "SELECT m FROM MembershipDiscounts m WHERE m.membershipType.id = ?1 and m.service = ?2")
 })
 public class MembershipDiscounts implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(name = "service", nullable = false)
     private String service;
@@ -53,6 +54,8 @@ public class MembershipDiscounts implements Serializable {
     @JoinColumn(name = "membership_type", referencedColumnName = "id")
     @ManyToOne
     private MembershipTypes membershipType;
+    @Version
+    private int version;
 
     public MembershipDiscounts() {
     }
@@ -117,6 +120,14 @@ public class MembershipDiscounts implements Serializable {
         this.membershipType = membershipType;
     }
 
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -140,5 +151,4 @@ public class MembershipDiscounts implements Serializable {
     public String toString() {
         return "com.MembershipDiscounts[id=" + id + "]";
     }
-
 }

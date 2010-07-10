@@ -18,6 +18,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.persistence.Version;
 
 /**
  *
@@ -41,7 +42,7 @@ public class Memberships implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(name = "start_date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -68,6 +69,8 @@ public class Memberships implements Serializable {
     private String startDateString;
     @Transient
     private String expirationDateString;
+    @Version
+    private int version;
 
     public Memberships() {
     }
@@ -191,7 +194,14 @@ public class Memberships implements Serializable {
         this.startDateString = startDateString;
     }
 
-    
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;

@@ -19,6 +19,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.persistence.Version;
 
 /**
  *
@@ -41,7 +42,7 @@ public class Users implements Serializable {
     private Date createDate;
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Transient
     private String enabledString;
@@ -107,9 +108,11 @@ public class Users implements Serializable {
     private boolean isVerified = false;
     @Column(name = "verified_by")
     private String verifiedBy;
+    @Version
+    private int version;
+
 //    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY)
 //    private UserPic userPic;
-
     public Users() {
     }
 
@@ -361,7 +364,6 @@ public class Users implements Serializable {
         this.pic = pic;
     }
 
-    
 //    public byte[] getPic() {
 //        if ( pic == null && userPic != null && userPic.getPic() != null ) {
 //            return userPic.getPic();
@@ -380,7 +382,6 @@ public class Users implements Serializable {
 //            this.pic = userPic.getPic();
 //        }
 //    }
-
     public String getRationCardNo() {
         return rationCardNo;
     }
@@ -436,6 +437,13 @@ public class Users implements Serializable {
 //    public void setUserPic(UserPic userPic) {
 //        this.userPic = userPic;
 //    }
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
 
     @Override
     public int hashCode() {

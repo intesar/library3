@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 /**
  *
@@ -23,19 +24,20 @@ import javax.persistence.Table;
 @NamedQueries({
     @NamedQuery(name = "UsersLight.findByUsername", query = "select u from UsersLight u where u.username = ?1 "),
     @NamedQuery(name = "UsersLight.findByOrganization", query = "select u from UsersLight u where u.organization = ?1 ")
-    
 })
 public class UsersLight implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(name = "username", nullable = false)
     private String username;
     @Column(name = "organization")
     private String organization;
+    @Version
+    private int version;
 
     public UsersLight(String username, String organization) {
         this.username = username;
@@ -45,7 +47,6 @@ public class UsersLight implements Serializable {
     public UsersLight() {
     }
 
-    
     public String getOrganization() {
         return organization;
     }
@@ -70,7 +71,14 @@ public class UsersLight implements Serializable {
         this.id = id;
     }
 
-    
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -96,5 +104,4 @@ public class UsersLight implements Serializable {
     public String toString() {
         return this.username;
     }
-    
 }
