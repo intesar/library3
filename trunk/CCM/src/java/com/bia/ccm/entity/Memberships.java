@@ -69,6 +69,8 @@ public class Memberships implements Serializable {
     private String startDateString;
     @Transient
     private String expirationDateString;
+    @Column(name = "ip")
+    private String ip;
     @Version
     private int version;
 
@@ -193,6 +195,15 @@ public class Memberships implements Serializable {
     public void setStartDateString(String startDateString) {
         this.startDateString = startDateString;
     }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
 
     public int getVersion() {
         return version;

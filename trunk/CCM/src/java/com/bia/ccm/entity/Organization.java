@@ -75,6 +75,8 @@ public class Organization implements Serializable {
     private String timings;
     @Column(name = "print_email")
     private String printEmail;
+    @Column(name = "ip")
+    private String ip;
     @Version
     private int version;
 
@@ -277,6 +279,16 @@ public class Organization implements Serializable {
     public void setTimings(String timings) {
         this.timings = timings;
     }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
+
 
     public int getVersion() {
         return version;

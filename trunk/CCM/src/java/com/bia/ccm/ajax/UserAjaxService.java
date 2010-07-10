@@ -1,6 +1,5 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * 
  */
 package com.bia.ccm.ajax;
 
@@ -15,45 +14,34 @@ import com.bia.ccm.util.AcegiUtil;
 import com.bia.ccm.util.ServiceFactory;
 import com.bia.converter.CaseConverter;
 import java.util.Date;
+import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
  *
+ *  @see  src/context/ApplicationContext-AjaxService.xml
+ *
+ *  This class is mapped to AjaxUserService bean in the above file
+ *
  * @author intesar
  */
 public class UserAjaxService {
 
+    @Deprecated
     public String getLoggedInUserRole() {
         String username = AcegiUtil.getUsername();
         return this.userService.getUserRole(username);
     }
 
-    public int resetPassword(String email, String activationCode, String password) {
-        try {
-            email = SQLInjectionFilterManager.getInstance().filter(email);
-            //activationCode  = SQLInjectionFilterManager.getInstance().filter(activationCode);            
-            this.userService.resetPassword(email, activationCode, password);
-            return 1;
-        } catch (InvalidInputException ex) {
-            logger.warn(ex.getMessage(), ex);
-            return -2;
-        } catch (NoRoleException ex) {
-            logger.warn(ex.getMessage(), ex);
-            return -3;
-        } catch (Exception ex) {
-            logger.warn(ex.getMessage(), ex);
-            return -1;
-        }
-    }
-
+    /**
+     * 
+     * @param email
+     * @return
+     */
     public int forgotPassword(String email) {
-
-        email = SQLInjectionFilterManager.getInstance().filter(email);
-
-        String msg = " Please check your email for your password! ";
         try {
-            this.userService.forgotPassword(email.toLowerCase());
+            this.userService.forgotPassword(email);
             return 1;
         } catch (InvalidInputException ex) {
             logger.warn(ex.getMessage(), ex);
@@ -65,9 +53,33 @@ public class UserAjaxService {
             logger.warn(ex.getMessage(), ex);
             return -1;
         }
-
     }
 
+    /**
+     *
+     * @param email
+     * @param activationCode
+     * @param password
+     * @param request 
+     * @return
+     */
+    public int resetPassword(String email, String activationCode, String password, HttpServletRequest request) {
+        try {
+            this.userService.resetPassword(email, activationCode, password, request.getRemoteAddr());
+            return 1;
+        } catch (InvalidInputException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -2;
+        } catch (NoRoleException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -3;
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -1;
+        }
+    }
+
+    
     public boolean isUserAdmin() {
         return AcegiUtil.isAdmin();
     }
@@ -76,27 +88,23 @@ public class UserAjaxService {
         return AcegiUtil.getUserRole();
     }
 
+    /**
+     * @see com.bia.ccm.services.impl.UserServiceImpl.registerNewOrganization for more documentation
+     * @param organizationName
+     * @param city
+     * @param email
+     * @param password
+     * @param minutes
+     * @param rate
+     * @param maxSystems
+     * @return
+     */
     public int registerNewOrganization(String organizationName, String city,
-            String email, String password, Integer minutes, Integer rate, Integer maxSystems) {
-        if (organizationName != null) {
-            organizationName = SQLInjectionFilterManager.getInstance().filter(organizationName);
-            organizationName = organizationName.toLowerCase();
-        }
-        if (city != null) {
-            city = SQLInjectionFilterManager.getInstance().filter(city);
-            city = city.toLowerCase();
-        }
-        if (email != null) {
-            email = SQLInjectionFilterManager.getInstance().filter(email);
-            email = email.toLowerCase();
-        }
-
-        logger.debug("error");
-        String str = "Please login with your email and password";
+            String email, String password, Integer minutes, Integer rate, 
+            Integer maxSystems, HttpServletRequest request) {
         try {
             this.userService.registerNewOrganization(organizationName,
-                    city, email, password, minutes, rate, maxSystems);
-            emailService.sendEmail(email, "Welcome to FaceGuard, username / password : " + email + " / " + password);
+                    city, email, password, minutes, rate, maxSystems, request.getRemoteAddr());
             return 1;
         } catch (InvalidInputException ex) {
             logger.warn(ex.getMessage(), ex);
@@ -142,22 +150,14 @@ public class UserAjaxService {
     public void setCaseConverter(CaseConverter caseConverter) {
         this.caseConverter = caseConverter;
     }
-
     public void setEmailService(EMailService emailService) {
         this.emailService = emailService;
     }
-    private EMailService emailService;
-    private CaseConverter caseConverter;
-    protected final Log logger = LogFactory.getLog(getClass());
+    protected EMailService emailService;
+    protected CaseConverter caseConverter;
+    protected static final Log logger = LogFactory.getLog(UserAjaxService.class);
     protected UserService userService = (UserService) ServiceFactory.getService("userServiceImpl");
-    private WorkService workService = (WorkService) ServiceFactory.getService("workServiceImpl");
+    protected WorkService workService = (WorkService) ServiceFactory.getService("workServiceImpl");
 
-    public static void main(String[] args) {
-        UserAjaxService uas = new UserAjaxService();
-        uas.registerNewOrganization("apolokk", "hyd", "intesar.mohammed@bizintelapps.com", "apollo13", 15, 50, 10);
-        System.out.println(" _________________________________ ");
-        //System.out.println(uas.userService.getUser(1));
-        System.out.println(" _________________________________ ");
-
-    }
+   
 }

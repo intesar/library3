@@ -30,7 +30,6 @@
             <dwr:include method="forgotPassword" />
             <dwr:include method="resetPassword" />
             <dwr:include method="registerNewOrganization" />
-            <dwr:include method="getLoggedInUserRole" />
             <dwr:include method="isUserAdmin" />
             <dwr:include method="getUserRole" />
             <dwr:include method="createCustomer" />

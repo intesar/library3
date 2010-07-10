@@ -47,6 +47,8 @@ public class EmailPreference implements Serializable {
     @Column(name = "create_date")
     @Temporal(TemporalType.DATE)
     private Date createDate;
+    @Column(name = "ip")
+    private String ip;
     @Version
     private int version;
 
@@ -120,6 +122,16 @@ public class EmailPreference implements Serializable {
         this.createDate = createDate;
     }
 
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+    
+
+
     public int getVersion() {
         return version;
     }
@@ -127,6 +139,7 @@ public class EmailPreference implements Serializable {
     public void setVersion(int version) {
         this.version = version;
     }
+
 
     @Override
     public int hashCode() {

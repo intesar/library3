@@ -5,6 +5,7 @@
 package com.bia.ccm.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
@@ -52,6 +55,13 @@ public class Services implements Serializable {
     private Double saleTwoPrice;
     @Column(name = "units", nullable = false)
     private Integer units = 1;
+    @Column(name = "create_user")
+    private String createUser;
+    @Column(name = "create_date")
+    @Temporal(TemporalType.DATE)
+    private Date createDate;
+    @Column(name = "ip")
+    private String ip;
     @Version
     private int version;
 
@@ -67,6 +77,16 @@ public class Services implements Serializable {
         this.name = name;
         this.unitPrice = unitPrice;
         this.organization = organization;
+    }
+
+    public Services(Integer id, String name, double unitPrice, String organization, String createUser, Date createDate, String ip) {
+        this.id = id;
+        this.name = name;
+        this.unitPrice = unitPrice;
+        this.organization = organization;
+        this.createUser = createUser;
+        this.createDate = createDate;
+        this.ip = ip;
     }
 
     public String getName() {
@@ -140,6 +160,33 @@ public class Services implements Serializable {
     public void setUnits(Integer units) {
         this.units = units;
     }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public String getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(String createUser) {
+        this.createUser = createUser;
+    }
+
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
+
 
     public int getVersion() {
         return version;
