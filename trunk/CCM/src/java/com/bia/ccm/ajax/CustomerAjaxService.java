@@ -6,7 +6,6 @@
 package com.bia.ccm.ajax;
 
 import com.bia.ccm.entity.SystemLease;
-import com.bia.ccm.entity.Users;
 import com.bia.ccm.services.AdminService;
 import com.bia.ccm.util.AcegiUtil;
 import com.bia.ccm.util.ServiceFactory;
@@ -14,8 +13,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  *
@@ -32,9 +31,10 @@ public class CustomerAjaxService {
             endDate = sdf.parse(endDateString);
             return this.adminService.getMySystemLease(startDate, endDate, username);
         } catch (ParseException ex) {
-            Logger.getLogger(AdminAjaxService.class.getName()).log(Level.SEVERE, null, ex);
+            logger.warn(ex.getMessage(), ex);
             return null;
         }
     }
+    protected static final Log logger = LogFactory.getLog(CustomerAjaxService.class);
     private AdminService adminService = (AdminService) ServiceFactory.getService("adminServiceImpl");
 }

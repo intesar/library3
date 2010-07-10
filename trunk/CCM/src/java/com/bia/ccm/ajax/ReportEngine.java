@@ -27,9 +27,8 @@ public class ReportEngine {
         //iterate and send emails
         try {
             workService.notifyCustomersAtContractStart();
-        } catch (RuntimeException re) {
-            logger.debug(re);
-            re.printStackTrace();
+        } catch (RuntimeException ex) {
+            logger.warn(ex.getMessage(), ex);
         }
 
     }
@@ -40,9 +39,8 @@ public class ReportEngine {
         //iterate and send emails
         try {
             workService.notifyCustomersAtContractEnd();
-        } catch (RuntimeException re) {
-            logger.debug(re);
-            re.printStackTrace();
+        } catch (RuntimeException ex) {
+            logger.warn(ex.getMessage(), ex);
         }
     }
 
@@ -77,9 +75,8 @@ public class ReportEngine {
                 }
                 this.emailService.sendEmail(toAddress, list1.toString());
 
-            } catch (RuntimeException re) {
-                logger.error(re);
-                re.printStackTrace();
+            } catch (RuntimeException ex) {
+                logger.warn(ex.getMessage(), ex);
             }
         }
     }

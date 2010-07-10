@@ -30,6 +30,7 @@ public class MembershipServiceImpl implements MembershipService {
      * if id is null creates a new otherwise tries to save
      * @param membershipTypes
      */
+    @Override
     public void saveMembershipType(MembershipTypes membershipTypes) {
         if (membershipTypes.getId() == null) {
             this.membershipTypesDao.create(membershipTypes);
@@ -43,6 +44,7 @@ public class MembershipServiceImpl implements MembershipService {
      * @param org
      * @return
      */
+    @Override
     public List<MembershipTypes> getMembershipTypesByOrganization(String org) {
         List<MembershipTypes> list = null;
         list = this.membershipTypesDao.findByOrganization(org);
@@ -55,6 +57,7 @@ public class MembershipServiceImpl implements MembershipService {
      * @param name
      * @return
      */
+    @Override
     public MembershipTypes getMembershipTypesByOrganizationAndName(String org, String name) {
         return this.membershipTypesDao.findByOrganizationAndName(org, name);
     }
@@ -64,6 +67,7 @@ public class MembershipServiceImpl implements MembershipService {
      * if the id is null create a new one else updates the record
      * @param membershipDiscounts
      */
+    @Override
     public void saveMembershipDiscounts(MembershipDiscounts membershipDiscounts) {
         if (membershipDiscounts.getId() == null) {
             this.membershipDiscountsDao.create(membershipDiscounts);
@@ -72,6 +76,7 @@ public class MembershipServiceImpl implements MembershipService {
         }
     }
 
+    @Override
     public MembershipDiscounts getMembershipDiscountsById(Integer id) {
         return this.membershipDiscountsDao.read(id);
     }
@@ -81,12 +86,14 @@ public class MembershipServiceImpl implements MembershipService {
      * @param id
      * @return
      */
+    @Override
     public List<MembershipDiscounts> getMembershipDiscountsByMembershipTypesId(Integer id) {
         List<MembershipDiscounts> list = null;
         list = this.membershipDiscountsDao.findByMembershipTypesId(id);
         return list;
     }
 
+    @Override
     public void validateUserMembership(String email, String org) {
         List<Memberships> list = membershipsDao.findByOrganizationAndEmail(org, email);
         if (list != null && list.size() > 0) {
@@ -106,6 +113,7 @@ public class MembershipServiceImpl implements MembershipService {
      *
      * @param membership
      */
+    @Override
     public void saveMembership(Memberships memberships, Organization org, String cashier) {
         logger.debug("inside saveMembership-------------");
         memberships.setCreateDate(new Date());
@@ -170,6 +178,7 @@ public class MembershipServiceImpl implements MembershipService {
      * @param org
      * @return
      */
+    @Override
     public List<Memberships> getMembershipsByOrganization(String org) {
         List list = null;
         list = this.membershipsDao.findByOrganization(org);
@@ -181,6 +190,7 @@ public class MembershipServiceImpl implements MembershipService {
      * @param id
      * @return
      */
+    @Override
     public Memberships getMembershipsById(Integer id) {
         return this.membershipsDao.read(id);
     }

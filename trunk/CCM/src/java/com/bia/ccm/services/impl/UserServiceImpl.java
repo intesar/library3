@@ -36,6 +36,7 @@ public class UserServiceImpl implements UserService {
 
     protected final Log logger = LogFactory.getLog(getClass());
 
+    @Override
     public String getUserRole(String username) {
         AuthoritiesPK authPK1 = new AuthoritiesPK(username, "ROLE_ADMIN");
         Authorities authorities1 = this.authoritiesDao.read(authPK1);
@@ -52,6 +53,7 @@ public class UserServiceImpl implements UserService {
         return "";
     }
 
+    @Override
     public void resetPassword(String email, String activationCode, String password) {
         UsersPass usersPass = usersPassDao.findByUsernameAndEnabled(email, true);
         if (usersPass.getResetCode().trim().equals(activationCode.trim())) {
@@ -70,6 +72,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
     public void forgotPassword(String email) {
 
         try {
@@ -89,6 +92,7 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Override
     public void registerNewOrganization(String organizationName, String city,
             String email, String password, Integer minutes, Integer rate, Integer maxSystems) {
 
@@ -137,9 +141,8 @@ public class UserServiceImpl implements UserService {
                 this.systemsDao.create(systems);
             }
 
-        } catch (Exception e) {
-            logger.error(e);
-            throw new RuntimeException(e);
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage(), ex);
         }
 
     }
