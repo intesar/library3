@@ -1,0 +1,21 @@
+Milestone 1
+ 1. CC Registration
+ 2. Setting up Products/Services
+ 3. User Management & Verification
+ 4. Sale Management
+ 5. Reports
+
+Milestone 2
+ 1. Remote System Management (Shutdown switch)
+ 2. CC Portal
+ 3. Audit all Data inside DB using Audit Tables and Triggers
+
+
+Milestone 3
+ 1. Member management
+
+Milestone 4 (Performance)
+ 1. JPA 2.0 Hibernate + EhCache
+ 2. User Picture Management
+ 3. Load Balancer + Failover
+ 4. Shards + SOA
