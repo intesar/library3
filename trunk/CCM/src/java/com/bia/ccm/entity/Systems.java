@@ -67,6 +67,13 @@ public class Systems implements Serializable {
     @Column(name = "create_date")
     @Temporal(TemporalType.DATE)
     private Date createDate;
+    @Column(name = "last_modified_date")
+    @Temporal(TemporalType.DATE)
+    private Date lastModifiedDate;
+    @Column(name = "last_modified_user")
+    private String lastModifiedUser;
+    @Column(name = "last_modified_ip")
+    private String lastModifiedIP;
     @Column(name = "mac_address")
     private String macAddress;
     @Column(name = "ip_address")
@@ -228,6 +235,31 @@ public class Systems implements Serializable {
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
+
+    public Date getLastModifiedDate() {
+        return lastModifiedDate;
+    }
+
+    public void setLastModifiedDate(Date lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
+    }
+
+    public String getLastModifiedIP() {
+        return lastModifiedIP;
+    }
+
+    public void setLastModifiedIP(String lastModifiedIP) {
+        this.lastModifiedIP = lastModifiedIP;
+    }
+
+    public String getLastModifiedUser() {
+        return lastModifiedUser;
+    }
+
+    public void setLastModifiedUser(String lastModifiedUser) {
+        this.lastModifiedUser = lastModifiedUser;
+    }
+
 
     public String getMacAddress() {
         return macAddress;

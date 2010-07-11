@@ -21,15 +21,15 @@ import java.util.List;
  */
 public interface AdminService {
     // Systems
-    public void deleteEmail(int id);
+    public void deleteEmail(int id, String username);
 
-    public void deleteEmailTimePreference(EmailTimePreference emailTimePreference);
+    public void deleteEmailTimePreference(EmailTimePreference emailTimePreference, String username);
 
     public List<SystemLease> getMySystemLease(Date startDate, Date endDate, String organization);
 
     public UsersLight getUserByUsername(String username);
 
-    public void updateRentalPrice(int mims, double rate, Integer lmins, Double lrate, String username);
+    public void updateRentalPrice(int mims, double rate, Integer lmins, Double lrate, String username, String ip);
 
     public List<Systems> getAllSystems(String username);
 
@@ -63,7 +63,7 @@ public interface AdminService {
 
     public void saveService(Services service);
 
-    public void deleteService(Integer id, String org);
+    public void deleteService(Integer id, String username);
 
     public List<Services> getAllServices(String org);
 

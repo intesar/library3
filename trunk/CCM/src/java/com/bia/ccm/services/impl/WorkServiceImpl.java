@@ -28,6 +28,7 @@ import com.bia.ccm.entity.UsersLight;
 import com.bia.ccm.entity.UsersPass;
 import com.bia.ccm.services.EMailService;
 import com.bia.ccm.services.WorkService;
+import com.bia.converter.CaseConverter;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
@@ -199,12 +200,13 @@ public class WorkServiceImpl implements WorkService {
         }
         systemLease.setTotalMinutesUsed(totalMinutes);
         systemLease.setEndTime(endTime);
-        applyDiscount(system.getOrganization(), systemLease.getLeaseHolderName(), "computer", payableAmount, systemLease);
+        //applyDiscount(system.getOrganization(), systemLease.getLeaseHolderName(), "computer", payableAmount, systemLease);
     //systemLease.setDiscounts(0.0);
     //systemLease.setComments("You din't get any Discounts, since you din't have any membership!");
 
     }
 
+    @Override
     public void addService(String service, long units, String user, double payableAmount,
             String comments, double paidAmount, String agent) {
         int u = 0;
@@ -258,6 +260,7 @@ public class WorkServiceImpl implements WorkService {
         }
     }
 
+    @Override
     public UsageDetail getPayableAmount(int id) {
         SystemLease systemLease = null;//this.systemLeaseDao.findBySystemAndFinished(id);
         System.out.println(systemLease);
@@ -362,13 +365,8 @@ public class WorkServiceImpl implements WorkService {
 
     @Override
     public void createCutomer(Users customer, Users createUser) {
-
+        caseConverter.toLowerCase(customer);
         if (customer.getId() == null) {
-//            Users user = usersDao.findByUsername(customer.getEmail());
-//            logger.info("________________________ before createCustomer1 _________________");
-//            if ( user != null && user.getUsername() != null ) {
-//                throw new RuntimeException("User already exists exception");
-//            }
             customer.setUsername(customer.getEmail());
             customer.setPassword(new Date().getTime() + "");
             customer.setPassword(passwordEncryptor.encryptPassword(customer.getPassword()));
@@ -377,23 +375,22 @@ public class WorkServiceImpl implements WorkService {
             if (createUser != null) {
                 customer.setCreateUser(createUser.getUsername());
             }
-            logger.debug("__________________________________ " + "inside save customer");
-            UsersLight ul = new UsersLight(customer.getUsername(), null);
-            String encryptedPass = this.stringEncryptor.encrypt(new Date().getTime() + "");
-            String resetCode = this.stringEncryptor.encrypt(customer.getEmail() + Calendar.getInstance().getFirstDayOfWeek());
-            UsersPass usersPass = new UsersPass(null, customer.getEmail(),
-                    encryptedPass, true, resetCode, new Date());
-
-
+            logger.trace("inside createCutomer() customer");
             if (customer.getImg() != null) {
                 customer.setPic(this.bufferedImageToByteArray(customer.getImg()));
             }
             //Users u = usersDao.findByUsername(customer.getUsername());
-            logger.info("________________________ before createCustomer _________________");
+            logger.trace("________________________ before createCustomer _________________");
             this.usersDao.create(customer);
+
+            UsersLight usersLight = new UsersLight(customer.getUsername(), null);
+            this.usersLightDao.create(usersLight);
+
+            String encryptedPass = this.stringEncryptor.encrypt(new Date().getTime() + "");
+            String resetCode = this.stringEncryptor.encrypt(customer.getEmail() + Calendar.getInstance().getFirstDayOfWeek());
+            UsersPass usersPass = new UsersPass(null, customer.getEmail(),
+                    encryptedPass, true, resetCode, new Date());
             this.usersPassDao.create(usersPass);
-            this.usersLightDao.create(ul);
-            logger.info("________________________ after createCustomer _________________");
         } else {
             // get img then update
             // if img is not null copy img to pic and save it
@@ -408,6 +405,8 @@ public class WorkServiceImpl implements WorkService {
 //            }
             this.usersDao.update(customer);
         }
+        emailService.sendEmail(customer.getEmail(), "Welcome to FaceGuard, username / password : " + customer.getUsername() + " / " + customer.getPassword());
+
     }
 
     @Override
@@ -678,19 +677,27 @@ public class WorkServiceImpl implements WorkService {
     public void setEmailService(EMailService emailService) {
         this.emailService = emailService;
     }
-    private EMailService emailService;
+
+    public void setCaseConverter(CaseConverter caseConverter) {
+        this.caseConverter = caseConverter;
+    }
+
+
+
+    protected CaseConverter caseConverter;
+    protected EMailService emailService;
     protected final Log logger = LogFactory.getLog(getClass());
-    private SystemsDao systemsDao;
-    private UsersDao usersDao;
-    private UsersLightDao usersLightDao;
-    private UsersPassDao usersPassDao;
-    private SystemLeaseDao systemLeaseDao;
-    private OrganizationDao organizationDao;
-    private ServicesDao servicesDao;
-    private PasswordEncryptor passwordEncryptor;
-    private PBEStringEncryptor stringEncryptor;
-    private MembershipsDao membershipsDao;
-    private MembershipTypesDao membershipTypesDao;
-    private MembershipDiscountsDao membershipDiscountsDao;
+    protected SystemsDao systemsDao;
+    protected UsersDao usersDao;
+    protected UsersLightDao usersLightDao;
+    protected UsersPassDao usersPassDao;
+    protected SystemLeaseDao systemLeaseDao;
+    protected OrganizationDao organizationDao;
+    protected ServicesDao servicesDao;
+    protected PasswordEncryptor passwordEncryptor;
+    protected PBEStringEncryptor stringEncryptor;
+    protected MembershipsDao membershipsDao;
+    protected MembershipTypesDao membershipTypesDao;
+    protected MembershipDiscountsDao membershipDiscountsDao;
 }
 

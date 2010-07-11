@@ -14,15 +14,7 @@
      ##########################################################################
     -->
 
-    <!-- Example Services Decleration
-
-
-    <bean id="personServiceImpl" class="com.company.projectname.service.impl.PersonServiceImpl" >
-        <property name="personDao" ref="personDao"/>
-    </bean>
-
     
-    -->
     <bean id="emailServiceImpl" class="com.bia.ccm.services.impl.EMailServiceImpl" />
     <bean id="caseConverterImpl" class="com.bia.converter.CaseConverterImpl" />
     <bean id="userAjaxService" class="com.bia.ccm.ajax.UserAjaxService" >
@@ -30,12 +22,8 @@
             <dwr:include method="forgotPassword" />
             <dwr:include method="resetPassword" />
             <dwr:include method="registerNewOrganization" />
-            <dwr:include method="isUserAdmin" />
-            <dwr:include method="getUserRole" />
             <dwr:include method="createCustomer" />
         </dwr:remote>
-        <property name="caseConverter" ref="caseConverterImpl" />
-        <property name="emailService" ref="emailServiceImpl" />
     </bean>
     <bean id="workAjaxService" class="com.bia.ccm.ajax.WorkAjaxService" >
         <dwr:remote javascript="AjaxWorkService">
@@ -87,7 +75,6 @@
             <dwr:include method="deleteService" />
             <dwr:include method="getAllServices" />
         </dwr:remote>
-        <property name="caseConverter" ref="caseConverterImpl" />
     </bean>
     <bean id="customerAjaxService" class="com.bia.ccm.ajax.CustomerAjaxService" >
         <dwr:remote javascript="AjaxCustomerService">

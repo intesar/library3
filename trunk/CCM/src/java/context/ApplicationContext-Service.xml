@@ -19,7 +19,7 @@
     
     -->
     <bean id="emailServiceImpl" class="com.bia.ccm.services.impl.EMailServiceImpl" />
-    
+    <bean id="caseConverterImpl" class="com.bia.converter.CaseConverterImpl" />
     <bean id="passwordEncryptor" class="org.jasypt.util.password.StrongPasswordEncryptor" />
     <bean id="stringEncryptor" class="org.jasypt.encryption.pbe.StandardPBEStringEncryptor" >
         <property name="password" value="faceguard" />
@@ -38,6 +38,7 @@
         <property name="passwordEncryptor" ref="passwordEncryptor" />
         <property name="stringEncryptor" ref="stringEncryptor" />
         <property name="emailService" ref="emailServiceImpl" />
+        <property name="caseConverter" ref="caseConverterImpl" />
     </bean>
     <bean id="userServiceImpl" class="com.bia.ccm.services.impl.UserServiceImpl" >
         <property name="usersDao" ref="usersDao" />

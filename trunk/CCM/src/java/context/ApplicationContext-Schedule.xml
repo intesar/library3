@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
 <beans>
-    <bean id="reportEngine" class="com.bia.ccm.services.ajax.ReportEngine" >
+    <bean id="reportEngine" class="com.bia.ccm.jobs.ReportEngine" >
         <property name="emailService" ref="emailServiceImpl" />
     </bean>
     <bean id="jobDetailForStartContract" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
