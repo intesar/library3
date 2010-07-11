@@ -26,6 +26,8 @@ import com.bia.ccm.entity.UsageDetail;
 import com.bia.ccm.entity.Users;
 import com.bia.ccm.entity.UsersLight;
 import com.bia.ccm.entity.UsersPass;
+import com.bia.ccm.exceptions.InvalidInputException;
+import com.bia.ccm.exceptions.NoRoleException;
 import com.bia.ccm.services.EMailService;
 import com.bia.ccm.services.WorkService;
 import com.bia.converter.CaseConverter;
@@ -85,7 +87,7 @@ public class WorkServiceImpl implements WorkService {
     public void leaseSystem(int id, String leaseHolder, String cashier) {
         Systems system = this.systemsDao.read(id);
         system.setIsAvailable(false);
-        system.setCurrentUserEmail(leaseHolder);
+        system.setCurrentUserEmail(leaseHolder.toLowerCase());
         system.setStartTime(new Date());
         this.systemsDao.update(system);
         SystemLease systemLease = new SystemLease(null, new Date(), cashier, system.getId(), false);
@@ -179,8 +181,8 @@ public class WorkServiceImpl implements WorkService {
         Double payableAmount = null;
         logger.debug("rate ******** : " + rate);
         // if (rate >= 1.0) {
-        if (system.getLowerMinuteRate() != null && system.getLowerMinuteRate() > 0.0 &&
-                system.getLowerMinimumMinutes() != null && system.getLowerMinimumMinutes() > 0) {
+        if (system.getLowerMinuteRate() != null && system.getLowerMinuteRate() > 0.0
+                && system.getLowerMinimumMinutes() != null && system.getLowerMinimumMinutes() > 0) {
             // apply pattern for dual rate
             Double amt = 0.0;
             long quotient = totalMinutes / system.getMinimumMinutes();
@@ -201,14 +203,18 @@ public class WorkServiceImpl implements WorkService {
         systemLease.setTotalMinutesUsed(totalMinutes);
         systemLease.setEndTime(endTime);
         //applyDiscount(system.getOrganization(), systemLease.getLeaseHolderName(), "computer", payableAmount, systemLease);
-    //systemLease.setDiscounts(0.0);
-    //systemLease.setComments("You din't get any Discounts, since you din't have any membership!");
+        //systemLease.setDiscounts(0.0);
+        //systemLease.setComments("You din't get any Discounts, since you din't have any membership!");
 
     }
 
     @Override
     public void addService(String service, long units, String user, double payableAmount,
             String comments, double paidAmount, String agent) {
+        if (units <= 0 || payableAmount <= 0 || paidAmount <= 0) {
+            throw new NoRoleException();
+        }
+
         int u = 0;
         UsersLight user1 = this.usersLightDao.findByUsername(agent);
         try {
@@ -282,18 +288,22 @@ public class WorkServiceImpl implements WorkService {
         }
         String pattern = "hh:mm";
         SimpleDateFormat sdf = new SimpleDateFormat(pattern);
-        String str = " User : " + systemLease.getLeaseHolderName() + " \n" +
-                " System : " + system.getName() + " \n" +
-                " Start Time : " + sdf.format(systemLease.getStartTime()) + " \n" +
-                " End Time : " + sdf.format(endTime) + " \n" +
-                " Total Minutes : " + totalMinutes + " \n" +
-                " Payable Amount : " + payableAmount;
+        String str = " User : " + systemLease.getLeaseHolderName() + " \n"
+                + " System : " + system.getName() + " \n"
+                + " Start Time : " + sdf.format(systemLease.getStartTime()) + " \n"
+                + " End Time : " + sdf.format(endTime) + " \n"
+                + " Total Minutes : " + totalMinutes + " \n"
+                + " Payable Amount : " + payableAmount;
         UsageDetail ud = new UsageDetail(str, payableAmount);
         return ud;
     }
 
     @Override
     public void unleaseSystem(int id, double amountPaid, String cashier) {
+        if (id <= 0 || amountPaid <= 0) {
+            throw new InvalidInputException();
+        }
+
         Systems system = this.systemsDao.read(id);
         system.setIsAvailable(true);
         this.systemsDao.update(system);
@@ -366,6 +376,7 @@ public class WorkServiceImpl implements WorkService {
     @Override
     public void createCutomer(Users customer, Users createUser) {
         caseConverter.toLowerCase(customer);
+        caseConverter.toLowerCase(customer, "password");
         if (customer.getId() == null) {
             customer.setUsername(customer.getEmail());
             customer.setPassword(new Date().getTime() + "");
@@ -391,6 +402,7 @@ public class WorkServiceImpl implements WorkService {
             UsersPass usersPass = new UsersPass(null, customer.getEmail(),
                     encryptedPass, true, resetCode, new Date());
             this.usersPassDao.create(usersPass);
+            emailService.sendEmail(customer.getEmail(), "Welcome to FaceGuard, username / password : " + customer.getUsername() + " / " + customer.getPassword());
         } else {
             // get img then update
             // if img is not null copy img to pic and save it
@@ -457,7 +469,7 @@ public class WorkServiceImpl implements WorkService {
                 try {
                     logger.debug("********* before method1 " + sl.getService());
                     logger.debug("********* System id " + sl.getId());
-                    System.out.println ( "********* System id " + sl.getId() );
+                    System.out.println("********* System id " + sl.getId());
                     if (!sl.getLeaseHolderName().equalsIgnoreCase("Walkin Customer")) {
                         this.emailService.sendEmail(sl.getLeaseHolderName(), getStringAtContractStart(sl, sl.getReturnAgent()));
                     }
@@ -568,24 +580,24 @@ public class WorkServiceImpl implements WorkService {
 
         }
         String str = "";
-        str += "Dear " + sl.getLeaseHolderName() + " Welcome to FaceGuard.org, <br> " +
-                "At FaceGuard.org We care your Security. <br> " +
-                "Use of Service Report: <br> " +
-                "Cyber Cafe  Name : " + org.getName() + " <br> " +
-                org.getName() + " Contact No : " + org.getPhone() + " <br> " +
-                org.getName() + " Contact Email : " + org.getContactEmail() + " <br> " +
-                org.getName() + " Address : " + org.getStreet() + " " + org.getCity() + " <br> " +
-                org.getName() + " Admin At Kiosk : " + sl.getIssueAgent() + " <br> " +
-                org.getName() + " Operating Hours : " + org.getTimings() + " <br> " +
-                org.getName() + " Print Email : " + org.getPrintEmail() + " <br> " +
-                "Service      :" + sl.getService() + " <br> " +
-                "Start Time : " + sl.getStartTimeString() + " <br> " +
-                "<br> " +
-                org.getName() + " Also Offers:  <br> " +
-                "<table> <thead> <tr> <td> Service </td> <td>  Unit Price </td> </tr> </thead><body> " + s +
-                " If someone else have used the above service at " + org.getName() + " please contact and report Cyber Cafe or Email us at info@bizintelapps.com < br > " +
-                " Thanks  <br>" +
-                "Team BizIntelApps (Business Intelligent Application) & FaceGuard.org ";
+        str += "Dear " + sl.getLeaseHolderName() + " Welcome to FaceGuard.org, <br> "
+                + "At FaceGuard.org We care your Security. <br> "
+                + "Use of Service Report: <br> "
+                + "Cyber Cafe  Name : " + org.getName() + " <br> "
+                + org.getName() + " Contact No : " + org.getPhone() + " <br> "
+                + org.getName() + " Contact Email : " + org.getContactEmail() + " <br> "
+                + org.getName() + " Address : " + org.getStreet() + " " + org.getCity() + " <br> "
+                + org.getName() + " Admin At Kiosk : " + sl.getIssueAgent() + " <br> "
+                + org.getName() + " Operating Hours : " + org.getTimings() + " <br> "
+                + org.getName() + " Print Email : " + org.getPrintEmail() + " <br> "
+                + "Service      :" + sl.getService() + " <br> "
+                + "Start Time : " + sl.getStartTimeString() + " <br> "
+                + "<br> "
+                + org.getName() + " Also Offers:  <br> "
+                + "<table> <thead> <tr> <td> Service </td> <td>  Unit Price </td> </tr> </thead><body> " + s
+                + " If someone else have used the above service at " + org.getName() + " please contact and report Cyber Cafe or Email us at info@bizintelapps.com < br > "
+                + " Thanks  <br>"
+                + "Team BizIntelApps (Business Intelligent Application) & FaceGuard.org ";
         return str;
     }
 
@@ -599,30 +611,30 @@ public class WorkServiceImpl implements WorkService {
 
         }
         String str = "";
-        str += "Dear " + sl.getLeaseHolderName() + " Welcome to FaceGuard.org, <br> " +
-                "At FaceGuard.org We care your Security. <br> " +
-                "Use of Service Report: <br> " +
-                "Cyber Cafe  Name : " + org.getName() + " <br> " +
-                org.getName() + " Contact No : " + org.getPhone() + " <br> " +
-                org.getName() + " Contact Email : " + org.getContactEmail() + " <br> " +
-                org.getName() + " Address : " + org.getStreet() + " " + org.getCity() + " <br> " +
-                org.getName() + " Admin, Issed By : " + sl.getIssueAgent() + " <br> " +
-                org.getName() + " Operating Hours : " + org.getTimings() + " <br> " +
-                "Service      :" + sl.getService() + " <br> " +
-                "Start Time : " + sl.getStartTimeString() + " <br> " +
-                "End Time : " + sl.getEndTimeString() + " <br> " +
-                "Total Minutest :" + sl.getTotalMinutesUsed() + "<br> " +
-                "Payable Amount :" + sl.getPayableAmount() + "<br> " +
-                "Paid Amount :" + sl.getAmountPaid() + "<br> " +
-                org.getName() + " Admin, Paid To : " + sl.getReturnAgent() + " <br> " +
-                org.getName() + " Print Email : " + org.getPrintEmail() + " <br> " +
-                "<br> " +
-                org.getName() + " Also Offers:  <br> " +
-                "<table> <thead> <tr> <td> Service </td> <td>  Unit Price </td> </tr> </thead><body> " + s + "</body></table>" +
-                " If someone else have used the above service at " + org.getName() + " please contact and report Cyber Cafe or Email us at info@bizintelapps.com < br > " +
-                " -- <br> " +
-                " Thanks  <br>" +
-                "Team BizIntelApps (Business Intelligent Application) & FaceGuard.org ";
+        str += "Dear " + sl.getLeaseHolderName() + " Welcome to FaceGuard.org, <br> "
+                + "At FaceGuard.org We care your Security. <br> "
+                + "Use of Service Report: <br> "
+                + "Cyber Cafe  Name : " + org.getName() + " <br> "
+                + org.getName() + " Contact No : " + org.getPhone() + " <br> "
+                + org.getName() + " Contact Email : " + org.getContactEmail() + " <br> "
+                + org.getName() + " Address : " + org.getStreet() + " " + org.getCity() + " <br> "
+                + org.getName() + " Admin, Issed By : " + sl.getIssueAgent() + " <br> "
+                + org.getName() + " Operating Hours : " + org.getTimings() + " <br> "
+                + "Service      :" + sl.getService() + " <br> "
+                + "Start Time : " + sl.getStartTimeString() + " <br> "
+                + "End Time : " + sl.getEndTimeString() + " <br> "
+                + "Total Minutest :" + sl.getTotalMinutesUsed() + "<br> "
+                + "Payable Amount :" + sl.getPayableAmount() + "<br> "
+                + "Paid Amount :" + sl.getAmountPaid() + "<br> "
+                + org.getName() + " Admin, Paid To : " + sl.getReturnAgent() + " <br> "
+                + org.getName() + " Print Email : " + org.getPrintEmail() + " <br> "
+                + "<br> "
+                + org.getName() + " Also Offers:  <br> "
+                + "<table> <thead> <tr> <td> Service </td> <td>  Unit Price </td> </tr> </thead><body> " + s + "</body></table>"
+                + " If someone else have used the above service at " + org.getName() + " please contact and report Cyber Cafe or Email us at info@bizintelapps.com < br > "
+                + " -- <br> "
+                + " Thanks  <br>"
+                + "Team BizIntelApps (Business Intelligent Application) & FaceGuard.org ";
         return str;
     }
 
@@ -681,9 +693,6 @@ public class WorkServiceImpl implements WorkService {
     public void setCaseConverter(CaseConverter caseConverter) {
         this.caseConverter = caseConverter;
     }
-
-
-
     protected CaseConverter caseConverter;
     protected EMailService emailService;
     protected final Log logger = LogFactory.getLog(getClass());
@@ -700,4 +709,3 @@ public class WorkServiceImpl implements WorkService {
     protected MembershipTypesDao membershipTypesDao;
     protected MembershipDiscountsDao membershipDiscountsDao;
 }
-

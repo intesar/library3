@@ -15,9 +15,7 @@
     -->
 
     
-    <bean id="emailServiceImpl" class="com.bia.ccm.services.impl.EMailServiceImpl" />
-    <bean id="caseConverterImpl" class="com.bia.converter.CaseConverterImpl" />
-    <bean id="userAjaxService" class="com.bia.ccm.ajax.AjaxUserService" >
+    <bean id="ajaxUserService" class="com.bia.ccm.ajax.AjaxUserService" >
         <dwr:remote javascript="AjaxUserService">
             <dwr:include method="forgotPassword" />
             <dwr:include method="resetPassword" />
@@ -25,7 +23,7 @@
             <dwr:include method="createCustomer" />
         </dwr:remote>
     </bean>
-    <bean id="workAjaxService" class="com.bia.ccm.ajax.WorkAjaxService" >
+    <bean id="ajaxWorkService" class="com.bia.ccm.ajax.AjaxWorkService" >
         <dwr:remote javascript="AjaxWorkService">
             <dwr:include method="getActiveSystems" />
             <dwr:include method="getSystemByNameAndOrganization" />
@@ -49,10 +47,8 @@
             <dwr:include method="saveMembership" />
             <dwr:include method="createMembershipDiscount" />
         </dwr:remote>
-        <property name="caseConverter" ref="caseConverterImpl" />
-        <property name="emailService" ref="emailServiceImpl" />
     </bean>
-    <bean id="adminAjaxService" class="com.bia.ccm.ajax.AjaxAdminService" >
+    <bean id="ajaxAdminService" class="com.bia.ccm.ajax.AjaxAdminService" >
         <dwr:remote javascript="AjaxAdminService">
             <dwr:include method="getAllSystems" />
             <dwr:include method="saveSystems" />
@@ -76,7 +72,7 @@
             <dwr:include method="getAllServices" />
         </dwr:remote>
     </bean>
-    <bean id="customerAjaxService" class="com.bia.ccm.ajax.CustomerAjaxService" >
+    <bean id="ajaxCustomerService" class="com.bia.ccm.ajax.AjaxCustomerService" >
         <dwr:remote javascript="AjaxCustomerService">
             <dwr:include method="getMySystemLease" />
         </dwr:remote>

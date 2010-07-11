@@ -22,7 +22,7 @@ import org.apache.commons.logging.LogFactory;
  *
  * @author intesar
  */
-public class CustomerAjaxService {
+public class AjaxCustomerService {
 
     /**
      * 
@@ -44,6 +44,6 @@ public class CustomerAjaxService {
             return null;
         }
     }
-    protected static final Log logger = LogFactory.getLog(CustomerAjaxService.class);
+    protected static final Log logger = LogFactory.getLog(AjaxCustomerService.class);
     private AdminService adminService = (AdminService) ServiceFactory.getService("adminServiceImpl");
 }
