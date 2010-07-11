@@ -28,7 +28,6 @@ import com.bia.ccm.exceptions.InvalidInputException;
 import com.bia.ccm.exceptions.NoRoleException;
 import com.bia.ccm.services.AdminService;
 import com.bia.ccm.services.EMailService;
-import com.bia.ccm.util.AcegiUtil;
 import com.bia.ccm.util.EMailUtil;
 import com.bia.converter.CaseConverter;
 import java.util.Calendar;
@@ -48,7 +47,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void deleteEmail(int id, String username) {
         EmailPreference email = this.emailPreferenceDao.read(id);
-        if ( !email.getOrganization().equals(this.getOrganization(username).getName())) {
+        if (!email.getOrganization().equals(this.getOrganization(username).getName())) {
             throw new InvalidInputException();
         }
         this.emailPreferenceDao.delete(email);
@@ -101,7 +100,12 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public List<Users> getAllUsers(String username) {
         UsersLight u = this.usersLightDao.findByUsername(username);
-        return this.usersDao.findByOrganization(u.getOrganization());
+        // return name, enabled, isAdmin, password
+        List<Users> users = this.usersDao.findByOrganization(u.getOrganization());
+        for (Users u1 : users) {
+            u1.setPic(null);
+        }
+        return users;
     }
 
     @Override
@@ -251,7 +255,7 @@ public class AdminServiceImpl implements AdminService {
             Organization organization, String username) {
         UsersLight u = this.usersLightDao.findByUsername(username);
         Organization org = this.organizationDao.findByOrganization(u.getOrganization());
-        if ( !org.getName().equals(organization.getName())) {
+        if (!org.getName().equals(organization.getName())) {
             throw new NoRoleException();
         }
 
@@ -269,26 +273,36 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<SystemLease> getSystemLease(Date startDate, Date endDate, String org) {
-        startDate.setHours(0);
-        startDate.setMinutes(0);
-        endDate.setHours(23);
-        endDate.setMinutes(59);
-        return this.systemLeaseDao.findByStartAndEndDates(startDate, endDate, org);
+    public List<SystemLease> getSystemLease(Date startDate, Date endDate, String username) {
+        Calendar sDate = Calendar.getInstance();
+        sDate.setTime(startDate);
+        sDate.set(Calendar.HOUR, 0);
+        sDate.set(Calendar.MINUTE, 0);
+
+        Calendar eDate = Calendar.getInstance();
+        eDate.setTime(endDate);
+        eDate.set(Calendar.HOUR, 23);
+        eDate.set(Calendar.MINUTE, 59);
+        return this.systemLeaseDao.findByStartAndEndDates(sDate.getTime(), eDate.getTime(), this.getOrganization(username).getName());
     }
 
     @Override
     public List<SystemLease> getMySystemLease(Date startDate, Date endDate, String username) {
-        startDate.setHours(0);
-        startDate.setMinutes(0);
-        endDate.setHours(23);
-        endDate.setMinutes(59);
-        return this.systemLeaseDao.findByUsernameAndStartEndDates(username, startDate, endDate);
+        Calendar sDate = Calendar.getInstance();
+        sDate.setTime(startDate);
+        sDate.set(Calendar.HOUR, 0);
+        sDate.set(Calendar.MINUTE, 0);
+
+        Calendar eDate = Calendar.getInstance();
+        eDate.setTime(endDate);
+        eDate.set(Calendar.HOUR, 23);
+        eDate.set(Calendar.MINUTE, 59);
+        return this.systemLeaseDao.findByUsernameAndStartEndDates(username, sDate.getTime(), eDate.getTime());
     }
 
     @Override
     public List getReport(
-            Date startDate, Date endDate, String org) {
+            Date startDate, Date endDate, String username) {
         Calendar sDate = Calendar.getInstance();
         sDate.setTime(startDate);
         sDate.set(Calendar.HOUR, 0);
@@ -299,11 +313,7 @@ public class AdminServiceImpl implements AdminService {
         eDate.set(Calendar.HOUR, 23);
         eDate.set(Calendar.MINUTE, 59);
 
-//        startDate.setHours(0);
-//        startDate.setMinutes(0);
-//        endDate.setHours(23);
-//        endDate.setMinutes(59);
-        return systemLeaseDao.findReportBetweenDates(sDate.getTime(), eDate.getTime(), org);
+        return systemLeaseDao.findReportBetweenDates(sDate.getTime(), eDate.getTime(), this.getOrganization(username).getName());
     }
 
     @Override
@@ -320,27 +330,34 @@ public class AdminServiceImpl implements AdminService {
      *     case 2 user request for 20 copes 20 * 4.00 = 800.00
      *
      */
-    public void saveService(Services service) {
+    public void saveService(Services service, String username, String ip) {
         // validation logic
-        if (service.getName() == null || service.getName().trim().length() < 1) {
-            throw new RuntimeException(" name cannot be empty ");
-        }
-        if (service.getUnitPrice() < 0) {
-            throw new RuntimeException(" Unit price cannot be less then zero ");
-        }
-        if (service.getSaleTwoUnits() != null && service.getSaleTwoUnits() > 1
-                && service.getSaleTwoPrice() != null && service.getSaleTwoPrice() > 0.0) {
-            service.setSaleTwoEnabled(true);
+        if (service.getId() == -5) {
+            this.updateRentalPrice(service.getUnits(), service.getUnitPrice(),
+                    service.getSaleTwoUnits(), service.getSaleTwoPrice(), username, ip);
         } else {
+            isNotEmpty(service.getName());
+            validateFirstRentalPrice(service.getUnits(), service.getUnitPrice());
+            validateSecondRentalPrice(service.getUnits(), service.getUnitPrice(), service.getSaleTwoUnits(), service.getSaleTwoPrice());
             service.setSaleTwoEnabled(false);
-        }
+            if (service.getSaleTwoUnits() != null && service.getSaleTwoUnits() > 1) {
+                service.setSaleTwoEnabled(true);
+            } 
+            service.setIp(ip);
 
-        if (service.getId() == null) {
-            this.servicesDao.create(service);
-        } else {
-            this.servicesDao.update(service);
+            if (service.getId() == null) {
+                service.setCreateDate(new Date());
+                service.setCreateUser(username);
+                this.servicesDao.create(service);
+            } else {
+                service.setLastModifiedDate(new Date());
+                service.setLastModifiedUser(username);
+                this.servicesDao.update(service);
+            }
         }
     }
+
+
 
     @Override
     public void deleteService(Integer id, String username) {
@@ -418,6 +435,17 @@ public class AdminServiceImpl implements AdminService {
         return u;
     }
     // ----------------------------- private methods -------------------------//
+
+    /**
+     * 
+     * @param value
+     * @throws InvalidInputException
+     */
+    private void isNotEmpty(String value) throws InvalidInputException {
+        if (value == null || value.trim().length() < 1) {
+            throw new InvalidInputException();
+        }
+    }
 
     /**
      * if mins or rate is less then zero throw exception

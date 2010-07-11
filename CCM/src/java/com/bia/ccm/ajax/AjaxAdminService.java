@@ -19,6 +19,7 @@ import com.bia.ccm.util.ServiceFactory;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -33,7 +34,7 @@ import org.apache.commons.logging.LogFactory;
  *
  * @author intesar
  */
-public class AdminAjaxService {
+public class AjaxAdminService {
 
     /**
      *   Response codes
@@ -42,14 +43,11 @@ public class AdminAjaxService {
      *  -2 == Operation not executed, because of invalid input
      *  -3 == Operation failed (User doesn't have appropriate roles on data), if user believes he has roles ask him to refresh page or relogin
      *
-     */
-    /**
      * only Owner can delete Notification Email
      * @param id
-     * @param request set my DWR, used for getting IP Address
      * @return
      */
-    public int deleteEmail(int id, HttpServletRequest request) {
+    public int deleteEmail(int id) {
         try {
             this.adminService.deleteEmail(id, AcegiUtil.getUsername());
             return 1;
@@ -75,8 +73,8 @@ public class AdminAjaxService {
      * @return
      */
     public int updateRentalPrice(int mims, double rate, Integer lmins, Double lrate, HttpServletRequest request) {
-        String username = AcegiUtil.getUsername();
         try {
+            String username = AcegiUtil.getUsername();
             this.adminService.updateRentalPrice(mims, rate, lmins, lrate, username, request.getRemoteAddr());
             return 1;
         } catch (InvalidInputException ex) {
@@ -128,17 +126,18 @@ public class AdminAjaxService {
     }
 
     /**
-     *
+     * returns all CC employees
      * @return
      */
     public List<Users> getAllUsers() {
-        String username = AcegiUtil.getUsername();
-        List<Users> users = null;
-        users = this.adminService.getAllUsers(username);
-        for (Users u : users) {
-            u.setPic(null);
+        try {
+            String username = AcegiUtil.getUsername();
+            List<Users> users = this.adminService.getAllUsers(username);
+            return users;
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage(), ex);
+            return null;
         }
-        return users;
     }
 
     /**
@@ -195,11 +194,6 @@ public class AdminAjaxService {
     public int saveEmailPreference(EmailPreference emailPreference) {
         try {
             String username = AcegiUtil.getUsername();
-//            emailPreference.setEmailOrPhone(SQLInjectionFilterManager.getInstance().filter(emailPreference.getEmailOrPhone()));
-//            emailPreference.setEmailOrPhone(emailPreference.getEmailOrPhone().toLowerCase());
-//            if (emailPreference.getUsername() != null) {
-//                emailPreference.setUsername(emailPreference.getUsername().toLowerCase());
-//            }
             this.adminService.saveEmailPreference(emailPreference, username);
             return 1;
         } catch (InvalidInputException ex) {
@@ -228,9 +222,14 @@ public class AdminAjaxService {
         }
     }
 
+    /**
+     *
+     * @param emailTimePreference
+     * @return
+     */
     public int saveEmailTimePreference(EmailTimePreference emailTimePreference) {
-        String username = AcegiUtil.getUsername();
         try {
+            String username = AcegiUtil.getUsername();
             this.adminService.saveEmailTimePreference(emailTimePreference, username);
             return 1;
         } catch (InvalidInputException ex) {
@@ -245,6 +244,11 @@ public class AdminAjaxService {
         }
     }
 
+    /**
+     *
+     * @param emailTimePreference
+     * @return
+     */
     public int deleteEmailTimePreference(EmailTimePreference emailTimePreference) {
         try {
             this.adminService.deleteEmailTimePreference(emailTimePreference, AcegiUtil.getUsername());
@@ -261,6 +265,10 @@ public class AdminAjaxService {
         }
     }
 
+    /**
+     *  not in use
+     * @return
+     */
     public List<SystemLease> getAllSystemLease() {
         String username = AcegiUtil.getUsername();
 
@@ -304,55 +312,57 @@ public class AdminAjaxService {
         }
     }
 
+    /**
+     *
+     * @param startDateString
+     * @param endDateString
+     * @return
+     */
     public List<SystemLease> getSystemLease(String startDateString, String endDateString) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date startDate = null;
-        Date endDate = null;
-        String username = AcegiUtil.getUsername();
-        UsersLight u = this.adminService.getUserByUsername(username);
-
         try {
-            startDate = sdf.parse(startDateString);
-            endDate = sdf.parse(endDateString);
-            return this.adminService.getSystemLease(startDate, endDate, u.getOrganization());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date startDate = sdf.parse(startDateString);
+            Date endDate = sdf.parse(endDateString);
+            String username = AcegiUtil.getUsername();
+            return this.adminService.getSystemLease(startDate, endDate, username);
         } catch (ParseException ex) {
             logger.warn(ex.getMessage(), ex);
-            return null;
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage(), ex);
         }
-
+        return null;
     }
 
+    /**
+     *
+     * @param startDateString
+     * @param endDateString
+     * @return
+     */
     public List getReport(String startDateString, String endDateString) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try {
             Date startDate = sdf.parse(startDateString);
             Date endDate = sdf.parse(endDateString);
-            logger.trace(startDate + " " + endDate);
             String username = AcegiUtil.getUsername();
-            UsersLight u = this.adminService.getUserByUsername(username);
-            return this.adminService.getReport(startDate, endDate, u.getOrganization());
+            return this.adminService.getReport(startDate, endDate, username);
         } catch (ParseException ex) {
             logger.warn(ex.getMessage(), ex);
-            return null;
+            } catch (Exception ex) {
+            logger.warn(ex.getMessage(), ex);
         }
-
+        return null;
     }
 
+    /**
+     * 
+     * @param service
+     * @param request
+     * @return
+     */
     public int saveService(Services service, HttpServletRequest request) {
         try {
-            if (service.getId() == -5) {
-                if (logger.isTraceEnabled()) {
-                    logger.trace("computer rate save ------ " + service.getUnits() + "  " + service.getUnitPrice());
-                    logger.trace("computer rate ------ " + service.getSaleTwoUnits() + " " + service.getSaleTwoPrice());
-                }
-
-                adminService.updateRentalPrice(service.getUnits(), service.getUnitPrice(),
-                        service.getSaleTwoUnits(), service.getSaleTwoPrice(), AcegiUtil.getUsername(), request.getRemoteAddr());
-
-            } else {
-                service.setOrganization(this.getOrganization().getName());
-                adminService.saveService(service);
-            }
+            this.adminService.saveService(service, AcegiUtil.getUsername(), request.getRemoteAddr());
             return 1;
         } catch (InvalidInputException ex) {
             logger.warn(ex.getMessage(), ex);
@@ -401,6 +411,10 @@ public class AdminAjaxService {
         }
     }
 
+    /**
+     * not in use
+     * @return
+     */
     public int sendReports() {
         try {
             this.adminService.sendReports();
@@ -416,33 +430,6 @@ public class AdminAjaxService {
             return -1;
         }
     }
-    protected final Log logger = LogFactory.getLog(getClass());
-    private AdminService adminService = (AdminService) ServiceFactory.getService("adminServiceImpl");
-
-    public static void main(String[] args) {
-        AdminAjaxService aas = new AdminAjaxService();
-//        EmailPreference ep = new EmailPreference(null, "test", "mohdshannan@yahoo.com", "bia");
-//        aas.saveEmailPreference(ep);
-//        short s = (short) 500;
-//        EmailTimePreference etp = new EmailTimePreference(null, s, "bia");
-//        aas.saveEmailTimePreference(etp);
-//        Systems s1 = new Systems(null, 2, "bia", true, null, 20.8, true);
-//        aas.saveSystems(s1);
-//        Users u = new Users(null, "shannan", "shannan", true, "admin", "bia", "shannan");
-//        aas.saveUsers(u);
-//        
-//        System.out.println(aas.getAllEmailPreference());
-//        System.out.println(aas.getAllEmailTimePreference());
-//        System.out.println(aas.getAllSystemLease());
-//        System.out.println(aas.getAllSystems());
-//        System.out.println(aas.getAllUsers());
-//        System.out.println(aas.getOrganization());
-        Date dt1 = new Date(107, 7, 7);
-        Date dt2 = new Date(110, 11, 11);
-
-        //System.out.println(aas.getSystemLease("2007-07-07", "2008-10-10").size());
-        //System.out.println ();//getReport("2008-08-04", "2008-08-04").toString());
-        // System.out.println(aas.getReport("2007-07-07", "2008-10-10"));
-        aas.sendReports();
-    }
+    protected static final Log logger = LogFactory.getLog(AjaxAdminService.class);
+    protected AdminService adminService = (AdminService) ServiceFactory.getService("adminServiceImpl");
 }
