@@ -71,8 +71,8 @@ public class UserServiceImpl implements UserService {
             user.setIp(ip);
             usersDao.update(user);
             String activationCode_ = this.stringEncryptor.encrypt(password + email);
-            UsersPass userPass = new UsersPass(null, email, password, true, activationCode_, new Date());
-            usersPassDao.create(userPass);
+            UsersPass newUserPass = new UsersPass(null, email, password, true, activationCode_, new Date());
+            usersPassDao.create(newUserPass);
             usersPass.setEnabled(false);
             usersPassDao.update(usersPass);
         } else {

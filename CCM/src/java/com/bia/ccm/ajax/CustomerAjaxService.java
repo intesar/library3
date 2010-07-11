@@ -1,6 +1,5 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * 
  */
 
 package com.bia.ccm.ajax;
@@ -17,10 +16,20 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
+ * @see  src/context/ApplicationContext-AjaxService.xml
+ *
+ *  This class is mapped to AjaxCustomerService bean in the above file
  *
  * @author intesar
  */
 public class CustomerAjaxService {
+
+    /**
+     * 
+     * @param startDateString
+     * @param endDateString
+     * @return
+     */
     public List<SystemLease> getMySystemLease ( String startDateString, String endDateString) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date startDate = null;

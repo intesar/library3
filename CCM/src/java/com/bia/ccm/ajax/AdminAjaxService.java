@@ -1,10 +1,8 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * 
  */
 package com.bia.ccm.ajax;
 
-import com.abbhsoft.sqlInjectionFilter.SQLInjectionFilterManager;
 import com.bia.ccm.entity.EmailPreference;
 import com.bia.ccm.entity.EmailTimePreference;
 import com.bia.ccm.entity.Organization;
@@ -19,7 +17,6 @@ import com.bia.ccm.services.AdminService;
 import com.bia.ccm.util.AcegiUtil;
 import com.bia.ccm.util.ServiceFactory;
 
-import com.bia.converter.CaseConverter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -30,6 +27,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
+ * @see  src/context/ApplicationContext-AjaxService.xml
+ *
+ *  This class is mapped to AjaxAdminService bean in the above file
  *
  * @author intesar
  */
@@ -51,7 +51,7 @@ public class AdminAjaxService {
      */
     public int deleteEmail(int id, HttpServletRequest request) {
         try {
-            this.adminService.deleteEmail(id);
+            this.adminService.deleteEmail(id, AcegiUtil.getUsername());
             return 1;
         } catch (InvalidInputException ex) {
             logger.warn(ex.getMessage(), ex);
@@ -71,24 +71,13 @@ public class AdminAjaxService {
      * @param rate
      * @param lmins
      * @param lrate
+     * @param request
      * @return
      */
-    public int updateRentalPrice(int mims, double rate, Integer lmins, Double lrate) {
-        if (logger.isTraceEnabled()) {
-            logger.trace("updateRentalPrice ------ ");
-        }
+    public int updateRentalPrice(int mims, double rate, Integer lmins, Double lrate, HttpServletRequest request) {
         String username = AcegiUtil.getUsername();
-        if (logger.isTraceEnabled()) {
-            logger.trace("updateRentalPrice ------ " + username);
-        }
-        if (mims < 0 || rate < 0.0 || (lmins != null && lmins < 0) || (lrate != null && lrate < 0.0)) {
-            //return "We are keeping an eye on you! ";
-        }
-        if (logger.isTraceEnabled()) {
-            logger.trace("updateRentalPrice ------ after validation");
-        }
         try {
-            this.adminService.updateRentalPrice(mims, rate, lmins, lrate, username);
+            this.adminService.updateRentalPrice(mims, rate, lmins, lrate, username, request.getRemoteAddr());
             return 1;
         } catch (InvalidInputException ex) {
             logger.warn(ex.getMessage(), ex);
@@ -107,8 +96,13 @@ public class AdminAjaxService {
      * @return
      */
     public List<Systems> getAllSystems() {
-        String username = AcegiUtil.getUsername();
-        return this.adminService.getAllSystems(username);
+        try {
+            String username = AcegiUtil.getUsername();
+            return this.adminService.getAllSystems(username);
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage(), ex);
+        }
+        return null;
     }
 
     /**
@@ -153,14 +147,9 @@ public class AdminAjaxService {
      * @return
      */
     public int saveUsers(Users users) {
-        logger.trace("inside ------------------ save users ");
-        users.setEmail(SQLInjectionFilterManager.getInstance().filter(users.getEmail()));
-        users.setUsername(SQLInjectionFilterManager.getInstance().filter(users.getUsername()));
-        logger.trace("inside ------------------ save users1 ");
         try {
             String username = AcegiUtil.getUsername();
             this.adminService.saveUser(users, username);
-            logger.trace("inside ------------------ save users 2 ");
             return 1;
         } catch (InvalidInputException ex) {
             logger.warn(ex.getMessage(), ex);
@@ -189,8 +178,13 @@ public class AdminAjaxService {
      * @return
      */
     public List<EmailPreference> getAllEmailPreference() {
-        String username = AcegiUtil.getUsername();
-        return this.adminService.getAllEmailPreference(username);
+        try {
+            String username = AcegiUtil.getUsername();
+            return this.adminService.getAllEmailPreference(username);
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage(), ex);
+            return null;
+        }
     }
 
     /**
@@ -201,11 +195,11 @@ public class AdminAjaxService {
     public int saveEmailPreference(EmailPreference emailPreference) {
         try {
             String username = AcegiUtil.getUsername();
-            emailPreference.setEmailOrPhone(SQLInjectionFilterManager.getInstance().filter(emailPreference.getEmailOrPhone()));
-            emailPreference.setEmailOrPhone(emailPreference.getEmailOrPhone().toLowerCase());
-            if (emailPreference.getUsername() != null) {
-                emailPreference.setUsername(emailPreference.getUsername().toLowerCase());
-            }
+//            emailPreference.setEmailOrPhone(SQLInjectionFilterManager.getInstance().filter(emailPreference.getEmailOrPhone()));
+//            emailPreference.setEmailOrPhone(emailPreference.getEmailOrPhone().toLowerCase());
+//            if (emailPreference.getUsername() != null) {
+//                emailPreference.setUsername(emailPreference.getUsername().toLowerCase());
+//            }
             this.adminService.saveEmailPreference(emailPreference, username);
             return 1;
         } catch (InvalidInputException ex) {
@@ -225,8 +219,13 @@ public class AdminAjaxService {
      * @return
      */
     public List<EmailTimePreference> getAllEmailTimePreference() {
-        String username = AcegiUtil.getUsername();
-        return this.adminService.getAllEmailTimePreference(username);
+        try {
+            String username = AcegiUtil.getUsername();
+            return this.adminService.getAllEmailTimePreference(username);
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage(), ex);
+            return null;
+        }
     }
 
     public int saveEmailTimePreference(EmailTimePreference emailTimePreference) {
@@ -248,7 +247,7 @@ public class AdminAjaxService {
 
     public int deleteEmailTimePreference(EmailTimePreference emailTimePreference) {
         try {
-            this.adminService.deleteEmailTimePreference(emailTimePreference);
+            this.adminService.deleteEmailTimePreference(emailTimePreference, AcegiUtil.getUsername());
             return 1;
         } catch (InvalidInputException ex) {
             logger.warn(ex.getMessage(), ex);
@@ -269,13 +268,26 @@ public class AdminAjaxService {
 
     }
 
+    /**
+     *
+     * @return
+     */
     public Organization getOrganization() {
-        String username = AcegiUtil.getUsername();
-        return this.adminService.getOrganization(username);
+        try {
+            String username = AcegiUtil.getUsername();
+            return this.adminService.getOrganization(username);
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage(), ex);
+            return null;
+        }
     }
 
+    /**
+     * 
+     * @param organization
+     * @return
+     */
     public int saveOrganization(Organization organization) {
-        String msg = "Company profile saved successfully!";
         try {
             String username = AcegiUtil.getUsername();
             this.adminService.saveOrganization(organization, username);
@@ -326,7 +338,7 @@ public class AdminAjaxService {
 
     }
 
-    public int saveService(Services service) {
+    public int saveService(Services service, HttpServletRequest request) {
         try {
             if (service.getId() == -5) {
                 if (logger.isTraceEnabled()) {
@@ -334,28 +346,13 @@ public class AdminAjaxService {
                     logger.trace("computer rate ------ " + service.getSaleTwoUnits() + " " + service.getSaleTwoPrice());
                 }
 
-                this.updateRentalPrice(service.getUnits(), service.getUnitPrice(),
-                        service.getSaleTwoUnits(), service.getSaleTwoPrice());
+                adminService.updateRentalPrice(service.getUnits(), service.getUnitPrice(),
+                        service.getSaleTwoUnits(), service.getSaleTwoPrice(), AcegiUtil.getUsername(), request.getRemoteAddr());
 
+            } else {
+                service.setOrganization(this.getOrganization().getName());
+                adminService.saveService(service);
             }
-            service.setOrganization(this.getOrganization().getName());
-            adminService.saveService(service);
-            return 1;
-        } catch (InvalidInputException ex) {
-            logger.warn(ex.getMessage(), ex);
-            return -2;
-        } catch (NoRoleException ex) {
-            logger.warn(ex.getMessage(), ex);
-            return -3;
-        } catch (Exception ex) {
-            logger.warn(ex.getMessage(), ex);
-            return -1;
-        }
-    }
-
-    public int deleteService(Integer id) {
-        try {
-            adminService.deleteService(id, getOrganization().getName());
             return 1;
         } catch (InvalidInputException ex) {
             logger.warn(ex.getMessage(), ex);
@@ -370,22 +367,38 @@ public class AdminAjaxService {
     }
 
     /**
-     * add computer as service to this list
+     * 
+     * @param id
+     * @return
+     */
+    public int deleteService(Integer id) {
+        try {
+            adminService.deleteService(id, AcegiUtil.getUsername());
+            return 1;
+        } catch (InvalidInputException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -2;
+        } catch (NoRoleException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -3;
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -1;
+        }
+    }
+
+    /**
+     * 
      * @return
      */
     public List<Services> getAllServices() {
-        String org = this.getOrganization().getName();
-        List<Services> list = this.adminService.getAllServices(org);
-        Systems system = this.adminService.getSystem(org);
-        Services s = new Services();
-        s.setId(-5);
-        s.setName("Computer");
-        s.setUnits(system.getMinimumMinutes());
-        s.setUnitPrice(system.getMinuteRate());
-        s.setSaleTwoUnits(system.getLowerMinimumMinutes());
-        s.setSaleTwoPrice(system.getLowerMinuteRate());
-        list.add(s);
-        return list;
+        try {
+            List<Services> list = this.adminService.getAllServices(AcegiUtil.getUsername());
+            return list;
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage(), ex);
+            return null;
+        }
     }
 
     public int sendReports() {
@@ -403,11 +416,6 @@ public class AdminAjaxService {
             return -1;
         }
     }
-
-    public void setCaseConverter(CaseConverter caseConverter) {
-        this.caseConverter = caseConverter;
-    }
-    private CaseConverter caseConverter;
     protected final Log logger = LogFactory.getLog(getClass());
     private AdminService adminService = (AdminService) ServiceFactory.getService("adminServiceImpl");
 

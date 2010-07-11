@@ -114,7 +114,7 @@ http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
   <!-- changed to work with formbased login -->
     <bean id="authenticationEntryPoint"
         class="org.acegisecurity.ui.webapp.AuthenticationProcessingFilterEntryPoint">
-        <property name="loginFormUrl" value="/login.jsp"/>
+        <property name="loginFormUrl" value="/jsp/login.jsp"/>
     </bean>
     <bean id="authenticationManager"
         class="org.acegisecurity.providers.ProviderManager">

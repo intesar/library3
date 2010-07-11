@@ -3,17 +3,14 @@
  */
 package com.bia.ccm.ajax;
 
-import com.abbhsoft.sqlInjectionFilter.SQLInjectionFilterManager;
 import com.bia.ccm.entity.Users;
 import com.bia.ccm.exceptions.InvalidInputException;
 import com.bia.ccm.exceptions.NoRoleException;
 import com.bia.ccm.services.EMailService;
 import com.bia.ccm.services.UserService;
 import com.bia.ccm.services.WorkService;
-import com.bia.ccm.util.AcegiUtil;
 import com.bia.ccm.util.ServiceFactory;
 import com.bia.converter.CaseConverter;
-import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -28,11 +25,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public class UserAjaxService {
 
-    @Deprecated
-    public String getLoggedInUserRole() {
-        String username = AcegiUtil.getUsername();
-        return this.userService.getUserRole(username);
-    }
+  
 
     /**
      * 
@@ -80,13 +73,7 @@ public class UserAjaxService {
     }
 
     
-    public boolean isUserAdmin() {
-        return AcegiUtil.isAdmin();
-    }
-
-    public String getUserRole() {
-        return AcegiUtil.getUserRole();
-    }
+   
 
     /**
      * @see com.bia.ccm.services.impl.UserServiceImpl.registerNewOrganization for more documentation
@@ -119,21 +106,15 @@ public class UserAjaxService {
 
     }
 
-    public int createCustomer(Users c) {
-
-        String msg = "Customer Created Successfully!";
+    /**
+     *
+     * @param user
+     * @return
+     */
+    public int createCustomer(Users user, HttpServletRequest request) {
         try {
-//            if (c.getImg() != null) {
-//                c.setPic(this.bufferedImageToByteArray(c.getImg()));//this.scaleToSize(c.getImg())
-//            }
-            c.setCreateDate(new Date());
-            c.setEmail(SQLInjectionFilterManager.getInstance().filter(c.getEmail()));
-            c.setUsername(SQLInjectionFilterManager.getInstance().filter(c.getUsername()));
-            caseConverter.toLowerCase(c);
-            logger.info("________________________ before create _________________");
-            this.workService.createCutomer(c, null);
-            logger.info("________________________ after create _________________");
-            emailService.sendEmail(c.getEmail(), "Welcome to FaceGuard, username / password : " + c.getUsername() + " / " + c.getPassword());
+            user.setIp(request.getRemoteAddr());
+            this.workService.createCutomer(user, null);
             return 1;
         } catch (InvalidInputException ex) {
             logger.warn(ex.getMessage(), ex);
