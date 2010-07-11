@@ -53,15 +53,15 @@ public interface AdminService {
     //SystemLease
     public List<SystemLease> getAllSystemLease(String username);
     // lease history
-    public List<SystemLease> getSystemLease(Date startDate, Date endDate, String org);
+    public List<SystemLease> getSystemLease(Date startDate, Date endDate, String username);
 
-    public List getReport(Date startDate, Date endDate, String org);
+    public List getReport(Date startDate, Date endDate, String username);
 
     public Organization getOrganization(String username);
 
     public void saveOrganization(Organization organization, String username);
 
-    public void saveService(Services service);
+    public void saveService(Services service, String username, String ip);
 
     public void deleteService(Integer id, String username);
 

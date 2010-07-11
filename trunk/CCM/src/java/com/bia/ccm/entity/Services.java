@@ -60,6 +60,11 @@ public class Services implements Serializable {
     @Column(name = "create_date")
     @Temporal(TemporalType.DATE)
     private Date createDate;
+    @Column(name = "last_modified_user")
+    private String lastModifiedUser;
+    @Column(name = "last_modified_date")
+    @Temporal(TemporalType.DATE)
+    private Date lastModifiedDate;
     @Column(name = "ip")
     private String ip;
     @Version
@@ -175,6 +180,22 @@ public class Services implements Serializable {
 
     public void setCreateUser(String createUser) {
         this.createUser = createUser;
+    }
+
+    public Date getLastModifiedDate() {
+        return lastModifiedDate;
+    }
+
+    public void setLastModifiedDate(Date lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
+    }
+
+    public String getLastModifiedUser() {
+        return lastModifiedUser;
+    }
+
+    public void setLastModifiedUser(String lastModifiedUser) {
+        this.lastModifiedUser = lastModifiedUser;
     }
 
 

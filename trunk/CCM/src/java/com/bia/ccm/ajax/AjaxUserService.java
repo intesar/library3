@@ -6,11 +6,9 @@ package com.bia.ccm.ajax;
 import com.bia.ccm.entity.Users;
 import com.bia.ccm.exceptions.InvalidInputException;
 import com.bia.ccm.exceptions.NoRoleException;
-import com.bia.ccm.services.EMailService;
 import com.bia.ccm.services.UserService;
 import com.bia.ccm.services.WorkService;
 import com.bia.ccm.util.ServiceFactory;
-import com.bia.converter.CaseConverter;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -23,7 +21,7 @@ import org.apache.commons.logging.LogFactory;
  *
  * @author intesar
  */
-public class UserAjaxService {
+public class AjaxUserService {
 
   
 
@@ -128,15 +126,8 @@ public class UserAjaxService {
         }
     }
 
-    public void setCaseConverter(CaseConverter caseConverter) {
-        this.caseConverter = caseConverter;
-    }
-    public void setEmailService(EMailService emailService) {
-        this.emailService = emailService;
-    }
-    protected EMailService emailService;
-    protected CaseConverter caseConverter;
-    protected static final Log logger = LogFactory.getLog(UserAjaxService.class);
+    
+    protected static final Log logger = LogFactory.getLog(AjaxUserService.class);
     protected UserService userService = (UserService) ServiceFactory.getService("userServiceImpl");
     protected WorkService workService = (WorkService) ServiceFactory.getService("workServiceImpl");
 
