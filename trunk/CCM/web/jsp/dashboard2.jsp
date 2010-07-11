@@ -4,9 +4,7 @@
     Author     : intesar
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-    "http://www.w3.org/TR/html4/loose.dtd">
+
 
 <html>
     <head>
@@ -148,7 +146,7 @@
 
             <table align="center">
                 <tr><th style="width:100px">User</th><th><label><span class="username_" > </span></label></th></tr>
-                <tr><th>Computer</th><th> <label style="font-size: 2em"> # <span class="computerNo_" /></label></th></tr>
+                <tr><th>Computer</th><th> <label style="font-size: 2em"> # <span class="computerNo_" ></span></label></th></tr>
             </table>
             <br/>
             <table style='width:95%' class="tablesorter">
@@ -168,7 +166,7 @@
                 <tfoot>
                     <tr><td colspan="4">&nbsp;</td></tr>
                     <tr>
-                        <td></td><td></td><td><label style="font-size: 2em" >Total</label></td><td><label style="font-size: 3em" class="totalPayableAmount" /></td>
+                        <td></td><td></td><td><label style="font-size: 2em" >Total</label></td><td><label style="font-size: 3em" class="totalPayableAmount" ></label></td>
                     </tr>                    
                 </tfoot>
             </table>
@@ -190,7 +188,7 @@
             <div align="center" style="width:100%">
                 <table  style="width:100%">
                     <tr><td colspan="2">&nbsp;</td</tr>
-                    <tr><td><label>Computer <span style="display:none" class="computerNo" /></label></td><td><label style="font-size: 3em"> # <span class="computerName"/> </label></td></tr>
+                    <tr><td><label>Computer <span style="display:none" class="computerNo" ></span></label></td><td><label style="font-size: 3em"> # <span class="computerName"></span> </label></td></tr>
                     <tr><td colspan="2">&nbsp;</td</tr>
                     <tr><td><label>Customer Email</label></td><td><input type="text" class="name_" size="30" /></td></tr>
                     <tr><td colspan="2">&nbsp;</td</tr>
@@ -215,7 +213,7 @@
                 <tr><td></td><td>&nbsp;</td></tr>
                 <tr>
                     <td><label>Payable Amount</label></td>
-                    <td><label style="font-size: 2em"><span class="payableAmount1" /></label></td>
+                    <td><label style="font-size: 2em"><span class="payableAmount1" ></span></label></td>
                 </tr>
                 <tr><td></td><td>&nbsp;</td></tr>
                 <tr>
@@ -230,19 +228,24 @@
                 </tr>
             </table>
         </div>
-
-        <script type="text/javascript" src="../js/jquery-1.3.2.min.js"></script>
-        <script type="text/javascript" src="../js/jquery.tablesorter.min.js"></script>
-        <script type="text/javascript" src="../js/facebox.js" ></script>
+        <script type='text/javascript' src='../js/compress/base.js'></script>
         <script type="text/javascript">
             var jq = jQuery.noConflict();
         </script>
+        <%--
+        <script type='text/javascript' src='../js/compress/engine-util.js'></script>
+        <script type='text/javascript' src='../js/util.js'></script>
+        <script type="text/javascript" src="../js/email_validation.js"></script>
+        <script type="text/javascript" src="../js/jgcharts.pack.js"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" ></script>
+        <script type="text/javascript" src="../js/jquery-1.3.2.min.js"></script>
+        <script type="text/javascript" src="../js/jquery.tablesorter.min.js"></script>
+        <script type="text/javascript" src="../js/facebox.js" ></script>
+        --%>
         <script type='text/javascript' src='../dwr/interface/AjaxWorkService.js'></script>
         <script type='text/javascript' src='../dwr/interface/AjaxAdminService.js'></script>
-        <script type='text/javascript' src='../dwr/engine.js'></script>
-        <script type='text/javascript' src='../dwr/util.js'></script>
-        <script type="text/javascript" src="../js/email_validation.js"></script>
+
         <script type="text/javascript" src="../js/dashboard.js"></script>
-        <script type="text/javascript" src="../js/jgcharts.pack.js"></script>        
+                
     </body>
 </html>
