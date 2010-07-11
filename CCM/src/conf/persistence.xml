@@ -19,10 +19,10 @@
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="toplink.jdbc.user" value="root"/>
-            <property name="toplink.jdbc.password" value="Abbh1234"/>
-            <property name="toplink.jdbc.url" value="jdbc:mysql:///ccm1"/>
+            <property name="toplink.jdbc.password" value=""/>
+            <property name="toplink.jdbc.url" value="jdbc:mysql:///ccm"/>
             <property name="toplink.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-            <!--<property name="toplink.ddl-generation" value="drop-and-create-tables"/>-->
+            <property name="toplink.ddl-generation" value="create-tables"/>
             
             <property name="toplink.logging.level" value="FINEST"/>
             <property name="showSql" value="true"/>
