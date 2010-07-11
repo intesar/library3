@@ -1,6 +1,5 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * 
  */
 package com.bia.ccm.ajax;
 
@@ -34,28 +33,53 @@ import org.apache.commons.logging.LogFactory;
  *
  * @author intesar
  */
-public class WorkAjaxService {
+public class AjaxWorkService {
 
+    /**
+     * 
+     * @return
+     */
     public List<Services> getAllServices() {
-        return this.workService.getAllServices(AcegiUtil.getUsername());
+        try {
+            return this.workService.getAllServices(AcegiUtil.getUsername());
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage(), ex);
+        }
+        return null;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Systems> getActiveSystems() {
-        String username = AcegiUtil.getUsername();
-        return workService.getActiveSystems(username);
+        try {
+            String username = AcegiUtil.getUsername();
+            return workService.getActiveSystems(username);
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage(), ex);
+        }
+        return null;
     }
 
+    /**
+     * not in use
+     * @param systemNo
+     * @return
+     */
     public Systems getSystemByNameAndOrganization(int systemNo) {
         String username = AcegiUtil.getUsername();
         return this.workService.getSystemByNameAndOrganization(systemNo, username);
     }
 
+    /**
+     *
+     * @param systemId
+     * @param leaseHolder
+     * @return
+     */
     public int leaseSystem(int systemId, String leaseHolder) {
         try {
-            if (leaseHolder != null) {
-                leaseHolder = SQLInjectionFilterManager.getInstance().filter(leaseHolder);
-                leaseHolder = leaseHolder.toLowerCase();
-            }
             this.workService.leaseSystem(systemId, leaseHolder, AcegiUtil.getUsername());
             return 1;
         } catch (InvalidInputException ex) {
@@ -71,17 +95,21 @@ public class WorkAjaxService {
 
     }
 
+    /**
+     * 
+     * @param service
+     * @param units
+     * @param user
+     * @param payableAmount
+     * @param comments
+     * @param paidAmount
+     * @return
+     */
     public int addService(String service, Long units, String user, Double payableAmount,
             String comments, Double paidAmount) {
-        String msg = "Service Added Successfully";
-        String agent = AcegiUtil.getUsername();
+
         try {
-            service = SQLInjectionFilterManager.getInstance().filter(service);
-            user = SQLInjectionFilterManager.getInstance().filter(user);
-            comments = SQLInjectionFilterManager.getInstance().filter(comments);
-            if (units <= 0 || payableAmount <= 0 || paidAmount <= 0) {
-                //return "We are keeping an Eye on you! ";
-            }
+            String agent = AcegiUtil.getUsername();
             this.workService.addService(service, units, user, payableAmount, comments, paidAmount, agent);
             return 1;
         } catch (InvalidInputException ex) {
@@ -97,15 +125,28 @@ public class WorkAjaxService {
 
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     public UsageDetail getPayableAmount(int id) {
-        return this.workService.getPayableAmount(id);
+        try {
+            return this.workService.getPayableAmount(id);
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage(), ex);
+            return null;
+        }
     }
 
+    /**
+     *
+     * @param systemId
+     * @param paidAmount
+     * @return
+     */
     public int unleaseSystem(int systemId, double paidAmount) {
         try {
-            if (systemId <= 0 || paidAmount <= 0) {
-                //return "We are keeping an Eye on you! ";
-            }
             this.workService.unleaseSystem(systemId, paidAmount, AcegiUtil.getUsername());
             return 1;
         } catch (InvalidInputException ex) {
@@ -120,21 +161,19 @@ public class WorkAjaxService {
         }
     }
 
+    /**
+     *
+     * @param c
+     * @return
+     */
     public int createCustomer(Users c) {
-
-        String msg = "Customer Created Successfully!";
         try {
-//            if (c.getImg() != null) {
-//                c.setPic(this.bufferedImageToByteArray(c.getImg()));//this.scaleToSize(c.getImg())
-//            }
             c.setCreateDate(new Date());
             Users u = this.workService.getCustomer(AcegiUtil.getUsername());
             c.setIsVerified(true);
             c.setVerifiedBy(u.getUsername());
             //c.setCreateUser(AcegiUtil.getUsername());
-            caseConverter.toLowerCase(c, "password");
             this.workService.createCutomer(c, u);
-            emailService.sendEmail(c.getEmail(), "Welcome to FaceGuard, username / password : " + c.getUsername() + " / " + c.getPassword());
             return 1;
         } catch (InvalidInputException ex) {
             logger.warn(ex.getMessage(), ex);
@@ -148,57 +187,83 @@ public class WorkAjaxService {
         }
     }
 
+    /**
+     *
+     * @param key
+     * @return
+     */
     public Users getUserWithPic(String key) {
-        Users c = null;
-        key = SQLInjectionFilterManager.getInstance().filter(key);
         try {
-            if (key != null) {
-                key = key.toLowerCase();
+            Users c = null;
+            key = SQLInjectionFilterManager.getInstance().filter(key);
+            try {
+                if (key != null) {
+                    key = key.toLowerCase();
+                }
+                c = this.workService.getCustomerPic(key);
+                //c.setPassword("Encrypted");
+            } catch (Exception ex) {
+                logger.warn(ex.getMessage(), ex);
             }
-            c = this.workService.getCustomerPic(key);
-            //c.setPassword("Encrypted");
+            if (c == null) {
+                c = new Users();
+            }
+            return c;
         } catch (Exception ex) {
             logger.warn(ex.getMessage(), ex);
+            return null;
         }
-        if (c == null) {
-            c = new Users();
-        }
-//        if (c.getUserPic() != null && c.getUserPic().getPic() != null ) {
-//            c.setImage(this.byteArrayToBufferedImage(c.getUserPic().getPic()));
-//            c.setImg(null);
-//        }
-
-        return c;
     }
 
+    /**
+     *
+     * @param key
+     * @return
+     */
     public Users getCustomer(String key) {
-        Users c = null;
-        key = SQLInjectionFilterManager.getInstance().filter(key);
         try {
-            if (key != null) {
-                key = key.toLowerCase();
+            Users c = null;
+            key = SQLInjectionFilterManager.getInstance().filter(key);
+            try {
+                if (key != null) {
+                    key = key.toLowerCase();
+                }
+                c = this.workService.getCustomer(key);
+                //c.setPassword("Encrypted");
+            } catch (Exception ex) {
+                logger.warn(ex.getMessage(), ex);
             }
-            c = this.workService.getCustomer(key);
-            //c.setPassword("Encrypted");
+            if (c == null) {
+                c = new Users();
+                c.setComments("No record found for given email!");
+            }
+            return c;
         } catch (Exception ex) {
             logger.warn(ex.getMessage(), ex);
+            return null;
         }
-        if (c == null) {
-            c = new Users();
-            c.setComments("No record found for given email!");
-        }
-
-
-        return c;
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     public List<SystemLease> getSystemLease(int id) {
-        return this.workService.getSystemLease(id);
+        try {
+            return this.workService.getSystemLease(id);
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage(), ex);
+            return null;
+        }
     }
 
-    //public String addSuggestion()
+    /**
+     *
+     * @param systemId
+     * @return
+     */
     public int chargePayment(int systemId) {
-        String msg = "Payment Successful!";
         try {
             workService.chargePayment(systemId, AcegiUtil.getUsername());
             return 1;
@@ -214,11 +279,15 @@ public class WorkAjaxService {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public Organization getOrganization() {
         String username = AcegiUtil.getUsername();
         return this.adminService.getOrganization(username);
     }
-
+    // membership for next milestone
     public List<MembershipTypes> getAllMembershipTypes() {
         String org = this.getOrganization().getName();
         List<MembershipTypes> list = this.membershipService.getMembershipTypesByOrganization(org);
@@ -339,45 +408,9 @@ public class WorkAjaxService {
         }
         return list;
     }
-
-//    public List<Memberships> getMemberships(String key) {
-//        try {
-//            key = SQLInjectionFilterManager.getInstance().filter(key);
-//            if (key == null || key.trim().length() < 5) {
-//                return this.membershipService.getMembershipsByOrganization(this.getOrganization().getName());
-//            } else {
-//                List<Memberships> list = new ArrayList<Memberships>();
-//                Memberships m = this.membershipService.getMembershipsByOrganizationAndUsername(this.getOrganization().getName(), key);
-//                list.add(m);
-//                return list;
-//            }
-//        } catch (Exception e) {
-//            logger.error(e);
-//            return null;
-//        }
-//    }
-    public void setCaseConverter(CaseConverter caseConverter) {
-        this.caseConverter = caseConverter;
-    }
-
-    public void setEmailService(EMailService emailService) {
-        this.emailService = emailService;
-    }
-    private EMailService emailService;
-    private CaseConverter caseConverter;
-    private AdminService adminService = (AdminService) ServiceFactory.getService("adminServiceImpl");
+    // end of memberships
+     private AdminService adminService = (AdminService) ServiceFactory.getService("adminServiceImpl");
     private MembershipService membershipService = (MembershipService) ServiceFactory.getService("membershipServiceImpl");
     protected final Log logger = LogFactory.getLog(getClass());
     private WorkService workService = (WorkService) ServiceFactory.getService("workServiceImpl");
-
-    public static void main(String[] args) {
-        WorkAjaxService was = new WorkAjaxService();
-
-//        Users c = new Users(null, "Intesar shannan Mohammed", "intesar.mohammed@bizintelapps.com",
-//                "9-4-62/23 nizam colony, towli chowki", "hyderabad", "500008", "ap", "india", new Date(), "male");
-        // System.out.println ( was.createCustomer());
-//        System.out.println(was.getCustomer("intesar.mohammed@bizintelapps.com").getName());
-        //System.out.println ( was.getPayableAmount(277));
-        //System.out.println ( was.addService("B/W Print", 3, "2", 9.0, "", 9.0) );
-    }
 }
