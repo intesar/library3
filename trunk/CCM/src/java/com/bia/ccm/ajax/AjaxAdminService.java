@@ -10,7 +10,6 @@ import com.bia.ccm.entity.Services;
 import com.bia.ccm.entity.SystemLease;
 import com.bia.ccm.entity.Systems;
 import com.bia.ccm.entity.Users;
-import com.bia.ccm.entity.UsersLight;
 import com.bia.ccm.exceptions.InvalidInputException;
 import com.bia.ccm.exceptions.NoRoleException;
 import com.bia.ccm.services.AdminService;
@@ -19,7 +18,6 @@ import com.bia.ccm.util.ServiceFactory;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
