@@ -44,6 +44,11 @@ public class AjaxCustomerService {
             return null;
         }
     }
+
+    public void setAdminService(AdminService adminService) {
+        this.adminService = adminService;
+    }
+
     protected static final Log logger = LogFactory.getLog(AjaxCustomerService.class);
-    private AdminService adminService = (AdminService) ServiceFactory.getService("adminServiceImpl");
+    protected AdminService adminService = (AdminService) ServiceFactory.getService("adminServiceImpl");
 }
