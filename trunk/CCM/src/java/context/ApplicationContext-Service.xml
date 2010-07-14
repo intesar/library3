@@ -74,4 +74,6 @@
         <property name="membershipsDao" ref="membershipsDao" />
         <property name="emailService" ref="emailServiceImpl" />
     </bean>
+
+    
 </beans>
