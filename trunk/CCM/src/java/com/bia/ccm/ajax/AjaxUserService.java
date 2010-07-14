@@ -126,9 +126,17 @@ public class AjaxUserService {
         }
     }
 
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
+    public void setWorkService(WorkService workService) {
+        this.workService = workService;
+    }
+
     
     protected static final Log logger = LogFactory.getLog(AjaxUserService.class);
-    protected UserService userService = (UserService) ServiceFactory.getService("userServiceImpl");
+    protected UserService userService = (UserService)ServiceFactory.getService("userServiceImpl");
     protected WorkService workService = (WorkService) ServiceFactory.getService("workServiceImpl");
 
    

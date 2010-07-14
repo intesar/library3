@@ -406,9 +406,24 @@ public class AjaxWorkService {
         }
         return list;
     }
+
+    public void setAdminService(AdminService adminService) {
+        this.adminService = adminService;
+    }
+
+    public void setMembershipService(MembershipService membershipService) {
+        this.membershipService = membershipService;
+    }
+
+    public void setWorkService(WorkService workService) {
+        this.workService = workService;
+    }
     // end of memberships
-     private AdminService adminService = (AdminService) ServiceFactory.getService("adminServiceImpl");
-    private MembershipService membershipService = (MembershipService) ServiceFactory.getService("membershipServiceImpl");
+
+    
+    protected AdminService adminService = (AdminService) ServiceFactory.getService("adminServiceImpl");
+    protected MembershipService membershipService = (MembershipService) ServiceFactory.getService("membershipServiceImpl");
+    protected WorkService workService = (WorkService) ServiceFactory.getService("workServiceImpl");
+
     protected final Log logger = LogFactory.getLog(getClass());
-    private WorkService workService = (WorkService) ServiceFactory.getService("workServiceImpl");
 }
