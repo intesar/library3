@@ -48,7 +48,7 @@ public class AdminServiceImpl implements AdminService {
     public void deleteEmail(int id, String username) {
         EmailPreference email = this.emailPreferenceDao.read(id);
         if (!email.getOrganization().equals(this.getOrganization(username).getName())) {
-            throw new InvalidInputException();
+            throw new NoRoleException();
         }
         this.emailPreferenceDao.delete(email);
     }
@@ -78,8 +78,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List<Systems> getAllSystems(String username) {
-        UsersLight u = this.usersLightDao.findByUsername(username);
-        return this.systemsDao.findByOrganization(u.getOrganization());
+        return this.systemsDao.findByOrganization(this.getOrganization(username).getName());
     }
 
     @Override

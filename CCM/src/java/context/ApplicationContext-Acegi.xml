@@ -4,9 +4,9 @@
        xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="
          http://www.springframework.org/schema/beans
-http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+         http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
          http://www.springframework.org/schema/aop
-http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+         http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
 
   <!-- ======================== FILTER CHAIN ======================= -->
     <bean id="filterChainProxy"
@@ -19,7 +19,7 @@ http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
             </value>
         </property>
     </bean>
-     
+
   <!-- responsible for setting up a security context holder for other
        authentication mechanisms to work with -->
     <bean id="httpSessionContextIntegrationFilter"
@@ -80,7 +80,7 @@ http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
         <property name="objectDefinitionSource">
             <value>
         CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
-        PATTERN_TYPE_APACHE_ANT                
+        PATTERN_TYPE_APACHE_ANT
                 /dwr/interface/ajaxadminservice.js*=ROLE_ADMIN
                 /dwr/interface/ajaxworkservice.js*=ROLE_USER
                 /jsp/users.jsp*=ROLE_ADMIN
@@ -125,14 +125,14 @@ http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
             </list>
         </property>
     </bean>
-    <!-- Your application may use the PasswordEncryptor in several places, --> 
+    <!-- Your application may use the PasswordEncryptor in several places, -->
   <!-- like for example at new user sign-up.                             -->
     <bean id="jasyptPasswordEncryptor" class="org.jasypt.util.password.StrongPasswordEncryptor" />
 
 <!-- This Spring Security-friendly PasswordEncoder implementation will -->
   <!-- wrap the PasswordEncryptor instance so that it can be used from   -->
   <!-- the security framework.     org.jasypt.spring.security2.PasswordEncoder      -->
-    <bean id="passwordEncoder" class="org.jasypt.spring.security.PasswordEncoder" > 
+    <bean id="passwordEncoder" class="org.jasypt.spring.security.PasswordEncoder" >
         <property name="passwordEncryptor">
             <ref bean="jasyptPasswordEncryptor" />
         </property>

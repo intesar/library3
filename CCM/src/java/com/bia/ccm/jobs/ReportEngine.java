@@ -89,7 +89,7 @@ public class ReportEngine {
      public void setEmailService(EMailService emailService) {
         this.emailService = emailService;
     }
-    private EMailService emailService;
+    private EMailService emailService = (EMailService) ServiceFactory.getService("emailServiceImpl");
     private WorkService workService = (WorkService) ServiceFactory.getService("workServiceImpl");
     private AdminService adminService = (AdminService) ServiceFactory.getService("adminServiceImpl");
     protected final Log logger = LogFactory.getLog(getClass());
