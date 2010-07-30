@@ -33,7 +33,6 @@
         <property name="emailTimePreferenceDao" ref="emailTimePreferenceDao" />
         <property name="systemLeaseDao" ref="systemLeaseDao" />
         <property name="organizationDao" ref="organizationDao" />
-        <property name="authoritiesDao" ref="authoritiesDao" />
         <property name="servicesDao" ref="servicesDao" />
         <property name="passwordEncryptor" ref="passwordEncryptor" />
         <property name="stringEncryptor" ref="stringEncryptor" />
@@ -45,7 +44,6 @@
         <property name="usersLightDao" ref="usersLightDao" />
         <property name="usersPassDao" ref="usersPassDao" />
         <property name="organizationDao" ref="organizationDao" />
-        <property name="authoritiesDao" ref="authoritiesDao" />
         <property name="systemsDao" ref="systemsDao" />
         <property name="servicesDao" ref="servicesDao" />
         <property name="passwordEncryptor" ref="passwordEncryptor" />

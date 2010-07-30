@@ -38,8 +38,7 @@ public interface AdminService {
     //Users
     public List<Users> getAllUsers(String username);
 
-    public void saveUser(Users users, String username);
-
+    
     //public Users getUserByUsername(String username);
     //Email
     public List<EmailPreference> getAllEmailPreference(String username);
