@@ -34,33 +34,6 @@ import org.apache.commons.logging.LogFactory;
 public class AjaxAdminService {
 
     /**
-     *   Response codes
-     *   1 == Operation Successfully executed
-     *  -1 == Operation execution failed, no reason specified, ask user to try again
-     *  -2 == Operation not executed, because of invalid input
-     *  -3 == Operation failed (User doesn't have appropriate roles on data), if user believes he has roles ask him to refresh page or relogin
-     *
-     * only Owner can delete Notification Email
-     * @param id
-     * @return
-     */
-    public int deleteEmail(int id) {
-        try {
-            this.adminService.deleteEmail(id, AcegiUtil.getUsername());
-            return 1;
-        } catch (InvalidInputException ex) {
-            logger.warn(ex.getMessage(), ex);
-            return -2;
-        } catch (NoRoleException ex) {
-            logger.warn(ex.getMessage(), ex);
-            return -3;
-        } catch (Exception ex) {
-            logger.warn(ex.getMessage(), ex);
-            return -1;
-        }
-    }
-
-    /**
      *
      * @param mims
      * @param rate
@@ -123,29 +96,67 @@ public class AjaxAdminService {
     }
 
     /**
-     * returns all CC employees
+     *  not in use
      * @return
      */
-    public List<Users> getAllUsers() {
-        try {
-            String username = AcegiUtil.getUsername();
-            List<Users> users = this.adminService.getAllUsers(username);
-            return users;
-        } catch (Exception ex) {
-            logger.warn(ex.getMessage(), ex);
-            return null;
-        }
+    public List<SystemLease> getAllSystemLease() {
+        String username = AcegiUtil.getUsername();
+
+        return this.adminService.getAllSystemLease(username);
+
     }
 
     /**
      *
-     * @param users
+     * @param startDateString
+     * @param endDateString
      * @return
      */
-    public int saveUsers(Users users) {
+    public List<SystemLease> getSystemLease(String startDateString, String endDateString) {
         try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date startDate = sdf.parse(startDateString);
+            Date endDate = sdf.parse(endDateString);
             String username = AcegiUtil.getUsername();
-            this.adminService.saveUser(users, username);
+            return this.adminService.getSystemLease(startDate, endDate, username);
+        } catch (ParseException ex) {
+            logger.warn(ex.getMessage(), ex);
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage(), ex);
+        }
+        return null;
+    }
+
+    /**
+     *
+     * @param startDateString
+     * @param endDateString
+     * @return
+     */
+    public List getReport(String startDateString, String endDateString) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date startDate = sdf.parse(startDateString);
+            Date endDate = sdf.parse(endDateString);
+            String username = AcegiUtil.getUsername();
+            return this.adminService.getReport(startDate, endDate, username);
+        } catch (ParseException ex) {
+            logger.warn(ex.getMessage(), ex);
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage(), ex);
+        }
+        return null;
+    }
+
+    /**
+     * 
+     * @param service
+     * @param request
+     * @return
+     */
+    public int saveService(Services service, HttpServletRequest request) {
+        try {
+            this.adminService.saveService(service, AcegiUtil.getUsername(), request.getRemoteAddr());
             return 1;
         } catch (InvalidInputException ex) {
             logger.warn(ex.getMessage(), ex);
@@ -160,13 +171,89 @@ public class AjaxAdminService {
     }
 
     /**
-     *
-     * @param users
+     * 
+     * @param id
      * @return
      */
-    public List<Users> saveAndGetUsers(Users users) {
-        saveUsers(users);
-        return getAllUsers();
+    public int deleteService(Integer id) {
+        try {
+            adminService.deleteService(id, AcegiUtil.getUsername());
+            return 1;
+        } catch (InvalidInputException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -2;
+        } catch (NoRoleException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -3;
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -1;
+        }
+    }
+
+    /**
+     * 
+     * @return
+     */
+    public List<Services> getAllServices() {
+        try {
+            List<Services> list = this.adminService.getAllServices(AcegiUtil.getUsername());
+            return list;
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage(), ex);
+            return null;
+        }
+    }
+
+    /**
+     * not in use
+     * @return
+     */
+    public int sendReports() {
+        try {
+            this.adminService.sendReports();
+            return 1;
+        } catch (InvalidInputException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -2;
+        } catch (NoRoleException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -3;
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -1;
+        }
+    }
+
+    // email and timings
+    /**
+     *   Response codes
+     *   1 == Operation Successfully executed
+     *  -1 == Operation execution failed, no reason specified, ask user to try again
+     *  -2 == Operation not executed, because of invalid input
+     *  -3 == Operation failed (User doesn't have appropriate roles on data), if user believes he has roles ask him to refresh page or relogin
+     *
+     * only Owner can delete Notification Email
+     * @param id
+     * @return
+     */
+
+    
+
+    public int deleteEmail(int id) {
+        try {
+            this.adminService.deleteEmail(id, AcegiUtil.getUsername());
+            return 1;
+        } catch (InvalidInputException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -2;
+        } catch (NoRoleException ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -3;
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage(), ex);
+            return -1;
+        }
     }
 
     /**
@@ -262,176 +349,10 @@ public class AjaxAdminService {
         }
     }
 
-    /**
-     *  not in use
-     * @return
-     */
-    public List<SystemLease> getAllSystemLease() {
-        String username = AcegiUtil.getUsername();
-
-        return this.adminService.getAllSystemLease(username);
-
-    }
-
-    /**
-     *
-     * @return
-     */
-    public Organization getOrganization() {
-        try {
-            String username = AcegiUtil.getUsername();
-            return this.adminService.getOrganization(username);
-        } catch (Exception ex) {
-            logger.warn(ex.getMessage(), ex);
-            return null;
-        }
-    }
-
-    /**
-     * 
-     * @param organization
-     * @return
-     */
-    public int saveOrganization(Organization organization) {
-        try {
-            String username = AcegiUtil.getUsername();
-            this.adminService.saveOrganization(organization, username);
-            return 1;
-        } catch (InvalidInputException ex) {
-            logger.warn(ex.getMessage(), ex);
-            return -2;
-        } catch (NoRoleException ex) {
-            logger.warn(ex.getMessage(), ex);
-            return -3;
-        } catch (Exception ex) {
-            logger.warn(ex.getMessage(), ex);
-            return -1;
-        }
-    }
-
-    /**
-     *
-     * @param startDateString
-     * @param endDateString
-     * @return
-     */
-    public List<SystemLease> getSystemLease(String startDateString, String endDateString) {
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Date startDate = sdf.parse(startDateString);
-            Date endDate = sdf.parse(endDateString);
-            String username = AcegiUtil.getUsername();
-            return this.adminService.getSystemLease(startDate, endDate, username);
-        } catch (ParseException ex) {
-            logger.warn(ex.getMessage(), ex);
-        } catch (Exception ex) {
-            logger.warn(ex.getMessage(), ex);
-        }
-        return null;
-    }
-
-    /**
-     *
-     * @param startDateString
-     * @param endDateString
-     * @return
-     */
-    public List getReport(String startDateString, String endDateString) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            Date startDate = sdf.parse(startDateString);
-            Date endDate = sdf.parse(endDateString);
-            String username = AcegiUtil.getUsername();
-            return this.adminService.getReport(startDate, endDate, username);
-        } catch (ParseException ex) {
-            logger.warn(ex.getMessage(), ex);
-            } catch (Exception ex) {
-            logger.warn(ex.getMessage(), ex);
-        }
-        return null;
-    }
-
-    /**
-     * 
-     * @param service
-     * @param request
-     * @return
-     */
-    public int saveService(Services service, HttpServletRequest request) {
-        try {
-            this.adminService.saveService(service, AcegiUtil.getUsername(), request.getRemoteAddr());
-            return 1;
-        } catch (InvalidInputException ex) {
-            logger.warn(ex.getMessage(), ex);
-            return -2;
-        } catch (NoRoleException ex) {
-            logger.warn(ex.getMessage(), ex);
-            return -3;
-        } catch (Exception ex) {
-            logger.warn(ex.getMessage(), ex);
-            return -1;
-        }
-    }
-
-    /**
-     * 
-     * @param id
-     * @return
-     */
-    public int deleteService(Integer id) {
-        try {
-            adminService.deleteService(id, AcegiUtil.getUsername());
-            return 1;
-        } catch (InvalidInputException ex) {
-            logger.warn(ex.getMessage(), ex);
-            return -2;
-        } catch (NoRoleException ex) {
-            logger.warn(ex.getMessage(), ex);
-            return -3;
-        } catch (Exception ex) {
-            logger.warn(ex.getMessage(), ex);
-            return -1;
-        }
-    }
-
-    /**
-     * 
-     * @return
-     */
-    public List<Services> getAllServices() {
-        try {
-            List<Services> list = this.adminService.getAllServices(AcegiUtil.getUsername());
-            return list;
-        } catch (Exception ex) {
-            logger.warn(ex.getMessage(), ex);
-            return null;
-        }
-    }
-
-    /**
-     * not in use
-     * @return
-     */
-    public int sendReports() {
-        try {
-            this.adminService.sendReports();
-            return 1;
-        } catch (InvalidInputException ex) {
-            logger.warn(ex.getMessage(), ex);
-            return -2;
-        } catch (NoRoleException ex) {
-            logger.warn(ex.getMessage(), ex);
-            return -3;
-        } catch (Exception ex) {
-            logger.warn(ex.getMessage(), ex);
-            return -1;
-        }
-    }
-
+    //  Private section
     public void setAdminService(AdminService adminService) {
         this.adminService = adminService;
     }
-
     protected static final Log logger = LogFactory.getLog(AjaxAdminService.class);
     protected AdminService adminService;
 }
