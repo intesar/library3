@@ -8,7 +8,6 @@ import com.bia.ccm.exceptions.InvalidInputException;
 import com.bia.ccm.exceptions.NoRoleException;
 import com.bia.ccm.services.UserService;
 import com.bia.ccm.services.WorkService;
-import com.bia.ccm.util.ServiceFactory;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -136,8 +135,8 @@ public class AjaxUserService {
 
     
     protected static final Log logger = LogFactory.getLog(AjaxUserService.class);
-    protected UserService userService = (UserService)ServiceFactory.getService("userServiceImpl");
-    protected WorkService workService = (WorkService) ServiceFactory.getService("workServiceImpl");
+    protected UserService userService;
+    protected WorkService workService;
 
    
 }

@@ -7,7 +7,6 @@ package com.bia.ccm.ajax;
 import com.bia.ccm.entity.SystemLease;
 import com.bia.ccm.services.AdminService;
 import com.bia.ccm.util.AcegiUtil;
-import com.bia.ccm.util.ServiceFactory;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -50,5 +49,6 @@ public class AjaxCustomerService {
     }
 
     protected static final Log logger = LogFactory.getLog(AjaxCustomerService.class);
-    protected AdminService adminService = (AdminService) ServiceFactory.getService("adminServiceImpl");
+
+    protected AdminService adminService;
 }

@@ -22,6 +22,8 @@
             <dwr:include method="registerNewOrganization" />
             <dwr:include method="createCustomer" />
         </dwr:remote>
+        <property name="userService" ref="userServiceImpl" />
+        <property name="workService" ref="workServiceImpl" />
     </bean>
     <bean id="ajaxWorkService" class="com.bia.ccm.ajax.AjaxWorkService" >
         <dwr:remote javascript="AjaxWorkService">
@@ -47,6 +49,9 @@
             <dwr:include method="saveMembership" />
             <dwr:include method="createMembershipDiscount" />
         </dwr:remote>
+        <property name="adminService" ref="adminServiceImpl" />
+        <property name="membershipService" ref="membershipServiceImpl" />
+        <property name="workService" ref="workServiceImpl" />
     </bean>
     <bean id="ajaxAdminService" class="com.bia.ccm.ajax.AjaxAdminService" >
         <dwr:remote javascript="AjaxAdminService">
@@ -71,11 +76,13 @@
             <dwr:include method="deleteService" />
             <dwr:include method="getAllServices" />
         </dwr:remote>
+        <property name="adminService" ref="adminServiceImpl" />
     </bean>
     <bean id="ajaxCustomerService" class="com.bia.ccm.ajax.AjaxCustomerService" >
         <dwr:remote javascript="AjaxCustomerService">
             <dwr:include method="getMySystemLease" />
         </dwr:remote>
+        <property name="adminService" ref="adminServiceImpl" />
     </bean>
     <dwr:configuration>
         <dwr:convert type="bean" class="com.bia.ccm.entity.*" />

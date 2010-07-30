@@ -14,7 +14,6 @@ import com.bia.ccm.exceptions.InvalidInputException;
 import com.bia.ccm.exceptions.NoRoleException;
 import com.bia.ccm.services.AdminService;
 import com.bia.ccm.util.AcegiUtil;
-import com.bia.ccm.util.ServiceFactory;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -434,5 +433,5 @@ public class AjaxAdminService {
     }
 
     protected static final Log logger = LogFactory.getLog(AjaxAdminService.class);
-    protected AdminService adminService = (AdminService) ServiceFactory.getService("adminServiceImpl");
+    protected AdminService adminService;
 }

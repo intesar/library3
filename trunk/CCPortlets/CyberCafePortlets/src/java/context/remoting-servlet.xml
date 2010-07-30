@@ -14,5 +14,8 @@
     <bean name="/StatusCheckService"   class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
         <property name="service" ref="statusCheckService"/>
         <property name="serviceInterface" value="com.bia.ccm.remote.StatusCheckService"/>
+        <property name="emailService" ref="emailServiceImpl" />
+        <property name="workService" ref="workServiceImpl" />
+        <property name="adminService" ref="adminServiceImpl" />
     </bean>
 </beans>
