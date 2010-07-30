@@ -73,7 +73,7 @@ public class ReportEngine {
 //                        toAddress[count++] = ep.getEmailOrPhone() + emailService.idea;
 //                    }
                 }
-                this.emailService.sendEmail(toAddress, list1.toString());
+                this.emailService.sendEmail(toAddress, list1.toString(), null);
 
             } catch (RuntimeException ex) {
                 logger.warn(ex.getMessage(), ex);
