@@ -1,6 +1,5 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * 
  */
 package com.bia.ccm.services.impl;
 
@@ -58,13 +57,13 @@ public class WorkServiceImpl implements WorkService {
     @Override
     public String getUserEmailByMacAddress(String macAddress) {
         Systems system = this.systemsDao.findByMacAddress(macAddress);
-        logger.info("--------------" + system);
+        logger.trace("--------------" + system);
         if (system != null) {
             Organization org = this.organizationDao.findByOrganization(system.getOrganization());
-            logger.info("--------------" + org);
-            logger.info("--------------" + org.getContactEmail());
+            logger.trace("--------------" + org);
+            logger.trace("--------------" + org.getContactEmail());
             if (org != null && org.getContactEmail() != null && org.getContactEmail().length() > 5) {
-                logger.info("-------------- inside getContactEmail ");
+                logger.trace("-------------- inside getContactEmail ");
                 return org.getContactEmail();
             }
         }
@@ -124,7 +123,7 @@ public class WorkServiceImpl implements WorkService {
         Systems s = systemsDao.read(systemId);
         UsersLight u = this.usersLightDao.findByUsername(agent);
         if (!s.getOrganization().equals(u.getOrganization())) {
-            throw new RuntimeException("We are keeping an Eye on you! ");
+            throw new NoRoleException();
         }
         List<SystemLease> list = getSystemLease(systemId);
         for (SystemLease sl : list) {
@@ -138,7 +137,7 @@ public class WorkServiceImpl implements WorkService {
             Date endTime = new Date();
             if (sl.getService().startsWith("computer")) {
                 if (((new Date().getTime() - sl.getEndTime().getTime()) / (60 * 1000)) > 1) {
-                    throw new RuntimeException("This Record is not updated for more than 1 minutes, Please refresh again!");
+                    throw new InvalidInputException("This Record is not updated for more than 1 minutes, Please refresh again!");
                 }
                 Long totalMinutes = (endTime.getTime() - sl.getStartTime().getTime()) / (60 * 1000);
                 sl.setTotalMinutesUsed(totalMinutes);
@@ -402,7 +401,8 @@ public class WorkServiceImpl implements WorkService {
             UsersPass usersPass = new UsersPass(null, customer.getEmail(),
                     encryptedPass, true, resetCode, new Date());
             this.usersPassDao.create(usersPass);
-            emailService.sendEmail(customer.getEmail(), "Welcome to FaceGuard, username / password : " + customer.getUsername() + " / " + customer.getPassword());
+            String[] to = {customer.getEmail()};
+            emailService.sendEmail(to, null, "Welcome to FaceGuard, username / password : " + customer.getUsername() + " / " + customer.getPassword());
         } else {
             // get img then update
             // if img is not null copy img to pic and save it
@@ -417,7 +417,7 @@ public class WorkServiceImpl implements WorkService {
 //            }
             this.usersDao.update(customer);
         }
-        emailService.sendEmail(customer.getEmail(), "Welcome to FaceGuard, username / password : " + customer.getUsername() + " / " + customer.getPassword());
+        //emailService.sendEmail(customer.getEmail(), "Welcome to FaceGuard, username / password : " + customer.getUsername() + " / " + customer.getPassword());
 
     }
 
@@ -442,7 +442,8 @@ public class WorkServiceImpl implements WorkService {
                 try {
                     logger.debug("********* before method1 " + sl.getService());
                     if (!sl.getLeaseHolderName().equalsIgnoreCase("Walkin Customer")) {
-                        this.emailService.sendEmail(sl.getLeaseHolderName(), getStringAtContractStart(sl, sl.getIssueAgent()));
+                        String[] to = {sl.getLeaseHolderName()};
+                        this.emailService.sendEmail(to, null, getStringAtContractStart(sl, sl.getIssueAgent()));
                     }
                     sl.setIsStartContractNotified(true);
                     this.systemLeaseDao.update(sl);
@@ -471,7 +472,8 @@ public class WorkServiceImpl implements WorkService {
                     logger.debug("********* System id " + sl.getId());
                     System.out.println("********* System id " + sl.getId());
                     if (!sl.getLeaseHolderName().equalsIgnoreCase("Walkin Customer")) {
-                        this.emailService.sendEmail(sl.getLeaseHolderName(), getStringAtContractStart(sl, sl.getReturnAgent()));
+                        String[] to = {sl.getLeaseHolderName()};
+                        this.emailService.sendEmail(to, null, getStringAtContractStart(sl, sl.getReturnAgent()));
                     }
                     sl.setIsEndContractNotified(true);
                     this.systemLeaseDao.update(sl);

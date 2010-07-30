@@ -1,6 +1,5 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * 
  */
 package com.bia.ccm.services.impl;
 
@@ -135,7 +134,7 @@ public class MembershipServiceImpl implements MembershipService {
         logger.debug("inside saveMembership------------- added all ");
         this.membershipsDao.create(memberships);
         String emails[] = {memberships.getEmail(), org.getContactEmail()};
-        this.emailService.sendEmail(emails, getMembershipStringAtContractStart(memberships, org));
+        this.emailService.sendEmail(emails, "", getMembershipStringAtContractStart(memberships, org));
     }
 
     public String getMembershipStringAtContractStart(Memberships memberships, Organization org) {
