@@ -57,7 +57,8 @@ public class UserServiceImpl implements UserService {
     public void forgotPassword(String email) {
         email = email.toLowerCase();
         UsersPass up = this.usersPassDao.findByUsernameAndEnabled(email, true);
-        this.emailService.sendEmail(up.getUsername(), " Activation Code : " + up.getResetCode());
+        String[] to = {up.getUsername()};
+        this.emailService.sendEmail(to, null, " Activation Code : " + up.getResetCode());
     }
 
     @Override
@@ -143,7 +144,8 @@ public class UserServiceImpl implements UserService {
 
         // last sending an email
         // @Todo change FaceGuard and email format
-        emailService.sendEmail(email, "Welcome to FaceGuard, username / password : " + email + " / " + password);
+        String[] to = {email};
+        emailService.sendEmail(to, null, "Welcome to FaceGuard, username / password : " + email + " / " + password);
 
     }
 

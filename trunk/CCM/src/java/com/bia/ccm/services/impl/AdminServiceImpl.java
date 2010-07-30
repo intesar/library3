@@ -138,8 +138,8 @@ public class AdminServiceImpl implements AdminService {
             UsersPass usersPass = new UsersPass(null, users.getUsername(),
                     encryptedPass, true, resetCode, new Date());
             usersPassDao.create(usersPass);
-
-            emailService.sendEmail(u.getUsername(), "Welcome to FaceGuard, username / password : " + u.getUsername() + " / " + password);
+            String[] to = {u.getUsername()};
+            emailService.sendEmail(to, "Welcome", "Welcome to FaceGuard, username / password : " + u.getUsername() + " / " + password);
         } else if (users.getId() != null && users.getId() > 0) {
             Users u1 = this.usersDao.findByUsername(users.getUsername());
             if (!u1.getOrganization().equals(u.getOrganization())) {

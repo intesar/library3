@@ -1,6 +1,5 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * 
  */
 package com.bia.ccm.services.impl;
 
@@ -9,6 +8,8 @@ import com.bia.ccm.services.EMailService;
 import com.sun.mail.smtp.SMTPSendFailedException;
 import java.security.Security;
 import java.util.Properties;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -26,63 +27,57 @@ import org.apache.commons.logging.LogFactory;
 public class EMailServiceImpl implements EMailService {
 
     @Override
-    public void SendMail(String[] sendTo) {
-        try {
-            Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
-            sendSSMessage(sendTo, EMAIL_SUBJECT_TEXT, EMAIL_MESSAGE_TEXT, EMAIL_FROM_ADDRESS);
-        } catch (MessagingException ex) {
-            logger.warn(ex.getMessage(), ex);
-        }
-    }
-
-    @Override
-    public void sendEmail(String[] toAddress, String body) {
-        try {
-            Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
-            sendSSMessage(toAddress, EMAIL_SUBJECT_TEXT, body, EMAIL_FROM_ADDRESS);
-        } catch (MessagingException ex) {
-            logger.warn(ex.getMessage(), ex);
-        }
-    }
-
-    @Override
     public void sendEmail(String[] toAddress, String subject, String body) {
         try {
-            Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
-            if (subject == null || subject.length() <= 0) {
-                subject = EMAIL_MESSAGE_TEXT;
+            if ( logger.isTraceEnabled()) {
+                logger.trace("Sending email to queue..." + toAddress[0]);
             }
-            sendSSMessage(toAddress, subject, body, EMAIL_FROM_ADDRESS);
-        } catch (MessagingException ex) {
+            EmailTask emailTask = new EmailTask(toAddress, subject, body);
+            executorService.execute(emailTask);
+        } catch (Exception ex) {
             logger.warn(ex.getMessage(), ex);
         }
+    }
+    protected static final Log logger = LogFactory.getLog(EMailServiceImpl.class);
+    protected static final ExecutorService executorService = Executors.newCachedThreadPool();
+}
+
+class EmailTask implements Runnable {
+    protected String[] toAddress;
+    protected String subject;
+    protected String body;
+    protected static int errorCount = 0;
+    protected static final Log logger = LogFactory.getLog(EmailTask.class);
+
+
+    public EmailTask(String[] toAddress, String subject, String body) {
+        this.toAddress = toAddress;
+        this.subject = subject;
+        this.body = body;
     }
 
     @Override
-    public void sendEmail(String toAddress, String body) {
+    public void run() {
         try {
-            String[] to = {toAddress};
-            Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
-            sendSSMessage(to, EMAIL_SUBJECT_TEXT, body, EMAIL_FROM_ADDRESS);
+            if ( logger.isTraceEnabled()) {
+                logger.trace("Started sending email..." + toAddress[0]);
+            }
+            this.sendSSMessage(toAddress, subject, body);
+            if ( logger.isTraceEnabled()) {
+                logger.trace("Finished sending email..." + toAddress[0]);
+            }
         } catch (MessagingException ex) {
             logger.warn(ex.getMessage(), ex);
         }
     }
 
-    @Override
-    public void sendEmail(String toAddress, String subject, String body) {
-        try {
-            String[] to = {toAddress};
-            Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
-            sendSSMessage(to, subject, body, EMAIL_FROM_ADDRESS);
-        } catch (MessagingException ex) {
-            logger.warn(ex.getMessage(), ex);
+    protected void sendSSMessage(String recipients[], String subject,
+            String message) throws MessagingException {
+
+        Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
+        if (subject == null || subject.length() <= 0) {
+            subject = EMailService.EMAIL_MESSAGE_TEXT;
         }
-    }
-
-    private void sendSSMessage(String recipients[], String subject,
-            String message, String from) throws MessagingException {
-
 
         InternetAddress[] addressTo = new InternetAddress[recipients.length];
         for (int i = 0; i < recipients.length; i++) {
@@ -98,54 +93,46 @@ public class EMailServiceImpl implements EMailService {
         boolean debug = true;
 
         Properties props = new Properties();
-        props.put("mail.smtp.host", SMTP_HOST_NAME);
+        props.put("mail.smtp.host", EMailService.SMTP_HOST_NAME);
         props.put("mail.smtp.auth", "true");
         props.put("mail.debug", "true");
-        props.put("mail.smtp.port", SMTP_PORT);
-        props.put("mail.smtp.socketFactory.port", SMTP_PORT);
-        props.put("mail.smtp.socketFactory.class", SSL_FACTORY);
+        props.put("mail.smtp.port", EMailService.SMTP_PORT);
+        props.put("mail.smtp.socketFactory.port", EMailService.SMTP_PORT);
+        props.put("mail.smtp.socketFactory.class", EMailService.SSL_FACTORY);
         props.put("mail.smtp.socketFactory.fallback", "false");
         final String sendFrom;
         if (errorCount < 3) {
-            sendFrom = SEND_FROM_USERNAME;
+            sendFrom = EMailService.SEND_FROM_USERNAME;
         } else if (errorCount < 6) {
-            sendFrom = SEND_FROM_USERNAME1;
+            sendFrom = EMailService.SEND_FROM_USERNAME1;
         } else {
-            sendFrom = SEND_FROM_USERNAME2;
+            sendFrom = EMailService.SEND_FROM_USERNAME2;
         }
         Session session = Session.getDefaultInstance(props,
                 new javax.mail.Authenticator() {
 
                     @Override
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(sendFrom, SEND_FROM_PASSWORD);
+                        return new PasswordAuthentication(sendFrom, EMailService.SEND_FROM_PASSWORD);
                     }
                 });
 
         session.setDebug(debug);
 
         Message msg = new MimeMessage(session);
-        InternetAddress addressFrom = new InternetAddress(from);
+        InternetAddress addressFrom = new InternetAddress(EMailService.EMAIL_FROM_ADDRESS);
         msg.setFrom(addressFrom);
         msg.setRecipients(Message.RecipientType.TO, addressTo);
         // Setting the Subject and Content Type
         msg.setSubject(subject);
-        msg.setContent(message + EMAIL_SIGNATURE, EMAIL_CONTENT_TYPE);
+        msg.setContent(message + EMailService.EMAIL_SIGNATURE, EMailService.EMAIL_CONTENT_TYPE);
         try {
             Transport.send(msg);
         } catch (SMTPSendFailedException ex) {
             errorCount++;
             logger.warn(ex.getMessage(), ex);
-        } catch ( RuntimeException ex ) {
+        } catch (RuntimeException ex) {
             logger.warn(ex.getMessage(), ex);
-        } 
-    }
-    private int errorCount = 0;
-    protected final Log logger = LogFactory.getLog(getClass());
-
-    public static void main(String[] args) {
-        EMailService es = new EMailServiceImpl();
-        es.sendEmail("mdshannan@gmail.com", "testing");
+        }
     }
 }
-
