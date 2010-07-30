@@ -406,6 +406,8 @@ public class AjaxWorkService {
         return list;
     }
 
+    // getters and setters
+
     public void setAdminService(AdminService adminService) {
         this.adminService = adminService;
     }
@@ -417,8 +419,7 @@ public class AjaxWorkService {
     public void setWorkService(WorkService workService) {
         this.workService = workService;
     }
-    // end of memberships
-
+    
     
     protected AdminService adminService;
     protected MembershipService membershipService;
