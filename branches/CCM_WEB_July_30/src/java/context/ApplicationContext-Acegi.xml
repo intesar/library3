@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="
+         http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+         http://www.springframework.org/schema/aop
+         http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+
+  <!-- ======================== FILTER CHAIN ======================= -->
+    <bean id="filterChainProxy"
+        class="org.acegisecurity.util.FilterChainProxy">
+        <property name="filterInvocationDefinitionSource">
+            <value>
+        CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
+        PATTERN_TYPE_APACHE_ANT
+        /**=httpSessionContextIntegrationFilter,rememberMeProcessingFilter,authenticationProcessingFilter,logoutFilter,exceptionTranslationFilter,filterInvocationInterceptor
+            </value>
+        </property>
+    </bean>
+
+  <!-- responsible for setting up a security context holder for other
+       authentication mechanisms to work with -->
+    <bean id="httpSessionContextIntegrationFilter"
+        class="org.acegisecurity.context.HttpSessionContextIntegrationFilter">
+    </bean>
+
+  <!-- Processes formbased authentication.
+       The html form should contain to input fields: j_username and j_password.
+       The post of the form should point at the value of the "filterProcessesUrl"
+       in this case /j_acegi_security_check -->
+    <bean id="authenticationProcessingFilter"
+        class="org.acegisecurity.ui.webapp.AuthenticationProcessingFilter">
+        <property name="authenticationManager" ref="authenticationManager"/>
+        <property name="authenticationFailureUrl" value="/jsp/login.jsp?login_error=1"/>
+        <property name="defaultTargetUrl" value="/jsp/dashboard2.jsp"/>
+        <property name="filterProcessesUrl" value="/j_acegi_security_check"/>
+        <property name="rememberMeServices" ref="rememberMeServices"/>
+    </bean>
+    <bean id="logoutFilter" class="org.acegisecurity.ui.logout.LogoutFilter">
+        <constructor-arg index="0" value="/jsp/login.jsp"/>
+        <constructor-arg index="1">
+            <list>
+                <ref local="securityContextLogoutHandler"/>
+                <ref local="rememberMeServices"/>
+            </list>
+        </constructor-arg>
+    </bean>
+    <bean id="securityContextLogoutHandler" class="org.acegisecurity.ui.logout.SecurityContextLogoutHandler"/>
+
+  <!-- remember me processing filter used to handle logout -->
+    <bean id="rememberMeProcessingFilter"
+        class="org.acegisecurity.ui.rememberme.RememberMeProcessingFilter">
+        <property name="rememberMeServices" ref="rememberMeServices" />
+        <property name="authenticationManager" ref="authenticationManager" />
+    </bean>
+    <bean id="rememberMeServices"
+        class="org.acegisecurity.ui.rememberme.TokenBasedRememberMeServices">
+        <property name="userDetailsService">
+            <ref local="userDetailsService"/>
+        </property>
+        <property name="key" value="someTokenName"/>
+    </bean>
+    <bean id="rememberMeAuthenticationProvider"
+        class="org.acegisecurity.providers.rememberme.RememberMeAuthenticationProvider">
+        <property name="key" value="someTokenName"/>
+    </bean>
+
+  <!--http://www.acegisecurity.org/docbook/acegi.html#remember-me -->
+
+  <!-- filter responsible for access decisions. What urlrequests may be
+       processed by which roles -->
+    <bean id="filterInvocationInterceptor"
+        class="org.acegisecurity.intercept.web.FilterSecurityInterceptor">
+        <property name="authenticationManager" ref="authenticationManager"/>
+        <property name="accessDecisionManager">
+            <ref local="httpRequestAccessDecisionManager"/>
+        </property>
+        <property name="objectDefinitionSource">
+            <value>
+        CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
+        PATTERN_TYPE_APACHE_ANT
+                /dwr/interface/ajaxadminservice.js*=ROLE_ADMIN
+                /dwr/interface/ajaxworkservice.js*=ROLE_USER
+                /jsp/users.jsp*=ROLE_ADMIN
+                /jsp/emails.jsp*=ROLE_ADMIN
+                /jsp/emailtimings*.jps=ROLE_ADMIN
+                /jsp/organization.jsp*=ROLE_ADMIN
+                /jsp/report.jsp*=ROLE_ADMIN
+                /jsp/systemlease.jsp*=ROLE_ADMIN
+                /jsp/systems.jsp*=ROLE_ADMIN
+                /jsp/dashboard.jsp*=ROLE_ADMIN,ROLE_USER
+                /jsp/dashboard1.jsp*=ROLE_ADMIN,ROLE_USER
+                /jsp/dashboard2.jsp*=ROLE_ADMIN,ROLE_USER
+                /jsp/customer.jsp*=ROLE_ADMIN,ROLE_USER
+                /jsp/services.jsp*=ROLE_ADMIN
+                /jsp/memberships.jsp*=ROLE_ADMIN,ROLE_USER
+                /jsp/membership_types.jsp*=ROLE_ADMIN,ROLE_USER
+            </value>
+        </property>
+    </bean>
+
+  <!-- filter responsible for translating exceptions and delegating to the
+       provided authenticationEntryPoint -->
+    <bean id="exceptionTranslationFilter"
+        class="org.acegisecurity.ui.ExceptionTranslationFilter">
+        <property name="authenticationEntryPoint"
+              ref="authenticationEntryPoint"/>
+    </bean>
+
+  <!-- ======================== AUTHENTICATION ======================= -->
+
+  <!-- changed to work with formbased login -->
+    <bean id="authenticationEntryPoint"
+        class="org.acegisecurity.ui.webapp.AuthenticationProcessingFilterEntryPoint">
+        <property name="loginFormUrl" value="/jsp/login.jsp"/>
+    </bean>
+    <bean id="authenticationManager"
+        class="org.acegisecurity.providers.ProviderManager">
+        <property name="providers">
+            <list>
+                <ref local="daoAuthenticationProvider"/>
+                <ref local="rememberMeAuthenticationProvider"/>
+            </list>
+        </property>
+    </bean>
+    <!-- Your application may use the PasswordEncryptor in several places, -->
+  <!-- like for example at new user sign-up.                             -->
+    <bean id="jasyptPasswordEncryptor" class="org.jasypt.util.password.StrongPasswordEncryptor" />
+
+<!-- This Spring Security-friendly PasswordEncoder implementation will -->
+  <!-- wrap the PasswordEncryptor instance so that it can be used from   -->
+  <!-- the security framework.     org.jasypt.spring.security2.PasswordEncoder      -->
+    <bean id="passwordEncoder" class="org.jasypt.spring.security.PasswordEncoder" >
+        <property name="passwordEncryptor">
+            <ref bean="jasyptPasswordEncryptor" />
+        </property>
+    </bean>
+    <bean id="daoAuthenticationProvider"
+        class="org.acegisecurity.providers.dao.DaoAuthenticationProvider">
+        <property name="userDetailsService" ref="userDetailsService"/> <!-- memoryAuthenticationDao -->
+        <property name="passwordEncoder">
+            <ref bean="passwordEncoder" />
+        </property>
+    </bean>
+    <bean id="userDetailsService"
+          class="org.acegisecurity.userdetails.jdbc.JdbcDaoImpl">
+        <property name="dataSource">
+            <ref bean="dataSource"/>
+        </property>
+    </bean>
+    <bean id="dataSource"
+          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName">
+            <value>com.mysql.jdbc.Driver</value>
+        </property>
+        <property name="url">
+            <value>jdbc:mysql:///ccm</value>
+        </property>
+        <property name="username">
+            <value>root</value>
+        </property>
+        <property name="password">
+            <value></value>
+        </property>
+    </bean>
+    <bean id="httpRequestAccessDecisionManager"
+        class="org.acegisecurity.vote.AffirmativeBased">
+        <property name="allowIfAllAbstainDecisions" value="false"/>
+        <property name="decisionVoters">
+            <list>
+                <ref local="roleVoter"/>
+            </list>
+        </property>
+    </bean>
+    <bean id="roleVoter" class="org.acegisecurity.vote.RoleVoter">
+        <property name="rolePrefix" value=""/>
+    </bean>
+</beans>
