@@ -27,6 +27,7 @@ public interface EMailService {
     String EMAIL_FROM_ADDRESS2 = "face.guard4@bizintelapps.com";    
     String SEND_FROM_USERNAME2 = "face.guard4@bizintelapps.com";
     String SEND_FROM_PASSWORD = "Abbh1234";
+    String FROM = "Faceguard";
     String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
     String[] SEND_TO = {"mohdshannan@yahoo.com"};
     String EMAIL_CONTENT_TYPE = "text/html";
@@ -37,13 +38,13 @@ public interface EMailService {
             " <br/> <br/> <br/> For any queries reach us at info@bizintelapps.com " +
             "<br/> <br/>Thanks , <br/>The BizIntelApps, FaceGuard Team ";
 
-    void SendMail(String[] sendTo);
+    //void SendMail(String[] sendTo);
 
-    void sendEmail(String toAddress, String body);
+    //void sendEmail(String toAddress, String body);
 
-    void sendEmail(String[] toAddress, String body);
+    //void sendEmail(String[] toAddress, String body);
 
-    void sendEmail(String toAddress, String subject, String body);
+    //void sendEmail(String toAddress, String subject, String body);
 
     void sendEmail(String[] toAddress, String subject, String body);
 }
