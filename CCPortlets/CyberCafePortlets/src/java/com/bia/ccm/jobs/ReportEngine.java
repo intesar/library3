@@ -89,9 +89,19 @@ public class ReportEngine {
      public void setEmailService(EMailService emailService) {
         this.emailService = emailService;
     }
-    private EMailService emailService = (EMailService) ServiceFactory.getService("emailServiceImpl");
-    private WorkService workService = (WorkService) ServiceFactory.getService("workServiceImpl");
-    private AdminService adminService = (AdminService) ServiceFactory.getService("adminServiceImpl");
+
+    public void setAdminService(AdminService adminService) {
+        this.adminService = adminService;
+    }
+
+    public void setWorkService(WorkService workService) {
+        this.workService = workService;
+    }
+
+    private EMailService emailService;
+    private WorkService workService;
+    private AdminService adminService;
+
     protected final Log logger = LogFactory.getLog(getClass());
     
    

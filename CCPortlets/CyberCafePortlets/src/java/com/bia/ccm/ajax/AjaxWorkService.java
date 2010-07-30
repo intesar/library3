@@ -20,7 +20,6 @@ import com.bia.ccm.services.AdminService;
 import com.bia.ccm.services.MembershipService;
 import com.bia.ccm.services.WorkService;
 import com.bia.ccm.util.AcegiUtil;
-import com.bia.ccm.util.ServiceFactory;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -421,9 +420,9 @@ public class AjaxWorkService {
     // end of memberships
 
     
-    protected AdminService adminService = (AdminService) ServiceFactory.getService("adminServiceImpl");
-    protected MembershipService membershipService = (MembershipService) ServiceFactory.getService("membershipServiceImpl");
-    protected WorkService workService = (WorkService) ServiceFactory.getService("workServiceImpl");
+    protected AdminService adminService;
+    protected MembershipService membershipService;
+    protected WorkService workService;
 
-    protected final Log logger = LogFactory.getLog(getClass());
+    protected static final Log logger = LogFactory.getLog(AjaxWorkService.class);
 }
