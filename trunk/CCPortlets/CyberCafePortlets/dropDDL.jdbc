@@ -1,0 +1,15 @@
+ALTER TABLE membership_discounts DROP FOREIGN KEY FK_membership_discounts_membership_type
+ALTER TABLE membership_types DROP FOREIGN KEY FK_membership_types_organization
+DROP TABLE users_pass
+DROP TABLE systems
+DROP TABLE services
+DROP TABLE users
+DROP TABLE membership_discounts
+DROP TABLE email_preference
+DROP TABLE membership_types
+DROP TABLE email_time_preference
+DROP TABLE users_light
+DROP TABLE organization
+DROP TABLE authorities
+DROP TABLE memberships
+DROP TABLE system_lease
