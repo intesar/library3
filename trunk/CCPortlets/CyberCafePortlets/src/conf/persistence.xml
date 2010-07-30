@@ -3,7 +3,6 @@
   <persistence-unit name="CCMPU" transaction-type="RESOURCE_LOCAL">
     <provider>oracle.toplink.essentials.PersistenceProvider</provider>
     <!-- <non-jta-data-source>java:/comp/env/jdbc/ccm</non-jta-data-source> -->
-    <class>com.bia.ccm.entity.Authorities</class>
     <class>com.bia.ccm.entity.EmailPreference</class>
     <class>com.bia.ccm.entity.EmailTimePreference</class>
     <class>com.bia.ccm.entity.Organization</class>
