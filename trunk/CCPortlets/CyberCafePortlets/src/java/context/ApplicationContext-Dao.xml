@@ -187,18 +187,7 @@
             </bean>
         </property>
     </bean>
-    <bean id="authoritiesDao" parent="abstractDao">
-        <property name="proxyInterfaces">
-            <value>com.bia.ccm.dao.AuthoritiesDao</value>
-        </property>
-        <property name="target">
-            <bean parent="abstractDaoTarget">
-                <constructor-arg>
-                    <value>com.bia.ccm.entity.Authorities</value>
-                </constructor-arg>
-            </bean>
-        </property>
-    </bean>
+    
     <bean id="servicesDao" parent="abstractDao">
         <property name="proxyInterfaces">
             <value>com.bia.ccm.dao.ServicesDao</value>

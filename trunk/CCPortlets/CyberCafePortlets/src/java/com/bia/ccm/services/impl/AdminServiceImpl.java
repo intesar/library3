@@ -3,7 +3,6 @@
  */
 package com.bia.ccm.services.impl;
 
-import com.bia.ccm.dao.AuthoritiesDao;
 import com.bia.ccm.dao.EmailPreferenceDao;
 import com.bia.ccm.dao.EmailTimePreferenceDao;
 import com.bia.ccm.dao.OrganizationDao;
@@ -13,8 +12,6 @@ import com.bia.ccm.dao.SystemsDao;
 import com.bia.ccm.dao.UsersDao;
 import com.bia.ccm.dao.UsersLightDao;
 import com.bia.ccm.dao.UsersPassDao;
-import com.bia.ccm.entity.Authorities;
-import com.bia.ccm.entity.AuthoritiesPK;
 import com.bia.ccm.entity.EmailPreference;
 import com.bia.ccm.entity.EmailTimePreference;
 import com.bia.ccm.entity.Organization;
@@ -23,7 +20,6 @@ import com.bia.ccm.entity.SystemLease;
 import com.bia.ccm.entity.Systems;
 import com.bia.ccm.entity.Users;
 import com.bia.ccm.entity.UsersLight;
-import com.bia.ccm.entity.UsersPass;
 import com.bia.ccm.exceptions.InvalidInputException;
 import com.bia.ccm.exceptions.NoRoleException;
 import com.bia.ccm.services.AdminService;
@@ -107,6 +103,8 @@ public class AdminServiceImpl implements AdminService {
         return users;
     }
 
+    /**
+
     @Override
     public void saveUser(Users users, String username) {
         UsersLight u = this.usersLightDao.findByUsername(username);
@@ -174,6 +172,8 @@ public class AdminServiceImpl implements AdminService {
             }
         }
     }
+     *
+     */
 
     @Override
     public List<EmailPreference> getAllEmailPreference(String username) {
@@ -504,10 +504,7 @@ public class AdminServiceImpl implements AdminService {
         this.systemLeaseDao = systemLeaseDao;
     }
 
-    public void setAuthoritiesDao(AuthoritiesDao authoritiesDao) {
-        this.authoritiesDao = authoritiesDao;
-    }
-
+    
     public void setServicesDao(ServicesDao servicesDao) {
         this.servicesDao = servicesDao;
     }
@@ -545,7 +542,6 @@ public class AdminServiceImpl implements AdminService {
     protected EmailTimePreferenceDao emailTimePreferenceDao;
     protected SystemLeaseDao systemLeaseDao;
     protected OrganizationDao organizationDao;
-    protected AuthoritiesDao authoritiesDao;
     protected ServicesDao servicesDao;
     protected PasswordEncryptor passwordEncryptor;
     protected PBEStringEncryptor stringEncryptor;
