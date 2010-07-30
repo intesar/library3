@@ -5,11 +5,9 @@ package com.bia.ccm.ajax;
 
 import com.bia.ccm.entity.EmailPreference;
 import com.bia.ccm.entity.EmailTimePreference;
-import com.bia.ccm.entity.Organization;
 import com.bia.ccm.entity.Services;
 import com.bia.ccm.entity.SystemLease;
 import com.bia.ccm.entity.Systems;
-import com.bia.ccm.entity.Users;
 import com.bia.ccm.exceptions.InvalidInputException;
 import com.bia.ccm.exceptions.NoRoleException;
 import com.bia.ccm.services.AdminService;
