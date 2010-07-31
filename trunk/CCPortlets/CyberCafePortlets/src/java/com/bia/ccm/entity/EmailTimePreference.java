@@ -57,6 +57,14 @@ public class EmailTimePreference implements Serializable {
         this.id = id;
     }
 
+    public EmailTimePreference(short reportTime, String organization, String createUser, String ip) {
+        this.reportTime = reportTime;
+        this.organization = organization;
+        this.createDate = new Date();
+        this.createUser = createUser;
+        this.ip = ip;
+    }
+
     public EmailTimePreference(Integer id, short reportTime, String organization) {
         this.id = id;
         this.reportTime = reportTime;

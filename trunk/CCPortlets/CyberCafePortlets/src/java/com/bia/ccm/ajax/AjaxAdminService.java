@@ -5,6 +5,7 @@ package com.bia.ccm.ajax;
 
 import com.bia.ccm.entity.EmailPreference;
 import com.bia.ccm.entity.EmailTimePreference;
+import com.bia.ccm.entity.PreferenceDto;
 import com.bia.ccm.entity.Services;
 import com.bia.ccm.entity.SystemLease;
 import com.bia.ccm.entity.Systems;
@@ -12,12 +13,14 @@ import com.bia.ccm.exceptions.InvalidInputException;
 import com.bia.ccm.exceptions.NoRoleException;
 import com.bia.ccm.services.AdminService;
 import com.bia.ccm.util.AcegiUtil;
+import com.liferay.portal.theme.ThemeDisplay;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -223,6 +226,27 @@ public class AjaxAdminService {
         }
     }
 
+    /**
+     * checks user belongs to community and he is an admin or owner
+     * @param emails
+     * @param timings
+     * @param session
+     */
+    public void savePreferences(PreferenceDto preferenceDto, HttpServletRequest request, HttpSession session) {
+        // TODO role check
+        ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
+        String organization = "" + themeDisplay.getScopeGroupId();
+        String userId = "" + themeDisplay.getUserId(); 
+        String ip = request.getRemoteAddr();
+        adminService.savePreferences(preferenceDto.getEmails(), preferenceDto.getTimings(), organization, userId, ip);
+    }
+
+    public PreferenceDto getPreferences(HttpSession session) {
+        ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
+        String organization = "" + themeDisplay.getScopeGroupId();
+        return this.adminService.getPreferences(organization);
+    }
+
     // email and timings
     /**
      *   Response codes
@@ -347,7 +371,7 @@ public class AjaxAdminService {
         }
     }
 
-    //  Private section
+    //  getters and setters
     public void setAdminService(AdminService adminService) {
         this.adminService = adminService;
     }

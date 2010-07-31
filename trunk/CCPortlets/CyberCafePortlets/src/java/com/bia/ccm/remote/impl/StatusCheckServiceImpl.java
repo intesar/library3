@@ -36,7 +36,12 @@ public class StatusCheckServiceImpl implements StatusCheckService {
         return email;
     }
     protected final Log logger = LogFactory.getLog(getClass());
-    private WorkService workService = (WorkService) ServiceFactory.getService("workServiceImpl");
+
+    public void setWorkService(WorkService workService) {
+        this.workService = workService;
+    }
+    
+    private WorkService workService;
     public static void main(String[] args) {
         StatusCheckService sc = new StatusCheckServiceImpl();
         System.out.println ( sc.getStatus("00-1C-26-DD-F5-A4"));
