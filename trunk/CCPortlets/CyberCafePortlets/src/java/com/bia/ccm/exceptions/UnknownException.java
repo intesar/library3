@@ -9,12 +9,12 @@ package com.bia.ccm.exceptions;
  *
  * @author intesar
  */
-public class InvalidInputException extends RuntimeException {
+public class UnknownException extends RuntimeException {
 
     /**
      * Creates a new instance of <code>InvalidInputException</code> without detail message.
      */
-    public InvalidInputException() {
+    public UnknownException() {
         super(MSG);
     }
 
@@ -23,9 +23,9 @@ public class InvalidInputException extends RuntimeException {
      * Constructs an instance of <code>InvalidInputException</code> with the specified detail message.
      * @param msg the detail message.
      */
-    public InvalidInputException(String msg) {
+    public UnknownException(String msg) {
         super(msg);
     }
 
-    private static final String MSG = "Error occured, please try again!";
+    private static final String MSG = "Invalid input";
 }

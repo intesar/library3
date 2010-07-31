@@ -29,7 +29,7 @@ public class EMailServiceImpl implements EMailService {
     @Override
     public void sendEmail(String[] toAddress, String subject, String body) {
         try {
-            if ( logger.isTraceEnabled()) {
+            if (logger.isTraceEnabled()) {
                 logger.trace("Sending email to queue..." + toAddress[0]);
             }
             EmailTask emailTask = new EmailTask(toAddress, subject, body);
@@ -43,12 +43,12 @@ public class EMailServiceImpl implements EMailService {
 }
 
 class EmailTask implements Runnable {
+
     protected String[] toAddress;
     protected String subject;
     protected String body;
     protected static int errorCount = 0;
     protected static final Log logger = LogFactory.getLog(EmailTask.class);
-
 
     public EmailTask(String[] toAddress, String subject, String body) {
         this.toAddress = toAddress;
@@ -59,11 +59,11 @@ class EmailTask implements Runnable {
     @Override
     public void run() {
         try {
-            if ( logger.isTraceEnabled()) {
+            if (logger.isTraceEnabled()) {
                 logger.trace("Started sending email..." + toAddress[0]);
             }
             this.sendSSMessage(toAddress, subject, body);
-            if ( logger.isTraceEnabled()) {
+            if (logger.isTraceEnabled()) {
                 logger.trace("Finished sending email..." + toAddress[0]);
             }
         } catch (MessagingException ex) {

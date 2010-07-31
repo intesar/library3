@@ -2,7 +2,7 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
 <beans>
 
-<!-- EntityManagerFactory -->
+    <!-- EntityManagerFactory -->
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
         <property name="persistenceUnitName" value="CCMPU"/>
         <!-- <property name="loadTimeWeaver">
@@ -10,11 +10,11 @@
         </property>
         -->
     </bean>
-    
-    <!-- 
-    datasource bean is used by spring unit testing 
+
+    <!--
+    datasource bean is used by spring unit testing
     Uncomment this bean when testing application against some local database
-   
+
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="url" value="jdbc:mysql:///imea"/>
@@ -22,13 +22,13 @@
         <property name="password" value="imran123"/>
     </bean>
      -->
-     
+
     <!-- advisor -->
     <bean id="finderIntroductionAdvisor" class="com.abbhsoft.jpadaoframework.dao.advisor.FinderIntroductionAdvisor" />
-    
+
     <!-- helper bean resolves the finder method name -->
     <bean id="extendedFinderNamingStrategy" class="com.abbhsoft.jpadaoframework.dao.finderhelper.ExtendedFinderNamingStrategy" />
-    
+
     <!-- target -->
     <bean id="abstractDaoTarget" class="com.abbhsoft.jpadaoframework.dao.GenericDaoJPAImpl" abstract="true">
         <property name="entityManagerFactory">
@@ -38,7 +38,7 @@
             <ref bean="extendedFinderNamingStrategy" />
         </property>
     </bean>
-    
+
     <!-- base Proxy -->
     <bean id="abstractDao" class="org.springframework.aop.framework.ProxyFactoryBean" abstract="true">
         <property name="exposeProxy" value="true" />
@@ -48,26 +48,26 @@
             </list>
         </property>
     </bean>
-    
-    
-    
-    
+
+
+
+
     <!--
      ##########################################################################
                             Base Declerations End
      ##########################################################################
     <import resource="classpath:ApplicationContext-JpaDaoFramework.xml" />
     -->
-    
-    
+
+
     <!--
     #####################################################################
             Dao Declaration Begin
-    #####################################################################    
+    #####################################################################
     -->
 
-    
-   <!--  Dao instances 
+
+   <!--  Dao instances
    <bean id="personDao" parent="abstractDao">
       <property name="proxyInterfaces">
          <value>com.company.dao.PersonDao</value>
@@ -80,53 +80,18 @@
          </bean>
       </property>
    </bean>
-   
+
    -->
-   <!-- 
+   <!--
             To add new dao, copy the entire bean defination from above and change
             3 things
             1. bean id
-            2. proxyInterfaces value to new dao 
+            2. proxyInterfaces value to new dao
             3. constructor-arg to dao model class
    -->
-   
+
    <!-- common package dao's -->
-    <bean id="usersDao" parent="abstractDao">
-        <property name="proxyInterfaces">
-            <value>com.bia.ccm.dao.UsersDao</value>
-        </property>
-        <property name="target">
-            <bean parent="abstractDaoTarget">
-                <constructor-arg>
-                    <value>com.bia.ccm.entity.Users</value>
-                </constructor-arg>
-            </bean>
-        </property>
-    </bean>
-    <bean id="usersLightDao" parent="abstractDao">
-        <property name="proxyInterfaces">
-            <value>com.bia.ccm.dao.UsersLightDao</value>
-        </property>
-        <property name="target">
-            <bean parent="abstractDaoTarget">
-                <constructor-arg>
-                    <value>com.bia.ccm.entity.UsersLight</value>
-                </constructor-arg>
-            </bean>
-        </property>
-    </bean>
-    <bean id="usersPassDao" parent="abstractDao">
-        <property name="proxyInterfaces">
-            <value>com.bia.ccm.dao.UsersPassDao</value>
-        </property>
-        <property name="target">
-            <bean parent="abstractDaoTarget">
-                <constructor-arg>
-                    <value>com.bia.ccm.entity.UsersPass</value>
-                </constructor-arg>
-            </bean>
-        </property>
-    </bean>
+
     <bean id="emailPreferenceDao" parent="abstractDao">
         <property name="proxyInterfaces">
             <value>com.bia.ccm.dao.EmailPreferenceDao</value>
@@ -187,7 +152,7 @@
             </bean>
         </property>
     </bean>
-    
+
     <bean id="servicesDao" parent="abstractDao">
         <property name="proxyInterfaces">
             <value>com.bia.ccm.dao.ServicesDao</value>
@@ -200,20 +165,7 @@
             </bean>
         </property>
     </bean>
-    <!--
-     <bean id="userPicDao" parent="abstractDao">
-        <property name="proxyInterfaces">
-            <value>com.bia.ccm.dao.UserPicDao</value>
-        </property>
-        <property name="target">
-            <bean parent="abstractDaoTarget">
-                <constructor-arg>
-                    <value>com.bia.ccm.entity.UserPic</value>
-                </constructor-arg>
-            </bean>
-        </property>
-    </bean>
-    -->
+
     <bean id="membershipDiscountsDao" parent="abstractDao">
         <property name="proxyInterfaces">
             <value>com.bia.ccm.dao.MembershipDiscountsDao</value>

@@ -1,6 +1,5 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * 
  */
 package com.bia.ccm.services;
 
@@ -38,13 +37,11 @@ public interface EMailService {
             " <br/> <br/> <br/> For any queries reach us at info@bizintelapps.com " +
             "<br/> <br/>Thanks , <br/>The BizIntelApps, FaceGuard Team ";
 
-    //void SendMail(String[] sendTo);
-
-    //void sendEmail(String toAddress, String body);
-
-    //void sendEmail(String[] toAddress, String body);
-
-    //void sendEmail(String toAddress, String subject, String body);
-
+    /**
+     * 
+     * @param toAddress
+     * @param subject
+     * @param body
+     */
     void sendEmail(String[] toAddress, String subject, String body);
 }

@@ -3,19 +3,17 @@
  */
 package com.bia.ccm.ajax;
 
-import com.bia.ccm.entity.EmailPreference;
-import com.bia.ccm.entity.EmailTimePreference;
 import com.bia.ccm.entity.PreferenceDto;
 import com.bia.ccm.entity.Services;
 import com.bia.ccm.entity.SystemLease;
 import com.bia.ccm.entity.Systems;
 import com.bia.ccm.exceptions.InvalidInputException;
 import com.bia.ccm.exceptions.NoRoleException;
+import com.bia.ccm.exceptions.UnknownException;
 import com.bia.ccm.services.AdminService;
-import com.bia.ccm.util.AcegiUtil;
 import com.liferay.portal.theme.ThemeDisplay;
-
 import java.text.ParseException;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -43,67 +41,35 @@ public class AjaxAdminService {
      * @param request
      * @return
      */
-    public int updateRentalPrice(int mims, double rate, Integer lmins, Double lrate, HttpServletRequest request) {
-        try {
-            String username = AcegiUtil.getUsername();
-            this.adminService.updateRentalPrice(mims, rate, lmins, lrate, username, request.getRemoteAddr());
-            return 1;
-        } catch (InvalidInputException ex) {
-            logger.warn(ex.getMessage(), ex);
-            return -2;
-        } catch (NoRoleException ex) {
-            logger.warn(ex.getMessage(), ex);
-            return -3;
-        } catch (Exception ex) {
-            logger.warn(ex.getMessage(), ex);
-            return -1;
-        }
+    public void updateRentalPrice(int mims, double rate, Integer lmins, Double lrate, HttpServletRequest request, HttpSession session) {
+        ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
+        String username = themeDisplay.getUserId() + "";
+        String organization = themeDisplay.getScopeGroupId() + "";
+        this.adminService.updateRentalPrice(mims, rate, lmins, lrate, username, organization, request.getRemoteAddr());
+
     }
 
     /**
      *
      * @return
      */
-    public List<Systems> getAllSystems() {
-        try {
-            String username = AcegiUtil.getUsername();
-            return this.adminService.getAllSystems(username);
-        } catch (Exception ex) {
-            logger.warn(ex.getMessage(), ex);
-        }
-        return null;
-    }
+    public List<Systems> getAllSystems(HttpSession session) {
 
-    /**
-     *
-     * @param systems
-     * @return
-     */
-    public int saveSystems(Systems systems) {
-        try {
-            String username = AcegiUtil.getUsername();
-            this.adminService.saveSystem(systems, username);
-            return 1;
-        } catch (InvalidInputException ex) {
-            logger.warn(ex.getMessage(), ex);
-            return -2;
-        } catch (NoRoleException ex) {
-            logger.warn(ex.getMessage(), ex);
-            return -3;
-        } catch (Exception ex) {
-            logger.warn(ex.getMessage(), ex);
-            return -1;
-        }
+        ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
+        String organization = themeDisplay.getScopeGroupId() + "";
+        return this.adminService.getAllSystems(organization);
+
     }
 
     /**
      *  not in use
      * @return
      */
-    public List<SystemLease> getAllSystemLease() {
-        String username = AcegiUtil.getUsername();
+    public List<SystemLease> getAllSystemLease(HttpSession session) {
+        ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
+        String organization = themeDisplay.getScopeGroupId() + "";
+        return this.adminService.getAllSystemLease(organization);
 
-        return this.adminService.getAllSystemLease(username);
 
     }
 
@@ -113,40 +79,30 @@ public class AjaxAdminService {
      * @param endDateString
      * @return
      */
-    public List<SystemLease> getSystemLease(String startDateString, String endDateString) {
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Date startDate = sdf.parse(startDateString);
-            Date endDate = sdf.parse(endDateString);
-            String username = AcegiUtil.getUsername();
-            return this.adminService.getSystemLease(startDate, endDate, username);
-        } catch (ParseException ex) {
-            logger.warn(ex.getMessage(), ex);
-        } catch (Exception ex) {
-            logger.warn(ex.getMessage(), ex);
-        }
-        return null;
-    }
-
-    /**
-     *
-     * @param startDateString
-     * @param endDateString
-     * @return
-     */
-    public List getReport(String startDateString, String endDateString) {
+    public List<SystemLease> getSystemLease(String startDateString, String endDateString, HttpSession session) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            Date startDate = sdf.parse(startDateString);
-            Date endDate = sdf.parse(endDateString);
-            String username = AcegiUtil.getUsername();
-            return this.adminService.getReport(startDate, endDate, username);
-        } catch (ParseException ex) {
-            logger.warn(ex.getMessage(), ex);
-        } catch (Exception ex) {
-            logger.warn(ex.getMessage(), ex);
-        }
-        return null;
+        Date startDate = sdf.parse(startDateString);
+        Date endDate = sdf.parse(endDateString);
+        ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
+        String username = themeDisplay.getUserId() + "";
+        return this.adminService.getSystemLease(startDate, endDate, username);
+
+    }
+
+    /**
+     *
+     * @param startDateString
+     * @param endDateString
+     * @return
+     */
+    public List getReport(String startDateString, String endDateString, HttpSession session) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date startDate = sdf.parse(startDateString);
+        Date endDate = sdf.parse(endDateString);
+        ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
+        String username = themeDisplay.getUserId() + "";
+        return this.adminService.getReport(startDate, endDate, username);
+
     }
 
     /**
@@ -155,21 +111,11 @@ public class AjaxAdminService {
      * @param request
      * @return
      */
-    public int saveService(Services service, HttpServletRequest request, HttpSession session) {
-        try {
-            ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
-            this.adminService.saveService(service, themeDisplay.getUserId() +"", request.getRemoteAddr());
-            return 1;
-        } catch (InvalidInputException ex) {
-            logger.warn(ex.getMessage(), ex);
-            return -2;
-        } catch (NoRoleException ex) {
-            logger.warn(ex.getMessage(), ex);
-            return -3;
-        } catch (Exception ex) {
-            logger.warn(ex.getMessage(), ex);
-            return -1;
-        }
+    public void saveService(Services service, HttpServletRequest request, HttpSession session) {
+        ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
+        String organization = themeDisplay.getScopeGroupId() + "";
+        this.adminService.saveService(service, themeDisplay.getUserId() + "", organization, request.getRemoteAddr());
+
     }
 
     /**
@@ -177,21 +123,10 @@ public class AjaxAdminService {
      * @param id
      * @return
      */
-    public int deleteService(Integer id, HttpSession session) {
-        try {
-            ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
-            adminService.deleteService(id, themeDisplay.getScopeGroupId() + "");
-            return 1;
-        } catch (InvalidInputException ex) {
-            logger.warn(ex.getMessage(), ex);
-            return -2;
-        } catch (NoRoleException ex) {
-            logger.warn(ex.getMessage(), ex);
-            return -3;
-        } catch (Exception ex) {
-            logger.warn(ex.getMessage(), ex);
-            return -1;
-        }
+    public void deleteService(Integer id, HttpSession session) {
+        ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
+        adminService.deleteService(id, themeDisplay.getScopeGroupId() + "");
+
     }
 
     /**
@@ -199,34 +134,19 @@ public class AjaxAdminService {
      * @return
      */
     public List<Services> getAllServices(HttpSession session) {
-        try {
-            ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
-            List<Services> list = this.adminService.getAllServices("" + themeDisplay.getScopeGroupId());
-            return list;
-        } catch (Exception ex) {
-            logger.warn(ex.getMessage(), ex);
-            return null;
-        }
+        ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
+        List<Services> list = this.adminService.getAllServices("" + themeDisplay.getScopeGroupId());
+        return list;
+
     }
 
     /**
      * not in use
      * @return
      */
-    public int sendReports() {
-        try {
-            this.adminService.sendReports();
-            return 1;
-        } catch (InvalidInputException ex) {
-            logger.warn(ex.getMessage(), ex);
-            return -2;
-        } catch (NoRoleException ex) {
-            logger.warn(ex.getMessage(), ex);
-            return -3;
-        } catch (Exception ex) {
-            logger.warn(ex.getMessage(), ex);
-            return -1;
-        }
+    public void sendReports() {
+        this.adminService.sendReports();
+
     }
 
     /**
@@ -239,7 +159,7 @@ public class AjaxAdminService {
         // TODO role check
         ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
         String organization = "" + themeDisplay.getScopeGroupId();
-        String userId = "" + themeDisplay.getUserId(); 
+        String userId = "" + themeDisplay.getUserId();
         String ip = request.getRemoteAddr();
         adminService.savePreferences(preferenceDto.getEmails(), preferenceDto.getTimings(), organization, userId, ip);
     }
@@ -248,130 +168,6 @@ public class AjaxAdminService {
         ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
         String organization = "" + themeDisplay.getScopeGroupId();
         return this.adminService.getPreferences(organization);
-    }
-
-    // email and timings
-    /**
-     *   Response codes
-     *   1 == Operation Successfully executed
-     *  -1 == Operation execution failed, no reason specified, ask user to try again
-     *  -2 == Operation not executed, because of invalid input
-     *  -3 == Operation failed (User doesn't have appropriate roles on data), if user believes he has roles ask him to refresh page or relogin
-     *
-     * only Owner can delete Notification Email
-     * @param id
-     * @return
-     */
-
-    
-
-    public int deleteEmail(int id) {
-        try {
-            this.adminService.deleteEmail(id, AcegiUtil.getUsername());
-            return 1;
-        } catch (InvalidInputException ex) {
-            logger.warn(ex.getMessage(), ex);
-            return -2;
-        } catch (NoRoleException ex) {
-            logger.warn(ex.getMessage(), ex);
-            return -3;
-        } catch (Exception ex) {
-            logger.warn(ex.getMessage(), ex);
-            return -1;
-        }
-    }
-
-    /**
-     *
-     * @return
-     */
-    public List<EmailPreference> getAllEmailPreference() {
-        try {
-            String username = AcegiUtil.getUsername();
-            return this.adminService.getAllEmailPreference(username);
-        } catch (Exception ex) {
-            logger.warn(ex.getMessage(), ex);
-            return null;
-        }
-    }
-
-    /**
-     *
-     * @param emailPreference
-     * @return
-     */
-    public int saveEmailPreference(EmailPreference emailPreference) {
-        try {
-            String username = AcegiUtil.getUsername();
-            this.adminService.saveEmailPreference(emailPreference, username);
-            return 1;
-        } catch (InvalidInputException ex) {
-            logger.warn(ex.getMessage(), ex);
-            return -2;
-        } catch (NoRoleException ex) {
-            logger.warn(ex.getMessage(), ex);
-            return -3;
-        } catch (Exception ex) {
-            logger.warn(ex.getMessage(), ex);
-            return -1;
-        }
-    }
-
-    /**
-     *
-     * @return
-     */
-    public List<EmailTimePreference> getAllEmailTimePreference() {
-        try {
-            String username = AcegiUtil.getUsername();
-            return this.adminService.getAllEmailTimePreference(username);
-        } catch (Exception ex) {
-            logger.warn(ex.getMessage(), ex);
-            return null;
-        }
-    }
-
-    /**
-     *
-     * @param emailTimePreference
-     * @return
-     */
-    public int saveEmailTimePreference(EmailTimePreference emailTimePreference) {
-        try {
-            String username = AcegiUtil.getUsername();
-            this.adminService.saveEmailTimePreference(emailTimePreference, username);
-            return 1;
-        } catch (InvalidInputException ex) {
-            logger.warn(ex.getMessage(), ex);
-            return -2;
-        } catch (NoRoleException ex) {
-            logger.warn(ex.getMessage(), ex);
-            return -3;
-        } catch (Exception ex) {
-            logger.warn(ex.getMessage(), ex);
-            return -1;
-        }
-    }
-
-    /**
-     *
-     * @param emailTimePreference
-     * @return
-     */
-    public int deleteEmailTimePreference(EmailTimePreference emailTimePreference) {
-        try {
-            this.adminService.deleteEmailTimePreference(emailTimePreference, AcegiUtil.getUsername());
-            return 1;
-        } catch (InvalidInputException ex) {
-            logger.warn(ex.getMessage(), ex);
-            return -2;
-        } catch (NoRoleException ex) {
-            logger.warn(ex.getMessage(), ex);
-            return -3;
-        } catch (Exception ex) {
-            logger.warn(ex.getMessage(), ex);
-            return -1;
-        }
     }
 
     //  getters and setters

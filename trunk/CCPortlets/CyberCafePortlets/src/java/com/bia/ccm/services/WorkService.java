@@ -1,6 +1,5 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * 
  */
 package com.bia.ccm.services;
 
@@ -9,7 +8,6 @@ import com.bia.ccm.entity.Services;
 import com.bia.ccm.entity.SystemLease;
 import com.bia.ccm.entity.Systems;
 import com.bia.ccm.entity.UsageDetail;
-import com.bia.ccm.entity.Users;
 import java.util.List;
 
 /**
@@ -18,37 +16,100 @@ import java.util.List;
  */
 public interface WorkService {
 
-    public String getUserEmailByMacAddress(String macAddress);
+    /**
+     *
+     * @param organization
+     * @return
+     */
+    List<Services> getAllServices(String organization);
 
-    public List<Services> getAllServices(String org);
+    /**
+     * 
+     * @param systemId
+     * @param agent
+     * @param organization 
+     */
+    void chargePayment(int systemId, String agent, String organization);
 
-    public void chargePayment(int systemId, String agent);
+    /**
+     *
+     * @param service
+     * @param units
+     * @param user
+     * @param payableAmount
+     * @param comments
+     * @param paidAmount
+     * @param agent
+     */
+    void addService(String service, long units, String user, double payableAmount,
+            String comments, double paidAmount, String agent, String organization);
 
-    public void addService(String service, long units, String user, double payableAmount,
-            String comments, double paidAmount, String agent);
+    /**
+     *
+     * @param id
+     * @return
+     */
+    List<SystemLease> getSystemLease(int id);
 
-    public List<SystemLease> getSystemLease(int id);
+    /**
+     *
+     * @param username
+     * @return
+     */
+    List<Systems> getActiveSystems(String username);
 
-    public List<Systems> getActiveSystems(String username);
+    /**
+     *
+     * @param systemNo
+     * @param username
+     * @return
+     */
+    Systems getSystemByNameAndOrganization(int systemNo, String username);
 
-    public Systems getSystemByNameAndOrganization(int systemNo, String username);
+    /**
+     *
+     * @param id
+     * @param leaseHolder
+     * @param cashier
+     */
+    void leaseSystem(int id, String leaseHolder, String cashier);
 
-    public void leaseSystem(int id, String leaseHolder, String cashier);
+    /**
+     *
+     * @param id
+     * @param amountPaid
+     * @param cashier
+     */
+    void unleaseSystem(int id, double amountPaid, String cashier);
 
-    public void unleaseSystem(int id, double amountPaid, String cashier);
+    /**
+     *
+     * @param id
+     * @return
+     */
+    UsageDetail getPayableAmount(int id);
 
-    public UsageDetail getPayableAmount(int id);
+    /**
+     *
+     * @param macAddress
+     * @return
+     */
+    Integer getSystemStatus(String macAddress);
 
-    public Integer getSystemStatus(String macAddress);
+    /**
+     *
+     * @param macAddress
+     * @return
+     */
+    String getUserEmailByMacAddress(String macAddress);
 
-    public void createCutomer(Users users, Users createUser);
+    /**
+     *
+     */
+    void notifyCustomersAtContractEnd();
 
-    public Users getCustomerPic(String username);
-    public Users getCustomer(String key);
-
-    public Users getCustomerWithPic(String key);
-    
-    public void notifyCustomersAtContractEnd( );
-
-    public void notifyCustomersAtContractStart( );
+    /**
+     * 
+     */
+    void notifyCustomersAtContractStart();
 }

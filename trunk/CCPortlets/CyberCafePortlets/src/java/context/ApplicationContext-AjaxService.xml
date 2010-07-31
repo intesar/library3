@@ -39,7 +39,7 @@
             <dwr:include method="getMemberships" />
             <dwr:include method="saveMembership" />
             <dwr:include method="createMembershipDiscount" />
-            <dwr:filter class="com.bia.ccm.ajax.SessionFilter" />
+            <dwr:filter class="com.bia.ccm.ajax.AjaxInterceptingFilter" />
         </dwr:remote>
         <property name="adminService" ref="adminServiceImpl" />
         <property name="membershipService" ref="membershipServiceImpl" />
@@ -58,7 +58,7 @@
             <dwr:include method="saveService" />
             <dwr:include method="deleteService" />
             <dwr:include method="getAllServices" />
-            <dwr:filter class="com.bia.ccm.ajax.SessionFilter" />
+            <dwr:filter class="com.bia.ccm.ajax.AjaxInterceptingFilter" />
         </dwr:remote>
         <property name="adminService" ref="adminServiceImpl" />
     </bean>

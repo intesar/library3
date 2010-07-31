@@ -11,9 +11,6 @@ import com.bia.ccm.dao.OrganizationDao;
 import com.bia.ccm.dao.ServicesDao;
 import com.bia.ccm.dao.SystemLeaseDao;
 import com.bia.ccm.dao.SystemsDao;
-import com.bia.ccm.dao.UsersDao;
-import com.bia.ccm.dao.UsersLightDao;
-import com.bia.ccm.dao.UsersPassDao;
 import com.bia.ccm.entity.MembershipDiscounts;
 import com.bia.ccm.entity.MembershipTypes;
 import com.bia.ccm.entity.Memberships;
@@ -22,27 +19,14 @@ import com.bia.ccm.entity.Services;
 import com.bia.ccm.entity.SystemLease;
 import com.bia.ccm.entity.Systems;
 import com.bia.ccm.entity.UsageDetail;
-import com.bia.ccm.entity.Users;
-import com.bia.ccm.entity.UsersLight;
-import com.bia.ccm.entity.UsersPass;
 import com.bia.ccm.exceptions.InvalidInputException;
 import com.bia.ccm.exceptions.NoRoleException;
 import com.bia.ccm.services.EMailService;
 import com.bia.ccm.services.WorkService;
 import com.bia.converter.CaseConverter;
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import javax.imageio.ImageIO;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jasypt.encryption.pbe.PBEStringEncryptor;
@@ -71,15 +55,13 @@ public class WorkServiceImpl implements WorkService {
     }
 
     @Override
-    public List<Systems> getActiveSystems(String username) {
-        UsersLight u = this.usersLightDao.findByUsername(username);
-        return this.systemsDao.findByOrganization(u.getOrganization());
+    public List<Systems> getActiveSystems(String organization) {
+        return this.systemsDao.findByOrganization(organization);
     }
 
     @Override
-    public Systems getSystemByNameAndOrganization(int systemNo, String username) {
-        UsersLight u = this.usersLightDao.findByUsername(username);
-        return this.systemsDao.findBySystemNameAndOrganization(systemNo, u.getOrganization());
+    public Systems getSystemByNameAndOrganization(int systemNo, String organization) {
+        return this.systemsDao.findBySystemNameAndOrganization(systemNo, organization);
     }
 
     @Override
@@ -119,10 +101,9 @@ public class WorkServiceImpl implements WorkService {
     }
 
     @Override
-    public void chargePayment(int systemId, String agent) {
+    public void chargePayment(int systemId, String agent, String organization) {
         Systems s = systemsDao.read(systemId);
-        UsersLight u = this.usersLightDao.findByUsername(agent);
-        if (!s.getOrganization().equals(u.getOrganization())) {
+        if (!s.getOrganization().equals(organization)) {
             throw new NoRoleException();
         }
         List<SystemLease> list = getSystemLease(systemId);
@@ -209,20 +190,19 @@ public class WorkServiceImpl implements WorkService {
 
     @Override
     public void addService(String service, long units, String user, double payableAmount,
-            String comments, double paidAmount, String agent) {
+            String comments, double paidAmount, String agent, String organization) {
         if (units <= 0 || payableAmount <= 0 || paidAmount <= 0) {
             throw new NoRoleException();
         }
 
         int u = 0;
-        UsersLight user1 = this.usersLightDao.findByUsername(agent);
         try {
             u = Integer.parseInt(user.trim());
         } catch (Exception e) {
             logger.debug(e.getMessage());
         }
         if (u == 0) {
-            Systems s = systemsDao.findBySystemNameAndOrganization(1, user1.getOrganization());
+            Systems s = systemsDao.findBySystemNameAndOrganization(1, organization);
             SystemLease sl = new SystemLease(null, new Date(), agent, s.getId(), true);
             sl.setAmountPaid(paidAmount);
             sl.setEndTime(new Date());
@@ -233,11 +213,11 @@ public class WorkServiceImpl implements WorkService {
             sl.setTotalMinutesUsed(units);
             this.systemLeaseDao.create(sl);
         } else {
-            Systems s = systemsDao.findBySystemNameAndOrganization(u, user1.getOrganization());
+            Systems s = systemsDao.findBySystemNameAndOrganization(u, organization);
             SystemLease sl = new SystemLease(null, new Date(), agent, s.getId(), false);
             sl.setEndTime(new Date());
             sl.setLeaseHolderName(s.getCurrentUserEmail());
-            applyDiscount(user1.getOrganization(), user, service, payableAmount, sl);
+            applyDiscount(organization, user, service, payableAmount, sl);
             sl.setService(service);
             sl.setTotalMinutesUsed(units);
             this.systemLeaseDao.create(sl);
@@ -373,58 +353,8 @@ public class WorkServiceImpl implements WorkService {
     }
 
     @Override
-    public void createCutomer(Users customer, Users createUser) {
-        caseConverter.toLowerCase(customer);
-        caseConverter.toLowerCase(customer, "password");
-        if (customer.getId() == null) {
-            customer.setUsername(customer.getEmail());
-            customer.setPassword(new Date().getTime() + "");
-            customer.setPassword(passwordEncryptor.encryptPassword(customer.getPassword()));
-            customer.setEnabled(true);
-            customer.setCreateDate(new Date());
-            if (createUser != null) {
-                customer.setCreateUser(createUser.getUsername());
-            }
-            logger.trace("inside createCutomer() customer");
-            if (customer.getImg() != null) {
-                customer.setPic(this.bufferedImageToByteArray(customer.getImg()));
-            }
-            //Users u = usersDao.findByUsername(customer.getUsername());
-            logger.trace("________________________ before createCustomer _________________");
-            this.usersDao.create(customer);
-
-            UsersLight usersLight = new UsersLight(customer.getUsername(), null);
-            this.usersLightDao.create(usersLight);
-
-            String encryptedPass = this.stringEncryptor.encrypt(new Date().getTime() + "");
-            String resetCode = this.stringEncryptor.encrypt(customer.getEmail() + Calendar.getInstance().getFirstDayOfWeek());
-            UsersPass usersPass = new UsersPass(null, customer.getEmail(),
-                    encryptedPass, true, resetCode, new Date());
-            this.usersPassDao.create(usersPass);
-            String[] to = {customer.getEmail()};
-            emailService.sendEmail(to, null, "Welcome to FaceGuard, username / password : " + customer.getUsername() + " / " + customer.getPassword());
-        } else {
-            // get img then update
-            // if img is not null copy img to pic and save it
-            if (customer.getImg() != null) {
-                customer.setPic(this.bufferedImageToByteArray(customer.getImg()));
-            }
-//            if (customer.getPic() == null) {
-//                Users c = this.usersDao.read(customer.getId());
-//                customer.setPic(c.getPic());
-//            } else if (customer.getPic() != null) {
-//                customer.setPic(this.bufferedImageToByteArray(customer.getImage()));
-//            }
-            this.usersDao.update(customer);
-        }
-        //emailService.sendEmail(customer.getEmail(), "Welcome to FaceGuard, username / password : " + customer.getUsername() + " / " + customer.getPassword());
-
-    }
-
-    @Override
-    public List<Services> getAllServices(String username) {
-        UsersLight u = this.usersLightDao.findByUsername(username);
-        return this.servicesDao.findByOrganization(u.getOrganization());
+    public List<Services> getAllServices(String organization) {
+        return this.servicesDao.findByOrganization(organization);
     }
 
     @Override
@@ -484,164 +414,70 @@ public class WorkServiceImpl implements WorkService {
         }
     }
 
-    @Override
-    public Users getCustomerPic(String key) {
-        Users u = this.usersDao.findByKey(key);
-        if (u.getPic() != null) {
-            u.setImage(this.byteArrayToBufferedImage(u.getPic()));
-        }
-        return u;
-    }
-
-    @Override
-    public Users getCustomer(String key) {
-        return this.usersDao.findByKey(key);
-    }
-
-    @Override
-    public Users getCustomerWithPic(String key) {
-        Users u = this.usersDao.findByKey(key);
-        //u.setImage(this.byteArrayToBufferedImage(u.getUserPic().getPic()));
-        return u;
-    }
-
-    private BufferedImage byteArrayToBufferedImage(byte[] bytes) {
-        try {
-            BufferedImage image = ImageIO.read(new ByteArrayInputStream(bytes));
-            return image;
-        } catch (IOException ex) {
-            logger.warn(ex.getMessage(), ex);
-        }
-        return null;
-    }
-
-    /**
-     * Voodoo to scale the image to 200x200
-     * @param uploadImage The image to work on
-     * @return The altered image
-     */
-    private BufferedImage scaleToSize(BufferedImage uploadImage) {
-        AffineTransform atx = new AffineTransform();
-        atx.scale(400d / uploadImage.getWidth(), 400d / uploadImage.getHeight());
-        AffineTransformOp afop = new AffineTransformOp(atx, AffineTransformOp.TYPE_BILINEAR);
-        uploadImage = afop.filter(uploadImage, null);
-        return uploadImage;
-    }
-
-    /**
-     * And scrawl the text on the image in 10 rows of 20 chars
-     * @param uploadImage The image to work on
-     * @param uploadFile The text to write on the image
-     * @param color The selected color
-     * @return The altered image
-     */
-    private BufferedImage grafitiTextOnImage(BufferedImage uploadImage) {
-
-        Graphics2D g2d = uploadImage.createGraphics();
-        for (int row = 0; row < 10; row++) {
-            String output = null;
-
-
-            g2d.setFont(new Font("SansSerif", Font.BOLD, 16));
-
-            g2d.drawString(output, 5, (row + 1) * 20);
-        }
-
-        return uploadImage;
-    }
-
-    private byte[] bufferedImageToByteArray(BufferedImage aBufferedImage) {
-        try {
-            // O P E N
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-            // W R I T E
-            ImageIO.write(aBufferedImage, "jpg", baos);
-
-            // C L O S E
-            baos.flush();
-            byte[] resultImageAsRawBytes = baos.toByteArray();
-            baos.close();
-            return resultImageAsRawBytes;
-
-
-        } catch (IOException ex) {
-            logger.warn(ex.getMessage(), ex);
-
-        }
-        return null;
-    }
-
     public String getStringAtContractStart(SystemLease sl, String cashier) {
-        Users u = usersDao.findByUsername(cashier);
-        Organization org = organizationDao.findByOrganization(u.getOrganization());
-        List<Services> serviceses = servicesDao.findByOrganization(org.getName());
-        String s = "";
-        for (Services ss : serviceses) {
-            s += "<tr><td>" + ss.getName() + "</td><td> " + ss.getUnitPrice() + "</td></tr>";
-
-        }
+        //Organization org = organizationDao.findByOrganization(organization);
+//        List<Services> serviceses = servicesDao.findByOrganization(sl);
+//        String s = "";
+//        for (Services ss : serviceses) {
+//            s += "<tr><td>" + ss.getName() + "</td><td> " + ss.getUnitPrice() + "</td></tr>";
+//
+//        }
         String str = "";
         str += "Dear " + sl.getLeaseHolderName() + " Welcome to FaceGuard.org, <br> "
                 + "At FaceGuard.org We care your Security. <br> "
                 + "Use of Service Report: <br> "
-                + "Cyber Cafe  Name : " + org.getName() + " <br> "
-                + org.getName() + " Contact No : " + org.getPhone() + " <br> "
-                + org.getName() + " Contact Email : " + org.getContactEmail() + " <br> "
-                + org.getName() + " Address : " + org.getStreet() + " " + org.getCity() + " <br> "
-                + org.getName() + " Admin At Kiosk : " + sl.getIssueAgent() + " <br> "
-                + org.getName() + " Operating Hours : " + org.getTimings() + " <br> "
-                + org.getName() + " Print Email : " + org.getPrintEmail() + " <br> "
+                //                + "Cyber Cafe  Name : " + org.getName() + " <br> "
+                //                + org.getName() + " Contact No : " + org.getPhone() + " <br> "
+                //                + org.getName() + " Contact Email : " + org.getContactEmail() + " <br> "
+                //                + org.getName() + " Address : " + org.getStreet() + " " + org.getCity() + " <br> "
+                //                + org.getName() + " Admin At Kiosk : " + sl.getIssueAgent() + " <br> "
+                //                + org.getName() + " Operating Hours : " + org.getTimings() + " <br> "
+                //                + org.getName() + " Print Email : " + org.getPrintEmail() + " <br> "
                 + "Service      :" + sl.getService() + " <br> "
                 + "Start Time : " + sl.getStartTimeString() + " <br> "
                 + "<br> "
-                + org.getName() + " Also Offers:  <br> "
-                + "<table> <thead> <tr> <td> Service </td> <td>  Unit Price </td> </tr> </thead><body> " + s
-                + " If someone else have used the above service at " + org.getName() + " please contact and report Cyber Cafe or Email us at info@bizintelapps.com < br > "
+                //                + org.getName() + " Also Offers:  <br> "
+                //                + "<table> <thead> <tr> <td> Service </td> <td>  Unit Price </td> </tr> </thead><body> " + s
+                //                + " If someone else have used the above service at " + org.getName() + " please contact and report Cyber Cafe or Email us at info@bizintelapps.com < br > "
                 + " Thanks  <br>"
                 + "Team BizIntelApps (Business Intelligent Application) & FaceGuard.org ";
         return str;
     }
 
     public String getStringAtContractEnd(SystemLease sl, String cashier) {
-        Users u = usersDao.findByUsername(cashier);
-        Organization org = organizationDao.findByOrganization(u.getOrganization());
-        List<Services> serviceses = servicesDao.findByOrganization(org.getName());
-        String s = "";
-        for (Services ss : serviceses) {
-            s += "<tr><td>" + ss.getName() + "</td><td> " + ss.getUnitPrice() + "</td></tr>";
-
-        }
+//        Organization org = organizationDao.findByOrganization(organization);
+//        List<Services> serviceses = servicesDao.findByOrganization(org.getName());
+//        String s = "";
+//        for (Services ss : serviceses) {
+//            s += "<tr><td>" + ss.getName() + "</td><td> " + ss.getUnitPrice() + "</td></tr>";
+//
+//        }
         String str = "";
         str += "Dear " + sl.getLeaseHolderName() + " Welcome to FaceGuard.org, <br> "
                 + "At FaceGuard.org We care your Security. <br> "
                 + "Use of Service Report: <br> "
-                + "Cyber Cafe  Name : " + org.getName() + " <br> "
-                + org.getName() + " Contact No : " + org.getPhone() + " <br> "
-                + org.getName() + " Contact Email : " + org.getContactEmail() + " <br> "
-                + org.getName() + " Address : " + org.getStreet() + " " + org.getCity() + " <br> "
-                + org.getName() + " Admin, Issed By : " + sl.getIssueAgent() + " <br> "
-                + org.getName() + " Operating Hours : " + org.getTimings() + " <br> "
+                //                + "Cyber Cafe  Name : " + org.getName() + " <br> "
+                //                + org.getName() + " Contact No : " + org.getPhone() + " <br> "
+                //                + org.getName() + " Contact Email : " + org.getContactEmail() + " <br> "
+                //                + org.getName() + " Address : " + org.getStreet() + " " + org.getCity() + " <br> "
+                //                + org.getName() + " Admin, Issed By : " + sl.getIssueAgent() + " <br> "
+                //                + org.getName() + " Operating Hours : " + org.getTimings() + " <br> "
                 + "Service      :" + sl.getService() + " <br> "
                 + "Start Time : " + sl.getStartTimeString() + " <br> "
                 + "End Time : " + sl.getEndTimeString() + " <br> "
                 + "Total Minutest :" + sl.getTotalMinutesUsed() + "<br> "
                 + "Payable Amount :" + sl.getPayableAmount() + "<br> "
                 + "Paid Amount :" + sl.getAmountPaid() + "<br> "
-                + org.getName() + " Admin, Paid To : " + sl.getReturnAgent() + " <br> "
-                + org.getName() + " Print Email : " + org.getPrintEmail() + " <br> "
-                + "<br> "
-                + org.getName() + " Also Offers:  <br> "
-                + "<table> <thead> <tr> <td> Service </td> <td>  Unit Price </td> </tr> </thead><body> " + s + "</body></table>"
-                + " If someone else have used the above service at " + org.getName() + " please contact and report Cyber Cafe or Email us at info@bizintelapps.com < br > "
+                //                + org.getName() + " Admin, Paid To : " + sl.getReturnAgent() + " <br> "
+                //                + org.getName() + " Print Email : " + org.getPrintEmail() + " <br> "
+                //                + "<br> "
+                //                + org.getName() + " Also Offers:  <br> "
+                //                + "<table> <thead> <tr> <td> Service </td> <td>  Unit Price </td> </tr> </thead><body> " + s + "</body></table>"
+                //                + " If someone else have used the above service at " + org.getName() + " please contact and report Cyber Cafe or Email us at info@bizintelapps.com < br > "
                 + " -- <br> "
                 + " Thanks  <br>"
                 + "Team BizIntelApps (Business Intelligent Application) & FaceGuard.org ";
         return str;
-    }
-
-    public void setUsersDao(UsersDao usersDao) {
-        this.usersDao = usersDao;
     }
 
     public void setSystemsDao(SystemsDao systemsDao) {
@@ -676,14 +512,6 @@ public class WorkServiceImpl implements WorkService {
         this.membershipDiscountsDao = membershipDiscountsDao;
     }
 
-    public void setUsersLightDao(UsersLightDao usersLightDao) {
-        this.usersLightDao = usersLightDao;
-    }
-
-    public void setUsersPassDao(UsersPassDao usersPassDao) {
-        this.usersPassDao = usersPassDao;
-    }
-
     public void setStringEncryptor(PBEStringEncryptor stringEncryptor) {
         this.stringEncryptor = stringEncryptor;
     }
@@ -699,9 +527,6 @@ public class WorkServiceImpl implements WorkService {
     protected EMailService emailService;
     protected final Log logger = LogFactory.getLog(getClass());
     protected SystemsDao systemsDao;
-    protected UsersDao usersDao;
-    protected UsersLightDao usersLightDao;
-    protected UsersPassDao usersPassDao;
     protected SystemLeaseDao systemLeaseDao;
     protected OrganizationDao organizationDao;
     protected ServicesDao servicesDao;
