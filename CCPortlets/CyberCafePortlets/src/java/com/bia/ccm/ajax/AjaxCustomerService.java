@@ -1,16 +1,16 @@
 /*
  * 
  */
-
 package com.bia.ccm.ajax;
 
 import com.bia.ccm.entity.SystemLease;
 import com.bia.ccm.services.AdminService;
-import com.bia.ccm.util.AcegiUtil;
+import com.liferay.portal.theme.ThemeDisplay;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -29,11 +29,12 @@ public class AjaxCustomerService {
      * @param endDateString
      * @return
      */
-    public List<SystemLease> getMySystemLease ( String startDateString, String endDateString) {
+    public List<SystemLease> getMySystemLease(String startDateString, String endDateString, HttpSession session) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date startDate = null;
         Date endDate = null;
-        String username = AcegiUtil.getUsername();
+        ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
+        String username = themeDisplay.getUserId() + "";
         try {
             startDate = sdf.parse(startDateString);
             endDate = sdf.parse(endDateString);
@@ -47,8 +48,6 @@ public class AjaxCustomerService {
     public void setAdminService(AdminService adminService) {
         this.adminService = adminService;
     }
-
     protected static final Log logger = LogFactory.getLog(AjaxCustomerService.class);
-
     protected AdminService adminService;
 }

@@ -25,9 +25,6 @@
         <property name="password" value="faceguard" />
     </bean>
     <bean id="adminServiceImpl" class="com.bia.ccm.services.impl.AdminServiceImpl" >
-        <property name="usersDao" ref="usersDao" />
-        <property name="usersLightDao" ref="usersLightDao" />
-        <property name="usersPassDao" ref="usersPassDao" />
         <property name="systemsDao" ref="systemsDao" />
         <property name="emailPreferenceDao" ref="emailPreferenceDao" />
         <property name="emailTimePreferenceDao" ref="emailTimePreferenceDao" />
@@ -39,21 +36,8 @@
         <property name="emailService" ref="emailServiceImpl" />
         <property name="caseConverter" ref="caseConverterImpl" />
     </bean>
-    <bean id="userServiceImpl" class="com.bia.ccm.services.impl.UserServiceImpl" >
-        <property name="usersDao" ref="usersDao" />
-        <property name="usersLightDao" ref="usersLightDao" />
-        <property name="usersPassDao" ref="usersPassDao" />
-        <property name="organizationDao" ref="organizationDao" />
-        <property name="systemsDao" ref="systemsDao" />
-        <property name="servicesDao" ref="servicesDao" />
-        <property name="passwordEncryptor" ref="passwordEncryptor" />
-        <property name="stringEncryptor" ref="stringEncryptor" />
-        <property name="emailService" ref="emailServiceImpl" />
-    </bean>
+    
     <bean id="workServiceImpl" class="com.bia.ccm.services.impl.WorkServiceImpl" >
-        <property name="usersDao" ref="usersDao" />
-        <property name="usersLightDao" ref="usersLightDao" />
-        <property name="usersPassDao" ref="usersPassDao" />
         <property name="systemsDao" ref="systemsDao" />
         <property name="systemLeaseDao" ref="systemLeaseDao" />
         <property name="servicesDao" ref="servicesDao" />

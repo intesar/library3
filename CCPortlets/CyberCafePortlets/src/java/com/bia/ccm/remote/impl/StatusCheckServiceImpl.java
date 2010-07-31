@@ -1,16 +1,10 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
  */
 package com.bia.ccm.remote.impl;
 
 import com.bia.ccm.services.WorkService;
-import com.bia.ccm.util.ServiceFactory;
-
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import com.bia.ccm.remote.StatusCheckService;
 
 /**

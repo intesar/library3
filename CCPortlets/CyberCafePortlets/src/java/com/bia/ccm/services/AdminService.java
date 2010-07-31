@@ -1,18 +1,14 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * 
  */
 package com.bia.ccm.services;
 
 import com.bia.ccm.entity.EmailPreference;
 import com.bia.ccm.entity.EmailTimePreference;
-import com.bia.ccm.entity.Organization;
 import com.bia.ccm.entity.PreferenceDto;
 import com.bia.ccm.entity.Services;
 import com.bia.ccm.entity.SystemLease;
 import com.bia.ccm.entity.Systems;
-import com.bia.ccm.entity.Users;
-import com.bia.ccm.entity.UsersLight;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -22,60 +18,138 @@ import java.util.Set;
  * @author intesar
  */
 public interface AdminService {
-    // Systems
-    public void deleteEmail(int id, String username);
 
-    public void deleteEmailTimePreference(EmailTimePreference emailTimePreference, String username);
+    /**
+     * 
+     * @param organization
+     * @return
+     */
+    Systems getSystem(String organization);
 
-    public List<SystemLease> getMySystemLease(Date startDate, Date endDate, String organization);
+    /**
+     *
+     * @param username
+     * @return
+     */
+    List<Systems> getAllSystems(String username);
 
-    public UsersLight getUserByUsername(String username);
+    /**
+     *
+     * @param startDate
+     * @param endDate
+     * @param organization
+     * @return
+     */
+    List<SystemLease> getMySystemLease(Date startDate, Date endDate, String organization);
 
-    public void updateRentalPrice(int mims, double rate, Integer lmins, Double lrate, String username, String ip);
+    /**
+     * 
+     * @param username
+     * @return
+     */
+    List<SystemLease> getAllSystemLease(String username);
 
-    public List<Systems> getAllSystems(String username);
+    /**
+     *
+     * @param startDate
+     * @param endDate
+     * @param organization
+     * @return
+     */
+    List<SystemLease> getSystemLease(Date startDate, Date endDate, String organization);
 
-    public void saveSystem(Systems systems, String username);
+    /**
+     *
+     * 
+     *  service contains ( name, organization, unitPrice, saleTwoUnits, saleTwoPrice, saleTwoEnabled )
+     *
+     *  unitPrice is for one unit of product or service
+     *  if admin sets saleTwoUnits > 1 and saleTwoPrice > 0 then make saleTwoEnabled to true
+     *    it means that if there is sale of product or services >= saleTwoUnits
+     *    then apply saleTwoPrice per unit
+     *    eg name = color print, organzation = sample, unitPrice = 5.00
+     *           saleTwoEnabled = true, saleTwoUnits = 10, saleTwoPrice = 4
+     *     case 1 user request for 4 copies 4 * 5.00 = 20.00
+     *     case 2 user request for 20 copes 20 * 4.00 = 800.00
+     *
+     *
+     *
+     * @param service
+     * @param organization
+     * @param username
+     * @param ip
+     */
+    void saveService(Services service, String organization, String username, String ip);
 
-    //Users
-    public List<Users> getAllUsers(String username);
+    /**
+     *
+     * @param id
+     * @param username
+     */
+    void deleteService(Integer id, String username);
 
-    
-    //public Users getUserByUsername(String username);
-    //Email
-    public List<EmailPreference> getAllEmailPreference(String username);
+    /**
+     *
+     * @param org
+     * @return
+     */
+    List<Services> getAllServices(String org);
 
-    public void saveEmailPreference(EmailPreference emailPreference, String username);
-    //EmailTimePreference
-    public List<EmailTimePreference> getAllEmailTimePreference(String username);
-    public List<EmailPreference> getAllOrganizationEmailPreference(String org);
+    /**
+     *
+     * @param mims
+     * @param rate
+     * @param lmins
+     * @param lrate
+     * @param organization
+     * @param username
+     * @param ip
+     */
+    void updateRentalPrice(int mims, double rate, Integer lmins, Double lrate, String organization, String username, String ip);
 
-    public void saveEmailTimePreference(EmailTimePreference emailTimePreference, String username);
-    //SystemLease
-    public List<SystemLease> getAllSystemLease(String username);
-    // lease history
-    public List<SystemLease> getSystemLease(Date startDate, Date endDate, String username);
-
-    public List getReport(Date startDate, Date endDate, String username);
-
-    public Organization getOrganization(String username);
-
-    public void saveOrganization(Organization organization, String username);
-
-    public void saveService(Services service, String username, String ip);
-
-    public void deleteService(Integer id, String username);
-
-    public List<Services> getAllServices(String org);
-
-    public Systems getSystem(String org);
-    
-    void sendReports();
-    
-    List<EmailTimePreference> getEmailTimePreferences(short time);
-
+    /**
+     *
+     * @param emails
+     * @param timings
+     * @param organization
+     * @param userId
+     * @param ip
+     */
     void savePreferences(Set<String> emails, Set<Short> timings, String organization,
             String userId, String ip);
 
-    public PreferenceDto getPreferences(String organization);
+    /**
+     * 
+     * @param organization
+     * @return
+     */
+    PreferenceDto getPreferences(String organization);
+
+    /**
+     *
+     */
+    void sendReports();
+
+    /**
+     * 
+     * @param startDate
+     * @param endDate
+     * @param organization
+     * @return
+     */
+    List getReport(Date startDate, Date endDate, String organization);
+    
+    /**
+     * 
+     * @param s
+     * @return
+     */
+    List<EmailTimePreference> getEmailTimePreferences(short time);
+
+    /**
+     * 
+     * @param organization
+     * @return
+     */
+    List<EmailPreference> getAllOrganizationEmailPreference(String organization);
 }
