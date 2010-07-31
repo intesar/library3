@@ -16,7 +16,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 import javax.persistence.Version;
 
 /**
@@ -206,8 +205,6 @@ public class Services implements Serializable {
     public void setIp(String ip) {
         this.ip = ip;
     }
-
-
 
     public int getVersion() {
         return version;
