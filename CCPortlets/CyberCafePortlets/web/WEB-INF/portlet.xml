@@ -16,4 +16,20 @@
 			<short-title>Services</short-title>
 		</portlet-info>
 	</portlet>
+	<portlet>
+		<description>Preferences</description>
+		<portlet-name>Preferences</portlet-name>
+		<display-name>Preferences</display-name>
+		<portlet-class>com.bia.ccm.portlet.Preferences</portlet-class>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+		</supports>
+		<resource-bundle>com.bia.ccm.portlet.messages</resource-bundle>
+		<portlet-info>
+			<title>Preferences</title>
+			<short-title>Preferences</short-title>
+		</portlet-info>
+	</portlet>
 </portlet-app>
