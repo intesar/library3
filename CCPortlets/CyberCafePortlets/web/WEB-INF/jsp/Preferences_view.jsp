@@ -36,10 +36,10 @@
 <script type="text/javascript">
     dwr.engine.setErrorHandler(cc_p_errorHandler);
     function cc_p_errorHandler(message, exception){
-        alert("inside errorHandler " + message+ " " +exception.javaClassName);
+        alert(message);
         //Session timedout/invalidated
         if(exception && exception.javaClassName
-            == 'org.directwebremoting.extend.LoginRequiredException'){
+            == 'com.bia.ccm.exceptions.LoginRequiredException'){
             //Reload or display an error etc.
             document.location.reload();
         }
