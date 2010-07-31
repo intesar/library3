@@ -18,7 +18,8 @@ public class Services extends GenericPortlet {
     }
     
     public void doView(RenderRequest request,RenderResponse response) throws PortletException,IOException {
-        response.setContentType("text/html");        
+        response.setContentType("text/html");
+        SessionUtil.configure(request);
         PortletRequestDispatcher dispatcher =
         getPortletContext().getRequestDispatcher("/WEB-INF/jsp/Services_view.jsp");
         dispatcher.include(request, response);

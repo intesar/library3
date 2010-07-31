@@ -155,9 +155,10 @@ public class AjaxAdminService {
      * @param request
      * @return
      */
-    public int saveService(Services service, HttpServletRequest request) {
+    public int saveService(Services service, HttpServletRequest request, HttpSession session) {
         try {
-            this.adminService.saveService(service, AcegiUtil.getUsername(), request.getRemoteAddr());
+            ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
+            this.adminService.saveService(service, themeDisplay.getUserId() +"", request.getRemoteAddr());
             return 1;
         } catch (InvalidInputException ex) {
             logger.warn(ex.getMessage(), ex);
@@ -176,9 +177,10 @@ public class AjaxAdminService {
      * @param id
      * @return
      */
-    public int deleteService(Integer id) {
+    public int deleteService(Integer id, HttpSession session) {
         try {
-            adminService.deleteService(id, AcegiUtil.getUsername());
+            ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
+            adminService.deleteService(id, themeDisplay.getScopeGroupId() + "");
             return 1;
         } catch (InvalidInputException ex) {
             logger.warn(ex.getMessage(), ex);
@@ -196,9 +198,10 @@ public class AjaxAdminService {
      * 
      * @return
      */
-    public List<Services> getAllServices() {
+    public List<Services> getAllServices(HttpSession session) {
         try {
-            List<Services> list = this.adminService.getAllServices(AcegiUtil.getUsername());
+            ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
+            List<Services> list = this.adminService.getAllServices("" + themeDisplay.getScopeGroupId());
             return list;
         } catch (Exception ex) {
             logger.warn(ex.getMessage(), ex);

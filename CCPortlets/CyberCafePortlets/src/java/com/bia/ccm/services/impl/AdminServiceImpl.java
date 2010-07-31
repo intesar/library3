@@ -395,10 +395,9 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void deleteService(Integer id, String username) {
-        String org = this.usersLightDao.findByUsername(username).getOrganization();
+    public void deleteService(Integer id, String organization) {
         Services services = this.servicesDao.read(id);
-        if (org.equals(services.getOrganization())) {
+        if (organization.equals(services.getOrganization())) {
             servicesDao.delete(services);
         } else {
             throw new NoRoleException();
@@ -406,10 +405,9 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<Services> getAllServices(String username) {
-        String org = this.usersLightDao.findByUsername(username).getOrganization();
-        List<Services> list = this.servicesDao.findByOrganization(org);
-        Systems system = this.getSystem(org);
+    public List<Services> getAllServices(String organization) {
+        List<Services> list = this.servicesDao.findByOrganization(organization);
+        Systems system = this.getSystem(organization);
         Services s = new Services();
         s.setId(-5);
         s.setName("Computer");
@@ -510,7 +508,7 @@ public class AdminServiceImpl implements AdminService {
             return;
         } else if ((lmins != null && lrate == null) || (lmins == null && lrate != null)) {
             throw new InvalidInputException();
-        } else if (lmins <= mims || lrate < rate) {
+        } else if (lmins <= mims || lrate < 0.0) {
             throw new InvalidInputException();
         }
     }
