@@ -5,7 +5,7 @@
          xsi:schemaLocation="http://www.springframework.org/schema/beans
          http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
          http://www.directwebremoting.org/schema/spring-dwr
-         http://www.directwebremoting.org/schema/spring-dwr-2.0.xsd">
+         http://www.directwebremoting.org/schema/spring-dwr-3.0.xsd">
 
 
     <!--
@@ -39,6 +39,7 @@
             <dwr:include method="getMemberships" />
             <dwr:include method="saveMembership" />
             <dwr:include method="createMembershipDiscount" />
+            <dwr:filter class="com.bia.ccm.ajax.SessionFilter" />
         </dwr:remote>
         <property name="adminService" ref="adminServiceImpl" />
         <property name="membershipService" ref="membershipServiceImpl" />
@@ -46,21 +47,18 @@
     </bean>
     <bean id="ajaxAdminService" class="com.bia.ccm.ajax.AjaxAdminService" >
         <dwr:remote javascript="AjaxAdminService">
+            <dwr:include method="savePreferences" />
+            <dwr:include method="getPreferences" />
             <dwr:include method="getAllSystems" />
             <dwr:include method="saveSystems" />
-            <dwr:include method="getAllEmailPreference" />
-            <dwr:include method="saveEmailPreference" />
-            <dwr:include method="getAllEmailTimePreference" />
-            <dwr:include method="saveEmailTimePreference" />
-            <dwr:include method="deleteEmailTimePreference" />
             <dwr:include method="getAllSystemLease" />
             <dwr:include method="getSystemLease" />
             <dwr:include method="getReport" />
             <dwr:include method="updateRentalPrice" />
-            <dwr:include method="deleteEmail" />
             <dwr:include method="saveService" />
             <dwr:include method="deleteService" />
             <dwr:include method="getAllServices" />
+            <dwr:filter class="com.bia.ccm.ajax.SessionFilter" />
         </dwr:remote>
         <property name="adminService" ref="adminServiceImpl" />
     </bean>
@@ -75,5 +73,6 @@
     <dwr:configuration>
         <dwr:convert type="bean" class="com.bia.ccm.entity.*" />
         <dwr:convert type="bean"  class="java.util.*"  />
+        <dwr:convert type="exception" class="com.bia.ccm.exceptions.*" />
     </dwr:configuration>
 </beans>

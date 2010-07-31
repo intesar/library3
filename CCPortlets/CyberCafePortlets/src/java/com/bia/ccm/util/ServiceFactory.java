@@ -17,11 +17,22 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class ServiceFactory {
 
     public ServiceFactory() {
-        ApplicationContext context = new ClassPathXmlApplicationContext(
+//        ApplicationContext context = new ClassPathXmlApplicationContext(
+//                new String[]{
+//                    "classpath:context/ApplicationContext-Dao.xml",
+//                    "classpath:context/ApplicationContext-Service.xml",
+//                    "classpath:context/ApplicationContext-Transactions.xml"
+//                });
+
+         ApplicationContext context = new ClassPathXmlApplicationContext(
                 new String[]{
+                    "classpath:context/ApplicationContext-AjaxService.xml",
+                    "classpath:context/ApplicationContext.xml",
+                    "classpath:context/remoting-servlet.xml",
                     "classpath:context/ApplicationContext-Dao.xml",
                     "classpath:context/ApplicationContext-Service.xml",
-                    "classpath:context/ApplicationContext-Transactions.xml"
+                    "classpath:context/ApplicationContext-Transactions.xml",
+                    "classpath:context/ApplicationContext-Schedule.xml"
                 });
 
 // an ApplicationContext is also a BeanFactory (via inheritance)

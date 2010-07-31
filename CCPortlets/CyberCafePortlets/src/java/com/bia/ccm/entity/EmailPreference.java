@@ -59,6 +59,15 @@ public class EmailPreference implements Serializable {
         this.id = id;
     }
 
+    public EmailPreference(String email, String organization, String username, String createUser, String ip) {
+        this.emailOrPhone = email;
+        this.organization = organization;
+        this.username = username;
+        this.createDate = new Date();
+        this.ip = ip;
+        this.createUser = createUser;
+    }
+
     public EmailPreference(Integer id, String username, String emailOrPhone, String organization) {
         this.id = id;
         this.username = username;

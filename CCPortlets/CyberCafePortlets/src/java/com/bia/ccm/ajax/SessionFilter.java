@@ -27,9 +27,9 @@ public class SessionFilter  implements AjaxFilter {
             //Throw an exception
             throw new LoginRequiredException("This operation requires login.");
         } else {
-            String msg = (String) session.getAttribute("msg");
+            Object msg = session.getAttribute("THEME_DISPLAY");
             System.out.println ( "msg : " + msg );
-            if ( msg != null && msg.equals("invalidate")){
+            if ( msg == null){
                 session.invalidate();
                 System.out.println("session invalidated..");
                 throw new LoginRequiredException("This operation requires login.");

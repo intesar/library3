@@ -9,8 +9,7 @@ import com.bia.ccm.entity.EmailTimePreference;
 import com.bia.ccm.services.AdminService;
 import com.bia.ccm.services.EMailService;
 import com.bia.ccm.services.WorkService;
-import com.bia.ccm.util.ServiceFactory;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -21,10 +20,13 @@ import org.apache.commons.logging.LogFactory;
  */
 public class ReportEngine {
 
+    /**
+     *
+     */
     public void processReportAtContractStart() {
-        logger.debug("inside processReport ***************** ");
-        // find all SystemLease Records that was not notified
-        //iterate and send emails
+        if (logger.isTraceEnabled()) {
+            logger.trace(" Started workService.notifyCustomersAtContractStart() ");
+        }
         try {
             workService.notifyCustomersAtContractStart();
         } catch (RuntimeException ex) {
@@ -33,10 +35,13 @@ public class ReportEngine {
 
     }
 
+    /**
+     *
+     */
     public void processReportAtContractEnd() {
-        logger.debug("inside processReport ***************** ");
-        // find all SystemLease Records that was not notified
-        //iterate and send emails
+        if (logger.isTraceEnabled()) {
+            logger.trace("started workService.notifyCustomersAtContractEnd()");
+        }
         try {
             workService.notifyCustomersAtContractEnd();
         } catch (RuntimeException ex) {
@@ -44,19 +49,20 @@ public class ReportEngine {
         }
     }
 
+    /**
+     *
+     */
     public void processReport() {
-        logger.debug(" inside processing report ___________________________________ ");
-        System.out.println(" inside processing report ___________________________________ ");
-        Date dt = new Date();
-        int time = dt.getHours();
-        time = time * 100;
+        if (logger.isTraceEnabled()) {
+            logger.trace(" inside processReport() ");
+        }
+        Calendar calendar = Calendar.getInstance();
+        int time = calendar.get(Calendar.HOUR_OF_DAY) * 100;
 
         List<EmailTimePreference> list = adminService.getEmailTimePreferences((short) time);
         for (EmailTimePreference etp : list) {
             try {
                 String org = etp.getOrganization();
-                List list1 = this.adminService.getReport(new Date(), dt, org);
-
                 int count = 0;
                 // get addresses for org
                 List<EmailPreference> emailPreferences = this.adminService.getAllOrganizationEmailPreference(org);
@@ -67,26 +73,19 @@ public class ReportEngine {
                     } else {
                         toAddress[count++] = ep.getEmailOrPhone() + ep.getServiceProvider();
                     }
-//                    } else if (ep.getServiceProvider().startsWith("b")) {
-//                        toAddress[count++] = ep.getEmailOrPhone() + emailService.bsnl;
-//                    } else if (ep.getServiceProvider().startsWith("i")) {
-//                        toAddress[count++] = ep.getEmailOrPhone() + emailService.idea;
-//                    }
                 }
-                this.emailService.sendEmail(toAddress, list1.toString(), null);
-
+                if (toAddress.length > 0) {
+                    List list1 = this.adminService.getReport(calendar.getTime(), calendar.getTime(), org);
+                    this.emailService.sendEmail(toAddress, list1.toString(), null);
+                }
             } catch (RuntimeException ex) {
                 logger.warn(ex.getMessage(), ex);
             }
         }
     }
 
-    public static void main(String[] args) {
-        ReportEngine re = new ReportEngine();
-        re.workService.notifyCustomersAtContractStart();
-        
-    }
-     public void setEmailService(EMailService emailService) {
+    // getters and setters
+    public void setEmailService(EMailService emailService) {
         this.emailService = emailService;
     }
 
@@ -97,12 +96,8 @@ public class ReportEngine {
     public void setWorkService(WorkService workService) {
         this.workService = workService;
     }
-
     private EMailService emailService;
     private WorkService workService;
     private AdminService adminService;
-
     protected final Log logger = LogFactory.getLog(getClass());
-    
-   
 }

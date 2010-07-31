@@ -7,6 +7,7 @@ package com.bia.ccm.services;
 import com.bia.ccm.entity.EmailPreference;
 import com.bia.ccm.entity.EmailTimePreference;
 import com.bia.ccm.entity.Organization;
+import com.bia.ccm.entity.PreferenceDto;
 import com.bia.ccm.entity.Services;
 import com.bia.ccm.entity.SystemLease;
 import com.bia.ccm.entity.Systems;
@@ -14,6 +15,7 @@ import com.bia.ccm.entity.Users;
 import com.bia.ccm.entity.UsersLight;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -71,4 +73,9 @@ public interface AdminService {
     void sendReports();
     
     List<EmailTimePreference> getEmailTimePreferences(short time);
+
+    void savePreferences(Set<String> emails, Set<Short> timings, String organization,
+            String userId, String ip);
+
+    public PreferenceDto getPreferences(String organization);
 }

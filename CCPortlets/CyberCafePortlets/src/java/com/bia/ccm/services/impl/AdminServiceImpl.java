@@ -15,6 +15,7 @@ import com.bia.ccm.dao.UsersPassDao;
 import com.bia.ccm.entity.EmailPreference;
 import com.bia.ccm.entity.EmailTimePreference;
 import com.bia.ccm.entity.Organization;
+import com.bia.ccm.entity.PreferenceDto;
 import com.bia.ccm.entity.Services;
 import com.bia.ccm.entity.SystemLease;
 import com.bia.ccm.entity.Systems;
@@ -29,6 +30,7 @@ import com.bia.converter.CaseConverter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jasypt.encryption.pbe.PBEStringEncryptor;
@@ -107,73 +109,109 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void saveUser(Users users, String username) {
-        UsersLight u = this.usersLightDao.findByUsername(username);
-        if (users == null) {
-            throw new InvalidInputException();
-        }
-        if (users.getId() == null) {
-            users.setOrganization(u.getOrganization());
-            users.setCreateDate(new Date());
-            users.setCreateUser(username);
-            users.setEmail(users.getUsername());
-            String password = users.getPassword();
-            users.setPassword(passwordEncryptor.encryptPassword(users.getPassword()));
-            this.usersDao.create(users);
+    UsersLight u = this.usersLightDao.findByUsername(username);
+    if (users == null) {
+    throw new InvalidInputException();
+    }
+    if (users.getId() == null) {
+    users.setOrganization(u.getOrganization());
+    users.setCreateDate(new Date());
+    users.setCreateUser(username);
+    users.setEmail(users.getUsername());
+    String password = users.getPassword();
+    users.setPassword(passwordEncryptor.encryptPassword(users.getPassword()));
+    this.usersDao.create(users);
 
-            UsersLight ul = new UsersLight(users.getUsername(), u.getOrganization());
-            this.usersLightDao.create(ul);
+    UsersLight ul = new UsersLight(users.getUsername(), u.getOrganization());
+    this.usersLightDao.create(ul);
 
-            if (users.getRole().equalsIgnoreCase("admin")) {
-                Authorities a1 = new Authorities(users.getUsername(), "ROLE_ADMIN");
-                this.authoritiesDao.create(a1);
-            }
-            Authorities a2 = new Authorities(users.getUsername(), "ROLE_USER");
-            this.authoritiesDao.create(a2);
+    if (users.getRole().equalsIgnoreCase("admin")) {
+    Authorities a1 = new Authorities(users.getUsername(), "ROLE_ADMIN");
+    this.authoritiesDao.create(a1);
+    }
+    Authorities a2 = new Authorities(users.getUsername(), "ROLE_USER");
+    this.authoritiesDao.create(a2);
 
-            // storing pass in UsersPass
-            String encryptedPass = this.stringEncryptor.encrypt(password);
-            String resetCode = this.stringEncryptor.encrypt(username + Calendar.getInstance().getFirstDayOfWeek());
-            UsersPass usersPass = new UsersPass(null, users.getUsername(),
-                    encryptedPass, true, resetCode, new Date());
-            usersPassDao.create(usersPass);
-            String[] to = {u.getUsername()};
-            emailService.sendEmail(to, "Welcome", "Welcome to FaceGuard, username / password : " + u.getUsername() + " / " + password);
-        } else if (users.getId() != null && users.getId() > 0) {
-            Users u1 = this.usersDao.findByUsername(users.getUsername());
-            if (!u1.getOrganization().equals(u.getOrganization())) {
-                throw new NoRoleException();
-            }
-            u1.setName(users.getName());
-            u1.setEnabled(users.getEnabled());
-            if (!users.getPassword().equals(u1.getPassword())) {
-                // update password
-                String password = users.getPassword();
-                u1.setPassword(passwordEncryptor.encryptPassword(users.getPassword()));
-                UsersPass usersPass = usersPassDao.findByUsernameAndEnabled(u1.getEmail(), true);
-                String activationCode_ = this.stringEncryptor.encrypt(password + u1.getEmail());
-                UsersPass newUserPass = new UsersPass(null, u1.getEmail(), password, true, activationCode_, new Date());
-                usersPassDao.create(newUserPass);
-                usersPass.setEnabled(false);
-                usersPassDao.update(usersPass);
-            }
-            this.usersDao.update(u1);
-            if (users.getRole().equalsIgnoreCase("employee")) {
-                Authorities a1 = this.authoritiesDao.read(new AuthoritiesPK(users.getUsername(), "ROLE_ADMIN"));
-                if (a1 != null) {
-                    this.authoritiesDao.delete(a1);
-                }
-            } else if (users.getRole().equalsIgnoreCase("admin")) {
-                AuthoritiesPK authPK = new AuthoritiesPK(users.getUsername(), "ROLE_ADMIN");
-                Authorities a2 = this.authoritiesDao.read(authPK);
-                if (a2 == null) {
-                    a2 = new Authorities(authPK);
-                    this.authoritiesDao.create(a2);
-                }
-            }
-        }
+    // storing pass in UsersPass
+    String encryptedPass = this.stringEncryptor.encrypt(password);
+    String resetCode = this.stringEncryptor.encrypt(username + Calendar.getInstance().getFirstDayOfWeek());
+    UsersPass usersPass = new UsersPass(null, users.getUsername(),
+    encryptedPass, true, resetCode, new Date());
+    usersPassDao.create(usersPass);
+    String[] to = {u.getUsername()};
+    emailService.sendEmail(to, "Welcome", "Welcome to FaceGuard, username / password : " + u.getUsername() + " / " + password);
+    } else if (users.getId() != null && users.getId() > 0) {
+    Users u1 = this.usersDao.findByUsername(users.getUsername());
+    if (!u1.getOrganization().equals(u.getOrganization())) {
+    throw new NoRoleException();
+    }
+    u1.setName(users.getName());
+    u1.setEnabled(users.getEnabled());
+    if (!users.getPassword().equals(u1.getPassword())) {
+    // update password
+    String password = users.getPassword();
+    u1.setPassword(passwordEncryptor.encryptPassword(users.getPassword()));
+    UsersPass usersPass = usersPassDao.findByUsernameAndEnabled(u1.getEmail(), true);
+    String activationCode_ = this.stringEncryptor.encrypt(password + u1.getEmail());
+    UsersPass newUserPass = new UsersPass(null, u1.getEmail(), password, true, activationCode_, new Date());
+    usersPassDao.create(newUserPass);
+    usersPass.setEnabled(false);
+    usersPassDao.update(usersPass);
+    }
+    this.usersDao.update(u1);
+    if (users.getRole().equalsIgnoreCase("employee")) {
+    Authorities a1 = this.authoritiesDao.read(new AuthoritiesPK(users.getUsername(), "ROLE_ADMIN"));
+    if (a1 != null) {
+    this.authoritiesDao.delete(a1);
+    }
+    } else if (users.getRole().equalsIgnoreCase("admin")) {
+    AuthoritiesPK authPK = new AuthoritiesPK(users.getUsername(), "ROLE_ADMIN");
+    Authorities a2 = this.authoritiesDao.read(authPK);
+    if (a2 == null) {
+    a2 = new Authorities(authPK);
+    this.authoritiesDao.create(a2);
+    }
+    }
+    }
     }
      *
      */
+
+    @Override
+    public void savePreferences(Set<String> emails, Set<Short> timings, String organization,
+            String userId, String ip) {
+        List<EmailPreference> emailPreferences = this.emailPreferenceDao.findByOrganization(organization);
+        // delete all and add new
+        for (EmailPreference emailPreference : emailPreferences) {
+            this.emailPreferenceDao.delete(emailPreference);
+        }
+        for (String email : emails ) {
+            EmailPreference emailPreference = new EmailPreference(email, organization, userId, userId, ip);
+            this.emailPreferenceDao.create(emailPreference);
+        }
+        List<EmailTimePreference> emailTimePreferences = this.emailTimePreferenceDao.findByOrganization(organization);
+        for (EmailTimePreference emailTimePreference : emailTimePreferences){
+            this.emailTimePreferenceDao.delete(emailTimePreference);
+        }
+        for (Short timing : timings) {
+            EmailTimePreference emailTimePreference = new EmailTimePreference(timing, organization, userId, ip);
+            this.emailTimePreferenceDao.create(emailTimePreference);
+        }
+    }
+
+    @Override
+    public PreferenceDto getPreferences(String organization) {
+        PreferenceDto dto = new PreferenceDto();
+        List<EmailPreference> emailPreferences = this.emailPreferenceDao.findByOrganization(organization);
+        for (EmailPreference emailPreference : emailPreferences) {
+            dto.getEmails().add(emailPreference.getEmailOrPhone());
+        }
+        List<EmailTimePreference> emailTimePreferences = this.emailTimePreferenceDao.findByOrganization(organization);
+        for (EmailTimePreference emailTimePreference : emailTimePreferences){
+            dto.getTimings().add(emailTimePreference.getReportTime());
+        }
+        return dto;
+    }
 
     @Override
     public List<EmailPreference> getAllEmailPreference(String username) {
@@ -341,7 +379,7 @@ public class AdminServiceImpl implements AdminService {
             service.setSaleTwoEnabled(false);
             if (service.getSaleTwoUnits() != null && service.getSaleTwoUnits() > 1) {
                 service.setSaleTwoEnabled(true);
-            } 
+            }
             service.setIp(ip);
 
             if (service.getId() == null) {
@@ -355,8 +393,6 @@ public class AdminServiceImpl implements AdminService {
             }
         }
     }
-
-
 
     @Override
     public void deleteService(Integer id, String username) {
@@ -504,7 +540,6 @@ public class AdminServiceImpl implements AdminService {
         this.systemLeaseDao = systemLeaseDao;
     }
 
-    
     public void setServicesDao(ServicesDao servicesDao) {
         this.servicesDao = servicesDao;
     }
