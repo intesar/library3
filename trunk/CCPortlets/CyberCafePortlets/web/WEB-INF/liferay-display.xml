@@ -4,5 +4,6 @@
   <category name="BizIntelApps">
     <portlet id="Services">Services</portlet>
     <portlet id="Preferences">Preferences</portlet>
+    <portlet id="CyberCafeProfile">CyberCafeProfile</portlet>
   </category>
 </display>

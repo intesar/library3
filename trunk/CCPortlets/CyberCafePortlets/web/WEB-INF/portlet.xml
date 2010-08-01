@@ -32,4 +32,20 @@
 			<short-title>Preferences</short-title>
 		</portlet-info>
 	</portlet>
+	<portlet>
+		<description>Cafe Profile</description>
+		<portlet-name>CyberCafeProfile</portlet-name>
+		<display-name>Cafe Profile</display-name>
+		<portlet-class>com.bia.ccm.portlet.CyberCafeProfile</portlet-class>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+		</supports>
+		<resource-bundle>com.bia.ccm.portlet.messages</resource-bundle>
+		<portlet-info>
+			<title>Cafe Profile</title>
+			<short-title>Cafe Profile</short-title>
+		</portlet-info>
+	</portlet>
 </portlet-app>
