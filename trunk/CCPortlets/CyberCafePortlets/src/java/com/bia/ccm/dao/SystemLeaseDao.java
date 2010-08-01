@@ -1,6 +1,5 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * 
  */
 package com.bia.ccm.dao;
 
@@ -20,15 +19,15 @@ public interface SystemLeaseDao extends GenericDao<SystemLease, Integer> {
 
     public List<SystemLease> findByIsStartContractNotified(Boolean b, PagingParams... pagingParamses);
 
-    public List<SystemLease> findByOrganization(String organization);
+    public List<SystemLease> findByOrganization(long organization);
 
     public List<SystemLease> findBySystemAndFinished(int id);
 
     public List<SystemLease> findBySystemIdAndFinished(int id);
 
-    public List<SystemLease> findByStartAndEndDates(Date sd, Date ed, String org);
+    public List<SystemLease> findByStartAndEndDates(Date sd, Date ed, long org);
 
     public List<SystemLease> findByUsernameAndStartEndDates(String username, Date startDate, Date endDate);
 
-    public List findReportBetweenDates(Date sd, Date ed, String org);
+    public List findReportBetweenDates(Date sd, Date ed, long org);
 }

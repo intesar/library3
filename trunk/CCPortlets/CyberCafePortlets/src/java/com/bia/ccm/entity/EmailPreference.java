@@ -40,7 +40,7 @@ public class EmailPreference implements Serializable {
     @Column(name = "service_provider")
     private String serviceProvider;
     @Column(name = "organization", nullable = false)
-    private String organization;
+    private long organization;
     @Column(name = "create_user")
     private String createUser;
     @Column(name = "create_date")
@@ -58,7 +58,7 @@ public class EmailPreference implements Serializable {
         this.id = id;
     }
 
-    public EmailPreference(String email, String organization, String username, String createUser, String ip) {
+    public EmailPreference(String email, long organization, String username, String createUser, String ip) {
         this.emailOrPhone = email;
         this.organization = organization;
         this.username = username;
@@ -67,7 +67,7 @@ public class EmailPreference implements Serializable {
         this.createUser = createUser;
     }
 
-    public EmailPreference(Integer id, String username, String emailOrPhone, String organization) {
+    public EmailPreference(Integer id, String username, String emailOrPhone, long organization) {
         this.id = id;
         this.username = username;
         this.emailOrPhone = emailOrPhone;
@@ -106,11 +106,11 @@ public class EmailPreference implements Serializable {
         this.serviceProvider = serviceProvider;
     }
 
-    public String getOrganization() {
+    public long getOrganization() {
         return organization;
     }
 
-    public void setOrganization(String organization) {
+    public void setOrganization(long organization) {
         this.organization = organization;
     }
 

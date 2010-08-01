@@ -64,7 +64,6 @@ public class ServiceFactory {
 
         BeanFactory f = (BeanFactory) c;
         AdminService as = (AdminService) serviceFactory.factory.getBean("adminServiceImpl");
-        List list = as.getAllSystems("mdshannan@gmail.com");
-        System.out.println(list.size());
+        
     }
 }

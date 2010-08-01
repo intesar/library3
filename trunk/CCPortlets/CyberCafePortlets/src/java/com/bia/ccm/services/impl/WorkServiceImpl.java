@@ -43,7 +43,7 @@ public class WorkServiceImpl implements WorkService {
         Systems system = this.systemsDao.findByMacAddress(macAddress);
         logger.trace("--------------" + system);
         if (system != null) {
-            Organization org = this.organizationDao.findByOrganization(system.getOrganization());
+            Organization org = this.organizationDao.read(system.getOrganization());
             logger.trace("--------------" + org);
             logger.trace("--------------" + org.getContactEmail());
             if (org != null && org.getContactEmail() != null && org.getContactEmail().length() > 5) {
@@ -55,12 +55,12 @@ public class WorkServiceImpl implements WorkService {
     }
 
     @Override
-    public List<Systems> getActiveSystems(String organization) {
+    public List<Systems> getActiveSystems(long organization) {
         return this.systemsDao.findByOrganization(organization);
     }
 
     @Override
-    public Systems getSystemByNameAndOrganization(int systemNo, String organization) {
+    public Systems getSystemByNameAndOrganization(int systemNo, long organization) {
         return this.systemsDao.findBySystemNameAndOrganization(systemNo, organization);
     }
 
@@ -101,9 +101,9 @@ public class WorkServiceImpl implements WorkService {
     }
 
     @Override
-    public void chargePayment(int systemId, String agent, String organization) {
+    public void chargePayment(int systemId, String agent, long organization) {
         Systems s = systemsDao.read(systemId);
-        if (!s.getOrganization().equals(organization)) {
+        if (! (s.getOrganization() == organization) ) {
             throw new NoRoleException();
         }
         List<SystemLease> list = getSystemLease(systemId);
@@ -142,9 +142,9 @@ public class WorkServiceImpl implements WorkService {
      * update the record
      * @param systemlease
      */
-    private double getDiscountPercentage(String org, String customerEmail, String service) {
+    private double getDiscountPercentage(long organization, String customerEmail, String service) {
         double discountPercentage = 0.0;
-        Memberships membership = membershipsDao.findByOrganizationAndEmailAndActive(org, customerEmail);
+        Memberships membership = membershipsDao.findByOrganizationAndEmailAndActive(organization + "", customerEmail);
         if (membership != null && membership.getExpirationDate().after(new Date()) && membership.isIsActive()) {
             MembershipTypes membershipTypes = membershipTypesDao.read(membership.getMembershipType());
             MembershipDiscounts membershipDiscounts = membershipDiscountsDao.findByMembershipTypesIdAndService(membershipTypes.getId(), service);
@@ -190,7 +190,7 @@ public class WorkServiceImpl implements WorkService {
 
     @Override
     public void addService(String service, long units, String user, double payableAmount,
-            String comments, double paidAmount, String agent, String organization) {
+            String comments, double paidAmount, String agent, long organization) {
         if (units <= 0 || payableAmount <= 0 || paidAmount <= 0) {
             throw new NoRoleException();
         }
@@ -225,9 +225,9 @@ public class WorkServiceImpl implements WorkService {
 
     }
 
-    private void applyDiscount(String org, String user, String service, double payableAmount, SystemLease sl) {
+    private void applyDiscount(long organization, String user, String service, double payableAmount, SystemLease sl) {
         // finding if user is member
-        double discount = this.getDiscountPercentage(org, user, service);
+        double discount = this.getDiscountPercentage(organization, user, service);
 
         if (discount > 0.0 && discount <= 100) {
             try {
@@ -323,11 +323,11 @@ public class WorkServiceImpl implements WorkService {
         try {
             Systems system = this.systemsDao.findByMacAddress(macAddress);
             logger.debug("found system : " + system);
-            if (system == null || system.getOrganization() == null || system.getOrganization().length() <= 0) {
+            if (system == null || system.getOrganization()  <= 0) {
                 logger.debug(" return 0 because " + system);
                 return 0;
             }
-            String org = system.getOrganization();
+            long org = system.getOrganization();
             Long count = this.systemsDao.findNoOfActiveSystemsByOrganization(org);
             logger.debug("systems idles : " + count);
             if (count >= 1) {
@@ -353,7 +353,7 @@ public class WorkServiceImpl implements WorkService {
     }
 
     @Override
-    public List<Services> getAllServices(String organization) {
+    public List<Services> getAllServices(long organization) {
         return this.servicesDao.findByOrganization(organization);
     }
 

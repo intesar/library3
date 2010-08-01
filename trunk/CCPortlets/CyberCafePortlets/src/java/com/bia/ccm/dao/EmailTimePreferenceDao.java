@@ -1,6 +1,5 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * 
  */
 package com.bia.ccm.dao;
 
@@ -14,9 +13,9 @@ import java.util.List;
  */
 public interface EmailTimePreferenceDao extends GenericDao<EmailTimePreference, Integer> {
 
-    public List<EmailTimePreference> findByOrganization(String organization);
+    public List<EmailTimePreference> findByOrganization(long organization);
 
-    public EmailTimePreference findByOrganizationAndReportTime(String organization, short reportTime);
+    public EmailTimePreference findByOrganizationAndReportTime(long organization, short reportTime);
 
     public List<EmailTimePreference> findByReportTime(int time);
 }

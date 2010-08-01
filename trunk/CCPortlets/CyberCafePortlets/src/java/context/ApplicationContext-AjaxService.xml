@@ -39,7 +39,8 @@
             <dwr:include method="getMemberships" />
             <dwr:include method="saveMembership" />
             <dwr:include method="createMembershipDiscount" />
-            <dwr:filter class="com.bia.ccm.ajax.AjaxInterceptingFilter" />
+            <dwr:filter class="com.bia.ccm.ajax.LoginCheckFilter" />
+            <dwr:filter class="com.bia.ccm.ajax.MemberRoleCheckFilter" />
         </dwr:remote>
         <property name="adminService" ref="adminServiceImpl" />
         <property name="membershipService" ref="membershipServiceImpl" />
@@ -60,7 +61,9 @@
             <dwr:include method="getAllServices" />
             <dwr:include method="saveOrganization" />
             <dwr:include method="getOrganization" />
-            <dwr:filter class="com.bia.ccm.ajax.AjaxInterceptingFilter" />
+            <dwr:filter class="com.bia.ccm.ajax.LoginCheckFilter" />
+            <dwr:filter class="com.bia.ccm.ajax.MemberRoleCheckFilter" />
+            <dwr:filter class="com.bia.ccm.ajax.AdminRoleCheckFilter" />
         </dwr:remote>
         <property name="adminService" ref="adminServiceImpl" />
     </bean>

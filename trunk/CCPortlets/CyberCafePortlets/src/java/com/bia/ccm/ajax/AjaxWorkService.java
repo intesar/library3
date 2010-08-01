@@ -28,7 +28,7 @@ public class AjaxWorkService {
      */
     public List<Services> getAllServices(HttpSession session) {
         ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
-        String organization = themeDisplay.getScopeGroupId() + "";
+        long organization = themeDisplay.getScopeGroupId();
         return this.workService.getAllServices(organization);
     }
 
@@ -38,8 +38,8 @@ public class AjaxWorkService {
      */
     public List<Systems> getActiveSystems(HttpSession session) {
         ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
-        String username = themeDisplay.getUserId() + "";
-        return workService.getActiveSystems(username);
+        long organization = themeDisplay.getScopeGroupId();
+        return workService.getActiveSystems(organization);
     }
 
     /**
@@ -49,8 +49,8 @@ public class AjaxWorkService {
      */
     public Systems getSystemByNameAndOrganization(int systemNo, HttpSession session) {
         ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
-        String username = themeDisplay.getUserId() + "";
-        return this.workService.getSystemByNameAndOrganization(systemNo, username);
+        long organization = themeDisplay.getScopeGroupId();
+        return this.workService.getSystemByNameAndOrganization(systemNo, organization);
     }
 
     /**
@@ -79,7 +79,7 @@ public class AjaxWorkService {
             String comments, Double paidAmount, HttpSession session) {
         ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
         String username = themeDisplay.getUserId() + "";
-        String organization = themeDisplay.getScopeGroupId() + "";
+        long organization = themeDisplay.getScopeGroupId();
         this.workService.addService(service, units, user, payableAmount, comments, paidAmount, username, organization);
     }
 
@@ -121,7 +121,7 @@ public class AjaxWorkService {
     public void chargePayment(int systemId, HttpSession session) {
         ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
         String username = themeDisplay.getUserId() + "";
-        String organization = themeDisplay.getScopeGroupId() + "";
+        long organization = themeDisplay.getScopeGroupId();
         workService.chargePayment(systemId, username, organization);
     }
 
