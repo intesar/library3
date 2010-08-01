@@ -1,6 +1,5 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * 
  */
 package com.bia.ccm.entity;
 
@@ -29,52 +28,52 @@ public class Organization implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @Column(name = "name", nullable = false)
+    @Column(name = "id", nullable = false)
+    private long id;
+    @Column(name = "name")
     private String name;
-    @Column(name = "enabled", nullable = false)
-    private short enabled;
+    @Column(name = "enabled")
+    private boolean enabled;
     @Column(name = "street")
     private String street;
-    @Column(name = "city", nullable = false)
+    @Column(name = "city")
     private String city;
-    @Column(name = "state_", nullable = false)
+    @Column(name = "state_")
     private String state;
     @Column(name = "zipcode")
     private String zipcode;
-    @Column(name = "country", nullable = false)
+    @Column(name = "country")
     private String country;
-    @Column(name = "phone")
-    private String phone;
     @Column(name = "contact_name")
     private String contactName;
-    @Column(name = "register_type", nullable = false)
+    @Column(name = "email")
+    private String contactEmail;
+    @Column(name = "phone")
+    private String phone;
+    @Column(name = "fax")
+    private String fax;
+    @Column(name = "timings")
+    private String timings;
+    @Column(name = "register_type")
     private String registerType;
     @Column(name = "register_date")
     private String registerDate;
-    @Column(name = "contact_email")
-    private String contactEmail;
-    @Column(name = "product_name", nullable = false)
+    @Column(name = "product_name")
     private String productName;
-    @Column(name = "product_version", nullable = false)
+    @Column(name = "product_version")
     private String productVersion;
-    @Column(name = "licence_key", nullable = false)
+    @Column(name = "licence_key")
     private String licenceKey;
-    @Column(name = "amount_paid", nullable = false)
+    @Column(name = "amount_paid")
     private double amountPaid;
-    @Column(name = "expiration_date", nullable = false)
+    @Column(name = "expiration_date")
     @Temporal(TemporalType.DATE)
     private Date expirationDate;
-    @Column(name = "register_agent")
-    private String registerAgent;
-    @Column(name = "create_agent", nullable = false)
-    private String createAgent;
-    @Column(name = "create_date")
+    @Column(name = "last_modified_by")
+    private long lastModifiedUser;
+    @Column(name = "last_modified_date")
     @Temporal(TemporalType.DATE)
-    private Date createDate;
-    @Column(name = "timings")
-    private String timings;
-    @Column(name = "print_email")
-    private String printEmail;
+    private Date lastModifiedDate;
     @Column(name = "ip")
     private String ip;
     @Version
@@ -87,7 +86,7 @@ public class Organization implements Serializable {
         this.name = name;
     }
 
-    public Organization(String name, short enabled, String street, String city, String state, String country, String contactName, String registerType, String productName, String productVersion, String licenceKey, double amountPaid, Date expirationDate, String createAgent) {
+    public Organization(String name, boolean enabled, String street, String city, String state, String country, String contactName, String registerType, String productName, String productVersion, String licenceKey, double amountPaid, Date expirationDate, String createAgent) {
         this.name = name;
         this.enabled = enabled;
         this.street = street;
@@ -101,7 +100,6 @@ public class Organization implements Serializable {
         this.licenceKey = licenceKey;
         this.amountPaid = amountPaid;
         this.expirationDate = expirationDate;
-        this.createAgent = createAgent;
     }
 
     public String getName() {
@@ -112,11 +110,11 @@ public class Organization implements Serializable {
         this.name = name;
     }
 
-    public short getEnabled() {
+    public boolean getEnabled() {
         return enabled;
     }
 
-    public void setEnabled(short enabled) {
+    public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
 
@@ -240,36 +238,36 @@ public class Organization implements Serializable {
         this.expirationDate = expirationDate;
     }
 
-    public String getRegisterAgent() {
-        return registerAgent;
+    public long getLastModifiedUser() {
+        return lastModifiedUser;
     }
 
-    public void setRegisterAgent(String registerAgent) {
-        this.registerAgent = registerAgent;
+    public void setLastModifiedUser(long lastModifiedUser) {
+        this.lastModifiedUser = lastModifiedUser;
     }
 
-    public String getCreateAgent() {
-        return createAgent;
+    public String getFax() {
+        return fax;
     }
 
-    public void setCreateAgent(String createAgent) {
-        this.createAgent = createAgent;
+    public void setFax(String fax) {
+        this.fax = fax;
     }
 
-    public Date getCreateDate() {
-        return createDate;
+    public long getId() {
+        return id;
     }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public String getPrintEmail() {
-        return printEmail;
+    public Date getLastModifiedDate() {
+        return lastModifiedDate;
     }
 
-    public void setPrintEmail(String printEmail) {
-        this.printEmail = printEmail;
+    public void setLastModifiedDate(Date lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
     }
 
     public String getTimings() {
@@ -287,8 +285,6 @@ public class Organization implements Serializable {
     public void setIp(String ip) {
         this.ip = ip;
     }
-
-
 
     public int getVersion() {
         return version;

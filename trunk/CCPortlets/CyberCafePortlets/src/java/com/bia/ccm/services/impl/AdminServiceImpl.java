@@ -254,6 +254,50 @@ public class AdminServiceImpl implements AdminService {
         }
     }
 
+    @Override
+    public void saveOrganization(Organization organization, long organizationId, long userId, String ip) {
+        if ( organization.getId() != organizationId ) {
+            throw new NoRoleException();
+        }
+        Organization org = this.organizationDao.read(organizationId);
+        // address
+        org.setStreet(organization.getStreet());
+        org.setCity(organization.getCity());
+        org.setState(organization.getState());
+        org.setZipcode(organization.getZipcode());
+        org.setCountry(organization.getCountry());
+        // phones
+        org.setPhone(organization.getPhone());
+        org.setFax(organization.getFax());
+        // contact
+        org.setContactName(organization.getContactName());
+        org.setContactEmail(organization.getContactEmail());
+        // timing
+        org.setTimings(organization.getTimings());
+        // audit
+        org.setIp(ip);
+        org.setLastModifiedDate(new Date());
+        org.setLastModifiedUser(userId);
+
+        this.organizationDao.update(org);
+
+    }
+
+    @Override
+    public Organization getOrganization(long organizationId, String organizationName) {
+        Organization org = this.organizationDao.read(organizationId);
+        if ( org == null) {
+            org = new Organization();
+            org.setId(organizationId);
+            org.setName(organizationName);
+            org.setEnabled(true);
+            this.organizationDao.create(org);
+            org = this.organizationDao.read(organizationId);
+        }
+        return org;
+    }
+
+
     // ----------------------------- private methods -------------------------//
     /**
      * 
@@ -350,6 +394,8 @@ public class AdminServiceImpl implements AdminService {
     protected PasswordEncryptor passwordEncryptor;
     protected PBEStringEncryptor stringEncryptor;
     protected static final Log logger = LogFactory.getLog(AdminServiceImpl.class);
+
+
 
     
 }

@@ -58,6 +58,8 @@
             <dwr:include method="saveService" />
             <dwr:include method="deleteService" />
             <dwr:include method="getAllServices" />
+            <dwr:include method="saveOrganization" />
+            <dwr:include method="getOrganization" />
             <dwr:filter class="com.bia.ccm.ajax.AjaxInterceptingFilter" />
         </dwr:remote>
         <property name="adminService" ref="adminServiceImpl" />

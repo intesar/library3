@@ -28,10 +28,8 @@ public class AjaxWorkService {
      */
     public List<Services> getAllServices(HttpSession session) {
         ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
-        String username = themeDisplay.getUserId() + "";
         String organization = themeDisplay.getScopeGroupId() + "";
         return this.workService.getAllServices(organization);
-
     }
 
     /**
@@ -42,7 +40,6 @@ public class AjaxWorkService {
         ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
         String username = themeDisplay.getUserId() + "";
         return workService.getActiveSystems(username);
-
     }
 
     /**
@@ -66,8 +63,6 @@ public class AjaxWorkService {
         ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
         String username = themeDisplay.getUserId() + "";
         this.workService.leaseSystem(systemId, leaseHolder, username);
-
-
     }
 
     /**
@@ -86,7 +81,6 @@ public class AjaxWorkService {
         String username = themeDisplay.getUserId() + "";
         String organization = themeDisplay.getScopeGroupId() + "";
         this.workService.addService(service, units, user, payableAmount, comments, paidAmount, username, organization);
-
     }
 
     /**
@@ -96,7 +90,6 @@ public class AjaxWorkService {
      */
     public UsageDetail getPayableAmount(int id) {
         return this.workService.getPayableAmount(id);
-
     }
 
     /**
@@ -109,7 +102,6 @@ public class AjaxWorkService {
         ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
         String username = themeDisplay.getUserId() + "";
         this.workService.unleaseSystem(systemId, paidAmount, username);
-
     }
 
     /**
@@ -119,7 +111,6 @@ public class AjaxWorkService {
      */
     public List<SystemLease> getSystemLease(int id) {
         return this.workService.getSystemLease(id);
-
     }
 
     /**
@@ -132,7 +123,6 @@ public class AjaxWorkService {
         String username = themeDisplay.getUserId() + "";
         String organization = themeDisplay.getScopeGroupId() + "";
         workService.chargePayment(systemId, username, organization);
-
     }
 
     // membership for next milestone

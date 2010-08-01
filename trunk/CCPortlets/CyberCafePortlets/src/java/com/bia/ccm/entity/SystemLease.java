@@ -35,7 +35,7 @@ import javax.persistence.Version;
     @NamedQuery(name = "SystemLease.findByStartAndEndDates", query = "SELECT s FROM SystemLease s where (s.startTime >= ?1 and s.startTime <= ?2) and s.system in (select t.id from Systems t where t.organization = ?3 )"),
     @NamedQuery(name = "SystemLease.findByUsernameAndStartEndDates", query = "SELECT s FROM SystemLease s where s.leaseHolderName like ?1 and (s.startTime >= ?2 and s.startTime <= ?3) "),
     @NamedQuery(name = "SystemLease.findByIsStartContractNotified", query = "SELECT s FROM SystemLease s where s.service like 'computer' AND s.isStartContractNotified = ?1 "),
-    @NamedQuery(name = "SystemLease.findByIsEndContractNotified", query = "SELECT s FROM SystemLease s where s.service like 'computer' s.isEndContractNotified = ?1 and s.isFinished = true ")
+    @NamedQuery(name = "SystemLease.findByIsEndContractNotified", query = "SELECT s FROM SystemLease s where s.service like 'computer' AND s.isEndContractNotified = ?1 and s.isFinished = true ")
 })
 @NamedNativeQueries({
     @NamedNativeQuery(name = "SystemLease.findReportBetweenDates", query = "SELECT  service, sum(total_minutes_used) as total_minutes_used, sum(payable_amount) as payable_amount, sum(amount_paid) as amount_paid FROM system_lease s where (start_time >= ?1 and end_time <= ?2)  and system in (select id from systems where organization = ?3 ) group by service")
