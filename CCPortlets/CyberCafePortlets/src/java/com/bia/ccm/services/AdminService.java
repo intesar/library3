@@ -25,14 +25,14 @@ public interface AdminService {
      * @param organization
      * @return
      */
-    Systems getSystem(String organization);
+    Systems getSystem(long organization);
 
     /**
      *
      * @param username
      * @return
      */
-    List<Systems> getAllSystems(String username);
+    List<Systems> getAllSystems(long organization);
 
     /**
      *
@@ -41,14 +41,14 @@ public interface AdminService {
      * @param organization
      * @return
      */
-    List<SystemLease> getMySystemLease(Date startDate, Date endDate, String organization);
+    List<SystemLease> getMySystemLease(Date startDate, Date endDate, String usrename);
 
     /**
      * 
      * @param username
      * @return
      */
-    List<SystemLease> getAllSystemLease(String username);
+    List<SystemLease> getAllSystemLease(long organization);
 
     /**
      *
@@ -57,7 +57,7 @@ public interface AdminService {
      * @param organization
      * @return
      */
-    List<SystemLease> getSystemLease(Date startDate, Date endDate, String organization);
+    List<SystemLease> getSystemLease(Date startDate, Date endDate, long organization);
 
     /**
      *
@@ -80,21 +80,21 @@ public interface AdminService {
      * @param username
      * @param ip
      */
-    void saveService(Services service, String organization, String username, String ip);
+    void saveService(Services service, long organization, String username, String ip);
 
     /**
      *
      * @param id
      * @param username
      */
-    void deleteService(Integer id, String username);
+    void deleteService(Integer id, long organization);
 
     /**
      *
      * @param org
      * @return
      */
-    List<Services> getAllServices(String org);
+    List<Services> getAllServices(long organization);
 
     /**
      *
@@ -106,7 +106,7 @@ public interface AdminService {
      * @param username
      * @param ip
      */
-    void updateRentalPrice(int mims, double rate, Integer lmins, Double lrate, String organization, String username, String ip);
+    void updateRentalPrice(int mims, double rate, Integer lmins, Double lrate, long organization, String username, String ip);
 
     /**
      *
@@ -116,7 +116,7 @@ public interface AdminService {
      * @param userId
      * @param ip
      */
-    void savePreferences(Set<String> emails, Set<Short> timings, String organization,
+    void savePreferences(Set<String> emails, Set<Short> timings, long organization,
             String userId, String ip);
 
     /**
@@ -124,7 +124,7 @@ public interface AdminService {
      * @param organization
      * @return
      */
-    PreferenceDto getPreferences(String organization);
+    PreferenceDto getPreferences(long organization);
 
     /**
      *
@@ -138,7 +138,7 @@ public interface AdminService {
      * @param organization
      * @return
      */
-    List getReport(Date startDate, Date endDate, String organization);
+    List getReport(Date startDate, Date endDate, long organization);
     
     /**
      * 
@@ -152,7 +152,7 @@ public interface AdminService {
      * @param organization
      * @return
      */
-    List<EmailPreference> getAllOrganizationEmailPreference(String organization);
+    List<EmailPreference> getAllOrganizationEmailPreference(long organization);
 
     /**
      *

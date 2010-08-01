@@ -1,6 +1,5 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * -n7
  */
 package com.bia.ccm.entity;
 
@@ -41,7 +40,7 @@ public class Services implements Serializable {
     @Column(name = "description")
     private String description;
     @Column(name = "organization", nullable = false)
-    private String organization;
+    private long organization;
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -76,14 +75,14 @@ public class Services implements Serializable {
         this.id = id;
     }
 
-    public Services(Integer id, String name, double unitPrice, String organization) {
+    public Services(Integer id, String name, double unitPrice, long organization) {
         this.id = id;
         this.name = name;
         this.unitPrice = unitPrice;
         this.organization = organization;
     }
 
-    public Services(Integer id, String name, double unitPrice, String organization, String createUser, Date createDate, String ip) {
+    public Services(Integer id, String name, double unitPrice, long organization, String createUser, Date createDate, String ip) {
         this.id = id;
         this.name = name;
         this.unitPrice = unitPrice;
@@ -117,11 +116,11 @@ public class Services implements Serializable {
         this.description = description;
     }
 
-    public String getOrganization() {
+    public long getOrganization() {
         return organization;
     }
 
-    public void setOrganization(String organization) {
+    public void setOrganization(long organization) {
         this.organization = organization;
     }
 

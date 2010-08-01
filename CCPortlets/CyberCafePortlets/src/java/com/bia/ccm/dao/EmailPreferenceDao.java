@@ -1,6 +1,5 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * 
  */
 package com.bia.ccm.dao;
 
@@ -14,5 +13,5 @@ import java.util.List;
  */
 public interface EmailPreferenceDao extends GenericDao<EmailPreference, Integer> {
 
-    public List<EmailPreference> findByOrganization(String organization);
+    public List<EmailPreference> findByOrganization(long organization);
 }

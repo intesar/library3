@@ -1,6 +1,5 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * 
  */
 package com.bia.ccm.entity;
 
@@ -42,7 +41,7 @@ public class Systems implements Serializable {
     @Column(name = "name", nullable = false)
     private int name;
     @Column(name = "organization", nullable = false)
-    private String organization;
+    private long organization;
     @Column(name = "is_available", nullable = false)
     private boolean isAvailable;
     @Column(name = "expected_free_time")
@@ -103,7 +102,7 @@ public class Systems implements Serializable {
         this.id = id;
     }
 
-    public Systems(Integer id, int name, String organization, boolean isAvailable, Date expectedFreeTime, Integer minimumMinutes, double minuteRate, boolean enabled) {
+    public Systems(Integer id, int name, long organization, boolean isAvailable, Date expectedFreeTime, Integer minimumMinutes, double minuteRate, boolean enabled) {
         this.id = id;
         this.name = name;
         this.organization = organization;
@@ -112,10 +111,10 @@ public class Systems implements Serializable {
         this.minimumMinutes = minimumMinutes;
         this.minuteRate = minuteRate;
         this.enabled = enabled;
-        this.macAddress = organization + name;
+        this.macAddress = "" +organization + name;
     }
 
-    public Systems(Integer id, int name, String organization, boolean isAvailable,
+    public Systems(Integer id, int name, long organization, boolean isAvailable,
             Date expectedFreeTime, Integer minimumMinutes, double minuteRate, boolean enabled,
             String createUser, Date createDate, String ip) {
         this.id = id;
@@ -126,7 +125,7 @@ public class Systems implements Serializable {
         this.minimumMinutes = minimumMinutes;
         this.minuteRate = minuteRate;
         this.enabled = enabled;
-        this.macAddress = organization + name;
+        this.macAddress = ""+organization + name;
         this.createUser = createUser;
         this.createDate = createDate;
         this.ip = ip;
@@ -148,11 +147,11 @@ public class Systems implements Serializable {
         this.name = name;
     }
 
-    public String getOrganization() {
+    public long getOrganization() {
         return organization;
     }
 
-    public void setOrganization(String organization) {
+    public void setOrganization(long organization) {
         this.organization = organization;
     }
 

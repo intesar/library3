@@ -1,6 +1,5 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * 
  */
 package com.bia.ccm.jobs;
 
@@ -62,7 +61,7 @@ public class ReportEngine {
         List<EmailTimePreference> list = adminService.getEmailTimePreferences((short) time);
         for (EmailTimePreference etp : list) {
             try {
-                String org = etp.getOrganization();
+                long org = etp.getOrganization();
                 int count = 0;
                 // get addresses for org
                 List<EmailPreference> emailPreferences = this.adminService.getAllOrganizationEmailPreference(org);

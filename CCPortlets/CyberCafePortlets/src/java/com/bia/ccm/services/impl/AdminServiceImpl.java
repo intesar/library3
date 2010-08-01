@@ -38,7 +38,7 @@ import org.jasypt.util.password.PasswordEncryptor;
 public class AdminServiceImpl implements AdminService {
 
     @Override
-    public void updateRentalPrice(int mims, double rate, Integer lmins, Double lrate, String organization, String username, String ip) {
+    public void updateRentalPrice(int mims, double rate, Integer lmins, Double lrate, long organization, String username, String ip) {
         validateFirstRentalPrice(mims, rate);
         validateSecondRentalPrice(mims, rate, lmins, lrate);
         List<Systems> list = this.systemsDao.findByOrganization(organization);
@@ -59,7 +59,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<Systems> getAllSystems(String organization) {
+    public List<Systems> getAllSystems(long organization) {
         return this.systemsDao.findByOrganization(organization);
     }
 
@@ -69,12 +69,12 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<EmailPreference> getAllOrganizationEmailPreference(String organization) {
+    public List<EmailPreference> getAllOrganizationEmailPreference(long organization) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public void savePreferences(Set<String> emails, Set<Short> timings, String organization,
+    public void savePreferences(Set<String> emails, Set<Short> timings, long organization,
             String userId, String ip) {
         List<EmailPreference> emailPreferences = this.emailPreferenceDao.findByOrganization(organization);
         // delete all and add new
@@ -96,7 +96,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public PreferenceDto getPreferences(String organization) {
+    public PreferenceDto getPreferences(long organization) {
         PreferenceDto dto = new PreferenceDto();
         List<EmailPreference> emailPreferences = this.emailPreferenceDao.findByOrganization(organization);
         for (EmailPreference emailPreference : emailPreferences) {
@@ -110,7 +110,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<SystemLease> getAllSystemLease(String organization) {
+    public List<SystemLease> getAllSystemLease(long organization) {
         return this.systemLeaseDao.findByOrganization(organization);
     }
 
@@ -120,7 +120,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<SystemLease> getSystemLease(Date startDate, Date endDate, String organization) {
+    public List<SystemLease> getSystemLease(Date startDate, Date endDate, long organization) {
         Calendar sDate = Calendar.getInstance();
         sDate.setTime(startDate);
         sDate.set(Calendar.HOUR, 0);
@@ -149,7 +149,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List getReport(
-            Date startDate, Date endDate, String organization) {
+            Date startDate, Date endDate, long organization) {
         Calendar sDate = Calendar.getInstance();
         sDate.setTime(startDate);
         sDate.set(Calendar.HOUR, 0);
@@ -164,7 +164,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void saveService(Services service, String username, String organization, String ip) {
+    public void saveService(Services service, long organization, String username, String ip) {
         // validation logic
         if (service.getId() == -5) {
             this.updateRentalPrice(service.getUnits(), service.getUnitPrice(),
@@ -192,9 +192,9 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void deleteService(Integer id, String organization) {
+    public void deleteService(Integer id, long organization) {
         Services services = this.servicesDao.read(id);
-        if (organization.equals(services.getOrganization())) {
+        if (organization == services.getOrganization()) {
             servicesDao.delete(services);
         } else {
             throw new NoRoleException();
@@ -202,7 +202,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<Services> getAllServices(String organization) {
+    public List<Services> getAllServices(long organization) {
         List<Services> list = this.servicesDao.findByOrganization(organization);
         Systems system = this.getSystem(organization);
         Services s = new Services();
@@ -217,23 +217,26 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Systems getSystem(String org) {
-        return this.systemsDao.findBySystemNameAndOrganization(1, org);
+    public Systems getSystem(long organization) {
+        return this.systemsDao.findBySystemNameAndOrganization(1, organization);
     }
 
     @Override
     public void sendReports() {
         List<Organization> orgs = this.organizationDao.readAll().getResults();
         for (Organization organization : orgs) {
-            List<EmailPreference> emailPreferences = this.emailPreferenceDao.findByOrganization(organization.getName());
+            List<EmailPreference> emailPreferences = this.emailPreferenceDao.findByOrganization(organization.getId());
             if (emailPreferences != null && emailPreferences.size() > 0) {
-                Date endDate = new Date();
-                endDate.setHours(23);
-                endDate.setMinutes(59);
-                Date startDate = new Date();
-                startDate.setHours(0);
-                startDate.setMinutes(0);
-                List result = getReport(startDate, endDate, organization.getName());
+                
+                Calendar startDate = Calendar.getInstance();
+                startDate.set(Calendar.HOUR_OF_DAY, 0);
+                startDate.set(Calendar.MINUTE, 0);
+
+                Calendar endDate = Calendar.getInstance();
+                startDate.set(Calendar.HOUR_OF_DAY, 23);
+                startDate.set(Calendar.MINUTE, 59);
+
+                List result = getReport(startDate.getTime(), endDate.getTime(), organization.getId());
                 String[] toAddress = new String[emailPreferences.size()];
                 int count = 0;
                 String subject = "Courtesy BizIntelApps & FaceQuard.com";

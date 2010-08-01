@@ -1,6 +1,5 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * 
  */
 package com.bia.ccm.dao;
 
@@ -14,11 +13,11 @@ import java.util.List;
  */
 public interface SystemsDao extends GenericDao<Systems, Integer> {
 
-    public List<Systems> findByOrganization(String organization);
+    public List<Systems> findByOrganization(long organization);
 
-    public Systems findBySystemNameAndOrganization(int systemNo, String organization);
+    public Systems findBySystemNameAndOrganization(int systemNo, long organization);
 
     Systems findByMacAddress(String macAddress);
 
-    Long findNoOfActiveSystemsByOrganization(String org);
+    Long findNoOfActiveSystemsByOrganization(long organization);
 }

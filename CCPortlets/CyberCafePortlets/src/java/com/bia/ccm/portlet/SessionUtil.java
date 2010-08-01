@@ -19,6 +19,7 @@ public class SessionUtil {
     public static void configure(PortletRequest portletRequest) {
         ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(WebKeys.THEME_DISPLAY);
         portletRequest.getPortletSession().setAttribute("THEME_DISPLAY", themeDisplay, PortletSession.APPLICATION_SCOPE);
+        portletRequest.getPortletSession().setAttribute("CC_GROUP_ID", themeDisplay.getScopeGroupId(), PortletSession.APPLICATION_SCOPE);
     }
 
 }

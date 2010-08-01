@@ -38,7 +38,7 @@ public class EmailTimePreference implements Serializable {
     @Column(name = "report_time", nullable = false)
     private short reportTime;
     @Column(name = "organization", nullable = false)
-    private String organization;
+    private long organization;
     @Column(name = "create_user")
     private String createUser;
     @Column(name = "create_date")
@@ -56,7 +56,7 @@ public class EmailTimePreference implements Serializable {
         this.id = id;
     }
 
-    public EmailTimePreference(short reportTime, String organization, String createUser, String ip) {
+    public EmailTimePreference(short reportTime, long organization, String createUser, String ip) {
         this.reportTime = reportTime;
         this.organization = organization;
         this.createDate = new Date();
@@ -64,7 +64,7 @@ public class EmailTimePreference implements Serializable {
         this.ip = ip;
     }
 
-    public EmailTimePreference(Integer id, short reportTime, String organization) {
+    public EmailTimePreference(Integer id, short reportTime, long organization) {
         this.id = id;
         this.reportTime = reportTime;
         this.organization = organization;
@@ -86,11 +86,11 @@ public class EmailTimePreference implements Serializable {
         this.reportTime = reportTime;
     }
 
-    public String getOrganization() {
+    public long getOrganization() {
         return organization;
     }
 
-    public void setOrganization(String organization) {
+    public void setOrganization(long organization) {
         this.organization = organization;
     }
 

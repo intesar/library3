@@ -21,7 +21,7 @@ public interface WorkService {
      * @param organization
      * @return
      */
-    List<Services> getAllServices(String organization);
+    List<Services> getAllServices(long organization);
 
     /**
      * 
@@ -29,7 +29,7 @@ public interface WorkService {
      * @param agent
      * @param organization 
      */
-    void chargePayment(int systemId, String agent, String organization);
+    void chargePayment(int systemId, String agent, long organization);
 
     /**
      *
@@ -42,7 +42,7 @@ public interface WorkService {
      * @param agent
      */
     void addService(String service, long units, String user, double payableAmount,
-            String comments, double paidAmount, String agent, String organization);
+            String comments, double paidAmount, String agent, long organization);
 
     /**
      *
@@ -56,7 +56,7 @@ public interface WorkService {
      * @param username
      * @return
      */
-    List<Systems> getActiveSystems(String username);
+    List<Systems> getActiveSystems(long organization);
 
     /**
      *
@@ -64,7 +64,7 @@ public interface WorkService {
      * @param username
      * @return
      */
-    Systems getSystemByNameAndOrganization(int systemNo, String username);
+    Systems getSystemByNameAndOrganization(int systemNo, long organization);
 
     /**
      *
