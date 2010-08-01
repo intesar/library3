@@ -5,6 +5,7 @@ package com.bia.ccm.services;
 
 import com.bia.ccm.entity.EmailPreference;
 import com.bia.ccm.entity.EmailTimePreference;
+import com.bia.ccm.entity.Organization;
 import com.bia.ccm.entity.PreferenceDto;
 import com.bia.ccm.entity.Services;
 import com.bia.ccm.entity.SystemLease;
@@ -152,4 +153,17 @@ public interface AdminService {
      * @return
      */
     List<EmailPreference> getAllOrganizationEmailPreference(String organization);
+
+    /**
+     *
+     * @param organization
+     */
+    void saveOrganization(Organization organization, long organizationId, long userId, String ip);
+
+    /**
+     * 
+     * @param organizationId
+     * @return
+     */
+    Organization getOrganization(long organizationId, String organizationName);
 }
