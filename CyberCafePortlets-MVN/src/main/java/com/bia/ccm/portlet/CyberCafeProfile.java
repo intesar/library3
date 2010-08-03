@@ -1,0 +1,27 @@
+package com.bia.ccm.portlet;
+import javax.portlet.GenericPortlet;
+import javax.portlet.ActionRequest;
+import javax.portlet.RenderRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.RenderResponse;
+import javax.portlet.PortletException;
+import java.io.IOException;
+import javax.portlet.PortletRequestDispatcher;
+
+/**
+ * CyberCafeProfile Portlet Class
+ */
+public class CyberCafeProfile extends GenericPortlet {
+
+    public void processAction(ActionRequest request, ActionResponse response) throws PortletException,IOException {
+
+    }
+    
+    public void doView(RenderRequest request,RenderResponse response) throws PortletException,IOException {
+        response.setContentType("text/html");
+        SessionUtil.configure(request);
+        PortletRequestDispatcher dispatcher =
+        getPortletContext().getRequestDispatcher("/WEB-INF/jsp/CyberCafeProfile_view.jsp");
+        dispatcher.include(request, response);
+    }
+}

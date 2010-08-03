@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="1.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+    <persistence-unit name="CCMPU" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <class>com.bia.ccm.entity.EmailPreference</class>
+        <class>com.bia.ccm.entity.EmailTimePreference</class>
+        <class>com.bia.ccm.entity.Organization</class>
+        <class>com.bia.ccm.entity.Services</class>
+        <class>com.bia.ccm.entity.SystemLease</class>
+        <class>com.bia.ccm.entity.Systems</class>
+        <class>com.bia.ccm.entity.MembershipDiscounts</class>
+        <class>com.bia.ccm.entity.MembershipTypes</class>
+        <class>com.bia.ccm.entity.Memberships</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <properties>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+            <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/ccm"/>
+            <property name="hibernate.connection.password" value=""/>
+            <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
+            <property name="hibernate.connection.username" value="root"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+        </properties>
+    </persistence-unit>
+</persistence>

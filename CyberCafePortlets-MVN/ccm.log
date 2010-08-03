@@ -1,0 +1,3 @@
+2010-08-02 21:34:58,396 TRACE [com.bizintelapps.easydao.dao.GenericDaoImpl] - < persisting class com.bia.ccm.entity.Services>
+2010-08-02 21:34:58,415 TRACE [com.bizintelapps.easydao.dao.BaseModel] - < prePersist() ---> setting createDate, lastModifiedDate, createUser, lastModifiedUser, ip>
+2010-08-02 21:34:58,463 TRACE [com.bizintelapps.easydao.dao.GenericDaoImpl] - < executing NamedQuery Services.findByOrganization>

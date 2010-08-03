@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans   xmlns="http://www.springframework.org/schema/beans"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:dwr="http://www.directwebremoting.org/schema/spring-dwr"
+         xsi:schemaLocation="http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+         http://www.directwebremoting.org/schema/spring-dwr
+         http://www.directwebremoting.org/schema/spring-dwr-3.0.xsd">
+
+
+    <!--
+     ##########################################################################
+                            Services Declerations Begin
+     ##########################################################################
+    -->
+
+
+
+    <bean id="ajaxWorkService" class="com.bia.ccm.ajax.AjaxWorkService" >
+        <dwr:remote javascript="AjaxWorkService">
+            <dwr:include method="getActiveSystems" />
+            <dwr:include method="getSystemByNameAndOrganization" />
+            <dwr:include method="leaseSystem" />
+            <dwr:include method="unleaseSystem" />
+            <dwr:include method="getPayableAmount" />
+            <dwr:include method="createCustomer" />
+            <dwr:include method="getCustomer" />
+            <dwr:include method="getUserWithPic" />
+            <dwr:include method="addSuggestion" />
+            <dwr:include method="getSystemLease" />
+            <dwr:include method="addService" />
+            <dwr:include method="chargePayment" />
+            <dwr:include method="getAllServices" />
+            <dwr:include method="getAllMembershipTypes" />
+            <dwr:include method="saveMembershipType" />
+            <dwr:include method="getMembershipDiscountses" />
+            <dwr:include method="saveMembershipDiscount" />
+            <dwr:include method="getMembers" />
+            <dwr:include method="getMemberships" />
+            <dwr:include method="saveMembership" />
+            <dwr:include method="createMembershipDiscount" />
+            <dwr:filter class="com.bia.ccm.ajax.LoginCheckFilter" />
+            <dwr:filter class="com.bia.ccm.ajax.MemberRoleCheckFilter" />
+        </dwr:remote>
+        <property name="adminService" ref="adminServiceImpl" />
+        <property name="membershipService" ref="membershipServiceImpl" />
+        <property name="workService" ref="workServiceImpl" />
+    </bean>
+    <bean id="ajaxAdminService" class="com.bia.ccm.ajax.AjaxAdminService" >
+        <dwr:remote javascript="AjaxAdminService">
+            <dwr:include method="savePreferences" />
+            <dwr:include method="getPreferences" />
+            <dwr:include method="getAllSystems" />
+            <dwr:include method="saveSystems" />
+            <dwr:include method="getAllSystemLease" />
+            <dwr:include method="getSystemLease" />
+            <dwr:include method="getReport" />
+            <dwr:include method="updateRentalPrice" />
+            <dwr:include method="saveService" />
+            <dwr:include method="deleteService" />
+            <dwr:include method="getAllServices" />
+            <dwr:include method="saveOrganization" />
+            <dwr:include method="getOrganization" />
+            <dwr:filter class="com.bia.ccm.ajax.LoginCheckFilter" />
+            <dwr:filter class="com.bia.ccm.ajax.MemberRoleCheckFilter" />
+            <dwr:filter class="com.bia.ccm.ajax.AdminRoleCheckFilter" />
+        </dwr:remote>
+        <property name="adminService" ref="adminServiceImpl" />
+    </bean>
+    <!--
+    <bean id="ajaxCustomerService" class="com.bia.ccm.ajax.AjaxCustomerService" >
+        <dwr:remote javascript="AjaxCustomerService">
+            <dwr:include method="getMySystemLease" />
+        </dwr:remote>
+        <property name="adminService" ref="adminServiceImpl" />
+    </bean>
+    -->
+    <dwr:configuration>
+        <dwr:convert type="bean" class="com.bia.ccm.entity.*" />
+        <dwr:convert type="bean"  class="java.util.*"  />
+        <dwr:convert type="exception" class="com.bia.ccm.exceptions.*" />
+    </dwr:configuration>
+</beans>
