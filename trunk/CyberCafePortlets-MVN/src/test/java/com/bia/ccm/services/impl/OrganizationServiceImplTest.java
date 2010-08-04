@@ -11,7 +11,6 @@ package com.bia.ccm.services.impl;
 
 import com.bia.ccm.entity.Organization;
 import com.bia.ccm.exceptions.InvalidInputException;
-import com.bia.ccm.exceptions.NoRoleException;
 import com.bia.ccm.services.OrganizationService;
 import com.bizintelapps.easydao.dao.UserThreadLocal;
 import com.bizintelapps.easydao.dao.UserThreadLocalDto;
