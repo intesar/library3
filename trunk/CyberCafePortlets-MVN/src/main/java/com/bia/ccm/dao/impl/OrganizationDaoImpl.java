@@ -26,7 +26,12 @@ public class OrganizationDaoImpl extends GenericDaoImpl<Organization, Long> impl
     }
 
     @Override
-    public Organization findByOrganization(String organization) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public Organization findByOrganizationName(String organization) {
+        return executeNamedQueryReturnObject("Organization.findByOrganizationName", organization);
+    }
+
+    @Override
+    public Organization findByOrganizationId(Long organizationId) {
+        return executeNamedQueryReturnObject("Organization.findByOrganizationId", organizationId);
     }
 }

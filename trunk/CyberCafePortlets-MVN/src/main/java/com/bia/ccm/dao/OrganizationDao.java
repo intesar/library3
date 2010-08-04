@@ -19,5 +19,7 @@ import com.bizintelapps.easydao.dao.GenericDao;
  */
 public interface OrganizationDao  extends GenericDao<Organization, Long> {
 
-    public Organization findByOrganization(String organization);
+    Organization findByOrganizationName(String organization);
+
+    Organization findByOrganizationId(Long organizationId);
 }

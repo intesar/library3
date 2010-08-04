@@ -21,14 +21,14 @@ public interface OrganizationService {
      *
      * @param organization
      */
-    void saveOrganization(Organization organization, long organizationId, long userId, String ip);
+    void saveOrganization(Organization organization, long organizationId);
 
     /**
      *
      * @param organizationId
      * @return
      */
-    Organization getOrganization(long organizationId, String organizationName);
+    Organization getOrganization(long organizationId);
 
     /**
      *
@@ -36,5 +36,5 @@ public interface OrganizationService {
      * @param organizationName
      * @param email
      */
-    void registerNewOrganization(long organizationId, String organizationName);
+    void registerNewOrganization(long organizationId, String organizationName, String email);
 }

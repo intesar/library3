@@ -18,16 +18,19 @@ import org.springframework.web.portlet.context.PortletApplicationContextUtils;
  */
 public class CafeRegistration extends GenericPortlet {
 
+    @Override
     public void processAction(ActionRequest request, ActionResponse response) throws PortletException, IOException {
         long organizationId = Long.parseLong(request.getParameter("cc_organizationId"));
         String organizationName = request.getParameter("cc_organizationName");
+        String email = request.getParameter("cc_email");
         PortletContext portletContext = this.getPortletContext();
         ApplicationContext context = PortletApplicationContextUtils.getWebApplicationContext(portletContext);
         OrganizationService organizationService = (OrganizationService) context.getBean("organizationServiceImpl");
-        organizationService.registerNewOrganization(organizationId, organizationName);
+        organizationService.registerNewOrganization(organizationId, organizationName, email);
 
     }
 
+    @Override
     public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
         response.setContentType("text/html");
         PortletRequestDispatcher dispatcher =
