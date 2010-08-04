@@ -27,11 +27,14 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "organization")
 @NamedQueries({
-    @NamedQuery(name = "Organization.findByOrganization", query = "select s from Organization s where s.name = ?1 ")
+    @NamedQuery(name = "Organization.findByOrganizationName", query = "select s from Organization s where s.name = ?1 "),
+    @NamedQuery(name = "Organization.findByOrganizationId", query = "select s from Organization s where s.organizationId = ?1 ")
 })
 public class Organization extends BaseModel implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    @Column(name = "organization_id")
+    private Long organizationId;
     @Column(name = "name")
     private String name;
     @Column(name = "enabled")
@@ -93,6 +96,14 @@ public class Organization extends BaseModel implements Serializable {
         this.licenceKey = licenceKey;
         this.amountPaid = amountPaid;
         this.expirationDate = expirationDate;
+    }
+
+    public Long getOrganizationId() {
+        return organizationId;
+    }
+
+    public void setOrganizationId(Long organizationId) {
+        this.organizationId = organizationId;
     }
 
     public String getName() {

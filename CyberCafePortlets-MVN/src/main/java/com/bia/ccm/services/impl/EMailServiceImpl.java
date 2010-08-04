@@ -20,13 +20,13 @@ import javax.mail.internet.MimeMessage;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
+
 /**
  *
  * @author mdshannan
  */
-@Service(value="eMailServiceImpl")
+@Service(value = "eMailServiceImpl")
 public class EMailServiceImpl implements EMailService {
-
     @Override
     public void sendEmail(String[] toAddress, String subject, String body) {
         try {
@@ -44,19 +44,16 @@ public class EMailServiceImpl implements EMailService {
 }
 
 class EmailTask implements Runnable {
-
     protected String[] toAddress;
     protected String subject;
     protected String body;
     protected static int errorCount = 0;
     protected static final Log logger = LogFactory.getLog(EmailTask.class);
-
     public EmailTask(String[] toAddress, String subject, String body) {
         this.toAddress = toAddress;
         this.subject = subject;
         this.body = body;
     }
-
     @Override
     public void run() {
         try {
@@ -71,15 +68,11 @@ class EmailTask implements Runnable {
             logger.warn(ex.getMessage(), ex);
         }
     }
-
     protected void sendSSMessage(String recipients[], String subject,
             String message) throws MessagingException {
 
         Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
-        if (subject == null || subject.length() <= 0) {
-            subject = EMailService.EMAIL_MESSAGE_TEXT;
-        }
-
+        
         InternetAddress[] addressTo = new InternetAddress[recipients.length];
         for (int i = 0; i < recipients.length; i++) {
             if (recipients[i] != null && recipients[i].length() > 0) {

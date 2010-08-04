@@ -1,6 +1,3 @@
-/*
- * 
- */
 package com.bia.ccm.ajax;
 
 import com.bia.ccm.entity.Organization;
@@ -47,7 +44,7 @@ public class AjaxAdminService {
     public void updateRentalPrice(int mims, double rate, Integer lmins, Double lrate, HttpServletRequest request, HttpSession session) {
         ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
         long organization = themeDisplay.getScopeGroupId();
-        this.adminService.updateRentalPrice(mims, rate, lmins, lrate, organization);
+        this.productService.updateRentalPrice(mims, rate, lmins, lrate, organization);
     }
 
     /**
@@ -57,7 +54,7 @@ public class AjaxAdminService {
     public List<Systems> getAllSystems(HttpSession session) {
         ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
         long organization = themeDisplay.getScopeGroupId();
-        return this.adminService.getAllSystems(organization);
+        return this.productService.getAllSystems(organization);
     }
 
     /**
@@ -67,7 +64,7 @@ public class AjaxAdminService {
     public List<SystemLease> getAllSystemLease(HttpSession session) {
         ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
         long organization = themeDisplay.getScopeGroupId();
-        return this.adminService.getAllSystemLease(organization);
+        return this.productService.getAllSystemLease(organization);
     }
 
     /**
@@ -82,7 +79,7 @@ public class AjaxAdminService {
         Date endDate = sdf.parse(endDateString);
         ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
         long organization = themeDisplay.getScopeGroupId();
-        return this.adminService.getSystemLease(startDate, endDate, organization);
+        return this.productService.getSystemLease(startDate, endDate, organization);
     }
 
     /**
@@ -97,7 +94,7 @@ public class AjaxAdminService {
         Date endDate = sdf.parse(endDateString);
         ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
         long organization = themeDisplay.getScopeGroupId();
-        return this.adminService.getReport(startDate, endDate, organization);
+        return this.productService.getReport(startDate, endDate, organization);
     }
 
     /**
@@ -109,7 +106,7 @@ public class AjaxAdminService {
     public void saveService(Services service, HttpServletRequest request, HttpSession session) {
         ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
         long organization = themeDisplay.getScopeGroupId();
-        this.adminService.saveService(service, organization);
+        this.productService.saveService(service, organization);
     }
 
     /**
@@ -119,7 +116,7 @@ public class AjaxAdminService {
      */
     public void deleteService(Long id, HttpSession session) {
         ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
-        adminService.deleteService(id, themeDisplay.getScopeGroupId());
+        productService.deleteService(id, themeDisplay.getScopeGroupId());
     }
 
     /**
@@ -128,7 +125,7 @@ public class AjaxAdminService {
      */
     public List<Services> getAllServices(HttpSession session) {
         ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
-        List<Services> list = this.adminService.getAllServicesWithSystem(themeDisplay.getScopeGroupId());
+        List<Services> list = this.productService.getAllServicesWithSystem(themeDisplay.getScopeGroupId());
         return list;
     }
 
@@ -137,7 +134,7 @@ public class AjaxAdminService {
      * @return
      */
     public void sendReports() {
-        this.adminService.sendReports();
+        this.productService.sendReports();
     }
 
     /**
@@ -172,9 +169,7 @@ public class AjaxAdminService {
     public void saveOrganization(Organization organization, HttpServletRequest request, HttpSession session) {
         ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
         long organizationId = themeDisplay.getScopeGroupId();
-        long userId = themeDisplay.getUserId();
-        String ip = request.getRemoteAddr();
-        this.organizationService.saveOrganization(organization, organizationId, userId, ip);
+        this.organizationService.saveOrganization(organization, organizationId);
     }
 
     /**
@@ -187,15 +182,12 @@ public class AjaxAdminService {
     public Organization getOrganization(HttpSession session) throws PortalException, SystemException {
         ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
         long organizationId = themeDisplay.getScopeGroupId();
-        String organizationName = themeDisplay.getScopeGroupName();
-        return this.organizationService.getOrganization(organizationId, organizationName);
+        return this.organizationService.getOrganization(organizationId);
     }
 
     //  getters and setters
-    public void setAdminService(ProductService adminService) {
-        this.adminService = adminService;
-    }
-    protected ProductService adminService;
+    @Autowired
+    protected ProductService productService;
     @Autowired
     protected OrganizationService organizationService;
     @Autowired
