@@ -13,6 +13,7 @@ import com.bia.ccm.entity.Services;
 import com.bia.ccm.entity.SystemLease;
 import com.bia.ccm.entity.Systems;
 import com.bia.ccm.exceptions.InvalidInputException;
+import com.bia.ccm.exceptions.NoRoleException;
 import com.bia.ccm.services.ProductService;
 import com.bizintelapps.easydao.dao.UserThreadLocal;
 import com.bizintelapps.easydao.dao.UserThreadLocalDto;
@@ -40,12 +41,12 @@ import static org.junit.Assert.*;
 @ContextConfiguration("/applicationContext-Annotations.xml")
 @TransactionConfiguration(transactionManager = "txManager", defaultRollback = true)
 @Transactional
-public class AdminServiceImplTest {
+public class ProductServiceImplTest {
 
     @Autowired
-    protected ProductService adminService;
+    protected ProductService productService;
 
-    public AdminServiceImplTest() {
+    public ProductServiceImplTest() {
     }
 
     @BeforeClass
@@ -197,24 +198,35 @@ public class AdminServiceImplTest {
         testSaveServiceWithNegativeSecondUnits();
         testSaveServiceWithNegativeAll();
         testSaveServiceWithInvalidUnitsCombination();
+        testSaveServiceWithInvalidOrganization();
     }
 
     private void testSaveServiceGoodCase() {
         System.out.println("saveService");
         long organization = 100L;
         Services service = new Services(null, "Temp", 5.0, organization);
-
-        adminService.saveService(service, organization);
-        List<Services> list = adminService.getAllServices(organization);
+        productService.saveService(service, organization);
+        List<Services> list = productService.getAllServices(organization);
         Assert.assertEquals(1, list.size());
     }
 
+    private void testSaveServiceWithInvalidOrganization() {
+        System.out.println("saveService");
+        long organization = 100L;
+        Services service = new Services(null, "", 5.0, organization);
+        try {
+            productService.saveService(service, organization+10);
+            fail("No exception");
+        } catch (InvalidInputException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
     private void testSaveServiceWithEmptyName() {
         System.out.println("saveService");
         long organization = 100L;
         Services service = new Services(null, "", 5.0, organization);
         try {
-            adminService.saveService(service, organization);
+            productService.saveService(service, organization);
             fail("No exception");
         } catch (InvalidInputException ex) {
             System.out.println(ex.getMessage());
@@ -226,7 +238,7 @@ public class AdminServiceImplTest {
         long organization = 100L;
         Services service = new Services(null, null, 5.0, organization);
         try {
-            adminService.saveService(service, organization);
+            productService.saveService(service, organization);
             fail("No exception");
         } catch (InvalidInputException ex) {
             System.out.println(ex.getMessage());
@@ -238,7 +250,7 @@ public class AdminServiceImplTest {
         long organization = 100L;
         Services service = new Services(null, "Temp", -0.001, organization);
         try {
-            adminService.saveService(service, organization);
+            productService.saveService(service, organization);
             fail("No exception");
         } catch (InvalidInputException ex) {
             System.out.println(ex.getMessage());
@@ -251,7 +263,7 @@ public class AdminServiceImplTest {
         Services service = new Services(null, "Temp", 0.001, organization);
         service.setUnits(-1);
         try {
-            adminService.saveService(service, organization);
+            productService.saveService(service, organization);
             fail("No exception");
         } catch (InvalidInputException ex) {
             System.out.println(ex.getMessage());
@@ -264,7 +276,7 @@ public class AdminServiceImplTest {
         Services service = new Services(null, "Temp", 0.001, organization);
         service.setUnits(0);
         try {
-            adminService.saveService(service, organization);
+            productService.saveService(service, organization);
             fail("No exception");
         } catch (InvalidInputException ex) {
             System.out.println(ex.getMessage());
@@ -277,7 +289,7 @@ public class AdminServiceImplTest {
         Services service = new Services(null, "Temp", 0.0, organization);
         service.setUnits(0);
         try {
-            adminService.saveService(service, organization);
+            productService.saveService(service, organization);
             fail("No exception");
         } catch (InvalidInputException ex) {
             System.out.println(ex.getMessage());
@@ -290,7 +302,7 @@ public class AdminServiceImplTest {
         Services service = new Services(null, "Temp", 0.001, organization);
         service.setSaleTwoPrice(-0.1);
         try {
-            adminService.saveService(service, organization);
+            productService.saveService(service, organization);
             fail("No exception");
         } catch (InvalidInputException ex) {
             System.out.println(ex.getMessage());
@@ -303,7 +315,7 @@ public class AdminServiceImplTest {
         Services service = new Services(null, "Temp", 0.001, organization);
         service.setSaleTwoUnits(-1);
         try {
-            adminService.saveService(service, organization);
+            productService.saveService(service, organization);
             fail("No exception");
         } catch (InvalidInputException ex) {
             System.out.println(ex.getMessage());
@@ -319,7 +331,7 @@ public class AdminServiceImplTest {
         service.setSaleTwoPrice(-0.1);
         service.setSaleTwoUnits(-1);
         try {
-            adminService.saveService(service, organization);
+            productService.saveService(service, organization);
             fail("No exception");
         } catch (InvalidInputException ex) {
             System.out.println(ex.getMessage());
@@ -333,7 +345,7 @@ public class AdminServiceImplTest {
         service.setUnits(10);
         service.setSaleTwoUnits(9);
         try {
-            adminService.saveService(service, organization);
+            productService.saveService(service, organization);
             fail("No exception");
         } catch (InvalidInputException ex) {
             System.out.println(ex.getMessage());
@@ -343,15 +355,63 @@ public class AdminServiceImplTest {
     /**
      * Test of deleteService method, of class AdminServiceImpl.
      */
-    //@Test
+    @Test
     public void testDeleteService() {
+        testDeleteServiceWithInvalidId();
+        testDeleteServiceWithInvalidOrganization();
+        testDeleteServiceWithValidId();
+    }
+
+    private void testDeleteServiceWithInvalidId() {
         System.out.println("deleteService");
-        Long id = null;
-        long organization = 0L;
-        ProductServiceImpl instance = new ProductServiceImpl();
-        instance.deleteService(id, organization);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        long organization = 100L;
+        Services service = new Services(null, "Temp", 5.0, organization);
+        productService.saveService(service, organization);
+        List<Services> list = productService.getAllServices(organization);
+        Assert.assertEquals(1, list.size());
+        try {
+            productService.deleteService(-1L, organization);
+            fail("No exception");
+        } catch ( InvalidInputException ex) {
+
+        }
+        try {
+            productService.deleteService(null, organization);
+            fail("No exception");
+        } catch ( InvalidInputException ex) {
+
+        }
+    }
+    private void testDeleteServiceWithInvalidOrganization() {
+        System.out.println("deleteService");
+        long organization = 101L;
+        Services service = new Services(null, "Temp", 5.0, organization);
+        productService.saveService(service, organization);
+        List<Services> list = productService.getAllServices(organization);
+        Assert.assertEquals(1, list.size());
+        try {
+            productService.deleteService(service.getId(), 10L);
+            fail("No exception");
+        } catch ( NoRoleException ex) {
+
+        }
+        
+    }
+
+    private void testDeleteServiceWithValidId() {
+        System.out.println("saveService");
+        long organization = 102L;
+        Services service = new Services(null, "Temp", 5.0, organization);
+        productService.saveService(service, organization);
+        List<Services> list = productService.getAllServices(organization);
+        Assert.assertEquals(1, list.size());
+        try {
+            productService.deleteService(service.getId(), organization);
+        } catch ( InvalidInputException ex) {
+            fail("No exception");
+        }
+        list = productService.getAllServices(organization);
+        Assert.assertEquals(0, list.size());
     }
 
     /**
