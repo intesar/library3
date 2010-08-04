@@ -19,6 +19,7 @@ import com.bia.ccm.exceptions.InvalidInputException;
 import com.bia.ccm.exceptions.NoRoleException;
 import com.bia.ccm.services.EMailService;
 import com.bia.ccm.services.OrganizationService;
+import com.bia.ccm.util.EmailUtil;
 import javax.persistence.NoResultException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -76,7 +77,7 @@ public class OrganizationServiceImpl implements OrganizationService {
             throw new InvalidInputException("Invalid Cyber Cafe Name!");
         }
         // validate email --> cannot be null, empty or invalid
-        if (email == null || email.trim().length() == 0 || isInvalidEmail(email)) {
+        if (email == null || email.trim().length() == 0 || !EmailUtil.isValidEmail(email)) {
             throw new InvalidInputException("Invalid Email");
         }
         // create organization
@@ -134,15 +135,7 @@ public class OrganizationServiceImpl implements OrganizationService {
         }
     }
 
-    private boolean isInvalidEmail(String email) {
-        String AT_THE_RATE = "@";
-        String DOT = ".";
-        int MIN_LENGTH = 5;
-        if (email.contains(AT_THE_RATE) && email.contains(DOT) && email.length() >= MIN_LENGTH) {
-            return false;
-        }
-        return true;
-    }
+    
     @Autowired
     EMailService eMailService;
     @Autowired

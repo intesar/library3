@@ -3,7 +3,9 @@
  */
 package com.bia.ccm.services.impl;
 
+import com.bia.ccm.exceptions.InvalidInputException;
 import com.bia.ccm.services.EMailService;
+import com.bia.ccm.util.EmailUtil;
 
 import com.sun.mail.smtp.SMTPSendFailedException;
 import java.security.Security;
@@ -30,6 +32,10 @@ public class EMailServiceImpl implements EMailService {
     @Override
     public void sendEmail(String[] toAddress, String subject, String body) {
         try {
+            if ( EmailUtil.isValidEmail(toAddress) ) {
+                throw new InvalidInputException("Invalid Email");
+            }
+            isNotEmpty(subject);
             if (logger.isTraceEnabled()) {
                 logger.trace("Sending email to queue..." + toAddress[0]);
             }
@@ -41,6 +47,14 @@ public class EMailServiceImpl implements EMailService {
     }
     protected static final Log logger = LogFactory.getLog(EMailServiceImpl.class);
     protected static final ExecutorService executorService = Executors.newCachedThreadPool();
+
+    private void isNotEmpty(String subject) {
+        if ( subject == null || subject.trim().length() == 0 ) {
+            throw new InvalidInputException("Subject is empty");
+        }
+    }
+
+    
 }
 
 class EmailTask implements Runnable {
@@ -96,25 +110,25 @@ class EmailTask implements Runnable {
         props.put("mail.smtp.socketFactory.fallback", "false");
         final String sendFrom;
         if (errorCount < 3) {
-            sendFrom = EMailService.SEND_FROM_USERNAME;
+            sendFrom = EMailService.USERNAME;
         } else if (errorCount < 6) {
-            sendFrom = EMailService.SEND_FROM_USERNAME1;
+            sendFrom = EMailService.USERNAME;
         } else {
-            sendFrom = EMailService.SEND_FROM_USERNAME2;
+            sendFrom = EMailService.USERNAME;
         }
         Session session = Session.getDefaultInstance(props,
                 new javax.mail.Authenticator() {
 
                     @Override
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(sendFrom, EMailService.SEND_FROM_PASSWORD);
+                        return new PasswordAuthentication(sendFrom, EMailService.PASSWORD);
                     }
                 });
 
         session.setDebug(debug);
 
         Message msg = new MimeMessage(session);
-        InternetAddress addressFrom = new InternetAddress(EMailService.EMAIL_FROM_ADDRESS);
+        InternetAddress addressFrom = new InternetAddress(EMailService.USERNAME);
         msg.setFrom(addressFrom);
         msg.setRecipients(Message.RecipientType.TO, addressTo);
         // Setting the Subject and Content Type
