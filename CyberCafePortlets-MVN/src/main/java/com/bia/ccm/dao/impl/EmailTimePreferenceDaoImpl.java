@@ -28,16 +28,16 @@ public class EmailTimePreferenceDaoImpl extends GenericDaoImpl<EmailTimePreferen
 
     @Override
     public List<EmailTimePreference> findByOrganization(long organization) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.executeNamedQueryReturnList("EmailTimePreference.findByOrganization", organization);
     }
 
     @Override
     public EmailTimePreference findByOrganizationAndReportTime(long organization, short reportTime) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.executeNamedQueryReturnObject("EmailTimePreference.findByOrganizationAndReportTime", organization, reportTime);
     }
 
     @Override
     public List<EmailTimePreference> findByReportTime(int time) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.executeNamedQueryReturnList("EmailTimePreference.findByReportTime", time);
     }
 }
