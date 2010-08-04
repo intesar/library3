@@ -28,8 +28,7 @@ public interface AccountStatusNotificationService {
      * @param userId
      * @param ip
      */
-    void savePreferences(PreferenceDto preferenceDto, long organization,
-            String userId, String ip);
+    void savePreferences(PreferenceDto preferenceDto, long organization);
 
     /**
      *

@@ -128,7 +128,7 @@ public class AjaxAdminService {
      */
     public List<Services> getAllServices(HttpSession session) {
         ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
-        List<Services> list = this.adminService.getAllServices(themeDisplay.getScopeGroupId());
+        List<Services> list = this.adminService.getAllServicesWithSystem(themeDisplay.getScopeGroupId());
         return list;
     }
 
@@ -149,9 +149,7 @@ public class AjaxAdminService {
     public void savePreferences(PreferenceDto preferenceDto, HttpServletRequest request, HttpSession session) {
         ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
         long organization = themeDisplay.getScopeGroupId();
-        String userId = "" + themeDisplay.getUserId();
-        String ip = request.getRemoteAddr();
-        accountStatusNotificationService.savePreferences(preferenceDto, organization, userId, ip);
+        accountStatusNotificationService.savePreferences(preferenceDto, organization);
     }
 
     /**

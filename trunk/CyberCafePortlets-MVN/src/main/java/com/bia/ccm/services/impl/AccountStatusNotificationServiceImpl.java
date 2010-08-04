@@ -7,7 +7,6 @@
  * This software is the proprietary information of BizIntelApps.
  * Use is subject to license terms.
  */
-
 package com.bia.ccm.services.impl;
 
 import com.bia.ccm.dao.EmailPreferenceDao;
@@ -17,6 +16,7 @@ import com.bia.ccm.entity.EmailTimePreference;
 import com.bia.ccm.entity.PreferenceDto;
 import com.bia.ccm.services.AccountStatusNotificationService;
 import java.util.List;
+import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,34 +28,46 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author intesar
  */
-@Service(value="accountStatusNotificationServiceImpl")
+@Service(value = "accountStatusNotificationServiceImpl")
 public class AccountStatusNotificationServiceImpl implements AccountStatusNotificationService {
-@Override
+
+    @Override
     public List<EmailTimePreference> getEmailTimePreferences(short time) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.emailTimePreferenceDao.findByReportTime(time);
     }
 
     @Override
     public List<EmailPreference> getAllOrganizationEmailPreference(long organization) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.emailPreferenceDao.findByOrganization(organization);
     }
 
     @Override
-    @Transactional(propagation=Propagation.REQUIRED)
-    public void savePreferences(PreferenceDto preferenceDto, long organization,
-            String userId, String ip) {
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void savePreferences(PreferenceDto preferenceDto, long organization) {
+        // add new and delete old --> Emails
         List<EmailPreference> emailPreferences = this.emailPreferenceDao.findByOrganization(organization);
-        // delete all and add new
+        Set<String> emails = preferenceDto.getEmails();
         for (EmailPreference emailPreference : emailPreferences) {
-            this.emailPreferenceDao.delete(emailPreference);
+            if (!emails.contains(emailPreference.getEmail())) {
+                this.emailPreferenceDao.delete(emailPreference);
+            } else {
+                emails.remove(emailPreference.getEmail());
+            }
         }
-        for (String email : preferenceDto.getEmails()) {
+        for (String email : emails) {
             EmailPreference emailPreference = new EmailPreference(email, organization);
             this.emailPreferenceDao.persist(emailPreference);
         }
+
+        // Timings
         List<EmailTimePreference> emailTimePreferences = this.emailTimePreferenceDao.findByOrganization(organization);
+        Set<Short> timings = preferenceDto.getTimings();
         for (EmailTimePreference emailTimePreference : emailTimePreferences) {
-            this.emailTimePreferenceDao.delete(emailTimePreference);
+            if (!timings.contains(emailTimePreference.getReportTime())) {
+                this.emailTimePreferenceDao.delete(emailTimePreference);
+            } else {
+                timings.remove(emailTimePreference.getReportTime());
+            }
         }
         for (Short timing : preferenceDto.getTimings()) {
             EmailTimePreference emailTimePreference = new EmailTimePreference(timing, organization);
@@ -76,11 +88,9 @@ public class AccountStatusNotificationServiceImpl implements AccountStatusNotifi
         }
         return dto;
     }
-
     @Autowired
     protected EmailPreferenceDao emailPreferenceDao;
     @Autowired
     protected EmailTimePreferenceDao emailTimePreferenceDao;
     protected static final Log logger = LogFactory.getLog(AccountStatusNotificationServiceImpl.class);
-
 }

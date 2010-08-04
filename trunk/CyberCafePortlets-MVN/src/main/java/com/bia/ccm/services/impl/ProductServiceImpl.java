@@ -108,12 +108,15 @@ public class ProductServiceImpl implements ProductService {
             if (service.getSaleTwoUnits() != null && service.getSaleTwoUnits() > 1) {
                 service.setSaleTwoEnabled(true);
             }
-            
+            // validate organization
+
             if (service.getId() == null) {
-                service.setCreateDate(new Date());
+                service.setOrganization(organization);
                 this.servicesDao.persist(service);
             } else {
-                service.setLastModifiedDate(new Date());
+                if ( service.getOrganization() != organization ) {
+                    throw new NoRoleException();
+                }
                 this.servicesDao.merge(service);
             }
         }
@@ -122,8 +125,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional(propagation=Propagation.REQUIRED)
     public void deleteService(Long id, long organization) {
+        if ( id == null || id < 1 || organization < 1 ) {
+            throw new InvalidInputException();
+        }
         Services services = this.servicesDao.find(id);
-        System.out.println(" id : " + id);
         if (services.getOrganization() == organization) {
             servicesDao.delete(services);
         } else {
@@ -136,7 +141,7 @@ public class ProductServiceImpl implements ProductService {
        return this.servicesDao.findByOrganization(organization);
     }
 
-    
+    @Override
     public List<Services> getAllServicesWithSystem(long organization) {
         List<Services> list = this.servicesDao.findByOrganization(organization);
         Systems system = this.getSystem(organization);

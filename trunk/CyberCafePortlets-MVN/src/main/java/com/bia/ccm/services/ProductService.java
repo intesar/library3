@@ -3,10 +3,6 @@
  */
 package com.bia.ccm.services;
 
-import com.bia.ccm.entity.EmailPreference;
-import com.bia.ccm.entity.EmailTimePreference;
-import com.bia.ccm.entity.Organization;
-import com.bia.ccm.entity.PreferenceDto;
 import com.bia.ccm.entity.Services;
 import com.bia.ccm.entity.SystemLease;
 import com.bia.ccm.entity.Systems;
@@ -94,6 +90,13 @@ public interface ProductService {
      * @return
      */
     List<Services> getAllServices(long organization);
+
+    /**
+     * 
+     * @param organization
+     * @return
+     */
+    List<Services> getAllServicesWithSystem(long organization);
 
     /**
      *
