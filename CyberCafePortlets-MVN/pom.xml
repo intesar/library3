@@ -25,6 +25,7 @@
             jars ( /lib)
             Liferay 6.0
             SVN + Tortoise
+            
         </technologies>
     </properties>
 
