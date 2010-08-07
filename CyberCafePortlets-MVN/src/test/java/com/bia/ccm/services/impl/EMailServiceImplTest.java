@@ -7,12 +7,9 @@
  * This software is the proprietary information of BizIntelApps.
  * Use is subject to license terms.
  */
-
 package com.bia.ccm.services.impl;
 
 import com.bia.ccm.services.EMailService;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -30,13 +27,16 @@ import org.springframework.transaction.annotation.Transactional;
  * @author intesar
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("/applicationContext-Annotations.xml")
+@ContextConfiguration(
+locations = {"/applicationContext-Annotations.xml","/ApplicationContext-AjaxService.xml"
+})
 @TransactionConfiguration(transactionManager = "txManager", defaultRollback = true)
 @Transactional
 public class EMailServiceImplTest {
 
     @Autowired
     EMailService eMailService;
+
     public EMailServiceImplTest() {
     }
 
@@ -66,8 +66,9 @@ public class EMailServiceImplTest {
         sendInvalidEmail();
         sendInvalidEmails();
         sendValidSubject();
-        
+
     }
+
     private void sendValidEmail() {
         String[] toAddress = {"mdshannan@gmail.com"};
         String subject = "test";
@@ -76,9 +77,10 @@ public class EMailServiceImplTest {
         try {
             Thread.sleep(10000);
         } catch (InterruptedException ex) {
-            System.out.println ( "exception waiting..");
+            System.out.println("exception waiting..");
         }
     }
+
     private void sendInvalidEmail() {
         String[] toAddress = {""};
         String subject = "test";
@@ -87,20 +89,22 @@ public class EMailServiceImplTest {
         try {
             Thread.sleep(10000);
         } catch (InterruptedException ex) {
-            System.out.println ( "exception waiting..");
+            System.out.println("exception waiting..");
         }
     }
+
     private void sendInvalidEmails() {
-        String[] toAddress = {"mdshannan@gmail.com",""};
+        String[] toAddress = {"mdshannan@gmail.com", ""};
         String subject = "test";
         String body = "test";
         this.eMailService.sendEmail(toAddress, subject, body);
         try {
             Thread.sleep(10000);
         } catch (InterruptedException ex) {
-            System.out.println ( "exception waiting..");
+            System.out.println("exception waiting..");
         }
     }
+
     private void sendValidSubject() {
         String[] toAddress = {"mdshannan@gmail.com"};
         String subject = "";
@@ -109,9 +113,7 @@ public class EMailServiceImplTest {
         try {
             Thread.sleep(10000);
         } catch (InterruptedException ex) {
-            System.out.println ( "exception waiting..");
+            System.out.println("exception waiting..");
         }
     }
-
-
 }
