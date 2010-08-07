@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  *
  * @author intesar
  */
+
 public class ReportEngine {
 
     /**
@@ -81,20 +82,13 @@ public class ReportEngine {
         }
     }
 
-    // getters and setters
-    public void setEmailService(EMailService emailService) {
-        this.emailService = emailService;
-    }
+  
 
-    public void setAdminService(ProductService adminService) {
-        this.adminService = adminService;
-    }
-
-    public void setWorkService(SaleService workService) {
-        this.workService = workService;
-    }
+    @Autowired
     private EMailService emailService;
+    @Autowired
     private SaleService workService;
+    @Autowired
     private ProductService adminService;
     @Autowired
     protected AccountStatusNotificationService accountStatusNotificationService;

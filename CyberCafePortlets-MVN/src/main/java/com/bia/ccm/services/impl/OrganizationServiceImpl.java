@@ -38,7 +38,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public void saveOrganization(Organization organization, long organizationId) {
-        if (organization.getId() != organizationId) {
+        if (organization.getOrganizationId() != organizationId) {
             throw new NoRoleException();
         }
         Organization org = this.organizationDao.findByOrganizationId(organizationId);
