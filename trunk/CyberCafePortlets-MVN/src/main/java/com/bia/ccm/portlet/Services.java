@@ -13,10 +13,12 @@ import javax.portlet.PortletRequestDispatcher;
  */
 public class Services extends GenericPortlet {
 
+    @Override
     public void processAction(ActionRequest request, ActionResponse response) throws PortletException,IOException {
 
     }
     
+    @Override
     public void doView(RenderRequest request,RenderResponse response) throws PortletException,IOException {
         response.setContentType("text/html");
         SessionUtil.configure(request);

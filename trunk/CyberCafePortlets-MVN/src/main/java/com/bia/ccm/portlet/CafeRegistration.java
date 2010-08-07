@@ -27,7 +27,6 @@ public class CafeRegistration extends GenericPortlet {
         ApplicationContext context = PortletApplicationContextUtils.getWebApplicationContext(portletContext);
         OrganizationService organizationService = (OrganizationService) context.getBean("organizationServiceImpl");
         organizationService.registerNewOrganization(organizationId, organizationName, email);
-
     }
 
     @Override

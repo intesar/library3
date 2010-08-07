@@ -5,7 +5,6 @@
 package com.bia.ccm.util;
 
 import com.bia.ccm.services.ProductService;
-import java.util.List;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
