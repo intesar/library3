@@ -260,6 +260,7 @@ public class AjaxWorkService {
     public void setWorkService(SaleService workService) {
         this.workService = workService;
     }
+    
     protected ProductService adminService;
     protected MembershipService membershipService;
     protected SaleService workService;
