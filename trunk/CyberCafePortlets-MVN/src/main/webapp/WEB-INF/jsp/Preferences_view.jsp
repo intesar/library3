@@ -3,10 +3,11 @@
 
 <div>
     <table>
+        <tr><th>Email</th><th>Time</th></tr>
         <tr>
             <td>
                 <table border="0">
-                    <tr><td><input type="text" id="cc_p_email0" /></td></tr>
+                    <tr><td><input type="text" id="cc_p_email0" /> (example@gmail.com)</td></tr>
                     <tr><td><input type="text" id="cc_p_email1" /></td></tr>
                     <tr><td><input type="text" id="cc_p_email2" /></td></tr>
                     <tr><td><input type="text" id="cc_p_email3" /></td></tr>
@@ -15,7 +16,7 @@
             </td>
             <td>
                 <table  border="0">
-                    <tr><td><input type="text" id="cc_p_timing0" /></td></tr>
+                    <tr><td><input type="text" id="cc_p_timing0" /> (0-2400 eg 900 is 9AM)</td></tr>
                     <tr><td><input type="text" id="cc_p_timing1" /></td></tr>
                     <tr><td><input type="text" id="cc_p_timing2" /></td></tr>
                     <tr><td><input type="text" id="cc_p_timing3" /></td></tr>

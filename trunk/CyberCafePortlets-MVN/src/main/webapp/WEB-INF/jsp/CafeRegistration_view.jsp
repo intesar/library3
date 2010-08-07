@@ -18,6 +18,9 @@
             <td>Organization Name</td><td><input type="text" id="cc_organizationName" /></td>
         </tr>
         <tr>
+            <td>User Email</td><td><input type="text" id="cc_email" /></td>
+        </tr>
+        <tr>
             <td></td><td><input type="submit" value="Create" /></td>
         </tr>
     </table>
