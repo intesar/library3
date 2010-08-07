@@ -10,8 +10,6 @@ import com.bia.ccm.util.EmailUtil;
 import com.sun.mail.smtp.SMTPSendFailedException;
 import java.security.Security;
 import java.util.Properties;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -21,7 +19,10 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.core.task.TaskExecutor;
+
 
 /**
  *
@@ -40,13 +41,14 @@ public class EMailServiceImpl implements EMailService {
                 logger.trace("Sending email to queue..." + toAddress[0]);
             }
             EmailTask emailTask = new EmailTask(toAddress, subject, body);
-            executorService.execute(emailTask);
+            taskExecutor.execute(emailTask);
         } catch (Exception ex) {
             logger.warn(ex.getMessage(), ex);
         }
     }
     protected static final Log logger = LogFactory.getLog(EMailServiceImpl.class);
-    protected static final ExecutorService executorService = Executors.newCachedThreadPool();
+    @Autowired
+    protected TaskExecutor taskExecutor;
 
     private void isNotEmpty(String subject) {
         if ( subject == null || subject.trim().length() == 0 ) {
