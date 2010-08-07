@@ -1,12 +1,5 @@
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
-
-<%-- Uncomment below lines to add portlet taglibs to jsp --%>
-<%@ page import="javax.portlet.*"%>
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet"%>
-
-<portlet:defineObjects />
-<%PortletPreferences prefs = renderRequest.getPreferences();%> 
 <div>
     <table>
         <tr>
@@ -56,12 +49,12 @@
     var cc_o_organization = function (dto) {
         cc_o_setValues('','','','','','','','');
         cc_o_setValues(cc_o_dto.contactName,cc_o_dto.contactEmail,cc_o_dto.phone,cc_o_dto.fax,
-            cc_o_dto.street,cc_o_dto.city,cc_o_dto.zipcode,cc_o_dto.timings);
+        cc_o_dto.street,cc_o_dto.city,cc_o_dto.zipcode,cc_o_dto.timings);
         cc_p_dto = dto;
     }
     function cc_o_setValues(contactPerson,contactEmail,cafePhone,cafeFax,street,city,zipcode,timing) {
         document.getElementById("cc_o_contactPerson").value = contactPerson;
-        document.getElementById("cc_o_ContactEmail").value = contactEmail;
+        document.getElementById("cc_o_contactEmail").value = contactEmail;
         document.getElementById("cc_o_cafePhone").value = cafePhone;
         document.getElementById("cc_o_cafeFax").value = cafeFax;
         document.getElementById("cc_o_street").value = street;
@@ -82,7 +75,9 @@
     function cc_p_save() {
         dwr.engine.beginBatch();
         cc_o_getValues();
-        AjaxAdminService.savePreferences(cc_o_dto);
+        AjaxAdminService.savePreferences(cc_o_dto,function() {
+            alert('Date saved!');
+        });
         dwr.engine.endBatch();
     }
 </script>
