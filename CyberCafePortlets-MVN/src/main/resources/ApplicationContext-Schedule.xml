@@ -9,9 +9,10 @@
        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
 
     <!-- -->
-    <bean id="emailServiceImpl1" class="com.bia.ccm.services.impl.EMailServiceImpl" />
+
+    
+
     <bean id="reportEngine" class="com.bia.ccm.jobs.ReportEngine" >
-        <property name="emailService" ref="emailServiceImpl1" />
     </bean>
     <bean id="jobDetailForStartContract" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
         <property name="targetObject" ref="reportEngine"/> <!--reportEngine" /> -->
@@ -32,11 +33,11 @@
         <aop:scoped-proxy proxy-target-class="true" />
     </bean>
     <bean id="simpleTriggerStartContract" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
-    <!-- see the example of method invoking job above -->
+        <!-- see the example of method invoking job above -->
         <property name="jobDetail" ref="jobDetailForStartContract" />
-    <!-- 18 seconds -->
+        <!-- 18 seconds -->
         <property name="startDelay" value="18000" />
-    <!-- repeat 15 minutes 15 * 60 * 1000-->
+        <!-- repeat 15 minutes 15 * 60 * 1000-->
         <property name="repeatInterval" value="900000" />
         <!-- start time 6 am
         <property name="startTime" value="0 0 6 * * ?" />
@@ -46,11 +47,11 @@
         <aop:scoped-proxy proxy-target-class="true" />
     </bean>
     <bean id="simpleTriggerEndContract" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
-    <!-- see the example of method invoking job above -->
+        <!-- see the example of method invoking job above -->
         <property name="jobDetail" ref="jobDetailForEndContract" />
-    <!-- 18 seconds -->
+        <!-- 18 seconds -->
         <property name="startDelay" value="18000" />
-    <!-- repeat 15 minutes 10 * 60 * 1000-->
+        <!-- repeat 15 minutes 10 * 60 * 1000-->
         <property name="repeatInterval" value="900000" />
         <!-- start time 6 am
         <property name="startTime" value="0 0 6 * * ?" />
@@ -60,9 +61,9 @@
         <aop:scoped-proxy proxy-target-class="true" />
     </bean>
     <bean id="cronTriggerCafeReport" class="org.springframework.scheduling.quartz.CronTriggerBean">
-    <!-- see the example of method invoking job above -->
+        <!-- see the example of method invoking job above -->
         <property name="jobDetail" ref="jobDetailForCafeReport" />
-    <!-- 10 seconds -->
+        <!-- 10 seconds -->
     <!--    <property name="startDelay" value="10000" /> -->
     <!-- repeat 1 minutes 10 * 60 * 1000-->
     <!-- <property name="repeatInterval" value="600000" /> -->
