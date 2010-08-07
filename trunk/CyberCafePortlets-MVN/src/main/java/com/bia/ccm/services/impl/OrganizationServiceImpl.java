@@ -68,6 +68,9 @@ public class OrganizationServiceImpl implements OrganizationService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public void registerNewOrganization(long organizationId, String organizationName, String email) {
+        if(logger.isTraceEnabled()) {
+            logger.trace("validating input");
+        }
         // validate organizationId --> should be greater then zero
         if (organizationId <= 0) {
             throw new InvalidInputException("Invalid Organization ID");
@@ -80,6 +83,10 @@ public class OrganizationServiceImpl implements OrganizationService {
         if (email == null || email.trim().length() == 0 || !EmailUtil.isValidEmail(email)) {
             throw new InvalidInputException("Invalid Email");
         }
+
+        if(logger.isTraceEnabled()) {
+            logger.trace(" creating org ");
+        }
         // create organization
         Organization o = new Organization();
         o.setOrganizationId(organizationId);
@@ -87,6 +94,9 @@ public class OrganizationServiceImpl implements OrganizationService {
         o.setContactEmail(email);
         this.organizationDao.persist(o);
 
+        if(logger.isTraceEnabled()) {
+            logger.trace("creating default services");
+        }
         // default adding some services
         Services s = new Services(null, "Other", null, organizationId, 1, 1.0, null, null);
         this.servicesDao.persist(s);
@@ -101,6 +111,9 @@ public class OrganizationServiceImpl implements OrganizationService {
         Services s5 = new Services(null, "Cool Drink", null, organizationId, 1, 10.0, null, null);
         this.servicesDao.persist(s5);
 
+        if(logger.isTraceEnabled()) {
+            logger.trace("creating systems");
+        }
         //Double minuteRate = Double.parseDouble("" + minutes + "." + rate);
         Integer minutes = 60;
         Double rate = 20.0;
@@ -113,6 +126,9 @@ public class OrganizationServiceImpl implements OrganizationService {
             this.systemsDao.persist(systems);
         }
 
+        if(logger.isTraceEnabled()) {
+            logger.trace("sending email");
+        }
 //      sending an email
         String[] to = {email};
         String host = "http://67.184.225.240/web/" + organizationName + "/home";
