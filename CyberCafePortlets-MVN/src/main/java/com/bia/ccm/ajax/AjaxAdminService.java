@@ -185,6 +185,9 @@ public class AjaxAdminService {
         return this.organizationService.getOrganization(organizationId);
     }
 
+    public void registerNewOrganization(Long organizationId, String organizationName, String email) {
+        this.organizationService.registerNewOrganization(organizationId, organizationName, email);
+    }
     //  getters and setters
     @Autowired
     protected ProductService productService;
