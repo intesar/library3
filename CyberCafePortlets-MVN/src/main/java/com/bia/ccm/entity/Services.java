@@ -35,6 +35,8 @@ public class Services extends BaseModel implements Serializable {
     private static final long serialVersionUID = 1L;
     @Column(name = "name", nullable = false)
     private String name;
+    @Column(name = "active", nullable = false)
+    private boolean active;
     @Column(name = "description")
     private String description;
     @Column(name = "organization", nullable = false)
@@ -78,6 +80,14 @@ public class Services extends BaseModel implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public double getUnitPrice() {

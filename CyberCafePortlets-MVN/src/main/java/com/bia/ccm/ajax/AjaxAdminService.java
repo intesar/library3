@@ -103,10 +103,12 @@ public class AjaxAdminService {
      * @param request
      * @return
      */
-    public void saveService(Services service, HttpServletRequest request, HttpSession session) {
+    public List<Services> saveService(Services service, HttpServletRequest request, HttpSession session) {
         ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
         long organization = themeDisplay.getScopeGroupId();
         this.productService.saveService(service, organization);
+        List<Services> list = this.productService.getAllServicesWithSystem(themeDisplay.getScopeGroupId());
+        return list;
     }
 
     /**
@@ -114,9 +116,11 @@ public class AjaxAdminService {
      * @param id
      * @return
      */
-    public void deleteService(Long id, HttpSession session) {
+    public List<Services> deleteService(Long id, HttpSession session) {
         ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
         productService.deleteService(id, themeDisplay.getScopeGroupId());
+        List<Services> list = this.productService.getAllServicesWithSystem(themeDisplay.getScopeGroupId());
+        return list;
     }
 
     /**
