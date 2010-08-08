@@ -28,7 +28,7 @@ public class SystemsDaoImpl extends GenericDaoImpl<Systems, Long> implements Sys
 
     @Override
     public List<Systems> findByOrganization(long organization) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.executeNamedQueryReturnList("Systems.findByOrganization", organization);
     }
 
     @Override
