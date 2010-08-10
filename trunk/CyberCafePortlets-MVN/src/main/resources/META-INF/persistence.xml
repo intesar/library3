@@ -6,7 +6,8 @@
         <class>com.bia.ccm.entity.EmailTimePreference</class>
         <class>com.bia.ccm.entity.Organization</class>
         <class>com.bia.ccm.entity.Services</class>
-        <class>com.bia.ccm.entity.SystemLease</class>
+        <class>com.bia.ccm.entity.OrderDetail</class>
+        <class>com.bia.ccm.entity.OrderItem</class>
         <class>com.bia.ccm.entity.Systems</class>
         <!--<class>com.bia.ccm.entity.MembershipDiscounts</class>
         <class>com.bia.ccm.entity.MembershipTypes</class>
