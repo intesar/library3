@@ -13,6 +13,8 @@ package com.bia.ccm.dao;
 import com.bia.ccm.entity.OrderDetail;
 import com.bia.ccm.entity.OrderStatus;
 import com.bizintelapps.easydao.dao.GenericDao;
+import com.bizintelapps.easydao.dao.PagedResult;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,6 +23,10 @@ import java.util.List;
  */
 public interface OrderDetailDao  extends GenericDao<OrderDetail, Long> {
 
-    public List<OrderDetail> findByOrderStatus(Long organization, OrderStatus orderStatus);
+    List<OrderDetail> findByOrderStatus(Long organization, OrderStatus orderStatus);
 
+    PagedResult<OrderDetail> findByCustomerInfo(Long userId, String username, String email, int start, int max);
+
+    PagedResult<OrderDetail> findOrderDetails(Long organization, Date startDate, Date endDate,
+            OrderStatus orderStatus, String customer, int start, int max);
 }
