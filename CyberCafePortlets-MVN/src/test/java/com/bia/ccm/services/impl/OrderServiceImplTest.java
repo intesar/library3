@@ -17,8 +17,10 @@ import com.bia.ccm.entity.Services;
 import com.bia.ccm.exceptions.InvalidInputException;
 import com.bia.ccm.services.OrderService;
 import com.bia.ccm.services.ProductService;
+import com.bizintelapps.easydao.dao.PagedResult;
 import com.bizintelapps.easydao.dao.UserThreadLocal;
 import com.bizintelapps.easydao.dao.UserThreadLocalDto;
+import java.util.Date;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -422,13 +424,13 @@ public class OrderServiceImplTest {
         assertEquals(result.getCustomerPhone(), customerPhone);
         assertEquals(result.getCustomerUserId(), customerUserId);
 
-        result = orderService.changeOrderStatus(result.getId(), 0.0, OrderStatus.Live, organization);
+        result = orderService.changeOrderStatus(result.getId(), 0.0, OrderStatus.LIVE, organization);
         assertNotNull(result);
         Double amt = 0.0;
         assertEquals(result.getAmountDue(), amt);
         assertEquals(result.getPaidAmount(), amt);
         assertEquals(result.getPayableAmount(), amt);
-        assertEquals(result.getOrderStatus(), OrderStatus.Live);
+        assertEquals(result.getOrderStatus(), OrderStatus.LIVE);
     }
 
     private void changeOrderStatus2() {
@@ -446,14 +448,14 @@ public class OrderServiceImplTest {
         assertEquals(result.getCustomerPhone(), customerPhone);
         assertEquals(result.getCustomerUserId(), customerUserId);
         Double paid = 5.0;
-        result = orderService.changeOrderStatus(result.getId(), paid, OrderStatus.Live, organization);
+        result = orderService.changeOrderStatus(result.getId(), paid, OrderStatus.LIVE, organization);
         assertNotNull(result);
         Double amt = 0.0;
         Double payable = -5.0;
         assertEquals(result.getAmountDue(), amt);
         assertEquals(result.getPaidAmount(), paid);
         assertEquals(result.getPayableAmount(), payable);
-        assertEquals(result.getOrderStatus(), OrderStatus.Live);
+        assertEquals(result.getOrderStatus(), OrderStatus.LIVE);
     }
 
     private void changeOrderStatus3() {
@@ -472,7 +474,7 @@ public class OrderServiceImplTest {
         assertEquals(result.getCustomerUserId(), customerUserId);
         Double paid = -1.0;
         try {
-            result = orderService.changeOrderStatus(result.getId(), paid, OrderStatus.Live, organization);
+            result = orderService.changeOrderStatus(result.getId(), paid, OrderStatus.LIVE, organization);
             fail(" negative payment");
         } catch (InvalidInputException ex) {
         }
@@ -493,7 +495,7 @@ public class OrderServiceImplTest {
         assertEquals(result.getCustomerPhone(), customerPhone);
         assertEquals(result.getCustomerUserId(), customerUserId);
         try {
-            result = orderService.changeOrderStatus(result.getId(), 0.0, OrderStatus.Live, organization + 1);
+            result = orderService.changeOrderStatus(result.getId(), 0.0, OrderStatus.LIVE, organization + 1);
             fail(" invalid org");
         } catch (InvalidInputException ex) {
         }
@@ -534,7 +536,7 @@ public class OrderServiceImplTest {
 
     private void getOrderByStatusNoResults() {
         Long organization = 1L;
-        List<OrderDetail> list = orderService.getOrderByStatus(organization, OrderStatus.Live);
+        List<OrderDetail> list = orderService.getOrderByStatus(organization, OrderStatus.LIVE);
         assertEquals(list.size(), 0);
     }
 
@@ -547,7 +549,7 @@ public class OrderServiceImplTest {
         Long organization = 1L;
         orderService.createOrder(customerName, customerUsername, customerEmail, customerPhone, customerUserId, organization);
 
-        List<OrderDetail> list = orderService.getOrderByStatus(organization, OrderStatus.Live);
+        List<OrderDetail> list = orderService.getOrderByStatus(organization, OrderStatus.LIVE);
         assertEquals(list.size(), 1);
     }
 
@@ -577,7 +579,278 @@ public class OrderServiceImplTest {
         for (int x = 0; x < max; x++) {
             orderService.createOrder(customerName, customerUsername, customerEmail, customerPhone, customerUserId, organization);
         }
-        List<OrderDetail> list = orderService.getOrderByStatus(organization, OrderStatus.Live);
+        List<OrderDetail> list = orderService.getOrderByStatus(organization, OrderStatus.LIVE);
         assertTrue(list.size() >= max);
     }
+
+    /**
+     * Test of getOrderByStatus method, of class OrderServiceImpl.
+     */
+    @Test
+    public void testGetOrderByUserInfo() {
+        System.out.println("getOrderByUserInfo");
+        testFindNoOrders();
+        createOrders();
+        testFindOrdersByUserId();
+        testFindOrdersByUserId1();
+        testFindOrdersByUsername();
+        testFindOrdersByUsername1();
+        testFindOrdersByEmail();
+        testFindOrdersByEmail1();
+    }
+
+    private void createOrders() {
+        String customerName = "intesar mohammed";
+        String customerUsername = "inmohamm";
+        String customerEmail = "mdshannan@gmail.com";
+        String customerPhone = "773-216-5478";
+        Long customerUserId = 1000L;
+        Long organization = 1L;
+        for (int x = 0; x < 100; x++) {
+            orderService.createOrder(customerName, customerUsername, customerEmail, customerPhone, customerUserId, organization);
+        }
+    }
+
+    private void testFindNoOrders() {
+        Long customerUserId = 1000L;
+        String customerUsername = "inmohamm";
+        String customerEmail = "mdshannan@gmail.com";
+        int start = 0;
+        int max = 20;
+        PagedResult<OrderDetail> result = orderService.getOrderByUserInfo(customerUserId, customerUsername, customerEmail, start, max);
+        assertTrue(result.getResults().size() == 0);
+    }
+
+    private void testFindOrdersByUserId() {
+        Long customerUserId = 1000L;
+        String customerUsername = "";
+        String customerEmail = "";
+        int start = 0;
+        int max = 20;
+        PagedResult<OrderDetail> result = orderService.getOrderByUserInfo(customerUserId, customerUsername, customerEmail, start, max);
+        System.out.println("size : " + result.getResults().size());
+        assertTrue(result.getResults().size() == 20);
+    }
+
+    private void testFindOrdersByUserId1() {
+        Long customerUserId = 1001L;
+        String customerUsername = "";
+        String customerEmail = "";
+        int start = 0;
+        int max = 20;
+        PagedResult<OrderDetail> result = orderService.getOrderByUserInfo(customerUserId, customerUsername, customerEmail, start, max);
+        System.out.println("size : " + result.getResults().size());
+        assertTrue(result.getResults().size() == 0);
+    }
+
+    private void testFindOrdersByUsername() {
+        Long customerUserId = 1000L;
+        String customerUsername = "inmohamm";
+        String customerEmail = "";
+        int start = 0;
+        int max = 20;
+        PagedResult<OrderDetail> result = orderService.getOrderByUserInfo(customerUserId, customerUsername, customerEmail, start, max);
+        System.out.println("size : " + result.getResults().size());
+        assertTrue(result.getResults().size() == 20);
+    }
+
+    private void testFindOrdersByUsername1() {
+        Long customerUserId = 1001L;
+        String customerUsername = "inmohamm1";
+        String customerEmail = "";
+        int start = 0;
+        int max = 20;
+        PagedResult<OrderDetail> result = orderService.getOrderByUserInfo(customerUserId, customerUsername, customerEmail, start, max);
+        System.out.println("size : " + result.getResults().size());
+        assertTrue(result.getResults().size() == 0);
+    }
+
+    private void testFindOrdersByEmail() {
+        Long customerUserId = 0L;
+        String customerUsername = "";
+        String customerEmail = "mdshannan@gmail.com";
+        int start = 0;
+        int max = 20;
+        PagedResult<OrderDetail> result = orderService.getOrderByUserInfo(customerUserId, customerUsername, customerEmail, start, max);
+        System.out.println("size : " + result.getResults().size());
+        assertTrue(result.getResults().size() == 20);
+    }
+
+    private void testFindOrdersByEmail1() {
+        Long customerUserId = 1001L;
+        String customerUsername = "inmohamm1";
+        String customerEmail = "mdshannan@gmail.com1";
+        int start = 0;
+        int max = 20;
+        PagedResult<OrderDetail> result = orderService.getOrderByUserInfo(customerUserId, customerUsername, customerEmail, start, max);
+        System.out.println("size : " + result.getResults().size());
+        assertTrue(result.getResults().size() == 0);
+    }
+
+
+    @Test
+    public void testSearchOrderByOrganization() {
+        System.out.println("getOrderByUserInfo");
+        testFindNoOrdersSearch();
+        createOrders();
+        testFindOrdersByUserIdX();
+        testFindOrdersByUserId1X();
+        testFindOrdersByUsernameX();
+        testFindOrdersByUsername1X();
+        testFindOrdersByEmailX();
+        testFindOrdersByEmail1X();
+    }
+
+    private void testFindNoOrdersSearch() {
+        String customerName = "intesar mohammed";
+        String customerUsername = "inmohamm";
+        String customerEmail = "mdshannan@gmail.com";
+        String customerPhone = "773-216-5478";
+        Long organization = 1L;
+        Date sd = new Date();
+        Date ed = new Date();
+        OrderStatus os = OrderStatus.LIVE;
+        String customer = customerUsername;
+        int start = 0;
+        int max = 20;
+        PagedResult<OrderDetail> result = orderService.searchOrderByOrganization(organization, sd, ed, os, customer, start, max);
+        assertTrue(result.getResults().size() == 0);
+    }
+
+    private void testFindOrdersByUserIdX() {
+        Long customerUserId = 1000L;
+        String customerName = "intesar mohammed";
+        String customerUsername = "inmohamm";
+        String customerEmail = "mdshannan@gmail.com";
+        String customerPhone = "773-216-5478";
+        Long organization = 1L;
+        Date sd = new Date();
+        Date ed = new Date();
+        OrderStatus os = OrderStatus.LIVE;
+        String customer = customerName;
+        int start = 0;
+        int max = 20;
+        PagedResult<OrderDetail> result = orderService.searchOrderByOrganization(organization, sd, ed, os, customer, start, max);
+        assertTrue(result.getResults().size() == 20);
+    }
+
+    private void testFindOrdersByUserId1X() {
+        Long customerUserId = 1000L;
+        String customerName = "intesar mohammed";
+        String customerUsername = "inmohamm";
+        String customerEmail = "mdshannan@gmail.com";
+        String customerPhone = "773-216-5478";
+        Long organization = 1L;
+        Date sd = new Date();
+        Date ed = new Date();
+        OrderStatus os = OrderStatus.LIVE;
+        String customer = customerName;
+        int start = 0;
+        int max = 20;
+        PagedResult<OrderDetail> result = orderService.searchOrderByOrganization(organization, sd, ed, os, customer, start, max);
+        assertTrue(result.getResults().size() == 20);
+    }
+
+    private void testFindOrdersByUsernameX() {
+        Long customerUserId = 1000L;
+        String customerName = "intesar mohammed";
+        String customerUsername = "inmohamm";
+        String customerEmail = "mdshannan@gmail.com";
+        String customerPhone = "773-216-5478";
+        Long organization = 1L;
+        Date sd = new Date();
+        Date ed = new Date();
+        OrderStatus os = OrderStatus.LIVE;
+        String customer = customerUsername;
+        int start = 0;
+        int max = 20;
+        PagedResult<OrderDetail> result = orderService.searchOrderByOrganization(organization, sd, ed, os, customer, start, max);
+        assertTrue(result.getResults().size() == 20);
+    }
+
+    private void testFindOrdersByUsername1X() {
+        Long customerUserId = 1000L;
+        String customerName = "intesar mohammed";
+        String customerUsername = "inmohamm";
+        String customerEmail = "mdshannan@gmail.com";
+        String customerPhone = "773-216-5478";
+        Long organization = 1L;
+        Date sd = new Date();
+        Date ed = new Date();
+        OrderStatus os = OrderStatus.LIVE;
+        String customer = customerUsername;
+        int start = 0;
+        int max = 20;
+        PagedResult<OrderDetail> result = orderService.searchOrderByOrganization(organization, sd, ed, os, customer, start, max);
+        assertTrue(result.getResults().size() == 20);
+    }
+
+    private void testFindOrdersByEmailX() {
+        Long customerUserId = 1000L;
+        String customerName = "intesar mohammed";
+        String customerUsername = "inmohamm";
+        String customerEmail = "mdshannan@gmail.com";
+        String customerPhone = "773-216-5478";
+        Long organization = 1L;
+        Date sd = new Date();
+        Date ed = new Date();
+        OrderStatus os = OrderStatus.LIVE;
+        String customer = customerEmail;
+        int start = 0;
+        int max = 20;
+        PagedResult<OrderDetail> result = orderService.searchOrderByOrganization(organization, sd, ed, os, customer, start, max);
+        assertTrue(result.getResults().size() == 20);
+    }
+
+    private void testFindOrdersByEmail1X() {
+        Long customerUserId = 1000L;
+        String customerName = "intesar mohammed";
+        String customerUsername = "inmohamm";
+        String customerEmail = "mdshannan@gmail.com";
+        String customerPhone = "773-216-5478";
+        Long organization = 1L;
+        Date sd = new Date();
+        Date ed = new Date();
+        OrderStatus os = OrderStatus.LIVE;
+        String customer = customerEmail;
+        int start = 0;
+        int max = 20;
+        PagedResult<OrderDetail> result = orderService.searchOrderByOrganization(organization, sd, ed, os, customer, start, max);
+        assertTrue(result.getResults().size() == 20);
+    }
+
+    private void testFindOrdersByNameX() {
+        Long customerUserId = 1000L;
+        String customerName = "intesar mohammed";
+        String customerUsername = "inmohamm";
+        String customerEmail = "mdshannan@gmail.com";
+        String customerPhone = "773-216-5478";
+        Long organization = 1L;
+        Date sd = new Date();
+        Date ed = new Date();
+        OrderStatus os = OrderStatus.LIVE;
+        String customer = customerName;
+        int start = 0;
+        int max = 20;
+        PagedResult<OrderDetail> result = orderService.searchOrderByOrganization(organization, sd, ed, os, customer, start, max);
+        assertTrue(result.getResults().size() == 20);
+    }
+
+    private void testFindOrdersByPhoneX() {
+        Long customerUserId = 1000L;
+        String customerName = "intesar mohammed";
+        String customerUsername = "inmohamm";
+        String customerEmail = "mdshannan@gmail.com";
+        String customerPhone = "773-216-5478";
+        Long organization = 1L;
+        Date sd = new Date();
+        Date ed = new Date();
+        OrderStatus os = OrderStatus.LIVE;
+        String customer = customerPhone;
+        int start = 0;
+        int max = 20;
+        PagedResult<OrderDetail> result = orderService.searchOrderByOrganization(organization, sd, ed, os, customer, start, max);
+        assertTrue(result.getResults().size() == 20);
+    }
+
 }
