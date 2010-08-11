@@ -21,7 +21,7 @@ public interface OrganizationService {
      *
      * @param organization
      */
-    void saveOrganization(Organization organization, long organizationId);
+    Organization saveOrganization(Organization organization, long organizationId);
 
     /**
      *
