@@ -37,32 +37,32 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public void saveOrganization(Organization organization, long organizationId) {
+    public Organization saveOrganization(Organization organization, long organizationId) {
         if (organization.getOrganizationId() != organizationId) {
             throw new NoRoleException();
         }
         Organization org = this.organizationDao.findByOrganizationId(organizationId);
-        // address
+        /* address */
         org.setStreet(organization.getStreet());
         org.setCity(organization.getCity());
         org.setState(organization.getState());
         org.setZipcode(organization.getZipcode());
         org.setCountry(organization.getCountry());
-        // phones
+        /* phones */
         org.setPhone(organization.getPhone());
         org.setFax(organization.getFax());
-        // contact
+        /* contact */
         org.setContactName(organization.getContactName());
         org.setContactEmail(organization.getContactEmail());
 
-        this.organizationDao.merge(org);
+        return this.organizationDao.merge(org);
 
     }
 
     @Override
     public Organization getOrganization(long organizationId) {
-        Organization org = this.organizationDao.findByOrganizationId(organizationId);
-        return org;
+        Organization organization = this.organizationDao.findByOrganizationId(organizationId);
+        return organization;
     }
 
     @Override
@@ -71,15 +71,15 @@ public class OrganizationServiceImpl implements OrganizationService {
         if(logger.isTraceEnabled()) {
             logger.trace("validating input");
         }
-        // validate organizationId --> should be greater then zero
+        /* validate organizationId --> should be greater then zero */
         if (organizationId <= 0) {
             throw new InvalidInputException("Invalid Organization ID");
         }
-        // organization cannot be null, empty or duplicate
+        /* organization cannot be null, empty or duplicate */
         if (organizationName == null || organizationName.trim().length() == 0 || isOrganizationNameExists(organizationName)) {
             throw new InvalidInputException("Invalid Cyber Cafe Name!");
         }
-        // validate email --> cannot be null, empty or invalid
+        /* validate email --> cannot be null, empty or invalid */
         if (email == null || email.trim().length() == 0 || !EmailUtil.isValidEmail(email)) {
             throw new InvalidInputException("Invalid Email");
         }
@@ -87,7 +87,7 @@ public class OrganizationServiceImpl implements OrganizationService {
         if(logger.isTraceEnabled()) {
             logger.trace(" creating org ");
         }
-        // create organization
+        /* create organization */
         Organization o = new Organization();
         o.setOrganizationId(organizationId);
         o.setName(organizationName);
@@ -97,7 +97,7 @@ public class OrganizationServiceImpl implements OrganizationService {
         if(logger.isTraceEnabled()) {
             logger.trace("creating default services");
         }
-        // default adding some services
+        /* default adding some services */
         Services s = new Services(null, "Other", null, organizationId, 1, 1.0, null, null);
         this.servicesDao.persist(s);
         Services s1 = new Services(null, "Print B&W", null, organizationId, 1, 1.0, null, null);
@@ -114,7 +114,7 @@ public class OrganizationServiceImpl implements OrganizationService {
         if(logger.isTraceEnabled()) {
             logger.trace("creating systems");
         }
-        //Double minuteRate = Double.parseDouble("" + minutes + "." + rate);
+        /* Double minuteRate = Double.parseDouble("" + minutes + "." + rate); */
         Integer minutes = 60;
         Double rate = 20.0;
         boolean enabled = false;
@@ -129,7 +129,7 @@ public class OrganizationServiceImpl implements OrganizationService {
         if(logger.isTraceEnabled()) {
             logger.trace("sending email");
         }
-//      sending an email
+        /* sending an email */
         String[] to = {email};
         String host = "http://67.184.225.240/web/" + organizationName + "/home";
         String url = "<a href='" + host + "'>" + host + "</a>";
@@ -153,7 +153,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     
     @Autowired
-    EMailService eMailService;
+    protected EMailService eMailService;
     @Autowired
     protected OrganizationDao organizationDao;
     @Autowired

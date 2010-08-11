@@ -170,10 +170,10 @@ public class AjaxAdminService {
      * @param request
      * @param session
      */
-    public void saveOrganization(Organization organization, HttpServletRequest request, HttpSession session) {
+    public Organization saveOrganization(Organization organization, HttpServletRequest request, HttpSession session) {
         ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
         long organizationId = themeDisplay.getScopeGroupId();
-        this.organizationService.saveOrganization(organization, organizationId);
+        return this.organizationService.saveOrganization(organization, organizationId);
     }
 
     /**
