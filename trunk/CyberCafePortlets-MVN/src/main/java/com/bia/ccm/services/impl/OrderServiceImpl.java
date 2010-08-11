@@ -20,7 +20,6 @@ import com.bia.ccm.entity.Services;
 import com.bia.ccm.services.OrderService;
 import com.bia.ccm.exceptions.InvalidInputException;
 import java.util.List;
-import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -55,7 +54,7 @@ public class OrderServiceImpl implements OrderService {
         /* organization validation */
         validateOrganization(orderDetail.getOrganization(), organization);
         /* add Item or update if exists */
-        Set<OrderItem> orderItems = orderDetail.getOrderItems();
+        List<OrderItem> orderItems = orderDetail.getOrderItems();
         for (OrderItem orderItem : orderItems) {
             if (orderItem.getProductId().equals(productId)) {
                 /* if quantity is zero delete this item */
@@ -130,7 +129,7 @@ public class OrderServiceImpl implements OrderService {
     /* private methods */
     private void updateAmountDueAndPayable(OrderDetail orderDetail) {
         Double amountDue = 0.0;
-        Set<OrderItem> orderItems = orderDetail.getOrderItems();
+        List<OrderItem> orderItems = orderDetail.getOrderItems();
         for (OrderItem orderItem : orderItems) {
             if (orderItem.getProductType().equals(ProductType.OTHER)) {
                 Services service = servicesDao.find(orderItem.getProductId());
