@@ -50,6 +50,7 @@ public class OrderItem extends BaseModel implements Serializable {
         this.orderDetail = orderDetail;
         this.productId = productId;
         this.productName = productName;
+        this.productType = productType;
         this.quantity = quantity;
         this.amount = amount;
     }

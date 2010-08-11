@@ -47,8 +47,10 @@ public class OrderServiceImpl implements OrderService {
     @Transactional(propagation = Propagation.REQUIRED)
     public OrderDetail adddItem(Long orderDetailId, Long productId, int quantity,
             Long organization, ProductType productType) {
-        /* quantity validation */
-        validateQuantity(quantity);
+        /* not null orderDetailId, productId, productType */
+        validateForNull(orderDetailId, "Order ID");
+        validateForNull(productId, "Product ID");
+        validateForNull(productType, "Product Type");
         OrderDetail orderDetail = this.orderDetailDao.find(orderDetailId);
         /* organization validation */
         validateOrganization(orderDetail.getOrganization(), organization);
@@ -56,18 +58,28 @@ public class OrderServiceImpl implements OrderService {
         Set<OrderItem> orderItems = orderDetail.getOrderItems();
         for (OrderItem orderItem : orderItems) {
             if (orderItem.getProductId().equals(productId)) {
-                orderItem.setQuantity(orderItem.getQuantity() + quantity);
+                /* if quantity is zero delete this item */
+                if ( quantity <= 0 ) {
+                   orderItems.remove(orderItem);
+                } else {
+                    orderItem.setQuantity(orderItem.getQuantity() + quantity);
+                }
                 orderDetail = this.orderDetailDao.merge(orderDetail);
                 return orderDetail;
             }
         }
-        // TODO
+        
         String productName = null;
-        if ( productType.equals(ProductType.OTHER)) {
+        if (productType.equals(ProductType.OTHER) && quantity <= 0) {
+            throw new InvalidInputException(" Quantity cannot be Zero");
+        } else if (productType.equals(ProductType.OTHER)) {
             Services service = servicesDao.find(productId);
             productName = service.getName();
+        } else {
+            // TODO handle Computer lease
+            productName = ProductType.Computer.toString();
         }
-        
+
         Double amount = 0.0; //
         OrderItem orderItem = new OrderItem(orderDetail, productId, productName, productType, quantity, amount);
         orderDetail.getOrderItems().add(orderItem);
@@ -80,7 +92,10 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public OrderDetail deleteItem(Long orderDetailId, Long orderItemId, Long organization) {
+        validateForNull(orderDetailId, "Order ID");
+        validateForNull(orderItemId, "Product ID");
         OrderDetail orderDetail = this.orderDetailDao.find(orderDetailId);
+        validateForNull(orderDetail, "Order ID");
         /* organization validation */
         validateOrganization(orderDetail.getOrganization(), organization);
         Set<OrderItem> orderItems = orderDetail.getOrderItems();
@@ -135,6 +150,8 @@ public class OrderServiceImpl implements OrderService {
     @Transactional(propagation = Propagation.REQUIRED)
     public OrderDetail changeOrderStatus(Long orderDetailId, Double amountPaid,
             OrderStatus orderStatus, Long organization) {
+        /* validate orderStatus */
+        validateOrderStatus(orderStatus);
         /* validate amount */
         validateAmount(amountPaid);
         OrderDetail orderDetail = this.orderDetailDao.find(orderDetailId);
@@ -146,7 +163,10 @@ public class OrderServiceImpl implements OrderService {
         return orderDetail;
     }
 
+    @Override
     public List<OrderDetail> getOrderByStatus(Long organization, OrderStatus orderStatus) {
+        /* validate orderStatus */
+        validateOrderStatus(orderStatus);
         return this.orderDetailDao.findByOrderStatus(organization, orderStatus);
     }
 
@@ -198,6 +218,18 @@ public class OrderServiceImpl implements OrderService {
     private void validateQuantity(int quantity) {
         if (quantity < 0) {
             throw new InvalidInputException("Quantity cannot be less than zero");
+        }
+    }
+
+    private void validateOrderStatus(OrderStatus orderStatus) {
+        if (orderStatus == null) {
+            throw new InvalidInputException(" Order Status cannot be null");
+        }
+    }
+
+    private void validateForNull(Object object, String msg) {
+        if (object == null) {
+            throw new InvalidInputException(msg + " cannot be null");
         }
     }
     /* daos */
