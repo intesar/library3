@@ -46,6 +46,19 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
+    public OrderDetail updateOrderCustomerDetail(Long orderDetailId, String customerName,
+            String customerUsername, String customerEmail, String customerPhone,
+            Long customerUserId, Long organization) {
+        OrderDetail orderDetail = this.orderDetailDao.find(orderDetailId);
+        /* organization validation */
+        validateOrganization(orderDetail.getOrganization(), organization);
+        updateCustomerDetails(orderDetail, customerName, customerUsername, customerUserId, customerEmail, customerPhone);
+        orderDetail = this.orderDetailDao.merge(orderDetail);
+        return orderDetail;
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public OrderDetail adddItem(Long orderDetailId, Long productId, int quantity,
             Long organization, ProductType productType) {
         /* not null orderDetailId, productId, productType */
@@ -86,19 +99,6 @@ public class OrderServiceImpl implements OrderService {
         orderDetail.getOrderItems().add(orderItem);
         /* calculate amount due */
         updateAmountDueAndPayable(orderDetail);
-        orderDetail = this.orderDetailDao.merge(orderDetail);
-        return orderDetail;
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED)
-    public OrderDetail updateOrderCustomerDetail(Long orderDetailId, String customerName,
-            String customerUsername, String customerEmail, String customerPhone,
-            Long customerUserId, Long organization) {
-        OrderDetail orderDetail = this.orderDetailDao.find(orderDetailId);
-        /* organization validation */
-        validateOrganization(orderDetail.getOrganization(), organization);
-        updateCustomerDetails(orderDetail, customerName, customerUsername, customerUserId, customerEmail, customerPhone);
         orderDetail = this.orderDetailDao.merge(orderDetail);
         return orderDetail;
     }
