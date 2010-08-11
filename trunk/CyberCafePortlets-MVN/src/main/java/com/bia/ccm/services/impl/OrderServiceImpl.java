@@ -128,7 +128,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public PagedResult<OrderDetail> getOrderByUserId(Long userId, String username, String email, int start, int max) {
+    public PagedResult<OrderDetail> getOrderByUserInfo(Long userId, String username, String email, int start, int max) {
         /* validate userId, start, max */
         validateForNull(userId, "user ID cannot be null");
         validatePagingParams(start, max);

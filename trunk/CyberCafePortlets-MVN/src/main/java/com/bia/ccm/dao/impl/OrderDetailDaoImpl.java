@@ -40,7 +40,10 @@ public class OrderDetailDaoImpl extends GenericDaoImpl<OrderDetail, Long> implem
     public PagedResult<OrderDetail> findByCustomerInfo(Long userId, String username, String email, int start, int max) {
         PagingParams pagingParams = new PagingParams(start, max);
         PagedResult pagedResult = new PagedResult(0, null, pagingParams);
-        return executeNamedQueryReturnList("OrderDetail.findByCustomerInfo", pagedResult, username, email, userId);
+        //return executeNamedQueryReturnList("OrderDetail.findByCustomerInfo", pagedResult, username, email, userId);
+        List<OrderDetail> list = em.createNamedQuery("OrderDetail.findByCustomerInfo").setParameter(1, username).setParameter(2, email).setParameter(3, userId).setFirstResult(start).setMaxResults(max).getResultList();
+        pagedResult.setResults(list);
+        return pagedResult;
     }
 
     @Override
@@ -50,34 +53,42 @@ public class OrderDetailDaoImpl extends GenericDaoImpl<OrderDetail, Long> implem
         PagedResult pagedResult = new PagedResult(0, null, pagingParams);
         String ql = "SELECT s FROM OrderDetail s WHERE s.organization = ?1 ";
         boolean isValidDate = false;
-        if ( startDate != null && endDate != null) {
+        if (startDate != null && endDate != null) {
             ql += "AND s.createDate BETWEEN ?2 AND ?3 ";
             isValidDate = true;
         }
         boolean isValidStatus = false;
-        if ( orderStatus != null ) {
+        if (orderStatus != null) {
             ql += "AND s.orderStatus LIKE ?4 ";
             isValidStatus = true;
         }
         boolean isValidCustomer = false;
-        if ( customer != null && customer.trim().length() > 0 ) {
-            ql += "AND (s.customerUserId LIKE ?5 OR s.customerUsername LIKE ?6 OR s.customerEmail LIKE ?7 ) ";
+        if (customer != null && customer.trim().length() > 0) {
+            ql += "AND (s.customerUserId = ?5 OR s.customerUsername LIKE ?6 OR s.customerEmail LIKE ?7 "
+                    + "OR s.customerName LIKE ?8 OR s.customerPhone LIKE ?9) ";
             isValidCustomer = true;
         }
         ql += "ORDER BY s.createDate";
         Query query = em.createQuery(ql).setFirstResult(start).setMaxResults(max);
         query.setParameter(1, organization);
-        if ( isValidDate) {
+        if (isValidDate) {
             query.setParameter(2, startDate);
             query.setParameter(3, endDate);
         }
-        if ( isValidStatus) {
-            query.setParameter(2, orderStatus);
+        if (isValidStatus) {
+            query.setParameter(4, orderStatus);
         }
-        if ( isValidCustomer) {
-            query.setParameter(5, customer);
+        if (isValidCustomer) {
+            Long userId = 0L;
+            try {
+                userId = Long.parseLong(customer);
+            } catch (Exception ex) {
+            }
+            query.setParameter(5, userId);
             query.setParameter(6, customer);
             query.setParameter(7, customer);
+            query.setParameter(8, customer);
+            query.setParameter(9, customer);
         }
         List<OrderDetail> list = query.getResultList();
         pagedResult.setResults(list);

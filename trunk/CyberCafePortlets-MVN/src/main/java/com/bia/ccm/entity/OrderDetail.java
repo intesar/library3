@@ -67,7 +67,7 @@ public class OrderDetail extends BaseModel implements Serializable {
         this.amountDue = 0.0;
         this.paidAmount = 0.0;
         this.payableAmount = 0.0;
-        this.orderStatus = OrderStatus.Live;
+        this.orderStatus = OrderStatus.LIVE;
         this.orderItems = new ArrayList<OrderItem>();
     }
 

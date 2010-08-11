@@ -16,7 +16,7 @@ package com.bia.ccm.entity;
  */
 public enum OrderStatus {
 
-    Live("live"),
+    LIVE("live"),
     INACTIVE("inactive"),
     COMPLETE("complete"),
     DELETED("deleted");

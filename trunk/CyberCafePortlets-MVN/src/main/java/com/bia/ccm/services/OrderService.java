@@ -93,7 +93,7 @@ public interface OrderService {
      * @param max
      * @return
      */
-    PagedResult<OrderDetail> getOrderByUserId(Long userId, String username, String email, int start, int max);
+    PagedResult<OrderDetail> getOrderByUserInfo(Long userId, String username, String email, int start, int max);
 
     /**
      *
