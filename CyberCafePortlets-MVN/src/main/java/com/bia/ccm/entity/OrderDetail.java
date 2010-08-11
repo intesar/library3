@@ -11,8 +11,8 @@ package com.bia.ccm.entity;
 
 import com.bizintelapps.easydao.dao.BaseModel;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -57,7 +57,7 @@ public class OrderDetail extends BaseModel implements Serializable {
     @Column(name = "order_status", nullable = false)
     private OrderStatus orderStatus;
     @OneToMany(targetEntity = com.bia.ccm.entity.OrderItem.class, cascade = CascadeType.ALL, mappedBy = "orderDetail")
-    private Set<OrderItem> orderItems;
+    private List<OrderItem> orderItems;
     @Column(name = "organization", nullable = false)
     private Long organization;
 
@@ -66,7 +66,7 @@ public class OrderDetail extends BaseModel implements Serializable {
         this.paidAmount = 0.0;
         this.payableAmount = 0.0;
         this.orderStatus = OrderStatus.Live;
-        this.orderItems = new HashSet<OrderItem>();
+        this.orderItems = new ArrayList<OrderItem>();
     }
 
     public String getCustomerEmail() {
@@ -125,11 +125,11 @@ public class OrderDetail extends BaseModel implements Serializable {
         this.paidAmount = paidAmount;
     }
 
-    public Set<OrderItem> getOrderItems() {
+    public List<OrderItem> getOrderItems() {
         return orderItems;
     }
 
-    public void setOrderItems(Set<OrderItem> orderItems) {
+    public void setOrderItems(List<OrderItem> orderItems) {
         this.orderItems = orderItems;
     }
 
