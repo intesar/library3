@@ -288,7 +288,7 @@ public class OrderServiceImplTest {
         addInValidProductType(orderDetailId, productId, quantity, organization, productType, orderDetail);
         addValidItem(orderDetailId, productId, quantity, organization, productType, orderDetail);
         addItemQuantityAsZero(orderDetailId, productId, quantity, organization, productType, orderDetail);
-
+        addItemQuantity1(orderDetailId, productId, quantity, organization, productType, orderDetail);
     }
 
     private void addValidItem(Long orderDetailId, Long productId, int quantity, Long organization, ProductType productType, OrderDetail orderDetail) {
@@ -365,6 +365,13 @@ public class OrderServiceImplTest {
 
     }
 
+    private void addItemQuantity1(Long orderDetailId, Long productId, int quantity, Long organization, ProductType productType, OrderDetail orderDetail) {
+
+        orderDetail = orderService.adddItem(orderDetailId, productId, 10, organization, productType);
+        assertTrue(10 <= orderDetail.getOrderItems().get(0).getQuantity());
+
+    }
+
     private OrderDetail getOrder() {
         String customerName = "test";
         String customerUsername = "test";
@@ -387,112 +394,6 @@ public class OrderServiceImplTest {
     /**
      * Test of deleteItem method, of class OrderServiceImpl.
      */
-    @Test
-    public void testDeleteItem() {
-        Long organization = 1L;
-        OrderDetail orderDetail = getOrder();
-        Long orderDetailId = orderDetail.getId();
-        Long productId = getProductId();
-        int quantity = 1;
-        ProductType productType = ProductType.OTHER;
-
-        addValidItem(orderDetailId, productId, quantity, organization, productType, orderDetail);
-        Long itemId = null;
-        for ( OrderItem oi : orderDetail.getOrderItems()) {
-            itemId = oi.getId();
-        }
-        deleteValidItem(orderDetailId, itemId,organization);
-        addValidItem(orderDetailId, productId, quantity, organization, productType, orderDetail);
-        for ( OrderItem oi : orderDetail.getOrderItems()) {
-            itemId = oi.getId();
-        }
-        deleteItemInvalidOrderDetail(orderDetailId,itemId,organization);
-        addValidItem(orderDetailId, productId, quantity, organization, productType, orderDetail);
-        for ( OrderItem oi : orderDetail.getOrderItems()) {
-            itemId = oi.getId();
-        }
-        deleteItemInvalidOrderDetail1(orderDetailId,itemId,organization);
-        addValidItem(orderDetailId, productId, quantity, organization, productType, orderDetail);
-        for ( OrderItem oi : orderDetail.getOrderItems()) {
-            itemId = oi.getId();
-        }
-        deleteItemInvalidOrderDetail2(orderDetailId,itemId,organization);
-        addValidItem(orderDetailId, productId, quantity, organization, productType, orderDetail);
-        deleteItemInvalidOrderDetail3(orderDetailId,itemId,organization);
-        addValidItem(orderDetailId, productId, quantity, organization, productType, orderDetail);
-        deleteItemInvalidOrderDetail4(orderDetailId,itemId,organization);
-        addValidItem(orderDetailId, productId, quantity, organization, productType, orderDetail);
-        deleteItemInvalidOrderDetail5(orderDetailId,itemId,organization);
-
-    }
-
-    private void deleteValidItem(Long orderDetailId, Long productId, Long organization) {
-        OrderDetail result = orderService.deleteItem(orderDetailId, productId, organization);
-        assertTrue(result.getOrderItems().size() == 0 );
-    }
-
-    private void deleteItemInvalidOrderDetail(Long orderDetailId, Long productId, Long organization) {
-        try {
-            OrderDetail result = orderService.deleteItem(orderDetailId+1, productId, organization);
-            fail("invalid order Id");
-        }catch (InvalidInputException ex){}
-
-    }
-
-    private void deleteItemInvalidOrderDetail1(Long orderDetailId, Long productId, Long organization) {
-        try {
-            OrderDetail result = orderService.deleteItem(null, productId, organization);
-            fail("invalid order Id");
-        }catch (InvalidInputException ex){}
-
-    }
-    private void deleteItemInvalidOrderDetail2(Long orderDetailId, Long productId, Long organization) {
-        try {
-            OrderDetail result = orderService.deleteItem(null, productId+1, organization);
-            fail("invalid order Id");
-        }catch (InvalidInputException ex){}
-
-    }
-    private void deleteItemInvalidOrderDetail3(Long orderDetailId, Long productId, Long organization) {
-        try {
-            OrderDetail result = orderService.deleteItem(null, null, organization);
-            fail("invalid order Id");
-        }catch (InvalidInputException ex){}
-
-    }
-    private void deleteItemInvalidOrderDetail4(Long orderDetailId, Long productId, Long organization) {
-        try {
-            OrderDetail result = orderService.deleteItem(null, productId, organization+1);
-            fail("invalid order Id");
-        }catch (InvalidInputException ex){}
-
-    }
-
-    private void deleteItemInvalidOrderDetail5(Long orderDetailId, Long productId, Long organization) {
-        try {
-            OrderDetail result = orderService.deleteItem(null, productId, null);
-            fail("invalid order Id");
-        }catch (InvalidInputException ex){}
-
-    }
-    /**
-     * Test of updateOrderItemQuantity method, of class OrderServiceImpl.
-     */
-    @Test
-    public void testUpdateOrderItemQuantity() {
-        System.out.println("updateOrderItemQuantity");
-        Long orderDetailId = null;
-        Long orderItemId = null;
-        int quantity = 0;
-        Long organization = null;
-        OrderServiceImpl instance = new OrderServiceImpl();
-        OrderDetail expResult = null;
-        OrderDetail result = instance.updateOrderItemQuantity(orderDetailId, orderItemId, quantity, organization);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
     /**
      * Test of changeOrderStatus method, of class OrderServiceImpl.
      */
