@@ -13,7 +13,6 @@ import com.bia.ccm.entity.OrderDetail;
 import com.bia.ccm.entity.OrderStatus;
 import com.bia.ccm.entity.ProductType;
 import java.util.List;
-import java.util.Set;
 
 /**
  *
@@ -36,6 +35,11 @@ public interface OrderService {
             Long customerUserId, Long organization);
 
     /**
+     *  use this function for
+     *   1. adding new item
+     *   2. deleting existing item by providing quantity as zero
+     *   3. update item quantity 
+     *
      *
      * @param orderDetailId not null
      * @param productId not null
@@ -45,24 +49,7 @@ public interface OrderService {
      */
     OrderDetail adddItem(Long orderDetailId, Long productId, int quantity, Long organization, ProductType productType);
 
-    /**
-     *
-     * @param orderDetailId not null
-     * @param orderItemId not null
-     * @param organization   not null
-     * @return
-     */
-    OrderDetail deleteItem(Long orderDetailId, Long orderItemId, Long organization);
-
-    /**
-     *
-     * @param orderDetailId not null
-     * @param quantity >= 0
-     * @param organization   not null
-     * @return
-     */
-    OrderDetail updateOrderItemQuantity(Long orderDetailId, Long orderItemId, int quantity, Long organization);
-
+    
     /**
      *
      * @param orderDetailId not null

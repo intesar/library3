@@ -89,50 +89,7 @@ public class OrderServiceImpl implements OrderService {
         return orderDetail;
     }
 
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED)
-    public OrderDetail deleteItem(Long orderDetailId, Long orderItemId, Long organization) {
-        validateForNull(orderDetailId, "Order ID");
-        validateForNull(orderItemId, "Product ID");
-        OrderDetail orderDetail = this.orderDetailDao.find(orderDetailId);
-        validateForNull(orderDetail, "Order ID");
-        /* organization validation */
-        validateOrganization(orderDetail.getOrganization(), organization);
-        Set<OrderItem> orderItems = orderDetail.getOrderItems();
-        for (OrderItem orderItem : orderItems) {
-            if (orderItem.getId().equals(orderItemId)) {
-                orderItems.remove(orderItem);
-                /* calculate amount due */
-                updateAmountDueAndPayable(orderDetail);
-                orderDetail = this.orderDetailDao.merge(orderDetail);
-                return orderDetail;
-            }
-        }
-        throw new InvalidInputException(" invalid item to delete ");
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED)
-    public OrderDetail updateOrderItemQuantity(Long orderDetailId, Long orderItemId,
-            int quantity, Long organization) {
-        /* quantity validation */
-        validateQuantity(quantity);
-        OrderDetail orderDetail = this.orderDetailDao.find(orderDetailId);
-        /* organization validation */
-        validateOrganization(orderDetail.getOrganization(), organization);
-        Set<OrderItem> orderItems = orderDetail.getOrderItems();
-        for (OrderItem orderItem : orderItems) {
-            if (orderItem.getId().equals(orderItemId)) {
-                orderItem.setQuantity(quantity);
-                /* calculate amount due */
-                updateAmountDueAndPayable(orderDetail);
-                orderDetail = this.orderDetailDao.merge(orderDetail);
-                return orderDetail;
-            }
-        }
-        throw new InvalidInputException(" invalid item to delete ");
-    }
-
+    
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public OrderDetail updateOrderCustomerDetail(Long orderDetailId, String customerName,
