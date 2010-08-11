@@ -19,6 +19,8 @@ import com.bia.ccm.entity.ProductType;
 import com.bia.ccm.entity.Services;
 import com.bia.ccm.services.OrderService;
 import com.bia.ccm.exceptions.InvalidInputException;
+import com.bizintelapps.easydao.dao.PagedResult;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -58,8 +60,8 @@ public class OrderServiceImpl implements OrderService {
         for (OrderItem orderItem : orderItems) {
             if (orderItem.getProductId().equals(productId)) {
                 /* if quantity is zero delete this item */
-                if ( quantity <= 0 ) {
-                   orderItems.remove(orderItem);
+                if (quantity <= 0) {
+                    orderItems.remove(orderItem);
                 } else {
                     orderItem.setQuantity(orderItem.getQuantity() + quantity);
                 }
@@ -67,7 +69,7 @@ public class OrderServiceImpl implements OrderService {
                 return orderDetail;
             }
         }
-        
+
         String productName = null;
         if (productType.equals(ProductType.OTHER) && quantity <= 0) {
             throw new InvalidInputException(" Quantity cannot be Zero");
@@ -88,7 +90,6 @@ public class OrderServiceImpl implements OrderService {
         return orderDetail;
     }
 
-    
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public OrderDetail updateOrderCustomerDetail(Long orderDetailId, String customerName,
@@ -124,6 +125,23 @@ public class OrderServiceImpl implements OrderService {
         /* validate orderStatus */
         validateOrderStatus(orderStatus);
         return this.orderDetailDao.findByOrderStatus(organization, orderStatus);
+    }
+
+    @Override
+    public PagedResult<OrderDetail> getOrderByUserId(Long userId, String username, String email, int start, int max) {
+        /* validate userId, start, max */
+        validateForNull(userId, "user ID cannot be null");
+        validatePagingParams(start, max);
+        return orderDetailDao.findByCustomerInfo(userId, username, email, start, max);
+    }
+
+    @Override
+    public PagedResult<OrderDetail> searchOrderByOrganization(Long organization, Date startDate, Date endDate,
+            OrderStatus orderStatus, String customer, int start, int max) {
+        /* validation */
+        validateForNull(organization, " organization Id cannot be null");
+        validatePagingParams(start, max);
+        return orderDetailDao.findOrderDetails(organization, startDate, endDate, orderStatus, customer, start, max);
     }
 
     /* private methods */
@@ -186,6 +204,12 @@ public class OrderServiceImpl implements OrderService {
     private void validateForNull(Object object, String msg) {
         if (object == null) {
             throw new InvalidInputException(msg + " cannot be null");
+        }
+    }
+
+    private void validatePagingParams(int start, int max) {
+        if (start < 0 || max <= 0 || max > 50) {
+            throw new InvalidInputException(" Invalid start and max values ");
         }
     }
     /* daos */

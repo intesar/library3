@@ -30,7 +30,9 @@ import javax.persistence.Table;
 @Table(name = "order_detail")
 @NamedQueries({
     @NamedQuery(name = "OrderDetail.findByCustomerName", query = "select s from OrderDetail s where s.customerName like ?1 "),
-    @NamedQuery(name = "OrderDetail.findByOrderStatus", query = "select s from OrderDetail s where s.organization = ?1 AND s.orderStatus like ?2")
+    @NamedQuery(name = "OrderDetail.findByOrderStatus", query = "select s from OrderDetail s where s.organization = ?1 AND s.orderStatus like ?2"),
+    @NamedQuery(name = "OrderDetail.findByCustomerInfo", query = "select s from OrderDetail s " +
+    "WHERE s.customerUsername LIKE ?1 OR s.customerEmail LIKE ?2 OR s.customerUserId = ?3 ORDER BY s.createDate DESC ")
 })
 public class OrderDetail extends BaseModel implements Serializable {
 
