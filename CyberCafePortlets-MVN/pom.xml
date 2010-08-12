@@ -15,7 +15,7 @@
         </repository>
     </repositories>
     <properties>
-        <spring.version>3.0.0.RELEASE</spring.version>
+        <spring.version>3.0.3.RELEASE</spring.version>
         <netbeans.hint.deploy.server>liferay</netbeans.hint.deploy.server>
         <technologies>
             JDK1.6
@@ -25,7 +25,7 @@
             jars ( /lib)
             Liferay 6.0
             SVN + Tortoise
-            
+
         </technologies>
     </properties>
 
@@ -61,14 +61,15 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc-portlet</artifactId>
-            <version>3.0.3.RELEASE</version>
+            <version>${spring.version}</version>
         </dependency>
+        
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
             <version>2.5.6</version>
         </dependency>
-
+        
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>
@@ -129,7 +130,12 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
-            <version>3.5.0-Beta-2</version>
+            <version>3.5.0-Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-search</artifactId>
+            <version>3.2.1.Final</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
