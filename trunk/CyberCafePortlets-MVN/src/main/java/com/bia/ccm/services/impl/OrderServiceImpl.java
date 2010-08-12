@@ -141,7 +141,8 @@ public class OrderServiceImpl implements OrderService {
         /* validation */
         validateForNull(organization, " organization Id cannot be null");
         validatePagingParams(start, max);
-        return orderDetailDao.findOrderDetails(organization, startDate, endDate, orderStatus, customer, start, max);
+        //return orderDetailDao.findOrderDetails(organization, startDate, endDate, orderStatus, customer, start, max);
+        return orderDetailDao.search(customer, orderStatus, startDate, endDate, organization, start, max);
     }
 
     /* private methods */

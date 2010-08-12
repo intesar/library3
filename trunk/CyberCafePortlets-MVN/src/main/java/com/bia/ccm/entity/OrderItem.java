@@ -17,6 +17,9 @@ import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Store;
 
 /**
  *
@@ -30,10 +33,13 @@ public class OrderItem extends BaseModel implements Serializable {
     @JoinColumn(name = "order_detail", referencedColumnName = "id", nullable = false)
     @ManyToOne
     private OrderDetail orderDetail;
+    @Field(index=Index.TOKENIZED, store=Store.NO)
     @Column(name = "product_id", nullable = false)
     private Long productId;
+    @Field(index=Index.TOKENIZED, store=Store.NO)
     @Column(name = "product_name", nullable = false)
     private String productName;
+    @Field(index=Index.TOKENIZED, store=Store.NO)
     @Enumerated
     @Column(name = "product_type", nullable = false)
     private ProductType productType;

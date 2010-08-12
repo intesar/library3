@@ -12,12 +12,19 @@ package com.bia.ccm.dao.impl;
 import com.bia.ccm.dao.OrderDetailDao;
 import com.bia.ccm.entity.OrderDetail;
 import com.bia.ccm.entity.OrderStatus;
+import com.bia.ccm.exceptions.InvalidInputException;
 import com.bizintelapps.easydao.dao.GenericDaoImpl;
 import com.bizintelapps.easydao.dao.PagedResult;
 import com.bizintelapps.easydao.dao.PagingParams;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Query;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.queryParser.MultiFieldQueryParser;
+import org.apache.lucene.queryParser.ParseException;
+import org.hibernate.search.jpa.FullTextEntityManager;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -44,6 +51,40 @@ public class OrderDetailDaoImpl extends GenericDaoImpl<OrderDetail, Long> implem
         List<OrderDetail> list = em.createNamedQuery("OrderDetail.findByCustomerInfo").setParameter(1, username).setParameter(2, email).setParameter(3, userId).setFirstResult(start).setMaxResults(max).getResultList();
         pagedResult.setResults(list);
         return pagedResult;
+    }
+
+    @Override
+    public PagedResult<OrderDetail> search(String keyword, OrderStatus orderStatus, Date startDate, Date endDate, Long organization, int start, int max) {
+        try {
+            FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
+            // create native Lucene query
+            String[] fields = new String[]{"customerName", "customerUsername", "customerEmail", "customerUserId",
+                "customerPhone", "orderStatus" ,"orderItems.productName"};
+
+            MultiFieldQueryParser parser = new MultiFieldQueryParser(fields, new StandardAnalyzer());
+            String txt = "";
+            if ( orderStatus != null ) {
+                txt = " AND orderStatus:" + orderStatus;
+            }
+            org.apache.lucene.search.Query query = parser.parse(keyword + " AND organization:" + organization
+                   /* + " AND orderDate: [" + startDate + " TO " + endDate + "]" */ + txt);
+            // wrap Lucene query in a javax.persistence.Query
+            javax.persistence.Query persistenceQuery = fullTextEntityManager.createFullTextQuery(query, OrderDetail.class);
+            // execute search
+            persistenceQuery.setFirstResult(start);
+            persistenceQuery.setMaxResults(max);
+            List list = persistenceQuery.getResultList();
+            int maxResults = persistenceQuery.getMaxResults();
+           
+            PagingParams pagingParams = new PagingParams(start, max);
+            PagedResult pagedResult = new PagedResult(maxResults, list, pagingParams);
+            
+            return pagedResult;
+        } catch (ParseException ex) {
+            log.warn(ex.getMessage(), ex);
+            throw new InvalidInputException(ex.getMessage());
+        }
+
     }
 
     @Override
@@ -94,4 +135,5 @@ public class OrderDetailDaoImpl extends GenericDaoImpl<OrderDetail, Long> implem
         pagedResult.setResults(list);
         return pagedResult;
     }
+    protected static final Log logger = LogFactory.getLog(OrderDetailDaoImpl.class);
 }
