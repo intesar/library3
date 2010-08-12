@@ -29,4 +29,6 @@ public interface OrderDetailDao  extends GenericDao<OrderDetail, Long> {
 
     PagedResult<OrderDetail> findOrderDetails(Long organization, Date startDate, Date endDate,
             OrderStatus orderStatus, String customer, int start, int max);
+
+    PagedResult<OrderDetail> search(String keyword, OrderStatus orderStatus, Date startDate, Date endDate, Long organization, int start, int max);
 }
