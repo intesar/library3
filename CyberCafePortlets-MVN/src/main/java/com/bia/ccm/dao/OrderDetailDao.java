@@ -7,7 +7,6 @@
  * This software is the proprietary information of BizIntelApps.
  * Use is subject to license terms.
  */
-
 package com.bia.ccm.dao;
 
 import com.bia.ccm.entity.OrderDetail;
@@ -21,11 +20,11 @@ import java.util.List;
  *
  * @author intesar
  */
-public interface OrderDetailDao  extends GenericDao<OrderDetail, Long> {
+public interface OrderDetailDao extends GenericDao<OrderDetail, Long> {
 
     List<OrderDetail> findByOrderStatus(Long organization, OrderStatus orderStatus);
 
-    PagedResult<OrderDetail> findByCustomerInfo(Long userId, String username, String email, int start, int max);
+    PagedResult<OrderDetail> findByCustomerInfo(String user, int start, int max);
 
     PagedResult<OrderDetail> findOrderDetails(Long organization, Date startDate, Date endDate,
             OrderStatus orderStatus, String customer, int start, int max);

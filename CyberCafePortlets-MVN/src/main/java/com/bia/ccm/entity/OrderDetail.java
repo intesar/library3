@@ -69,9 +69,11 @@ public class OrderDetail extends BaseModel implements Serializable {
     @Field(index = Index.TOKENIZED, store = Store.NO)
     @Column(name = "customer_name")
     private String customerName;
+    @Analyzer(definition = "customanalyzer")
     @Field(index = Index.TOKENIZED, store = Store.NO)
     @Column(name = "customer_username")
     private String customerUsername;
+    @Analyzer(definition = "customanalyzer")
     @Field(index = Index.TOKENIZED, store = Store.NO)
     @Column(name = "customer_email")
     private String customerEmail;

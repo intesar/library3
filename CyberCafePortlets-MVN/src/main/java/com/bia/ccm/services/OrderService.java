@@ -36,6 +36,7 @@ public interface OrderService {
             String customerUsername, String customerEmail, String customerPhone, 
             Long customerUserId, Long organization);
 
+    void deleteOrder(Long orderId, Long organization);
     /**
      *  use this function for
      *   1. adding new item

@@ -20,6 +20,7 @@ import com.bia.ccm.entity.Services;
 import com.bia.ccm.services.OrderService;
 import com.bia.ccm.exceptions.InvalidInputException;
 import com.bizintelapps.easydao.dao.PagedResult;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,13 @@ public class OrderServiceImpl implements OrderService {
         updateCustomerDetails(orderDetail, customerName, customerUsername, customerUserId, customerEmail, customerPhone);
         orderDetail.setOrganization(organization);
         return this.orderDetailDao.persist(orderDetail);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void deleteOrder(Long orderId, Long organization) {
+        OrderDetail od = orderDetailDao.find(orderId);
+        orderDetailDao.delete(od);
     }
 
     @Override
@@ -132,7 +140,7 @@ public class OrderServiceImpl implements OrderService {
         /* validate userId, start, max */
         validateForNull(userId, "user ID cannot be null");
         validatePagingParams(start, max);
-        return orderDetailDao.findByCustomerInfo(userId, username, email, start, max);
+        return orderDetailDao.findByCustomerInfo(userId + " " + username + " " + email, start, max);
     }
 
     @Override
