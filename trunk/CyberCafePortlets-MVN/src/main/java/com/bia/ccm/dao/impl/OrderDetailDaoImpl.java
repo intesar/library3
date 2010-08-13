@@ -24,7 +24,9 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.queryParser.MultiFieldQueryParser;
 import org.apache.lucene.queryParser.ParseException;
+import org.apache.lucene.search.Sort;
 import org.hibernate.search.jpa.FullTextEntityManager;
+import org.hibernate.search.jpa.FullTextQuery;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -44,13 +46,34 @@ public class OrderDetailDaoImpl extends GenericDaoImpl<OrderDetail, Long> implem
     }
 
     @Override
-    public PagedResult<OrderDetail> findByCustomerInfo(Long userId, String username, String email, int start, int max) {
-        PagingParams pagingParams = new PagingParams(start, max);
-        PagedResult pagedResult = new PagedResult(0, null, pagingParams);
-        //return executeNamedQueryReturnList("OrderDetail.findByCustomerInfo", pagedResult, username, email, userId);
-        List<OrderDetail> list = em.createNamedQuery("OrderDetail.findByCustomerInfo").setParameter(1, username).setParameter(2, email).setParameter(3, userId).setFirstResult(start).setMaxResults(max).getResultList();
-        pagedResult.setResults(list);
-        return pagedResult;
+    public PagedResult<OrderDetail> findByCustomerInfo(String user, int start, int max) {
+        try {
+            FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
+            // create native Lucene query
+            String[] fields = new String[]{"customerUsername", "customerEmail", "customerUserId"};
+
+            MultiFieldQueryParser parser = new MultiFieldQueryParser(fields, new StandardAnalyzer());
+
+            org.apache.lucene.search.Query query = parser.parse(user);
+            // wrap Lucene query in a javax.persistence.Query
+            //javax.persistence.Query persistenceQuery
+            FullTextQuery persistenceQuery = fullTextEntityManager.createFullTextQuery(query, OrderDetail.class);
+            // execute search
+            persistenceQuery.setFirstResult(start);
+            persistenceQuery.setMaxResults(max);
+            Sort sort = new Sort("id", true);
+            persistenceQuery.setSort(sort);
+            List list = persistenceQuery.getResultList();
+            int maxResults = persistenceQuery.getMaxResults();
+
+            PagingParams pagingParams = new PagingParams(start, max);
+            PagedResult pagedResult = new PagedResult(maxResults, list, pagingParams);
+
+            return pagedResult;
+        } catch (ParseException ex) {
+            log.warn(ex.getMessage(), ex);
+            throw new InvalidInputException(ex.getMessage());
+        }
     }
 
     @Override
@@ -59,26 +82,27 @@ public class OrderDetailDaoImpl extends GenericDaoImpl<OrderDetail, Long> implem
             FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
             // create native Lucene query
             String[] fields = new String[]{"customerName", "customerUsername", "customerEmail", "customerUserId",
-                "customerPhone", "orderStatus" ,"orderItems.productName"};
+                "customerPhone", "orderStatus", "orderItems.productName", "organization"};
 
             MultiFieldQueryParser parser = new MultiFieldQueryParser(fields, new StandardAnalyzer());
             String txt = "";
-            if ( orderStatus != null ) {
+            if (orderStatus != null) {
                 txt = " AND orderStatus:" + orderStatus;
             }
-            org.apache.lucene.search.Query query = parser.parse(keyword + " AND organization:" + organization
-                   /* + " AND orderDate: [" + startDate + " TO " + endDate + "]" */ + txt);
+            org.apache.lucene.search.Query query = parser.parse(keyword + " AND organization:" + organization + txt);
             // wrap Lucene query in a javax.persistence.Query
-            javax.persistence.Query persistenceQuery = fullTextEntityManager.createFullTextQuery(query, OrderDetail.class);
+            FullTextQuery persistenceQuery = fullTextEntityManager.createFullTextQuery(query, OrderDetail.class);
             // execute search
             persistenceQuery.setFirstResult(start);
             persistenceQuery.setMaxResults(max);
+            Sort sort = new Sort("id", true);
+            persistenceQuery.setSort(sort);
             List list = persistenceQuery.getResultList();
             int maxResults = persistenceQuery.getMaxResults();
-           
+
             PagingParams pagingParams = new PagingParams(start, max);
             PagedResult pagedResult = new PagedResult(maxResults, list, pagingParams);
-            
+
             return pagedResult;
         } catch (ParseException ex) {
             log.warn(ex.getMessage(), ex);
