@@ -36,23 +36,15 @@ public interface OrderService {
             String customerUsername, String customerEmail, String customerPhone, 
             Long customerUserId, Long organization);
 
-    void deleteOrder(Long orderId, Long organization);
     /**
-     *  use this function for
-     *   1. adding new item
-     *   2. deleting existing item by providing quantity as zero
-     *   3. update item quantity 
-     *
-     *
-     * @param orderDetailId not null
-     * @param productId not null
-     * @param quantity >= 0
-     * @param organization   not null
-     * @return
+     * Order with no items will be physically deleted else Order will be marked as Deleted
+     * 
+     * @param orderId
+     * @param organization
      */
-    OrderDetail adddItem(Long orderDetailId, Long productId, int quantity, Long organization, ProductType productType);
+    void deleteOrder(Long orderId, Long organization);
 
-    
+
     /**
      *
      * @param orderDetailId not null
@@ -67,6 +59,21 @@ public interface OrderService {
     OrderDetail updateOrderCustomerDetail(Long orderDetailId, String customerName,
             String customerUsername, String customerEmail, String customerPhone, 
             Long customerUserId, Long organization);
+
+    /**
+     *  use this function for
+     *   1. adding new item
+     *   2. deleting existing item by providing quantity as zero
+     *   3. update item quantity
+     *
+     *
+     * @param orderDetailId not null
+     * @param productId not null
+     * @param quantity >= 0
+     * @param organization   not null
+     * @return
+     */
+     OrderDetail adddItem(Long orderDetailId, Long productId, int quantity, Long organization, ProductType productType);
 
     /**
      *
