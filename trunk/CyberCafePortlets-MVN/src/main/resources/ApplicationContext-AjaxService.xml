@@ -45,6 +45,11 @@
 
     </bean>
     -->
+    <bean id="ajaxCafeService" class="com.bia.ccm.ajax.AjaxCafeService" >
+        <dwr:remote javascript="AjaxCafeService">
+            <dwr:include method="getAllServices" />
+        </dwr:remote>
+    </bean>
     <bean id="ajaxAdminService" class="com.bia.ccm.ajax.AjaxAdminService" >
         <dwr:remote javascript="AjaxAdminService">
             <dwr:include method="savePreferences" />
@@ -65,7 +70,6 @@
             <dwr:filter class="com.bia.ccm.ajax.MemberRoleCheckFilter" />
             <dwr:filter class="com.bia.ccm.ajax.AdminRoleCheckFilter" />
         </dwr:remote>
-
     </bean>
     <!--
     <bean id="ajaxCustomerService" class="com.bia.ccm.ajax.AjaxCustomerService" >
