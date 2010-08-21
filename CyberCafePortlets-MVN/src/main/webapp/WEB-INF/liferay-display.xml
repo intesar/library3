@@ -6,5 +6,6 @@
     <portlet id="Preferences">Preferences</portlet>
     <portlet id="CyberCafeProfile">CyberCafeProfile</portlet>
     <portlet id="CafeRegistration">CafeRegistration</portlet>
+    <portlet id="Products">Products</portlet>
   </category>
 </display>
