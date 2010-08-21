@@ -18,20 +18,12 @@
         </tr>
     </table>
 </div>
-
 <script type='text/javascript' src='/CyberCafePortlets/dwr/engine.js'></script>
 <script type='text/javascript' src='/CyberCafePortlets/dwr/interface/AjaxAdminService.js'></script>
 <script type="text/javascript">
-    dwr.engine.setErrorHandler(cc_r_errorHandler);
-    function cc_r_errorHandler(message, exception){
-        alert(message);
-        //Session timedout/invalidated
-        if(exception && exception.javaClassName
-            == 'com.bia.ccm.exceptions.LoginRequiredException'){
-            //Reload or display an error etc.
-            document.location.reload();
-        }
-    }
+    $(document).ready(function() {
+        cc_setErrorHandler();
+    })
     function cc_r_clear() {
         document.getElementById("cc_r_organizationId").value = "";
         document.getElementById("cc_r_organizationName").value = "";
