@@ -28,8 +28,8 @@
 		</supports>
 		<resource-bundle>com.bia.ccm.portlet.messages</resource-bundle>
 		<portlet-info>
-			<title>Preferences</title>
-			<short-title>Preferences</short-title>
+			<title>Email Notification</title>
+			<short-title>Email Notification</short-title>
 		</portlet-info>
 	</portlet>
 	<portlet>
@@ -44,8 +44,8 @@
 		</supports>
 		<resource-bundle>com.bia.ccm.portlet.messages</resource-bundle>
 		<portlet-info>
-			<title>Cafe Profile</title>
-			<short-title>Cafe Profile</short-title>
+			<title>Organization Profile</title>
+			<short-title>Organization Profile</short-title>
 		</portlet-info>
 	</portlet>
 	<portlet>
@@ -76,8 +76,8 @@
 		</supports>
 		<resource-bundle>com.bia.ccm.portlet.messages</resource-bundle>
 		<portlet-info>
-			<title>Products</title>
-			<short-title>Products</short-title>
+			<title>Products And Services</title>
+			<short-title>Products And Services</short-title>
 		</portlet-info>
 	</portlet>
 </portlet-app>

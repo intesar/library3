@@ -2,7 +2,17 @@ $(document).ready(function() {
     cc_setErrorHandler();
     cc_p_getPreferences();
 })
-//window.onload = function() {cc_p_getPreferences();}
+$('#cc_p_refreshBtn')
+    .button()
+    .click(function() {
+        cc_p_getPreferences();
+    });
+
+$('#cc_p_saveBtn')
+    .button()
+    .click(function() {
+        cc_p_save();
+    });
 var cc_p_dto;
 var cc_p_max = 5;
 function cc_p_getPreferences() {
