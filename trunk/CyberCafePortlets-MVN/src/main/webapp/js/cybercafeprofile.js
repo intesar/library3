@@ -2,6 +2,17 @@ $(document).ready(function() {
     cc_setErrorHandler();
     cc_o_getOrganization();
 })
+$('#cc_o_refreshBtn')
+    .button()
+    .click(function() {
+        cc_o_getOrganization();
+    });
+
+$('#cc_o_saveBtn')
+    .button()
+    .click(function() {
+        cc_o_save();
+    });
 var cc_o_dto;
 function cc_o_getOrganization() {
     dwr.engine.beginBatch();
