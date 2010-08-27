@@ -4,7 +4,6 @@
 package com.bia.ccm.services;
 
 import com.bia.ccm.entity.Services;
-import com.bia.ccm.entity.SystemLease;
 import com.bia.ccm.entity.Systems;
 import java.util.Date;
 import java.util.List;
@@ -36,23 +35,23 @@ public interface ProductService {
      * @param organization
      * @return
      */
-    List<SystemLease> getMySystemLease(Date startDate, Date endDate, String usrename);
-
-    /**
-     * 
-     * @param username
-     * @return
-     */
-    List<SystemLease> getAllSystemLease(long organization);
-
-    /**
-     *
-     * @param startDate
-     * @param endDate
-     * @param organization
-     * @return
-     */
-    List<SystemLease> getSystemLease(Date startDate, Date endDate, long organization);
+//    List<SystemLease> getMySystemLease(Date startDate, Date endDate, String usrename);
+//
+//    /**
+//     *
+//     * @param username
+//     * @return
+//     */
+//    List<SystemLease> getAllSystemLease(long organization);
+//
+//    /**
+//     *
+//     * @param startDate
+//     * @param endDate
+//     * @param organization
+//     * @return
+//     */
+//    List<SystemLease> getSystemLease(Date startDate, Date endDate, long organization);
 
     /**
      *
@@ -115,7 +114,7 @@ public interface ProductService {
     /**
      *
      */
-    void sendReports();
+    //void sendReports();
 
     /**
      * 
@@ -124,6 +123,6 @@ public interface ProductService {
      * @param organization
      * @return
      */
-    List getReport(Date startDate, Date endDate, long organization);
+   // List getReport(Date startDate, Date endDate, long organization);
 
  }

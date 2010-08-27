@@ -121,8 +121,8 @@ public class OrderServiceImpl implements OrderService {
         OrderDetail orderDetail = this.orderDetailDao.find(orderDetailId);
         /* organization validation */
         validateOrganization(orderDetail.getOrganization(), organization);
-        orderDetail.setPaidAmount(orderDetail.getPaidAmount() + amountPaid);
-        orderDetail.setPayableAmount(orderDetail.getPayableAmount() - amountPaid);
+        orderDetail.setPaid(orderDetail.getPaid() + amountPaid);
+        orderDetail.setDue(orderDetail.getDue() - amountPaid);
         orderDetail.setOrderStatus(orderStatus);
         return orderDetail;
     }
@@ -173,8 +173,8 @@ public class OrderServiceImpl implements OrderService {
                 /* also handle case of computer */
             }
         }
-        orderDetail.setAmountDue(amountDue);
-        orderDetail.setPayableAmount(amountDue - orderDetail.getPaidAmount());
+        orderDetail.setTotal(amountDue);
+        //orderDetail.setPayableAmount(amountDue - orderDetail.getPaidAmount());
     }
 
     private void updateCustomerDetails(OrderDetail orderDetail, String customerName, String customerUsername, Long customerUserId, String customerEmail, String customerPhone) {

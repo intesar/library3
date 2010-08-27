@@ -14,20 +14,20 @@ package com.bia.ccm.entity;
  *
  * @author intesar
  */
-public enum ProductType {
+public enum OrderType {
 
-    Computer("computer"),
-    OTHER("non-computer");
+    DURATION_BILLABLE("duration billable"),
+    MIXED("mixed"),
+    PRODUCT_BILLABLE("product billable");
 
-    private String rating;
+    private String type;
 
-    private ProductType(String rating) {
-        this.rating = rating;
+    private OrderType(String type) {
+        this.type = type;
     }
 
     @Override
     public String toString() {
-        return rating;
+        return type;
     }
-
 }

@@ -3,7 +3,6 @@ package com.bia.ccm.ajax;
 import com.bia.ccm.entity.Organization;
 import com.bia.ccm.entity.PreferenceDto;
 import com.bia.ccm.entity.Services;
-import com.bia.ccm.entity.SystemLease;
 import com.bia.ccm.entity.Systems;
 import com.bia.ccm.services.AccountStatusNotificationService;
 import com.bia.ccm.services.OrganizationService;
@@ -57,30 +56,7 @@ public class AjaxAdminService {
         return this.productService.getAllSystems(organization);
     }
 
-    /**
-     *  not in use
-     * @return
-     */
-    public List<SystemLease> getAllSystemLease(HttpSession session) {
-        ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
-        long organization = themeDisplay.getScopeGroupId();
-        return this.productService.getAllSystemLease(organization);
-    }
-
-    /**
-     *
-     * @param startDateString
-     * @param endDateString
-     * @return
-     */
-    public List<SystemLease> getSystemLease(String startDateString, String endDateString, HttpSession session) throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date startDate = sdf.parse(startDateString);
-        Date endDate = sdf.parse(endDateString);
-        ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
-        long organization = themeDisplay.getScopeGroupId();
-        return this.productService.getSystemLease(startDate, endDate, organization);
-    }
+    
 
     /**
      *
@@ -94,7 +70,7 @@ public class AjaxAdminService {
         Date endDate = sdf.parse(endDateString);
         ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
         long organization = themeDisplay.getScopeGroupId();
-        return this.productService.getReport(startDate, endDate, organization);
+        return null;//this.productService.getReport(startDate, endDate, organization);
     }
 
     /**
@@ -138,7 +114,7 @@ public class AjaxAdminService {
      * @return
      */
     public void sendReports() {
-        this.productService.sendReports();
+        //this.productService.sendReports();
     }
 
     /**

@@ -17,6 +17,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -46,13 +47,14 @@ import org.hibernate.search.annotations.TokenizerDef;
  */
 @Indexed
 @AnalyzerDef(name = "customanalyzer",
-  tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
-  filters = {
+tokenizer =
+@TokenizerDef(factory = StandardTokenizerFactory.class),
+filters = {
     @TokenFilterDef(factory = LowerCaseFilterFactory.class),
     @TokenFilterDef(factory = SnowballPorterFilterFactory.class, params = {
-      @Parameter(name = "language", value = "English")
+        @Parameter(name = "language", value = "English")
     })
-  })
+})
 @Entity
 @Table(name = "order_detail")
 @NamedQueries({
@@ -84,16 +86,20 @@ public class OrderDetail extends BaseModel implements Serializable {
     @Column(name = "customer_phone")
     private String customerPhone;
     /* payment info */
-    @Column(name = "amount_due", nullable = false)
-    private Double amountDue;
-    @Column(name = "paid_amount", nullable = false)
-    private Double paidAmount;
-    @Column(name = "payable_amount", nullable = false)
-    private Double payableAmount;
+    @Column(name = "total", nullable = false)
+    private Double total;
+    @Column(name = "paid", nullable = false)
+    private Double paid;
+    @Column(name = "due", nullable = false)
+    private Double due;
     @Field(index = Index.TOKENIZED, store = Store.NO)
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     @Column(name = "order_status", nullable = false)
     private OrderStatus orderStatus;
+    @Field(index = Index.TOKENIZED, store = Store.NO)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "order_type", nullable = false)
+    private OrderType orderType;
     @IndexedEmbedded
     @OneToMany(targetEntity = com.bia.ccm.entity.OrderItem.class, cascade = CascadeType.ALL, mappedBy = "orderDetail")
     private List<OrderItem> orderItems;
@@ -107,9 +113,9 @@ public class OrderDetail extends BaseModel implements Serializable {
     protected Date orderDate;
 
     public OrderDetail() {
-        this.amountDue = 0.0;
-        this.paidAmount = 0.0;
-        this.payableAmount = 0.0;
+        this.total = 0.0;
+        this.paid = 0.0;
+        this.due = 0.0;
         this.orderStatus = OrderStatus.LIVE;
         this.orderItems = new ArrayList<OrderItem>();
         this.orderDate = new Date();
@@ -163,12 +169,12 @@ public class OrderDetail extends BaseModel implements Serializable {
         this.orderStatus = orderStatus;
     }
 
-    public Double getPaidAmount() {
-        return paidAmount;
+    public OrderType getOrderType() {
+        return orderType;
     }
 
-    public void setPaidAmount(Double paidAmount) {
-        this.paidAmount = paidAmount;
+    public void setOrderType(OrderType orderType) {
+        this.orderType = orderType;
     }
 
     public List<OrderItem> getOrderItems() {
@@ -179,20 +185,28 @@ public class OrderDetail extends BaseModel implements Serializable {
         this.orderItems = orderItems;
     }
 
-    public Double getPayableAmount() {
-        return payableAmount;
+    public Double getDue() {
+        return due;
     }
 
-    public void setPayableAmount(Double payableAmount) {
-        this.payableAmount = payableAmount;
+    public void setDue(Double due) {
+        this.due = due;
     }
 
-    public Double getAmountDue() {
-        return amountDue;
+    public Double getPaid() {
+        return paid;
     }
 
-    public void setAmountDue(Double amountDue) {
-        this.amountDue = amountDue;
+    public void setPaid(Double paid) {
+        this.paid = paid;
+    }
+
+    public Double getTotal() {
+        return total;
+    }
+
+    public void setTotal(Double total) {
+        this.total = total;
     }
 
     public Long getOrganization() {

@@ -13,6 +13,7 @@ import com.bizintelapps.easydao.dao.BaseModel;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -40,7 +41,7 @@ public class OrderItem extends BaseModel implements Serializable {
     @Column(name = "product_name", nullable = false)
     private String productName;
     @Field(index=Index.TOKENIZED, store=Store.NO)
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     @Column(name = "product_type", nullable = false)
     private ProductType productType;
     @Column(name = "quantity", nullable = false)
