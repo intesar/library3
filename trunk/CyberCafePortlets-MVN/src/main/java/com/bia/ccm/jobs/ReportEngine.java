@@ -30,7 +30,7 @@ public class ReportEngine {
             logger.trace(" Started workService.notifyCustomersAtContractStart() ");
         }
         try {
-            workService.notifyCustomersAtContractStart();
+            //workService.notifyCustomersAtContractStart();
         } catch (RuntimeException ex) {
             logger.warn(ex.getMessage(), ex);
         }
@@ -45,7 +45,7 @@ public class ReportEngine {
             logger.trace("started workService.notifyCustomersAtContractEnd()");
         }
         try {
-            workService.notifyCustomersAtContractEnd();
+            //workService.notifyCustomersAtContractEnd();
         } catch (RuntimeException ex) {
             logger.warn(ex.getMessage(), ex);
         }
@@ -73,8 +73,8 @@ public class ReportEngine {
                     toAddress[count++] = ep.getEmail();
                 }
                 if (toAddress.length > 0) {
-                    List list1 = this.adminService.getReport(calendar.getTime(), calendar.getTime(), org);
-                    this.emailService.sendEmail(toAddress, list1.toString(), null);
+//                    List list1 = this.adminService.getReport(calendar.getTime(), calendar.getTime(), org);
+//                    this.emailService.sendEmail(toAddress, list1.toString(), null);
                 }
             } catch (RuntimeException ex) {
                 logger.warn(ex.getMessage(), ex);

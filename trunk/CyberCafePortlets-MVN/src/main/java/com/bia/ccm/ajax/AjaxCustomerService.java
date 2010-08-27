@@ -3,7 +3,6 @@
  */
 package com.bia.ccm.ajax;
 
-import com.bia.ccm.entity.SystemLease;
 import com.bia.ccm.services.ProductService;
 import com.liferay.portal.theme.ThemeDisplay;
 import java.text.ParseException;
@@ -29,21 +28,21 @@ public class AjaxCustomerService {
      * @param endDateString
      * @return
      */
-    public List<SystemLease> getMySystemLease(String startDateString, String endDateString, HttpSession session) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date startDate = null;
-        Date endDate = null;
-        ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
-        String username = themeDisplay.getUserId() + "";
-        try {
-            startDate = sdf.parse(startDateString);
-            endDate = sdf.parse(endDateString);
-            return this.adminService.getMySystemLease(startDate, endDate, username);
-        } catch (ParseException ex) {
-            logger.warn(ex.getMessage(), ex);
-            return null;
-        }
-    }
+//    public List getMySystemLease(String startDateString, String endDateString, HttpSession session) {
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//        Date startDate = null;
+//        Date endDate = null;
+//        ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
+//        String username = themeDisplay.getUserId() + "";
+//        try {
+//            startDate = sdf.parse(startDateString);
+//            endDate = sdf.parse(endDateString);
+//            return this.adminService.getMySystemLease(startDate, endDate, username);
+//        } catch (ParseException ex) {
+//            logger.warn(ex.getMessage(), ex);
+//            return null;
+//        }
+//    }
 
     public void setAdminService(ProductService adminService) {
         this.adminService = adminService;

@@ -7,12 +7,8 @@ import com.bia.ccm.dao.EmailPreferenceDao;
 import com.bia.ccm.dao.EmailTimePreferenceDao;
 import com.bia.ccm.dao.OrganizationDao;
 import com.bia.ccm.dao.ServicesDao;
-import com.bia.ccm.dao.SystemLeaseDao;
 import com.bia.ccm.dao.SystemsDao;
-import com.bia.ccm.entity.EmailPreference;
-import com.bia.ccm.entity.Organization;
 import com.bia.ccm.entity.Services;
-import com.bia.ccm.entity.SystemLease;
 import com.bia.ccm.entity.Systems;
 import com.bia.ccm.exceptions.InvalidInputException;
 import com.bia.ccm.exceptions.NoRoleException;
@@ -61,37 +57,37 @@ public class ProductServiceImpl implements ProductService {
     }
 
     
-    @Override
-    public List<SystemLease> getAllSystemLease(long organization) {
-        return this.systemLeaseDao.findByOrganization(organization);
-    }
-
-    public String saveSystemLease(
-            SystemLease systemLease, String username) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public List<SystemLease> getSystemLease(Date startDate, Date endDate, long organization) {
-        Calendar sDate = getCalendar(startDate, 0, 0);
-        Calendar eDate = getCalendar(startDate, 23, 59);
-        return this.systemLeaseDao.findByStartAndEndDates(sDate.getTime(), eDate.getTime(), organization);
-    }
-
-    @Override
-    public List<SystemLease> getMySystemLease(Date startDate, Date endDate, String username) {
-        Calendar sDate = getCalendar(startDate, 0, 0);
-        Calendar eDate = getCalendar(startDate, 23, 59);
-        return this.systemLeaseDao.findByUsernameAndStartEndDates(username, sDate.getTime(), eDate.getTime());
-    }
-
-    @Override
-    public List getReport(
-            Date startDate, Date endDate, long organization) {
-        Calendar sDate = getCalendar(startDate, 0, 0);
-        Calendar eDate = getCalendar(startDate, 23, 59);
-        return systemLeaseDao.findReportBetweenDates(sDate.getTime(), eDate.getTime(), organization);
-    }
+//    @Override
+//    public List<SystemLease> getAllSystemLease(long organization) {
+//        return this.systemLeaseDao.findByOrganization(organization);
+//    }
+//
+//    public String saveSystemLease(
+//            SystemLease systemLease, String username) {
+//        throw new UnsupportedOperationException("Not supported yet.");
+//    }
+//
+//    @Override
+//    public List<SystemLease> getSystemLease(Date startDate, Date endDate, long organization) {
+//        Calendar sDate = getCalendar(startDate, 0, 0);
+//        Calendar eDate = getCalendar(startDate, 23, 59);
+//        return this.systemLeaseDao.findByStartAndEndDates(sDate.getTime(), eDate.getTime(), organization);
+//    }
+//
+//    @Override
+//    public List<SystemLease> getMySystemLease(Date startDate, Date endDate, String username) {
+//        Calendar sDate = getCalendar(startDate, 0, 0);
+//        Calendar eDate = getCalendar(startDate, 23, 59);
+//        return this.systemLeaseDao.findByUsernameAndStartEndDates(username, sDate.getTime(), eDate.getTime());
+//    }
+//
+//    @Override
+//    public List getReport(
+//            Date startDate, Date endDate, long organization) {
+//        Calendar sDate = getCalendar(startDate, 0, 0);
+//        Calendar eDate = getCalendar(startDate, 23, 59);
+//        return systemLeaseDao.findReportBetweenDates(sDate.getTime(), eDate.getTime(), organization);
+//    }
 
     @Override
     @Transactional(propagation=Propagation.REQUIRED)
@@ -161,35 +157,35 @@ public class ProductServiceImpl implements ProductService {
         return this.systemsDao.findBySystemNameAndOrganization(1, organization);
     }
 
-    @Override
-    public void sendReports() {
-        List<Organization> orgs = this.organizationDao.findAll();
-        for (Organization organization : orgs) {
-            List<EmailPreference> emailPreferences = this.emailPreferenceDao.findByOrganization(organization.getId());
-            if (emailPreferences != null && emailPreferences.size() > 0) {
-
-                Calendar startDate = Calendar.getInstance();
-                startDate.set(Calendar.HOUR_OF_DAY, 0);
-                startDate.set(Calendar.MINUTE, 0);
-
-                Calendar endDate = Calendar.getInstance();
-                startDate.set(Calendar.HOUR_OF_DAY, 23);
-                startDate.set(Calendar.MINUTE, 59);
-
-                List result = getReport(startDate.getTime(), endDate.getTime(), organization.getId());
-                String[] toAddress = new String[emailPreferences.size()];
-                int count = 0;
-                String subject = "Courtesy BizIntelApps & FaceQuard.com";
-                for (EmailPreference ep : emailPreferences) {
-                    String email = ep.getEmail();
-
-                    toAddress[count++] = email;
-                }
-
-                emailService.sendEmail(toAddress, subject, new Date() + " [Total Minutes, Payable, Paid]" + result.toString());
-            }
-        }
-    }
+//    @Override
+//    public void sendReports() {
+//        List<Organization> orgs = this.organizationDao.findAll();
+//        for (Organization organization : orgs) {
+//            List<EmailPreference> emailPreferences = this.emailPreferenceDao.findByOrganization(organization.getId());
+//            if (emailPreferences != null && emailPreferences.size() > 0) {
+//
+//                Calendar startDate = Calendar.getInstance();
+//                startDate.set(Calendar.HOUR_OF_DAY, 0);
+//                startDate.set(Calendar.MINUTE, 0);
+//
+//                Calendar endDate = Calendar.getInstance();
+//                startDate.set(Calendar.HOUR_OF_DAY, 23);
+//                startDate.set(Calendar.MINUTE, 59);
+//
+//                List result = getReport(startDate.getTime(), endDate.getTime(), organization.getId());
+//                String[] toAddress = new String[emailPreferences.size()];
+//                int count = 0;
+//                String subject = "Courtesy BizIntelApps & FaceQuard.com";
+//                for (EmailPreference ep : emailPreferences) {
+//                    String email = ep.getEmail();
+//
+//                    toAddress[count++] = email;
+//                }
+//
+//                emailService.sendEmail(toAddress, subject, new Date() + " [Total Minutes, Payable, Paid]" + result.toString());
+//            }
+//        }
+//    }
 
     
     // ----------------------------- private methods -------------------------//
@@ -259,8 +255,6 @@ public class ProductServiceImpl implements ProductService {
     protected EmailPreferenceDao emailPreferenceDao;
     @Autowired
     protected EmailTimePreferenceDao emailTimePreferenceDao;
-    @Autowired
-    protected SystemLeaseDao systemLeaseDao;
     @Autowired
     protected OrganizationDao organizationDao;
     @Autowired

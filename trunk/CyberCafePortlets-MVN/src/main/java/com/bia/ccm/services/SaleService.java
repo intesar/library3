@@ -5,7 +5,6 @@ package com.bia.ccm.services;
 
 import com.bia.ccm.entity.Services;
 
-import com.bia.ccm.entity.SystemLease;
 import com.bia.ccm.entity.Systems;
 import com.bia.ccm.entity.UsageDetail;
 import java.util.List;
@@ -21,7 +20,7 @@ public interface SaleService {
      * @param organization
      * @return
      */
-    List<Services> getAllServices(long organization);
+    //List<Services> getAllServices(long organization);
 
     /**
      * 
@@ -29,7 +28,7 @@ public interface SaleService {
      * @param agent
      * @param organization 
      */
-    void chargePayment(long systemId, String agent, long organization);
+    //void chargePayment(long systemId, String agent, long organization);
 
     /**
      *
@@ -41,16 +40,10 @@ public interface SaleService {
      * @param paidAmount
      * @param agent
      */
-    void addService(String service, long units, String user, double payableAmount,
-            String comments, double paidAmount, String agent, long organization);
+//    void addService(String service, long units, String user, double payableAmount,
+//            String comments, double paidAmount, String agent, long organization);
 
-    /**
-     *
-     * @param id
-     * @return
-     */
-    List<SystemLease> getSystemLease(long id);
-
+    
     /**
      *
      * @param username
@@ -80,21 +73,21 @@ public interface SaleService {
      * @param amountPaid
      * @param cashier
      */
-    void unleaseSystem(long id, double amountPaid, String cashier);
+    //void unleaseSystem(long id, double amountPaid, String cashier);
 
     /**
      *
      * @param id
      * @return
      */
-    UsageDetail getPayableAmount(long id);
+    //UsageDetail getPayableAmount(long id);
 
     /**
      *
      * @param macAddress
      * @return
      */
-    Integer getSystemStatus(String macAddress);
+    //Integer getSystemStatus(String macAddress);
 
     /**
      *
@@ -106,10 +99,10 @@ public interface SaleService {
     /**
      *
      */
-    void notifyCustomersAtContractEnd();
+    //void notifyCustomersAtContractEnd();
 
     /**
      * 
      */
-    void notifyCustomersAtContractStart();
+    //void notifyCustomersAtContractStart();
 }

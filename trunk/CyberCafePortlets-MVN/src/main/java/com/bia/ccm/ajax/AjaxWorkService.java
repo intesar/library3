@@ -4,7 +4,6 @@
 package com.bia.ccm.ajax;
 
 import com.bia.ccm.entity.Services;
-import com.bia.ccm.entity.SystemLease;
 import com.bia.ccm.entity.Systems;
 import com.bia.ccm.entity.UsageDetail;
 import com.bia.ccm.services.ProductService;
@@ -29,7 +28,7 @@ public class AjaxWorkService {
     public List<Services> getAllServices(HttpSession session) {
         ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
         long organization = themeDisplay.getScopeGroupId();
-        return this.workService.getAllServices(organization);
+        return null;//this.workService.getAllServices(organization);
     }
 
     /**
@@ -80,7 +79,7 @@ public class AjaxWorkService {
         ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
         String username = themeDisplay.getUserId() + "";
         long organization = themeDisplay.getScopeGroupId();
-        this.workService.addService(service, units, user, payableAmount, comments, paidAmount, username, organization);
+        //this.workService.addService(service, units, user, payableAmount, comments, paidAmount, username, organization);
     }
 
     /**
@@ -89,7 +88,7 @@ public class AjaxWorkService {
      * @return
      */
     public UsageDetail getPayableAmount(int id) {
-        return this.workService.getPayableAmount(id);
+        return null;//this.workService.getPayableAmount(id);
     }
 
     /**
@@ -101,17 +100,17 @@ public class AjaxWorkService {
     public void unleaseSystem(int systemId, double paidAmount, HttpSession session) {
         ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
         String username = themeDisplay.getUserId() + "";
-        this.workService.unleaseSystem(systemId, paidAmount, username);
+        //this.workService.unleaseSystem(systemId, paidAmount, username);
     }
 
-    /**
-     *
-     * @param id
-     * @return
-     */
-    public List<SystemLease> getSystemLease(int id) {
-        return this.workService.getSystemLease(id);
-    }
+//    /**
+//     *
+//     * @param id
+//     * @return
+//     */
+//    public List getSystemLease(int id) {
+//        return this.workService.getSystemLease(id);
+//    }
 
     /**
      *
@@ -122,7 +121,7 @@ public class AjaxWorkService {
         ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute("THEME_DISPLAY");
         String username = themeDisplay.getUserId() + "";
         long organization = themeDisplay.getScopeGroupId();
-        workService.chargePayment(systemId, username, organization);
+        //workService.chargePayment(systemId, username, organization);
     }
 
     // membership for next milestone
