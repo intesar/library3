@@ -10,14 +10,12 @@
 package com.bia.ccm.services.impl;
 
 import com.bia.ccm.entity.Services;
-import com.bia.ccm.entity.SystemLease;
 import com.bia.ccm.entity.Systems;
 import com.bia.ccm.exceptions.InvalidInputException;
 import com.bia.ccm.exceptions.NoRoleException;
 import com.bia.ccm.services.ProductService;
 import com.bizintelapps.easydao.dao.UserThreadLocal;
 import com.bizintelapps.easydao.dao.UserThreadLocalDto;
-import java.util.Date;
 import java.util.List;
 import junit.framework.Assert;
 import org.junit.After;
@@ -103,85 +101,6 @@ public class ProductServiceImplTest {
     /**
      * Test of getAllSystemLease method, of class AdminServiceImpl.
      */
-    //@Test
-    public void testGetAllSystemLease() {
-        System.out.println("getAllSystemLease");
-        long organization = 0L;
-        ProductServiceImpl instance = new ProductServiceImpl();
-        List expResult = null;
-        List result = instance.getAllSystemLease(organization);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of saveSystemLease method, of class AdminServiceImpl.
-     */
-    //@Test
-    public void testSaveSystemLease() {
-        System.out.println("saveSystemLease");
-        SystemLease systemLease = null;
-        String username = "";
-        ProductServiceImpl instance = new ProductServiceImpl();
-        String expResult = "";
-        String result = instance.saveSystemLease(systemLease, username);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getSystemLease method, of class AdminServiceImpl.
-     */
-    //@Test
-    public void testGetSystemLease() {
-        System.out.println("getSystemLease");
-        Date startDate = null;
-        Date endDate = null;
-        long organization = 0L;
-        ProductServiceImpl instance = new ProductServiceImpl();
-        List expResult = null;
-        List result = instance.getSystemLease(startDate, endDate, organization);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getMySystemLease method, of class AdminServiceImpl.
-     */
-    //@Test
-    public void testGetMySystemLease() {
-        System.out.println("getMySystemLease");
-        Date startDate = null;
-        Date endDate = null;
-        String username = "";
-        ProductServiceImpl instance = new ProductServiceImpl();
-        List expResult = null;
-        List result = instance.getMySystemLease(startDate, endDate, username);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getReport method, of class AdminServiceImpl.
-     */
-    //@Test
-    public void testGetReport() {
-        System.out.println("getReport");
-        Date startDate = null;
-        Date endDate = null;
-        long organization = 0L;
-        ProductServiceImpl instance = new ProductServiceImpl();
-        List expResult = null;
-        List result = instance.getReport(startDate, endDate, organization);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
     /**
      * Test of saveService method, of class AdminServiceImpl.
      */
@@ -215,12 +134,13 @@ public class ProductServiceImplTest {
         long organization = 100L;
         Services service = new Services(null, "", 5.0, organization);
         try {
-            productService.saveService(service, organization+10);
+            productService.saveService(service, organization + 10);
             fail("No exception");
         } catch (InvalidInputException ex) {
             System.out.println(ex.getMessage());
         }
     }
+
     private void testSaveServiceWithEmptyName() {
         System.out.println("saveService");
         long organization = 100L;
@@ -372,16 +292,15 @@ public class ProductServiceImplTest {
         try {
             productService.deleteService(-1L, organization);
             fail("No exception");
-        } catch ( InvalidInputException ex) {
-
+        } catch (InvalidInputException ex) {
         }
         try {
             productService.deleteService(null, organization);
             fail("No exception");
-        } catch ( InvalidInputException ex) {
-
+        } catch (InvalidInputException ex) {
         }
     }
+
     private void testDeleteServiceWithInvalidOrganization() {
         System.out.println("deleteService");
         long organization = 101L;
@@ -392,10 +311,9 @@ public class ProductServiceImplTest {
         try {
             productService.deleteService(service.getId(), 10L);
             fail("No exception");
-        } catch ( NoRoleException ex) {
-
+        } catch (NoRoleException ex) {
         }
-        
+
     }
 
     private void testDeleteServiceWithValidId() {
@@ -407,7 +325,7 @@ public class ProductServiceImplTest {
         Assert.assertEquals(1, list.size());
         try {
             productService.deleteService(service.getId(), organization);
-        } catch ( InvalidInputException ex) {
+        } catch (InvalidInputException ex) {
             fail("No exception");
         }
         list = productService.getAllServices(organization);
@@ -444,17 +362,7 @@ public class ProductServiceImplTest {
         fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of sendReports method, of class AdminServiceImpl.
-     */
-    //@Test
-    public void testSendReports() {
-        System.out.println("sendReports");
-        ProductServiceImpl instance = new ProductServiceImpl();
-        instance.sendReports();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+   
     /**
      * Test of registerNewOrganization method, of class AdminServiceImpl.
      */
