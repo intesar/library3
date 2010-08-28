@@ -29,8 +29,6 @@ import org.hibernate.search.annotations.Store;
 @Entity
 @Table(name = "order_item")
 public class OrderItem extends BaseModel implements Serializable {
-
-    private static final long serialVersionUID = 1L;
     @JoinColumn(name = "order_detail", referencedColumnName = "id", nullable = false)
     @ManyToOne
     private OrderDetail orderDetail;

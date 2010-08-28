@@ -16,9 +16,9 @@ package com.bia.ccm.entity;
  */
 public enum OrderType {
 
-    DURATION_BILLABLE("duration billable"),
+    DURATION_BILLABLE("duration"),
     MIXED("mixed"),
-    PRODUCT_BILLABLE("product billable");
+    PRODUCT_BILLABLE("non-duration");
 
     private String type;
 

@@ -22,6 +22,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -65,7 +66,6 @@ filters = {
 })
 public class OrderDetail extends BaseModel implements Serializable {
 
-    private static final long serialVersionUID = 1L;
     /*  Customer Details */
     @Analyzer(definition = "customanalyzer")
     @Field(index = Index.TOKENIZED, store = Store.NO)
@@ -101,7 +101,8 @@ public class OrderDetail extends BaseModel implements Serializable {
     @Column(name = "order_type", nullable = false)
     private OrderType orderType;
     @IndexedEmbedded
-    @OneToMany(targetEntity = com.bia.ccm.entity.OrderItem.class, cascade = CascadeType.ALL, mappedBy = "orderDetail")
+    @OrderBy("id")
+    @OneToMany(targetEntity = OrderItem.class, cascade = CascadeType.ALL, mappedBy = "orderDetail")
     private List<OrderItem> orderItems;
     @Field(index = Index.TOKENIZED, store = Store.NO)
     @Column(name = "organization", nullable = false)
@@ -117,6 +118,7 @@ public class OrderDetail extends BaseModel implements Serializable {
         this.paid = 0.0;
         this.due = 0.0;
         this.orderStatus = OrderStatus.LIVE;
+        this.orderType = OrderType.PRODUCT_BILLABLE;
         this.orderItems = new ArrayList<OrderItem>();
         this.orderDate = new Date();
     }
