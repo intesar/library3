@@ -430,9 +430,9 @@ public class OrderServiceImplTest {
         result = orderService.changeOrderStatus(result.getId(), 0.0, OrderStatus.LIVE, organization);
         assertNotNull(result);
         Double amt = 0.0;
-        assertEquals(result.getAmountDue(), amt);
-        assertEquals(result.getPaidAmount(), amt);
-        assertEquals(result.getPayableAmount(), amt);
+        assertEquals(result.getTotal(), amt);
+        assertEquals(result.getPaid(), amt);
+        assertEquals(result.getDue(), amt);
         assertEquals(result.getOrderStatus(), OrderStatus.LIVE);
     }
 
@@ -455,9 +455,9 @@ public class OrderServiceImplTest {
         assertNotNull(result);
         Double amt = 0.0;
         Double payable = -5.0;
-        assertEquals(result.getAmountDue(), amt);
-        assertEquals(result.getPaidAmount(), paid);
-        assertEquals(result.getPayableAmount(), payable);
+        assertEquals(result.getTotal(), amt);
+        assertEquals(result.getPaid(), paid);
+        assertEquals(result.getDue(), payable);
         assertEquals(result.getOrderStatus(), OrderStatus.LIVE);
     }
 

@@ -174,16 +174,16 @@ public class AjaxWorkServiceTest {
      * Test of getSystemLease method, of class AjaxWorkService.
      */
     //@Test
-    public void testGetSystemLease() {
-        System.out.println("getSystemLease");
-        int id = 0;
-        AjaxWorkService instance = new AjaxWorkService();
-        List expResult = null;
-        List result = instance.getSystemLease(id);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+//    public void testGetSystemLease() {
+//        System.out.println("getSystemLease");
+//        int id = 0;
+//        AjaxWorkService instance = new AjaxWorkService();
+//        List expResult = null;
+//        List result = instance.getSystemLease(id);
+//        assertEquals(expResult, result);
+//        // TODO review the generated test code and remove the default call to fail.
+//        fail("The test case is a prototype.");
+//    }
 
     /**
      * Test of chargePayment method, of class AjaxWorkService.
