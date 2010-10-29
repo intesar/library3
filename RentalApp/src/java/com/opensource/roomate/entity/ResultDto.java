@@ -1,7 +1,11 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ *
+ * Copyright 2010 BizIntelApps. All Rights Reserved.
+ *
+ * This software is the proprietary information of BizIntelApps.
+ * Use is subject to license terms.
  */
+
 package com.opensource.roomate.entity;
 
 import com.opensource.roomate.entity.Post;

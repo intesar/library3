@@ -1,9 +1,13 @@
+/*
+ *
+ * Copyright 2010 BizIntelApps. All Rights Reserved.
+ *
+ * This software is the proprietary information of BizIntelApps.
+ * Use is subject to license terms.
+ */
+
 package com.opensource.roomate.entity;
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
