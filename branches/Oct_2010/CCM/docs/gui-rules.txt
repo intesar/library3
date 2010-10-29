@@ -1,0 +1,32 @@
+http://yui.2clics.net/
+http://www.textfixer.com/html/compress-html-compression.php
+
+base.js
+  contains engine.js, util.js, facebox.js, jgcharts.pack.js, jquery-1.4.2.js, jquery.tablesorter.min.js
+
+Dashboard
+ compress all js(base.js,AjaxWorkService.js,AjaxAdminService,dashboard.js) files into one dashboard-min.js file
+ compress all css files into one dashboard.css file
+ compress dashboard.jsp into dashboard-min.jsp file
+
+Customer Registration
+
+Email
+
+Notification Timings
+
+Forgot Password
+
+Organization
+
+Reports
+
+Services
+
+System Lease
+
+Systems
+
+Users
+
+Login Page
