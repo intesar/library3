@@ -1,0 +1,10 @@
+
+Milestone # 1
+  1. Add new Car Page
+  2. Display Recent Cars on page load
+  3. Filter cars by Price
+  4. Filter cars by Mileage
+  5. Filter cars by Year
+  6. Search by keyword
+  7. Paginate cars
+  8. Send more detail message for a car
