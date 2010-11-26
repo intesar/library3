@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans   xmlns="http://www.springframework.org/schema/beans"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:dwr="http://www.directwebremoting.org/schema/spring-dwr"
+         xsi:schemaLocation="http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+         http://www.directwebremoting.org/schema/spring-dwr
+         http://www.directwebremoting.org/schema/spring-dwr/spring-dwr-3.0.xsd">
+
+
+    <!--
+     ##########################################################################
+                            Services Declerations Begin
+     ##########################################################################
+    -->
+
+    
+    <bean id="ajaxCarService" class="com.bizintelapps.cars.ajax.CarsAjaxService" >
+        <dwr:remote javascript="AjaxCarService">
+            <dwr:include method="saveCar" />
+            <dwr:include method="getCar" />
+            <dwr:include method="search" />
+            <!--<dwr:filter class="com.bizintelapps.cars.ajax.LoginCheckFilter" />-->
+        </dwr:remote>
+    </bean>
+    
+    <dwr:configuration>
+        <dwr:convert type="bean" class="com.bizintelapps.cars.entity.*" />
+        <dwr:convert type="bean"  class="java.util.*"  />
+        <dwr:convert type="exception" class="com.bizintelapps.cars.exceptions.*" />
+    </dwr:configuration>
+</beans>
