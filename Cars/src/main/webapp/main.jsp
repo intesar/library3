@@ -21,10 +21,29 @@
         <script src="/Cars/js/facebox.js" type="text/javascript"></script>
     </head>
     <body>
-        <h1>Our Collection</h1>
-        <div id="cars">
+
+        <table width="300px" border="0">
+
+            <tr>
+                <td>
+                    <h2>Our Collection</h2>
+                </td>
+            </tr>
             
-        </div>
+            <tr valign="top">
+                
+                
+                <td style="background-color: white; height: 200px; width: 300px; text-align: top;">                    
+                    <div id="cars">
+
+
+                    </div>
+                    
+                </td>
+            </tr>
+        </table>
+
+        
     </body>
     <script type="text/javascript">
         var priceLimit = 0;
@@ -36,10 +55,22 @@
         });
         var displayCars = function(cars) {
             var html = "";
+
             for ( var i=0; i < cars.list.length; i++) {
-                html += "<div><a href='JavaScript:void(0)' class='car-record car'"+cars.list[i].id +">" + cars.list[i].year +
-                    " " + cars.list[i].make + " " + cars.list[i].model + " " + cars.list[i].mileage +
-                    " " + cars.list[i].askingPrice + " </a> </div>";
+                html += 
+                    "<div id='car-link'>\n\
+                        <a href='JavaScript:void(0)' class='car-record car'"+cars.list[i].id +">\n\
+                            <table width='600px'>" + cars.list[i].year +
+                                " " + cars.list[i].make + " " + cars.list[i].model + " " + cars.list[i].mileage +
+                                " $" + cars.list[i].askingPrice + " \n\
+                            </table>\n\
+                        </a> \n\
+                    </div><br/>" +
+                    " <img src=''   >"+
+                     "  " +cars.list[i].comments + " "
+                    +"<br/><br/>"
+
+                    ;
             }
             jQuery("#cars").html(html);
         }

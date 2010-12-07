@@ -29,7 +29,7 @@ public class Car implements Serializable {
     private String model;
     private String style;
     private String bodyStyle;
-    @Column(name="year_")
+    @Column(name = "year_")
     private Integer year;
     private Double askingPrice;
     private Long mileage;
@@ -82,6 +82,7 @@ public class Car implements Serializable {
     private Date createDate;
     private String createdBy;
     private String comments;
+    private String video;
     private Boolean sold;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date soldDate;
@@ -223,6 +224,14 @@ public class Car implements Serializable {
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    public String getVideo() {
+        return video;
+    }
+
+    public void setVideo(String video) {
+        this.video = video;
     }
 
     public Boolean getCruiseControl() {
@@ -569,6 +578,4 @@ public class Car implements Serializable {
     public String toString() {
         return "Car{" + "id=" + id + "make=" + make + "model=" + model + "style=" + style + "bodyStyle=" + bodyStyle + "year=" + year + "askingPrice=" + askingPrice + "mileage=" + mileage + "exteriorColor=" + exteriorColor + "interiorColor=" + interiorColor + "vin=" + vin + "fuleType=" + fuleType + "transmission=" + transmission + "engineCylinder=" + engineCylinder + "driveTrain=" + driveTrain + "doors=" + doors + "acFront=" + acFront + "acRear=" + acRear + "airbagDriver=" + airbagDriver + "airbagPassenger=" + airbagPassenger + "airbagSide=" + airbagSide + "alarm=" + alarm + "alloyWheels=" + alloyWheels + "antilockBrakes=" + antilockBrakes + "bucketSeats=" + bucketSeats + "cdChanger=" + cdChanger + "casset=" + casset + "cdPlayer=" + cdPlayer + "cruiseControl=" + cruiseControl + "fogLights=" + fogLights + "leatherInterior=" + leatherInterior + "memorySeats=" + memorySeats + "navigation=" + navigation + "powerLocks=" + powerLocks + "powerSeats=" + powerSeats + "powerStearing=" + powerStearing + "powerWindows=" + powerWindows + "premiumSound=" + premiumSound + "readWindowDefronster=" + readWindowDefronster + "rearWindowWiper=" + rearWindowWiper + "remoteKeyless=" + remoteKeyless + "soundSystem=" + soundSystem + "sunroof=" + sunroof + "thirdRowSeats=" + thirdRowSeats + "tintedGlass=" + tintedGlass + "towPackage=" + towPackage + "dvd=" + dvd + "buyDate=" + buyDate + "ownerName=" + ownerName + "createDate=" + createDate + "createdBy=" + createdBy + "comments=" + comments + "sold=" + sold + "soldDate=" + soldDate + "sellingPrice=" + sellingPrice + "sellerComments=" + sellerComments + "active=" + active + '}';
     }
-
-    
 }
