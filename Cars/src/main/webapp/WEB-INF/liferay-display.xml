@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE display PUBLIC "-//Liferay//DTD Display 5.2.0//EN" "http://www.liferay.com/dtd/liferay-display_5_2_0.dtd">
 <display>
-  <category name="User_Portlets"/>
+  <category name="Cars">
+    <portlet id="ManageCarDetails">ManageCarDetails</portlet>
+    <portlet id="Filter">Filter</portlet>
+    <portlet id="Cars">Cars</portlet>
+  </category>
 </display>

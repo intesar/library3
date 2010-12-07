@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE liferay-portlet-app PUBLIC "-//Liferay//DTD Portlet Application 5.2.0//EN" "http://www.liferay.com/dtd/liferay-portlet-app_5_2_0.dtd">
 <liferay-portlet-app>
+  <portlet>
+    <portlet-name>ManageCarDetails</portlet-name>
+    <instanceable>false</instanceable>
+  </portlet>
+  <portlet>
+    <portlet-name>Filter</portlet-name>
+    <instanceable>true</instanceable>
+  </portlet>
+  <portlet>
+    <portlet-name>Cars</portlet-name>
+    <instanceable>true</instanceable>
+  </portlet>
   <role-mapper>
     <role-name>administrator</role-name>
     <role-link>Administrator</role-link>
