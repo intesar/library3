@@ -1,5 +1,6 @@
 package com.bizintelapps.cars.ajax;
 
+import com.bizintelapps.cars.portlet.SessionHandler;
 import javax.servlet.http.HttpSession;
 import org.directwebremoting.WebContextFactory;
 import org.apache.commons.logging.Log;
@@ -20,7 +21,7 @@ public class RoleCheckUtil {
      */
     public boolean isSessionAlive() {
         //Check if session has timedout/invalidated
-        if( !checkSession()) {
+        if (!checkSession()) {
             return checkSession();
         }
         return true;
@@ -32,14 +33,12 @@ public class RoleCheckUtil {
      */
     private boolean checkSession() {
         HttpSession session = WebContextFactory.get().getSession(true);
-        Object themeDisplay = session.getAttribute("THEME_DISPLAY");
+        Object themeDisplay = session.getAttribute(SessionHandler.THEME_DISPLAY);
         if (themeDisplay == null) {
             session.invalidate();
             return false;
         }
         return true;
     }
-
-    
     protected static final Log logger = LogFactory.getLog(RoleCheckUtil.class);
 }
