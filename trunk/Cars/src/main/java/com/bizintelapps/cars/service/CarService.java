@@ -13,7 +13,7 @@ public interface CarService {
      *
      * @param car
      */
-    void saveCar(Car car);
+    Car saveCar(Car car);
 
     /**
      *
