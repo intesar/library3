@@ -18,14 +18,15 @@ public class CarServiceImpl implements CarService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public void saveCar(Car car) {
+    public Car saveCar(Car car) {
         // validate
         // save
         if (car.getId() == null) {
-            carDao.persist(car);
+            car = carDao.persist(car);
         } else {
-            carDao.merge(car);
+            car = carDao.merge(car);
         }
+        return car;
     }
 
     @Override
