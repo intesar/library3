@@ -20,7 +20,7 @@
             <dwr:include method="saveCar" />
             <dwr:include method="getCar" />
             <dwr:include method="search" />
-            <!--<dwr:filter class="com.bizintelapps.cars.ajax.LoginCheckFilter" />-->
+            <dwr:filter class="com.bizintelapps.cars.ajax.LoginCheckFilter" />
         </dwr:remote>
     </bean>
     
