@@ -90,6 +90,8 @@ public class Car implements Serializable {
     private String sellerComments;
     private Boolean active = true;
 
+    private Long photosFolderId;
+
     public Long getId() {
         return id;
     }
@@ -553,6 +555,15 @@ public class Car implements Serializable {
     public void setActive(Boolean active) {
         this.active = active;
     }
+
+    public Long getPhotosFolderId() {
+        return photosFolderId;
+    }
+
+    public void setPhotosFolderId(Long photosFolderId) {
+        this.photosFolderId = photosFolderId;
+    }
+
 
     @Override
     public boolean equals(Object object) {
