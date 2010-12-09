@@ -1,8 +1,6 @@
 package com.bizintelapps.cars.portlet;
 import javax.portlet.GenericPortlet;
-import javax.portlet.ActionRequest;
 import javax.portlet.RenderRequest;
-import javax.portlet.ActionResponse;
 import javax.portlet.RenderResponse;
 import javax.portlet.PortletException;
 import java.io.IOException;
