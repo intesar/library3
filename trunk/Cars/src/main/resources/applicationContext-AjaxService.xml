@@ -6,21 +6,13 @@
          http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
          http://www.directwebremoting.org/schema/spring-dwr
          http://www.directwebremoting.org/schema/spring-dwr/spring-dwr-3.0.xsd">
-
-
-    <!--
-     ##########################################################################
-                            Services Declerations Begin
-     ##########################################################################
-    -->
-
-    
+   
     <bean id="ajaxCarService" class="com.bizintelapps.cars.ajax.CarsAjaxService" >
         <dwr:remote javascript="AjaxCarService">
             <dwr:include method="saveCar" />
             <dwr:include method="getCar" />
             <dwr:include method="search" />
-            <dwr:filter class="com.bizintelapps.cars.ajax.LoginCheckFilter" />
+            <!--<dwr:filter class="com.bizintelapps.cars.ajax.LoginCheckFilter" /> -->
         </dwr:remote>
     </bean>
     
