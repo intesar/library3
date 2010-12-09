@@ -27,11 +27,15 @@ public class CarsAjaxService {
      */
     public Car saveCar(Car car, HttpSession session) {
         try {
-            if (car.getId() == null ) {
+            if (car.getId() == null || car.getPhotosFolderId() == null) {
                 ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute(SessionHandler.THEME_DISPLAY);
                 ServiceContext serviceContext = (ServiceContext) session.getAttribute(SessionHandler.SERVICE_CONTEXT);
                 String name = car.getMake() + " " + car.getMake() + " " + car.getYear();
                 String description = car.getVin();
+                if(log.isTraceEnabled()) {
+                    log.trace("themeDisplay " + themeDisplay);
+                    log.trace("serviceContext " + serviceContext);
+                }
                 IGFolder igFolder = IGFolderLocalServiceUtil.addFolder(themeDisplay.getUserId(), 0L, name, description, serviceContext);
                 car.setPhotosFolderId(igFolder.getFolderId());
             }
