@@ -10,8 +10,8 @@
     <body>
         <div>
             <h3 style="font-family: verdana;"> Car Stock Number </h3> &nbsp; <input type="text" value="2385" id="car-id" /> &nbsp;
-            <input type="button" id="car-search" value="Search" /> &nbsp;
-            <input type="button" id="new-car" value="Add Car" />
+            <input type="button" id="car-search" value="Search" /><br/><br/> &nbsp;
+            <input type="button" id="new-car" value="Add A New Car" />
         </div>
         <div id="car-newCar" title="Car Information" style="display:none">
             <table width="800px" border="0" cellspacing="1" cellpadding="0" class="description" style="font-family:arial;font-size:12px">
@@ -155,6 +155,7 @@
                     </td>
                 </tr>
             </table>
+            <br/><br/>
             <table style="font-family:arial;font-size:12px">
 
                 <tr>
@@ -165,7 +166,7 @@
                         </table>
                     </td></tr>
             </table>
-            <table style="font-family:arial;font-size:12px">
+            <table style="font-family:arial;font-size:12px;width: 100%">
                 <tr><td>
 
                         <table>
@@ -321,6 +322,7 @@
                         </table>
                     </td>
             </table>
+            <br/><br/>
             <table>
                 <tr>
                     <td>
@@ -333,6 +335,7 @@
                     </td>
                 </tr>
             </table>
+            <br/>
             <table>
                 <tr>
                     <td><input type="button" id="car-cancel" value="Cancel" /></td>
