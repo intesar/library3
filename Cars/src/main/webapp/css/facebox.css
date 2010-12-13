@@ -45,6 +45,7 @@
 #facebox .close img{
   opacity:0.3;
 }
+
 #facebox .close:hover img{
   opacity:1.0;
 }
@@ -77,4 +78,18 @@
 .facebox_overlayBG {
   background-color: #000;
   z-index: 99;
+}
+
+#car-link{
+    font-size:medium;
+    font-family: Trebuchet,Arial,Sans-Serif;
+}
+
+.tooltip {
+	display:none;	
+	font-size:19px;
+	height:70px;
+	width:160px;
+	padding:25px;
+	color:#fff;
 }

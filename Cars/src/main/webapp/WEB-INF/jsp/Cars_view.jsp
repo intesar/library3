@@ -23,18 +23,12 @@
             <span><a href="#" class="sort-by-mileage">Mileage</a></span>
             <span><a href="#" class="sort-by-year">Year</a></span>
         </div>
+        <br/>
         <table width="300px" border="0">
-
-            <tr>
-                <td>
-                    <h2>Our Collection</h2>
-                </td>
-            </tr>
 
             <tr valign="top">
 
-
-                <td style="background-color: white; height: 200px; width: 300px; text-align: top;">
+                <td>
                     <div id="cars">
 
 
@@ -52,3 +46,4 @@
     <script type="text/javascript" src="/Cars/js/facebox.js"></script>
     <script type="text/javascript" src="/Cars/js/cars.js"></script>
 </html>
+
