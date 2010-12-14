@@ -52,6 +52,7 @@ public class CarsAjaxService {
      *
      * @param carId
      * @return
+     * http://localhost:8080/image/image_gallery?uuid=2589decf-c2d5-423e-a29c-c076f180d52c&groupId=12104
      */
     public Car getCar(Long carId) {
         Car car = carService.getCar(carId);

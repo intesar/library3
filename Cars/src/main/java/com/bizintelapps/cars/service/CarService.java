@@ -22,6 +22,13 @@ public interface CarService {
      */
     Car getCar(Long carId);
 
+    /**
+     * 
+     * @param photosFolderId
+     * @return
+     */
+    Car getCarByImageFolder(Long photosFolderId);
+
    
 
     /**

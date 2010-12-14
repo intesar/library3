@@ -4,6 +4,8 @@ import com.bizintelapps.cars.dao.CarDao;
 import com.bizintelapps.cars.entity.Car;
 import java.util.List;
 import javax.persistence.Query;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -17,6 +19,12 @@ public class CarDaoImpl extends GenericDaoImpl<Car, Long> implements CarDao {
         super(Car.class);
     }
 
+    @Override
+    public Car findCarByImageFolderId(long folderId) {
+        return entityManager.createNamedQuery("Car.findByImageFolderId", Car.class)
+                .setParameter("photosFolderId", folderId)
+                .getSingleResult();
+    }
    
 
     /**
@@ -37,6 +45,7 @@ public class CarDaoImpl extends GenericDaoImpl<Car, Long> implements CarDao {
      * @param max
      * @return
      */
+    @Override
     public List<Car> search(int priceLimit, int mileageLimit, int start, int max) {
         List<Car> list = null;
         String ql = "SELECT c FROM Car c ";
@@ -73,4 +82,6 @@ public class CarDaoImpl extends GenericDaoImpl<Car, Long> implements CarDao {
         list = query.getResultList();
         return list;
     }
+
+    protected static final Log logger = LogFactory.getLog(CarDaoImpl.class);
 }
