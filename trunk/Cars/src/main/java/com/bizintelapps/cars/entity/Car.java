@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -14,11 +15,15 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  *
  * @author intesar
  */
+//@Cacheable(true)
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region="")
 @Entity
 @NamedQueries({
     @NamedQuery(name = "Car.findAll", query = "SELECT c FROM Car c ORDER BY c.createDate DESC"),
@@ -95,6 +100,7 @@ public class Car implements Serializable {
     private String sellerComments;
     private Boolean active = true;
     private Long photosFolderId;
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @ElementCollection(fetch=FetchType.EAGER)
     private List<Image> images = new ArrayList<Image>();
 
