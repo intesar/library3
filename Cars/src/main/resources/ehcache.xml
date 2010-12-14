@@ -9,12 +9,9 @@
         overflowToDisk="false" diskPersistent="false" timeToIdleSeconds="0"
         timeToLiveSeconds="600" memoryStoreEvictionPolicy="LRU"/>
 
-    <cache name="carCache" eternal="false"
+    <cache name="com.bizintelapps.cars.entity.Car" eternal="false"
         maxElementsInMemory="1000" overflowToDisk="false" diskPersistent="false"
-        timeToIdleSeconds="0" timeToLiveSeconds="600"
+        timeToIdleSeconds="600" timeToLiveSeconds="6000"
         memoryStoreEvictionPolicy="LRU" />
 
-   
-
-    
 </ehcache>
