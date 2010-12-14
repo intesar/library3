@@ -1,9 +1,13 @@
 package com.bizintelapps.cars.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,7 +21,8 @@ import javax.persistence.Temporal;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Car.findAll", query = "SELECT c FROM Car c ORDER BY c.createDate DESC")
+    @NamedQuery(name = "Car.findAll", query = "SELECT c FROM Car c ORDER BY c.createDate DESC"),
+    @NamedQuery(name = "Car.findByImageFolderId", query = "SELECT c FROM Car c WHERE c.photosFolderId = :photosFolderId")
 })
 public class Car implements Serializable {
 
@@ -89,8 +94,9 @@ public class Car implements Serializable {
     private Double sellingPrice;
     private String sellerComments;
     private Boolean active = true;
-
     private Long photosFolderId;
+    @ElementCollection(fetch=FetchType.EAGER)
+    private List<Image> images = new ArrayList<Image>();
 
     public Long getId() {
         return id;
@@ -564,6 +570,13 @@ public class Car implements Serializable {
         this.photosFolderId = photosFolderId;
     }
 
+    public List<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(List<Image> images) {
+        this.images = images;
+    }
 
     @Override
     public boolean equals(Object object) {

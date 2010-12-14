@@ -17,4 +17,11 @@ public interface CarDao extends GenericDao<Car, Long> {
      * @return
      */
     List<Car> search(int priceLimit, int mileageLimit, int start, int max);
+
+    /**
+     * 
+     * @param folderId
+     * @return
+     */
+    Car findCarByImageFolderId(long folderId);
 }
