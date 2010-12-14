@@ -1,5 +1,6 @@
 package com.bizintelapps.cars.service.impl;
 
+import com.bizintelapps.cars.entity.Image;
 import com.bizintelapps.cars.entity.ResultDto;
 import com.bizintelapps.cars.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +65,36 @@ public class CarServiceImplTest {
         Car car = new Car();
         car.setAcFront(true);
         carService.saveCar(car);
+    }
+
+    /**
+     * Test of saveCar method, of class CarServiceImpl.
+     */
+    @Test
+    public void testAddCar1() {
+        System.out.println("addCar");
+        Car car = new Car();
+        car.setAcFront(true);
+        Image image = new Image("abc", 11L, false);
+        car.getImages().add(image);
+        carService.saveCar(car);
+    }
+
+    /**
+     * Test of saveCar method, of class CarServiceImpl.
+     */
+    @Test
+    public void testRemoveImage() {
+        ResultDto<Car> dto = carService.search(0, 0, 0, 1);
+        assertNotNull(dto.getList());
+        assertTrue(dto.getList().size() == 1 );
+        Car car = dto.getList().get(0);
+        Image image = new Image("abc", 11L, false);
+        car.getImages().add(image);
+        car = carService.saveCar(car);
+        car.getImages().remove(image);
+        car = carService.saveCar(car);
+        assertTrue(car.getImages().size() == 0 );
     }
 
     /**
