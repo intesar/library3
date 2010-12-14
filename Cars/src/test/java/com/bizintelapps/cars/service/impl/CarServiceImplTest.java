@@ -87,14 +87,14 @@ public class CarServiceImplTest {
     public void testRemoveImage() {
         ResultDto<Car> dto = carService.search(0, 0, 0, 1);
         assertNotNull(dto.getList());
-        assertTrue(dto.getList().size() == 1 );
+        assertTrue(dto.getList().size() == 1);
         Car car = dto.getList().get(0);
         Image image = new Image("abc", 11L, false);
         car.getImages().add(image);
         car = carService.saveCar(car);
         car.getImages().remove(image);
         car = carService.saveCar(car);
-        assertTrue(car.getImages().size() == 0 );
+        assertTrue(car.getImages().size() == 0);
     }
 
     /**
@@ -104,23 +104,38 @@ public class CarServiceImplTest {
     public void testSearch() {
         ResultDto<Car> dto = carService.search(0, 0, 0, 10);
         assertNotNull(dto.getList());
-        assertTrue(dto.getList().size() == 10 );
+        assertTrue(dto.getList().size() == 10);
     }
 
+    /**
+     * Test of saveCar method, of class CarServiceImpl.
+     */
+    @Test
+    public void testSearchWithCacheOn() {
+        System.out.println ( " --------------------------------------------- ");
+        ResultDto<Car> dto = carService.search(0, 0, 0, 10);
+        assertNotNull(dto.getList());
+        assertTrue(dto.getList().size() == 10);
+        System.out.println ( " New Query ************** ");
+        dto = carService.search(0, 0, 0, 10);
+        assertNotNull(dto.getList());
+        assertTrue(dto.getList().size() == 10);
+        System.out.println ( " --------------------------------------------- ");
+    }
 
     @Test
     public void testSearch1() {
         ResultDto<Car> dto = carService.search(10, 0, 0, 10);
         assertNotNull(dto.getList());
-        System.out.println (dto.getList().size() );
-        assertTrue(dto.getList().size() == 5 );
+        System.out.println(dto.getList().size());
+        assertTrue(dto.getList().size() == 5);
     }
 
     @Test
     public void testSearch2() {
         ResultDto<Car> dto = carService.search(0, 10, 0, 10);
         assertNotNull(dto.getList());
-        System.out.println (dto.getList().size() );
-        assertTrue(dto.getList().size() == 10 );
+        System.out.println(dto.getList().size());
+        assertTrue(dto.getList().size() == 10);
     }
 }

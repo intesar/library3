@@ -78,7 +78,6 @@ public class CarDaoImpl extends GenericDaoImpl<Car, Long> implements CarDao {
         Query query = entityManager.createQuery(ql);
         query.setFirstResult(start);
         query.setMaxResults(max);
-
         list = query.getResultList();
         return list;
     }
