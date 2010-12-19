@@ -10,9 +10,9 @@
     <body>
         <div>
             <h3 style="font-family: verdana;"> Car Stock Number </h3> &nbsp; <input type="text" value="2385" id="car-id" /> &nbsp;
-            <input type="button" id="car-search" value="Search" /><br/><br/> &nbsp;
+            <input type="button" id="car-search" value="Edit" /><br/><br/> &nbsp;
             <input type="button" id="new-car" value="Add A New Car" />
-        </div>
+        </div>        
         <div id="car-newCar" title="Car Information" style="display:none">
             <table width="800px" border="0" cellspacing="1" cellpadding="0" class="description" style="font-family:arial;font-size:12px">
                 <tr>
