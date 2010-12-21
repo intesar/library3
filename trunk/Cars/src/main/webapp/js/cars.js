@@ -24,19 +24,19 @@ jQuery(document).ready(function() {
         getData();
     });
     jQuery(".priceLimit").click(function() {
-        priceChange()
-        });
+        priceLimit = jQuery(this).attr("value");
+        getData();
+    });
     jQuery(".mileageLimit").click(function() {
-        mileageChange()
-        });
+        mileage = jQuery(this).attr("value");
+        getData();
+    });
 });
 function priceChange() {
-    priceLimit = jQuery(this).attr("value");
-    getData();
+    
 }
 function mileageChange() {
-    mileage = jQuery(this).attr("value");
-    getData();
+    
 }
 function getData() {
     AjaxCarService.search(priceLimit, mileage, sortBy, start, max, displayCars);
@@ -61,7 +61,7 @@ var displayCars = function(cars) {
         + car.comments +
         "</td>"
         +"<td width='15%' align='center'>"
-        +"<img src='/image/image_gallery?uuid="+car.images[0].uuid+"' >"
+        +"<img src='http://localhost:8080/image/image_gallery?img_id="+car.images[0].smallImageId+"&igImageId="+car.images[0].imageId+"&igSmallImage=1' >"
         +"</td></tr></table></div> "
         
         +"<br/>"

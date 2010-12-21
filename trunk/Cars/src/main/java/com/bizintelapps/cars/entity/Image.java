@@ -13,6 +13,9 @@ public class Image implements Serializable {
     private String uuid;
     private long groupId;
     private boolean prefered;
+    private long imageId;
+    private long smallImageId;
+    private long largeImageId;
 
     public Image() {
     }
@@ -45,6 +48,30 @@ public class Image implements Serializable {
 
     public void setPrefered(boolean prefered) {
         this.prefered = prefered;
+    }
+
+    public long getImageId() {
+        return imageId;
+    }
+
+    public void setImageId(long imageId) {
+        this.imageId = imageId;
+    }
+
+    public long getLargeImageId() {
+        return largeImageId;
+    }
+
+    public void setLargeImageId(long largeImageId) {
+        this.largeImageId = largeImageId;
+    }
+
+    public long getSmallImageId() {
+        return smallImageId;
+    }
+
+    public void setSmallImageId(long smallImageId) {
+        this.smallImageId = smallImageId;
     }
 
     @Override
