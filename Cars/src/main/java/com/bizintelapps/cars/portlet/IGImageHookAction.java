@@ -21,6 +21,9 @@ public class IGImageHookAction implements ModelListener {
         CarService carService = (CarService) SpringApplicationContextFactory.getContext().getBean("CarServiceImpl");
         Car car = carService.getCarByImageFolder(igImage.getFolderId());
         Image image = new Image(igImage.getUuid(), igImage.getGroupId(), false);
+        image.setImageId(igImage.getImageId());
+        image.setSmallImageId(igImage.getSmallImageId());
+        image.setLargeImageId(igImage.getLargeImageId());
         car.getImages().add(image);
         carService.saveCar(car);
     }
