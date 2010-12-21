@@ -60,9 +60,9 @@ public class CarServiceImpl implements CarService {
      * @return
      */
     @Override
-    public ResultDto<Car> search(int priceLimit, int mileageLimit, int start, int max) {
+    public ResultDto<Car> search(int priceLimit, int mileageLimit, int sortBy, int start, int max) {
         ResultDto<Car> dto = new ResultDto<Car>();
-        dto.setList(carDao.search(priceLimit, mileageLimit, start, max));
+        dto.setList(carDao.search(priceLimit, mileageLimit, sortBy, start, max));
         return dto;
     }
     /** private methods **/

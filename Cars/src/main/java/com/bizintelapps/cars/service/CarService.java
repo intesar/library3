@@ -39,5 +39,5 @@ public interface CarService {
      * @param max
      * @return
      */
-    ResultDto<Car> search(int priceLimit, int mileageLimit, int start, int max);
+    ResultDto<Car> search(int priceLimit, int mileageLimit, int sortBy, int start, int max);
 }

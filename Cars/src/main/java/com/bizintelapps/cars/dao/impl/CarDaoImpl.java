@@ -21,11 +21,8 @@ public class CarDaoImpl extends GenericDaoImpl<Car, Long> implements CarDao {
 
     @Override
     public Car findCarByImageFolderId(long folderId) {
-        return entityManager.createNamedQuery("Car.findByImageFolderId", Car.class)
-                .setParameter("photosFolderId", folderId)
-                .getSingleResult();
+        return entityManager.createNamedQuery("Car.findByImageFolderId", Car.class).setParameter("photosFolderId", folderId).getSingleResult();
     }
-   
 
     /**
      *
@@ -46,7 +43,7 @@ public class CarDaoImpl extends GenericDaoImpl<Car, Long> implements CarDao {
      * @return
      */
     @Override
-    public List<Car> search(int priceLimit, int mileageLimit, int start, int max) {
+    public List<Car> search(int priceLimit, int mileageLimit, int sortBy, int start, int max) {
         List<Car> list = null;
         String ql = "SELECT c FROM Car c ";
         boolean isPriceLimitEnabled = false;
@@ -61,7 +58,7 @@ public class CarDaoImpl extends GenericDaoImpl<Car, Long> implements CarDao {
             isPriceLimitEnabled = true;
         }
         if (mileageLimit > 0) {
-            if ( isPriceLimitEnabled ) {
+            if (isPriceLimitEnabled) {
                 ql += " AND ";
             } else {
                 ql += " WHERE ";
@@ -74,13 +71,20 @@ public class CarDaoImpl extends GenericDaoImpl<Car, Long> implements CarDao {
                 ql += "c.mileage >= 50000";
             }
         }
-        ql += " ORDER BY c.createDate DESC";
+        if (sortBy == 1) {
+            ql += " ORDER BY c.createDate DESC";
+        } else if (sortBy == 2) {
+            ql += " ORDER BY c.askingPrice";
+        } else if (sortBy == 3) {
+            ql += " ORDER BY c.mileage";
+        } else if (sortBy == 4) {
+            ql += " ORDER BY c.year DESC";
+        }
         Query query = entityManager.createQuery(ql);
         query.setFirstResult(start);
         query.setMaxResults(max);
         list = query.getResultList();
         return list;
     }
-
     protected static final Log logger = LogFactory.getLog(CarDaoImpl.class);
 }
