@@ -79,8 +79,8 @@ public class CarsAjaxService {
      *
      * @return
      */
-    public ResultDto<Car> search(int priceLimit, int mileageLimit, int start, int max) {
-        return carService.search(priceLimit, mileageLimit, start, max);
+    public ResultDto<Car> search(int priceLimit, int mileageLimit, int sortBy, int start, int max) {
+        return carService.search(priceLimit, mileageLimit, sortBy, start, max);
     }
     /** private methods **/
     protected static final Log log = LogFactory.getLog(CarsAjaxService.class);

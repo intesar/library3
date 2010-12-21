@@ -16,7 +16,7 @@ public interface CarDao extends GenericDao<Car, Long> {
      * @param max
      * @return
      */
-    List<Car> search(int priceLimit, int mileageLimit, int start, int max);
+    List<Car> search(int priceLimit, int mileageLimit, int sortBy, int start, int max);
 
     /**
      * 
