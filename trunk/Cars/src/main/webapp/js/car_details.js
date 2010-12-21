@@ -32,9 +32,7 @@ var show_newCarDiv = function() {
     car_showAddCar();
 }
 var car_showAddCar = function() {
-    jQuery.facebox({
-        div: '#car-newCar'
-    })
+    jQuery.facebox({div: '#car-newCar'},'my-groovy-style')
 }
 var car_save = function() {
     if ( car_ == null ) {

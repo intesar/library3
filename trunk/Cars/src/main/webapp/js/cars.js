@@ -1,59 +1,93 @@
 var priceLimit = 0;
 var mileage = 0;
 var start = 0;
-var max = 20;
+var max = 50;
+var sortBy = 1;
 var cars_ = new Array();
 jQuery(document).ready(function() {
-    AjaxCarService.search(priceLimit, mileage, start, max, displayCars);
+    getData();
     jQuery(".car-link").live("click", view_details);
+    jQuery(".sort-by-new").click(function() {
+        sortBy = 1;
+        getData();
+    });
+    jQuery(".sort-by-price").click(function() {
+        sortBy = 2;
+        getData();
+    });
+    jQuery(".sort-by-mileage").click(function() {
+        sortBy = 3;
+        getData();
+    });
+    jQuery(".sort-by-year").click(function() {
+        sortBy = 4;
+        getData();
+    });
+    jQuery(".priceLimit").click(function() {
+        priceChange()
+        });
+    jQuery(".mileageLimit").click(function() {
+        mileageChange()
+        });
 });
-
+function priceChange() {
+    priceLimit = jQuery(this).attr("value");
+    getData();
+}
+function mileageChange() {
+    mileage = jQuery(this).attr("value");
+    getData();
+}
+function getData() {
+    AjaxCarService.search(priceLimit, mileage, sortBy, start, max, displayCars);
+}
 var displayCars = function(cars) {
     var html = "";
     for ( var i=0; i < cars.list.length; i++) {
         var car = cars.list[i];
-        cars_[car.id] = car; //cars_[i]=car;
-
+        cars_[car.id] = car; 
         html +=
         "<div class='car-link' id='car-"+car.id +"'>"
-                        +"<a href='JavaScript:void(0)' class='car-record' >"
-                            +"<table width='600px'>" + car.year +
+        +"<a href='JavaScript:void(0)' class='car-record' >"
+        +"<table width='600px'>" + car.year +
         " " + car.make + " " + car.model + " " + car.mileage +
         "mi $" + car.askingPrice  
-                           +" </table>"
-                        +"</a>"
-                    + "</div>" +
-          " <div><table width='100%'> "
+        +" </table>"
+        +"</a>"
+        + "</div>" +
+        " <div><table width='100%'> "
                 
-                +"<tr><td id='comments' width='5%'></td><td width='80%'>"
-                    + car.comments +
-                "</td>"
-                +"<td width='15%' align='center'>"
-                    +"<img src="+car.photosFolderId+" >"
-                +"</td></tr></table></div> "
-
-                 
+        +"<tr><td id='comments' width='5%'></td><td width='80%'>"
+        + car.comments +
+        "</td>"
+        +"<td width='15%' align='center'>"
+        +"<img src='/image/image_gallery?uuid="+car.images[0].uuid+"' >"
+        +"</td></tr></table></div> "
         
         +"<br/>"
         +"<!--a href='http://localhost:8080/web/cars/library?p_p_id=31&p_p_lifecycle=0&p_p_state=pop_up&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_31_struts_action=%2Fimage_gallery%2Fview_slide_show&_31_folderId=" + cars.photosFolderId + ">Images</a -->"
         + "<!-- a href='#'> Video <a-->\n\
         <br/><br/>"
-
     ;
     }
     jQuery("#cars").html(html);
-    
 }
-
 var view_details = function() {
     var id = jQuery(this).attr("id").substr(4); // car-10 car-33
     var car = cars_[id];
+    display_images(car);
     display_car(car);
     jQuery.facebox({
         div: '#view-details'
-    });
+    },'my-groovy-style');
 }
-
+function display_images(car) {
+    var url = '/web/cars/library?p_p_id=31&p_p_lifecycle=0&p_p_state=pop_up&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_31_struts_action=%2Fimage_gallery%2Fview_slide_show&_31_folderId=' + car.photosFolderId;
+    var html = '<iframe src ="'+ url +'" width="100%" height="100%">'
+    +'<p>Your browser does not support iframes.</p>'
+    +'</iframe>';
+    jQuery(".images").html(html);
+}
 function display_car(car) {
     jQuery(".make").text(car.make);
     jQuery(".model").text(car.model);
@@ -69,7 +103,6 @@ function display_car(car) {
     jQuery(".doors").text(car.doors);
     jQuery(".fuleType").text(car.doors);
     jQuery(".engineCylinder").text(car.engineCylinder);
-
     // checkboxes
     if(car.acFront == true)
         jQuery(".acFront").html("AC Front");
@@ -125,5 +158,4 @@ function display_car(car) {
         jQuery(".thirdRowSeats").html("Third Row Seats");
     if(car.towPackage == true)
         jQuery(".towPackage").html("Tow Package");
-
 }
