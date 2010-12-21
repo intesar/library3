@@ -88,7 +88,7 @@ public class Car implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date buyDate;
     private String ownerName;
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(javax.persistence.TemporalType.TIME)
     private Date createDate;
     private String createdBy;
     private String comments;

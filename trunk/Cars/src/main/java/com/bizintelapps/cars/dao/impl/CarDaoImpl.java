@@ -50,12 +50,14 @@ public class CarDaoImpl extends GenericDaoImpl<Car, Long> implements CarDao {
         if (priceLimit > 0) {
             if (priceLimit == 10) {
                 ql += "WHERE c.askingPrice <= 5000.0";
-            } else if (priceLimit == 10) {
+                isPriceLimitEnabled = true;
+            } else if (priceLimit == 20) {
                 ql += "WHERE c.askingPrice BETWEEN 5000.0 and 10000.0";
-            } else if (priceLimit == 10) {
+                isPriceLimitEnabled = true;
+            } else if (priceLimit == 30) {
                 ql += "WHERE c.askingPrice >= 10000.0";
+                isPriceLimitEnabled = true;
             }
-            isPriceLimitEnabled = true;
         }
         if (mileageLimit > 0) {
             if (isPriceLimitEnabled) {
@@ -65,9 +67,9 @@ public class CarDaoImpl extends GenericDaoImpl<Car, Long> implements CarDao {
             }
             if (mileageLimit == 10) {
                 ql += "c.mileage <= 30000";
-            } else if (mileageLimit == 10) {
+            } else if (mileageLimit == 20) {
                 ql += "c.mileage BETWEEN 30000 and 50000";
-            } else if (mileageLimit == 10) {
+            } else if (mileageLimit == 30) {
                 ql += "c.mileage >= 50000";
             }
         }
