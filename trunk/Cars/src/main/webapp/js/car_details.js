@@ -1,4 +1,4 @@
-var link = '/web/cars/library?p_p_id=31&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_31_struts_action=/image_gallery/view&_31_folderId=';
+var link = '/library?p_p_id=31&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_31_struts_action=/image_gallery/view&_31_folderId=';
 var car_ = null;
 jQuery(document).ready(function() {
     jQuery("#car-save").live("click",car_save);

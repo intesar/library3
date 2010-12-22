@@ -57,15 +57,15 @@ var displayCars = function(cars) {
         + "</div>" +
         " <div><table width='100%'> "
                 
-        +"<tr><td id='comments' width='5%'></td><td width='80%'>"
+        +"<tr><td class='comments-detail' width='5%'></td><td width='80%'>"
         + car.comments +
         "</td>"
         +"<td width='15%' align='center'>"
-        +"<img src='http://localhost:8080/image/image_gallery?img_id="+car.images[0].smallImageId+"&igImageId="+car.images[0].imageId+"&igSmallImage=1' >"
+        +"<img src='/image/image_gallery?img_id="+car.images[0].smallImageId+"&igImageId="+car.images[0].imageId+"&igSmallImage=1' >"
         +"</td></tr></table></div> "
         
         +"<br/>"
-        +"<!--a href='http://localhost:8080/web/cars/library?p_p_id=31&p_p_lifecycle=0&p_p_state=pop_up&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_31_struts_action=%2Fimage_gallery%2Fview_slide_show&_31_folderId=" + cars.photosFolderId + ">Images</a -->"
+        +"<!--a href='/web/cars/library?p_p_id=31&p_p_lifecycle=0&p_p_state=pop_up&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_31_struts_action=%2Fimage_gallery%2Fview_slide_show&_31_folderId=" + cars.photosFolderId + ">Images</a -->"
         + "<!-- a href='#'> Video <a-->\n\
         <br/><br/>"
     ;
@@ -82,7 +82,7 @@ var view_details = function() {
     },'my-groovy-style');
 }
 function display_images(car) {
-    var url = '/web/cars/library?p_p_id=31&p_p_lifecycle=0&p_p_state=pop_up&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_31_struts_action=%2Fimage_gallery%2Fview_slide_show&_31_folderId=' + car.photosFolderId;
+    var url = '/library?p_p_id=31&p_p_lifecycle=0&p_p_state=pop_up&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_31_struts_action=%2Fimage_gallery%2Fview_slide_show&_31_folderId=' + car.photosFolderId;
     var html = '<iframe src ="'+ url +'" width="100%" height="100%">'
     +'<p>Your browser does not support iframes.</p>'
     +'</iframe>';
@@ -104,6 +104,7 @@ function display_car(car) {
     jQuery(".fuleType").text(car.doors);
     jQuery(".engineCylinder").text(car.engineCylinder);
     // checkboxes
+    
     if(car.acFront == true)
         jQuery(".acFront").html("AC Front");
     if(car.acRear == true)

@@ -9,7 +9,7 @@
     </head>
     <body>
         <div>
-            <h3 style="font-family: verdana;"> Car Stock Number </h3> &nbsp; <input type="text" value="2385" id="car-id" /> &nbsp;
+            <h3 style="font-family: verdana;"> Car Stock Number </h3> &nbsp; <input type="text" value="" id="car-id" /> &nbsp;
             <input type="button" id="car-search" value="Edit" /><br/><br/> &nbsp;
             <input type="button" id="new-car" value="Add A New Car" />
         </div>        
@@ -69,11 +69,31 @@
                                 <td>
                                     <select class="exteriorColor" >
                                         <option value="">Select</option>
-                                        <option value="black">Black</option>
-                                        <option value="gray">Gray</option>
-                                        <option value="bue">Blue</option>
-                                        <option value="beige">Beige</option>
-                                        <option value="offwhite">Pearl White</option>
+                                        <option value="Beige">Beige</option>
+                                        <option value="Black">Black</option>
+                                        <option value="Blue">Blue</option>
+                                        <option value="Brown">Brown</option>
+                                        <option value="Burgundy">Burgundy</option>
+                                        <option value="Champagne">Champagne</option>
+                                        <option value="Charcoal">Charcoal</option>
+                                        <option value="Cream">Cream</option>
+                                        <option value="Gold">Gold</option>
+                                        <option value="Gray">Gray</option>
+                                        <option value="Green">Green</option>
+                                        <option value="Maroon">Maroon</option>
+                                        <option value="OffWhite">Off White</option>
+                                        <option value="Orange">Orange</option>
+                                        <option value="Pewter">Pewter</option>
+                                        <option value="PearlWhite">Pearl White</option>
+                                        <option value="Purple">Purple</option>
+                                        <option value="Red">Red</option>
+                                        <option value="Silver">Silver</option>
+                                        <option value="Tan">Tan</option>
+                                        <option value="Teal">Teal</option>
+                                        <option value="Titanium">Titanium</option>
+                                        <option value="Turquoise">Turquoise</option>
+                                        <option value="White">White</option>
+                                        <option value="Yellow">Yellow</option>
                                     </select>
                                 </td>
                             </tr>
@@ -82,11 +102,31 @@
                                 <td>
                                     <select class="interiorColor" >
                                         <option value="">Select</option>
-                                        <option value="black">Black</option>
-                                        <option value="gray">Gray</option>
-                                        <option value="bue">Blue</option>
-                                        <option value="beige">Beige</option>
-                                        <option value="offwhite">Pearl White</option>
+                                        <option value="Beige">Beige</option>
+                                        <option value="Black">Black</option>
+                                        <option value="Blue">Blue</option>
+                                        <option value="Brown">Brown</option>
+                                        <option value="Burgundy">Burgundy</option>
+                                        <option value="Champagne">Champagne</option>
+                                        <option value="Charcoal">Charcoal</option>
+                                        <option value="Cream">Cream</option>
+                                        <option value="Gold">Gold</option>
+                                        <option value="Gray">Gray</option>
+                                        <option value="Green">Green</option>
+                                        <option value="Maroon">Maroon</option>
+                                        <option value="OffWhite">Off White</option>
+                                        <option value="Orange">Orange</option>
+                                        <option value="Pewter">Pewter</option>
+                                        <option value="PearlWhite">Pearl White</option>
+                                        <option value="Purple">Purple</option>
+                                        <option value="Red">Red</option>
+                                        <option value="Silver">Silver</option>
+                                        <option value="Tan">Tan</option>
+                                        <option value="Teal">Teal</option>
+                                        <option value="Titanium">Titanium</option>
+                                        <option value="Turquoise">Turquoise</option>
+                                        <option value="White">White</option>
+                                        <option value="Yellow">Yellow</option>
                                     </select><br/>
                                 </td>
                             </tr>
@@ -150,6 +190,11 @@
                             <tr>
                                 <td>Photos</td>
                                 <td><a href="" target="_blank" class="photosUrl"> Click here </a></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Video <input size="15" class="video"/>
+                                </td>
                             </tr>
                         </table>
                     </td>
@@ -328,12 +373,7 @@
                     <td>
                         Comments <input size="100"  class="comments"/>
                     </td>
-                </tr>
-                <tr>
-                    <td>
-                        Video <input size="50" class="video"/>
-                    </td>
-                </tr>
+                </tr>                
             </table>
             <br/>
             <table>
