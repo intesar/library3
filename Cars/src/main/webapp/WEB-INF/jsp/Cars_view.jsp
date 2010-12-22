@@ -13,6 +13,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=MacRoman">
         <title>Search Cars</title>
         <link href="/Cars/css/facebox.css" media="screen" rel="stylesheet" type="text/css"/>
+        <link href="/Cars/css/cars.css" media="screen" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <div>
@@ -24,133 +25,111 @@
         </div>
         <br/>
         <div>
-            <table width="300px" border="0">
-                <tr valign="top">
-                    <td>
-                        <div id="cars">
-                        </div>
-                    </td>
-                </tr>
-            </table>
+            <div id="cars">
+
+            </div>
         </div>
-        <div id="view-details" style="display: none">
-            <!-- table class="clicked-details" -->
-            <table class="clicked-details" width="800px">
-                <tr>
-                    <td>
-                        <table>
-                            <tr>
-                                <td id="image-area"><div class="images"></div>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                    <td>
-                        <table>
-                            <tr>
-                                <td>
-                                    <table><!--div class="car-info"-->
-                                        <h4>Car Glimpse</h4>
-                                        <tr>
-                                            <td id="car-info"><label>Body Style: </label></td>
-                                            <td><span  class="bodyStyle"></span></td>
-                                        </tr>
-                                        <tr>
-                                            <td id="car-info"><label>Exterior Color: </label></td>
-                                            <td><span  class="exteriorColor"></span></td>
-                                        </tr>
-                                        <tr>
-                                            <td id="car-info"><label>Interior Color: </label></td>
-                                            <td><span  class="interiorColor"></span></td>
-                                        </tr>
-                                        <tr>
-                                            <td id="car-info"><label>Doors: </label></td>
-                                            <td><span class="doors"></span></td>
-                                        </tr>
-                                        <tr>
-                                            <td id="car-info"><label>Transmission: </label></td>
-                                            <td><span class="transmission"></span></td>
-                                        </tr>
-                                        <tr>
-                                            <td id="car-info"><label>Engine: </label></td>
-                                            <td><span  class="engine"></span></td>
-                                        </tr>
-                                        <tr>
-                                            <td id="car-info"><label>Drivetrain: </label></td>
-                                            <td><span  class="driveTrain"></span></td>
-                                        </tr>
-                                        <tr>
-                                            <td id="car-info"><label>VIN#: </label></td>
-                                            <td><span  class="vin"></span></td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
-            <table width="800px" border="0" cellspacing="1" cellpadding="0" class="description" style="font-family:arial;font-size:12px">
-                <tr><br/><br/>
-                <td width="133"><h5>Comfort</h5></td>
-                <td width="133"><h5>Safety</h5></td>
-                <td width="133"><h5>Seats</h5></td>
-                <td width="133"><h5>Sound System</h5></td>
-                <td width="133"><h5>Windows</h5></td>
-                <td width="133"><h5>Extras</h5></td>
-                </tr>
-            </table>
-            <table width="800px">
-                <tr>
-                    <td>
-                        <table><tr>
-                                <td width="133" class="acRear"></td></tr><tr>
-                                <td class="acFront"></td></tr><tr>
-                                <td class="cruiseControl"></td></tr><tr>
-                                <td class="navigation"></td></tr><tr>
-                                <td class="powerLocks"></td></tr><tr>
-                                <td class="powerStearing"></td></tr><tr>
-                                <td class="remoteKeyless"></td></tr><tr>
-                            </tr></table>
-                    </td>
-                    <td><table><tr>
-                                <td width="133" class="airbagDriver"></td></tr><tr>
-                                <td class="airbagPassenger"></td></tr><tr>
-                                <td class="airbagSide"></td></tr><tr>
-                                <td class="alarm"></td></tr><tr>
-                                <td class="antilockBrakes"></td></tr><tr>
-                            </tr></table>
-                    </td>
-                    <td><table><tr>
-                                <td width="133" class="bucketSeats"></td></tr><tr>
-                                <td class="leatherInterior"></td></tr><tr>
-                                <td class="memorySeats"></td></tr><tr>
-                                <td class="powerSeats"></td></tr><tr>
-                            </tr></table>
-                    </td>
-                    <td><table><tr>
-                                <td width="133"class="casset"></td></tr><tr>
-                                <td class="cdChanger"></td></tr><tr>
-                                <td class="cdPlayer"></td></tr><tr>
-                                <td class="premiumSound"></td></tr><tr>
-                            </tr></table>
-                    </td>
-                    <td><table><tr>
-                                <td width="133"class="powerWindows"></td></tr><tr>
-                                <td class="rearWindowWiper"></td></tr><tr>
-                                <td class="readWindowDefronster"></td></tr><tr>
-                                <td class="tintedGlass"></td></tr><tr>
-                            </tr></table>
-                    </td>
-                    <td><table><tr>
-                                <td width="133" class="alloyWheels"></td></tr><tr>
-                                <td class="sunroof"></td></tr><tr>
-                                <td class="thirdRowSeats"></td></tr><tr>
-                                <td class="towPackage"></td></tr><tr>
-                            </tr></table>
-                    </td>
-                </tr>
-            </table>
+
+
+        <div id="view-details" class="clicked-details"  style="display: none;">
+
+
+            <div class="images"></div>
+
+            <div class="car-info">
+
+
+                <div id="car-glimpse">
+                    <h4 id="cg-head">Car Glimpse</h4>
+                    <ul>
+                        <label>Body Style: </label>
+                        <span  class="bodyStyle"></span><br/>
+                        <label>Exterior Color: </label>
+                        <span  class="exteriorColor"></span><br/>
+                        <label>Interior Color: </label>
+                        <span  class="interiorColor"></span><br/>
+                        <label>Doors: </label>
+                        <span class="doors"></span><br/>
+                        <label>Transmission: </label>
+                        <span class="transmission"></span><br/>
+                        <label>Engine: </label>
+                        <span  class="engine"></span><br/>
+                        <label>Drivetrain: </label>
+                        <span  class="driveTrain"></span><br/>
+                        <label>VIN#: </label>
+                        <span  class="vin"></span><br/>
+                    </ul>
+                </div>
+
+
+                <div id="comfort-list">
+                    <h4>Comfort</h4>
+                    <ul>
+                        <li><div class="acFront"></div></li>
+                        <li><div class="acRear"></div></li>
+                        <li><div class="cruiseControl"></div></li>
+                        <li><div class="navigation"></div></li>
+                        <li><div class="powerLocks"></div></li>
+                        <li><div class="powerStearing"></div></li>
+                        <li><div class="remoteKeyless"></div></li>
+                    </ul>
+                </div>
+
+                <div id="safety-list">
+                    <h4>Safety</h4>
+                    <ul>
+                        <li><div class="airbagDriver"></div></li>
+                        <li><div class="airbagPassenger"></div></li>
+                        <li><div class="airbagSide"></div></li>
+                        <li><div class="alarm"></div></li>
+                        <li><div class="antilockBrakes"></div></li>
+                    </ul>
+                </div>
+
+                <div id="seats-list">
+                    <h4>Seats</h4>
+                    <ul>
+                        <li><div class="bucketSeats"></div></li>
+                        <li><div class="leatherInterior"></div></li>
+                        <li><div class="memorySeats"></div></li>
+                        <li><div class="powerSeats"></div></li>
+                    </ul>
+                </div>
+
+                <div id="soundSystem-list">
+                    <h4>Sound System</h4>
+                    <ul>
+                        <li><div class="casset"></div></li>
+                        <li><div class="cdChanger"></div></li>
+                        <li><div class="cdPlayer"></div></li>
+                        <li><div class="premiumSound"></div></li>
+                    </ul>
+                </div>
+
+                <div id="windows-list">
+                    <h4>Windows</h4>
+                    <ul>
+                        <li><div class="powerWindows"></div></li>
+                        <li><div class="rearWindowWiper"></div></li>
+                        <li><div class="readWindowDefronster"></div></li>
+                        <li><div class="tintedGlass"></div></li>
+                    </ul>
+                </div>
+
+                <div id="extras-list">
+                    <h4>Extras</h4>
+                    <ul>
+                        <li><div class="alloyWheels"></div></li>
+                        <li><div class="sunroof"></div></li>
+                        <li><div class="thirdRowSeats"></div></li>
+                        <li><div class="towPackage"></div></li>
+                    </ul>
+                </div>
+
+            </div>
+
+
+
         </div>
     </body>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" ></script>
@@ -159,4 +138,3 @@
     <script type="text/javascript" src="/Cars/js/facebox.js"></script>
     <script type="text/javascript" src="/Cars/js/cars.js"></script>
 </html>
-

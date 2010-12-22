@@ -79,27 +79,3 @@
   background-color: #000;
   z-index: 99;
 }
-
-.car-link{
-    font-size:larger;
-    font-family: 'Lucida Grande', Helvetica, Arial, Verdana, sans-serif;
-}
-.comments{
-    font-size:large;
-}
-
-.clicked-details{
-    width:800px;
-    border:0;
-    font-family:'Lucida Grande', Helvetica, Arial, Verdana, sans-serif;
-    font-size:12px;
-}
-#car-info{
-    width: 150px;
-    font-family:'Lucida Grande', Helvetica, Arial, Verdana, sans-serif;
-
-}
-#image-area{
-    width: 400px;
-}
-
