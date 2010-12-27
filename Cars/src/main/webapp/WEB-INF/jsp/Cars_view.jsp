@@ -37,7 +37,12 @@
             <div class="images"></div>
 
             <div class="car-info">
-
+                
+                <div class="carHeading">
+                    <label class="make"></label>
+                    <label class="model"></label>
+                    <label class="year"></label>
+                </div>
 
                 <div id="car-glimpse">
                     <h4 id="cg-head">Car Glimpse</h4>
@@ -58,11 +63,13 @@
                         <span  class="driveTrain"></span><br/>
                         <label>VIN#: </label>
                         <span  class="vin"></span><br/>
+                        <label>Stock#: </label>
+                        <span class="stock"></span>
                     </ul>
                 </div>
 
 
-                <div id="comfort-list">
+                <div id="comfort-list" class="left-padding">
                     <h4>Comfort</h4>
                     <ul>
                         <li><div class="acFront"></div></li>
@@ -86,7 +93,7 @@
                     </ul>
                 </div>
 
-                <div id="seats-list">
+                <div id="seats-list" class="left-padding">
                     <h4>Seats</h4>
                     <ul>
                         <li><div class="bucketSeats"></div></li>
@@ -106,7 +113,7 @@
                     </ul>
                 </div>
 
-                <div id="windows-list">
+                <div id="windows-list" class="left-padding">
                     <h4>Windows</h4>
                     <ul>
                         <li><div class="powerWindows"></div></li>

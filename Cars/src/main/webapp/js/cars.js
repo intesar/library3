@@ -55,9 +55,9 @@ var displayCars = function(cars) {
         +" </table>"
         +"</a>"
         + "</div>" +
-        " <div><table width='100%'> "
+        " <div><table width='100%' class='comments-detail'> "
                 
-        +"<tr><td class='comments-detail' width='5%'></td><td width='80%'>"
+        +"<tr><td width='5%'></td><td width='80%'>"
         + car.comments +
         "</td>"
         +"<td width='15%' align='center'>"
@@ -89,6 +89,7 @@ function display_images(car) {
     jQuery(".images").html(html);
 }
 function display_car(car) {
+    jQuery(".stock").text(car.id);
     jQuery(".make").text(car.make);
     jQuery(".model").text(car.model);
     jQuery(".style").text(car.style);
