@@ -3,7 +3,7 @@
     font-family: 'Lucida Grande', Helvetica, Arial, Verdana, sans-serif;
 }
 .comments-detail{
-    font-size:large;
+    font-size:medium;
 }
 
 
@@ -21,8 +21,10 @@
 #car-glimpse{
     float: left;
     text-align: justify;
+    margin-left: 25px;
     font-size: 14px;
     padding: 15px;
+    padding-bottom: 0px;
 }
 
 #comfort-list{
@@ -30,7 +32,6 @@
     float: left;
     width: 130px;
     font-size: 12px;
-    padding-left: 15px;
     list-style-type: none;
 }
 
@@ -38,8 +39,6 @@
     float: left;
     width: 110px;
     font-size: 12px;
-    padding: 15px;
-    list-style-type: none;
 }
 
 #seats-list{
@@ -47,16 +46,12 @@
     float: left;
     width: 130px;
     font-size: 12px;
-    padding-left: 15px;
-    list-style-type: none;
 }
 
 #soundSystem-list{
     float: left;
     width: 130px;
     font-size: 12px;
-    padding-left: 15px;
-    list-style-type: none;
 }
 
 #windows-list{
@@ -64,16 +59,12 @@
     float: left;
     width: 130px;
     font-size: 12px;
-    padding: 15px;
-    list-style-type: circle;
 }
 
 #extras-list{
     float: left;
     width: 120px;
     font-size: 12px;
-    padding-left: 15px;
-    list-style-type: none;
 }
 
 #cg-head{
@@ -98,4 +89,13 @@
 
 li{
     list-style-type: none;
+}
+
+.carHeading{
+    text-align: center;
+    font-size: 18px;
+    text-transform: uppercase;
+}
+.left-padding{
+    padding-left: 15px;
 }
