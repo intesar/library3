@@ -1,6 +1,7 @@
 .car-link{
     font-size:large;
     font-family: 'Lucida Grande', Helvetica, Arial, Verdana, sans-serif;
+    color: white;
 }
 .comments-detail{
     font-size:medium;
@@ -98,4 +99,11 @@ li{
 }
 .left-padding{
     padding-left: 15px;
+}
+
+#cars{
+    color: white;
+}
+.sort-list{
+    color: white;
 }
