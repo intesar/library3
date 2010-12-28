@@ -16,7 +16,7 @@
         <link href="/Cars/css/cars.css" media="screen" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        <div>
+        <div class="sort-list">
             <span> Sort By </span>
             <span><a href="#" class="sort-by-new">New</a></span>
             <span><a href="#" class="sort-by-price">Price</a></span>
