@@ -45,32 +45,23 @@ public class CarDaoImpl extends GenericDaoImpl<Car, Long> implements CarDao {
     @Override
     public List<Car> search(int priceLimit, int mileageLimit, int sortBy, int start, int max) {
         List<Car> list = null;
-        String ql = "SELECT c FROM Car c ";
-        boolean isPriceLimitEnabled = false;
+        String ql = "SELECT c FROM Car c WHERE c.active = true ";
         if (priceLimit > 0) {
             if (priceLimit == 10) {
-                ql += "WHERE c.askingPrice <= 5000.0";
-                isPriceLimitEnabled = true;
+                ql += " AND c.askingPrice <= 5000.0";
             } else if (priceLimit == 20) {
-                ql += "WHERE c.askingPrice BETWEEN 5000.0 and 10000.0";
-                isPriceLimitEnabled = true;
+                ql += " AND c.askingPrice BETWEEN 5000.0 and 10000.0";
             } else if (priceLimit == 30) {
-                ql += "WHERE c.askingPrice >= 10000.0";
-                isPriceLimitEnabled = true;
+                ql += " AND c.askingPrice >= 10000.0";
             }
         }
         if (mileageLimit > 0) {
-            if (isPriceLimitEnabled) {
-                ql += " AND ";
-            } else {
-                ql += " WHERE ";
-            }
             if (mileageLimit == 10) {
-                ql += "c.mileage <= 30000";
+                ql += " AND c.mileage <= 30000";
             } else if (mileageLimit == 20) {
-                ql += "c.mileage BETWEEN 30000 and 50000";
+                ql += " AND c.mileage BETWEEN 30000 and 50000";
             } else if (mileageLimit == 30) {
-                ql += "c.mileage >= 50000";
+                ql += " AND c.mileage >= 50000";
             }
         }
         if (sortBy == 1) {

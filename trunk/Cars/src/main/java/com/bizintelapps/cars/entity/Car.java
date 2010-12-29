@@ -26,7 +26,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region="")
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Car.findAll", query = "SELECT c FROM Car c ORDER BY c.createDate DESC"),
+    @NamedQuery(name = "Car.findAll", query = "SELECT c FROM Car c WHERE c.active = true ORDER BY c.createDate DESC"),
     @NamedQuery(name = "Car.findByImageFolderId", query = "SELECT c FROM Car c WHERE c.photosFolderId = :photosFolderId")
 })
 public class Car implements Serializable {
