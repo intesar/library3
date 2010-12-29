@@ -2,6 +2,7 @@ var link = '/library?p_p_id=31&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_
 var car_ = null;
 jQuery(document).ready(function() {
     jQuery("#car-save").live("click",car_save);
+    jQuery("#car-deactivate").live("click", car_deactivate);
     jQuery("#car-cancel").live("click",car_cancel);
     jQuery("#car-search").click(car_search);
     jQuery("#new-car").click(show_newCarDiv);
@@ -32,7 +33,9 @@ var show_newCarDiv = function() {
     car_showAddCar();
 }
 var car_showAddCar = function() {
-    jQuery.facebox({div: '#car-newCar'},'my-groovy-style')
+    jQuery.facebox({
+        div: '#car-newCar'
+    },'my-groovy-style')
 }
 var car_save = function() {
     if ( car_ == null ) {
@@ -42,6 +45,14 @@ var car_save = function() {
     AjaxCarService.saveCar(car_, function(car) {
         display_car(car);
     });
+}
+var car_deactivate = function() {
+    if ( confirm("Are you sure your want to De Activate this car ? ")) {
+        car_.active = false;
+        AjaxCarService.saveCar(car_, function(car) {
+            display_car(car);
+        });
+    }
 }
 function collectData(car) {
     for(var key in car){
@@ -93,6 +104,7 @@ var car_search = function () {
 function getEmptyCar() {
     var car = {
         id:null,
+        active:true,
         make:null,
         model:null,
         style:null,

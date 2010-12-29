@@ -26,6 +26,14 @@
 
                         <table>
                             <tr>
+                                <td>Stock ID  # </td>
+                                <td><input type="text" width="180" class="id" /></td>
+                            </tr>
+                            <tr>
+                                <td>Active</td>
+                                <td><input type="text" width="180" make="active" /></td>
+                            </tr>
+                            <tr>
                                 <td width="150"><label >Make</label></td>
                                 <td><input type="text" width="180" class="make" /><br/></td>
                             </tr>
@@ -192,9 +200,8 @@
                                 <td><a href="" target="_blank" class="photosUrl"> Click here </a></td>
                             </tr>
                             <tr>
-                                <td>
-                                    Video <input size="15" class="video"/>
-                                </td>
+                                <td>Video</td>
+                                <td><input size="15" class="video"/></td>
                             </tr>
                         </table>
                     </td>
@@ -380,6 +387,7 @@
                 <tr>
                     <td><input type="button" id="car-cancel" value="Cancel" /></td>
                     <td><input type="button" id="car-save" value="Save" /></td>
+                    <td><input type="button" id="car-deactivate" value="Deactivate" /></td>
                 </tr>
             </table>
         </div>
