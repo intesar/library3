@@ -30,7 +30,7 @@ public class CarsAjaxService {
             if (car.getId() == null || car.getPhotosFolderId() == null) {
                 ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute(SessionHandler.THEME_DISPLAY);
                 ServiceContext serviceContext = (ServiceContext) session.getAttribute(SessionHandler.SERVICE_CONTEXT);
-                String name = car.getMake() + " " + car.getMake() + " " + car.getYear();
+                String name = car.getMake() + " " + car.getModel() + " " + car.getYear() + " " + car.getVin();
                 String description = car.getVin();
                 if(log.isTraceEnabled()) {
                     log.trace("themeDisplay " + themeDisplay);
