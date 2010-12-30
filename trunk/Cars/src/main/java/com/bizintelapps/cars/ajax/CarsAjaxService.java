@@ -4,6 +4,7 @@ import com.bizintelapps.cars.entity.Car;
 import com.bizintelapps.cars.entity.ResultDto;
 import com.bizintelapps.cars.portlet.SessionHandler;
 import com.bizintelapps.cars.service.CarService;
+import com.bizintelapps.cars.service.EmailService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.ServiceContext;
@@ -82,8 +83,23 @@ public class CarsAjaxService {
     public ResultDto<Car> search(int priceLimit, int mileageLimit, int sortBy, int start, int max) {
         return carService.search(priceLimit, mileageLimit, sortBy, start, max);
     }
+
+    /**
+     * 
+     * @param carId
+     * @param to
+     * @param subject
+     * @param comment
+     */
+    public void emailTo(Long carId, String to, String subject, String comment) {
+        Car car = getCar(carId);
+        emailService.sendEmail(to, subject, car, comment);
+    }
+
     /** private methods **/
     protected static final Log log = LogFactory.getLog(CarsAjaxService.class);
     @Autowired
     protected CarService carService;
+    @Autowired
+    protected EmailService emailService;
 }
