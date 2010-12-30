@@ -1,8 +1,7 @@
-var link = '/library?p_p_id=31&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_31_struts_action=/image_gallery/view&_31_folderId=';
+var link = 'library?p_p_id=31&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_31_struts_action=/image_gallery/view&_31_folderId=';
 var car_ = null;
 jQuery(document).ready(function() {
     jQuery("#car-save").live("click",car_save);
-    jQuery("#car-deactivate").live("click", car_deactivate);
     jQuery("#car-cancel").live("click",car_cancel);
     jQuery("#car-search").click(car_search);
     jQuery("#new-car").click(show_newCarDiv);
@@ -45,14 +44,6 @@ var car_save = function() {
     AjaxCarService.saveCar(car_, function(car) {
         display_car(car);
     });
-}
-var car_deactivate = function() {
-    if ( confirm("Are you sure your want to De Activate this car ? ")) {
-        car_.active = false;
-        AjaxCarService.saveCar(car_, function(car) {
-            display_car(car);
-        });
-    }
 }
 function collectData(car) {
     for(var key in car){
@@ -161,7 +152,6 @@ function getEmptyCar() {
         soldDate:null,
         sellingPrice:null,
         sellerComments:null,
-        active:null,
         photosFolderId:null
     };
     return car;
