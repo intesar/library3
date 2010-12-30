@@ -27,11 +27,16 @@
                         <table>
                             <tr>
                                 <td>Stock ID  # </td>
-                                <td><input type="text" width="180" class="id" /></td>
+                                <td><input type="text" width="180" class="id" disabled /></td>
                             </tr>
                             <tr>
                                 <td>Active</td>
-                                <td><input type="text" width="180" make="active" /></td>
+                                <td>
+                                    <select class="active">
+                                        <option value="true">Yes</option>
+                                        <option value="false">No</option>
+                                    </select>
+                                </td>
                             </tr>
                             <tr>
                                 <td width="150"><label >Make</label></td>
@@ -387,7 +392,6 @@
                 <tr>
                     <td><input type="button" id="car-cancel" value="Cancel" /></td>
                     <td><input type="button" id="car-save" value="Save" /></td>
-                    <td><input type="button" id="car-deactivate" value="Deactivate" /></td>
                 </tr>
             </table>
         </div>
