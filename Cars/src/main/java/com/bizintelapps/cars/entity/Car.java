@@ -35,6 +35,7 @@ public class Car implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private Long stock;
     private String make;
     private String model;
     private String style;
@@ -110,6 +111,14 @@ public class Car implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getStock() {
+        return stock;
+    }
+
+    public void setStock(Long stock) {
+        this.stock = stock;
     }
 
     public Boolean getAcFront() {

@@ -47,27 +47,31 @@ var displayCars = function(cars) {
         var car = cars.list[i];
         cars_[car.id] = car; 
         html +=
-        "<div class='car-link' id='car-"+car.id +"'>"
-        +"<a href='JavaScript:void(0)' class='car-record' >"
-        +"<table width='600px'>" + car.year +
-        " " + car.make + " " + car.model + " " + car.mileage +
-        "mi $" + car.askingPrice  
-        +" </table>"
-        +"</a>"
-        + "</div>" +
-        " <div><table width='100%' class='comments-detail'> "
-                
-        +"<tr><td width='5%'></td><td width='80%'>"
-        + car.comments +
-        "</td>"
-        +"<td width='15%' align='center'>"
-        +"<img src='/image/image_gallery?img_id="+car.images[0].smallImageId+"&igImageId="+car.images[0].imageId+"&igSmallImage=1' >"
-        +"</td></tr></table></div> "
-        
+        "<div class='box'>"+
+            "<div class='inner-box'>"+
+                "<div class='car-link' id='car-"+car.id +"'>"+
+                    "<span>"
+                        +"<a href='JavaScript:void(0)' class='car-record' >"
+                        + car.year + " " + car.make + " " + car.model + " " + car.mileage +" miles"+"</a>"
+                    +" </span>"
+                + "</div>" +
+                " <div class='comments-detail'>"+
+                    "<span width='100%' id='comment-clr'> "
+                        + car.comments +
+                    "</span>"+
+                "</div>"+
+            "</div>"
+            +"<div class='car-image' width='15%' align='center'>"+
+                "<span>"
+                    if(car.images.length > 0)
+                        html += "<img src='http://localhost:8080/image/image_gallery?img_id="+car.images[0].smallImageId+"&igImageId="+car.images[0].imageId+"&igSmallImage=1' >";
+                    html += "<br/> $"+car.askingPrice +
+                "</span>"+
+            "</div> "+
+        "</div>"
         +"<br/>"
-        +"<!--a href='/web/cars/library?p_p_id=31&p_p_lifecycle=0&p_p_state=pop_up&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_31_struts_action=%2Fimage_gallery%2Fview_slide_show&_31_folderId=" + cars.photosFolderId + ">Images</a -->"
-        + "<!-- a href='#'> Video <a-->\n\
-        <br/><br/>"
+        +"<!--a href='http://localhost:8080/web/cars/library?p_p_id=31&p_p_lifecycle=0&p_p_state=pop_up&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_31_struts_action=%2Fimage_gallery%2Fview_slide_show&_31_folderId=" + cars.photosFolderId + ">Images</a -->"
+        + "<!-- a href='#'> Video <a-->"
     ;
     }
     jQuery("#cars").html(html);
@@ -82,14 +86,14 @@ var view_details = function() {
     },'my-groovy-style');
 }
 function display_images(car) {
-    var url = '/library?p_p_id=31&p_p_lifecycle=0&p_p_state=pop_up&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_31_struts_action=%2Fimage_gallery%2Fview_slide_show&_31_folderId=' + car.photosFolderId;
+    var url = 'http://localhost:8080/library?p_p_id=31&p_p_lifecycle=0&p_p_state=pop_up&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_31_struts_action=%2Fimage_gallery%2Fview_slide_show&_31_folderId=' + car.photosFolderId;
     var html = '<iframe src ="'+ url +'" width="100%" height="100%">'
     +'<p>Your browser does not support iframes.</p>'
     +'</iframe>';
     jQuery(".images").html(html);
 }
 function display_car(car) {
-    jQuery(".stock").text(car.id);
+    jQuery(".stock").text(car.stock);
     jQuery(".make").text(car.make);
     jQuery(".model").text(car.model);
     jQuery(".style").text(car.style);

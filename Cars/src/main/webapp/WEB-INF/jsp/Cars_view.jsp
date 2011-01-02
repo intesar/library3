@@ -14,14 +14,27 @@
         <title>Search Cars</title>
         <link href="/Cars/css/facebox.css" media="screen" rel="stylesheet" type="text/css"/>
         <link href="/Cars/css/cars.css" media="screen" rel="stylesheet" type="text/css"/>
+        <script type="text/javascript">
+
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-20502478-1']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+
+        </script>
     </head>
     <body>
-        <div class="sort-list">
+        <div id="sort-list">
             <span> Sort By </span>
-            <span><a href="#" class="sort-by-new">New</a></span>
-            <span><a href="#" class="sort-by-price">Price</a></span>
-            <span><a href="#" class="sort-by-mileage">Mileage</a></span>
-            <span><a href="#" class="sort-by-year">Year</a></span>
+            <span><a href="#" id="sort-list" class="sort-by-new">New</a></span>
+            <span><a href="#" id="sort-list" class="sort-by-price">Price</a></span>
+            <span><a href="#" id="sort-list" class="sort-by-mileage">Mileage</a></span>
+            <span><a href="#" id="sort-list" class="sort-by-year">Year</a></span>
         </div>
         <br/>
         <div>
@@ -37,7 +50,7 @@
             <div class="images"></div>
 
             <div class="car-info">
-                
+
                 <div class="carHeading">
                     <label class="make"></label>
                     <label class="model"></label>

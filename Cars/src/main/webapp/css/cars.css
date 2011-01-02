@@ -1,13 +1,23 @@
 .car-link{
     font-size:large;
     font-family: 'Lucida Grande', Helvetica, Arial, Verdana, sans-serif;
+    clear: both;
+    float: left;
     color: white;
 }
+
+
 .comments-detail{
     font-size:medium;
+    float: left;
+    clear:both;
+    padding-left: 10px;
+    padding-top: 10px;
 }
 
-
+#car-newCar{
+    color: black;
+}
 
 
 /* New style begins here*/
@@ -75,7 +85,7 @@
 .images{
     clear: both;
     float: left;
-    width: 600px;
+    width: 710px;
     height: 550px;
 }
 .car-info{
@@ -84,7 +94,7 @@
 }
 
 #facebox .content {
-    width: 900px;
+    width: 1100px;
 
 }
 
@@ -101,9 +111,28 @@ li{
     padding-left: 15px;
 }
 
-#cars{
+#comment-clr, #sort-range, #sort-list,
+.car-record, .priceLimit, .mileageLimit, #span-heading{
     color: white;
 }
-.sort-list{
+.box{
+    width:700px;
+    position:relative;
+    height:130px;
+}
+.inner-box{
+    position:absolute;
+    left:0px;
+    width:500px;
+    height:200px;
+}
+
+.car-image{
+    font-size: 18px;
+    text-align: center;
     color: white;
+    position:absolute;
+    left:500px;
+    width:200px;
+    height:200px;
 }
