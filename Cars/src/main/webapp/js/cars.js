@@ -64,7 +64,7 @@ var displayCars = function(cars) {
             +"<div class='car-image' width='15%' align='center'>"+
                 "<span>"
                     if(car.images.length > 0)
-                        html += "<img src='http://localhost:8080/image/image_gallery?img_id="+car.images[0].smallImageId+"&igImageId="+car.images[0].imageId+"&igSmallImage=1' >";
+                        html += "<img src='/image/image_gallery?img_id="+car.images[0].smallImageId+"&igImageId="+car.images[0].imageId+"&igSmallImage=1' >";
                     html += "<br/> $"+car.askingPrice +
                 "</span>"+
             "</div> "+
@@ -86,7 +86,7 @@ var view_details = function() {
     },'my-groovy-style');
 }
 function display_images(car) {
-    var url = 'http://localhost:8080/library?p_p_id=31&p_p_lifecycle=0&p_p_state=pop_up&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_31_struts_action=%2Fimage_gallery%2Fview_slide_show&_31_folderId=' + car.photosFolderId;
+    var url = '/library?p_p_id=31&p_p_lifecycle=0&p_p_state=pop_up&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_31_struts_action=%2Fimage_gallery%2Fview_slide_show&_31_folderId=' + car.photosFolderId;
     var html = '<iframe src ="'+ url +'" width="100%" height="100%">'
     +'<p>Your browser does not support iframes.</p>'
     +'</iframe>';
