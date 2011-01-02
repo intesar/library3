@@ -9,7 +9,8 @@
     </head>
     <body>
         <div>
-            <h3 style="font-family: verdana;"> Car Stock Number </h3> &nbsp; <input type="text" value="" id="car-id" /> &nbsp;
+            <h3 style="font-family: 'Lucida Grande', Helvetica, Arial, Verdana, sans-serif;"> Add/Edit Car </h3> &nbsp;
+            <input type="text" value="" id="car-id" /> &nbsp;
             <input type="button" id="car-search" value="Edit" /><br/><br/> &nbsp;
             <input type="button" id="new-car" value="Add A New Car" />
         </div>        
@@ -27,7 +28,7 @@
                         <table>
                             <tr>
                                 <td>Stock ID  # </td>
-                                <td><input type="text" width="180" class="id" disabled /></td>
+                                <td><input type="text" width="180" class="stock"/></td>
                             </tr>
                             <tr>
                                 <td>Active</td>
@@ -245,8 +246,8 @@
                                 <td>Airbag Passenger</td>
                             </tr>
                             <tr>
-                                <td align="center"><input type="checkbox"  class="airbagSclasse" /></td>
-                                <td>Airbag Sclasse</td>
+                                <td align="center"><input type="checkbox"  class="airbagSide" /></td>
+                                <td>Airbag Side</td>
                             </tr>
 
                         </table>
