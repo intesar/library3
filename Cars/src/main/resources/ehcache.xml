@@ -3,13 +3,18 @@
     xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd" updateCheck="false">
     
     <!-- Location of persistent caches on disk -->
-    <diskStore path="java.io.tmpdir/PolarApp" />
+    <!-- <diskStore path="java.io.tmpdir/PolarApp" /> -->
 
     <defaultCache eternal="false" maxElementsInMemory="1000"
         overflowToDisk="false" diskPersistent="false" timeToIdleSeconds="0"
         timeToLiveSeconds="600" memoryStoreEvictionPolicy="LRU"/>
 
     <cache name="com.bizintelapps.cars.entity.Car" eternal="false"
+        maxElementsInMemory="1000" overflowToDisk="false" diskPersistent="false"
+        timeToIdleSeconds="600" timeToLiveSeconds="6000"
+        memoryStoreEvictionPolicy="LRU" />
+
+    <cache name="com.bizintelapps.cars.entity.Car.images" eternal="false"
         maxElementsInMemory="1000" overflowToDisk="false" diskPersistent="false"
         timeToIdleSeconds="600" timeToLiveSeconds="6000"
         memoryStoreEvictionPolicy="LRU" />
