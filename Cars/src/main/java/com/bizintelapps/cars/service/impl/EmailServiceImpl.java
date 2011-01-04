@@ -8,6 +8,7 @@
 package com.bizintelapps.cars.service.impl;
 
 import com.bizintelapps.cars.entity.Car;
+import com.bizintelapps.cars.entity.Image;
 import com.bizintelapps.cars.service.EmailService;
 import java.security.Security;
 import java.util.Properties;
@@ -103,7 +104,13 @@ public class EmailServiceImpl implements EmailService {
         String msg = comment + "<br/>";
         // TODO - change from email and password in interface
         // TODO - add car details
+        msg += "<div>Make : "+ car.getMake() + "</div>"
+            +  "<div>Year : "+ car.getYear() + "</div>";
         // TODO - add images as <img> tags check js file for reference
+        for ( Image image : car.getImages() ) {
+            msg += "<div><img src='" + image.getUuid() + "' /> </div>";
+        }
+
         msg += EMAIL_SIGNATURE;
         return msg;
     }
