@@ -42,8 +42,6 @@
 
             </div>
         </div>
-
-
         <div id="view-details" class="clicked-details"  style="display: none;">
 
 
@@ -150,6 +148,12 @@
 
 
 
+        </div>
+        <div style="display:none" id="email-div">
+            <div><label>To</label><input type="text" class="toAddress"/> </div>
+            <div><label>Subject</label><input type="text" class="toAddress"/> </div>
+            <div><label>Comment</label><input type="text" class="toAddress"/> </div>
+            <div><input type="button" value="Send" class="send-btn"/><input type="button" value="Clear" class="clear-btn"/> </div>
         </div>
     </body>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" ></script>
