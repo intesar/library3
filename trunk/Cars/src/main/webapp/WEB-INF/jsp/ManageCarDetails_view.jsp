@@ -6,14 +6,27 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title></title>
         <link href="/Cars/css/facebox.css" media="screen" rel="stylesheet" type="text/css"/>
+        <link href="/Cars/css/tablesorter.css" media="screen" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <div>
-            <h3 style="font-family: 'Lucida Grande', Helvetica, Arial, Verdana, sans-serif;"> Add/Edit Car </h3> &nbsp;
             <input type="text" value="" id="car-id" /> &nbsp;
-            <input type="button" id="car-search" value="Edit" /><br/><br/> &nbsp;
+            <input type="button" id="car-search" value="Search" /> &nbsp;
             <input type="button" id="new-car" value="Add A New Car" />
-        </div>        
+        </div>
+        <div>
+            <table id="all-cars" class="tablesorter" cellspacing="1">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Stock #</th>
+                        <th>Make</th>
+                    </tr>
+                </thead>
+                <tbody id="all-cars-body">
+                </tbody>
+            </table>
+        </div>
         <div id="car-newCar" title="Car Information" style="display:none">
             <table width="800px" border="0" cellspacing="1" cellpadding="0" class="description" style="font-family:arial;font-size:12px">
                 <tr>
@@ -401,5 +414,6 @@
     <script type='text/javascript' src='/Cars/dwr/interface/AjaxCarService.js'></script>
     <script type='text/javascript' src='/Cars/dwr/engine.js'></script>
     <script type="text/javascript" src="/Cars/js/facebox.js" ></script>
+    <script type="text/javascript" src="/Cars/js/tablesorter.js" ></script>
     <script type="text/javascript" src="/Cars/js/car_details.js"></script>
 </html>

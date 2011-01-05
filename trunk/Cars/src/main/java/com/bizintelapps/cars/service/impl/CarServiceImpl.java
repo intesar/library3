@@ -4,6 +4,7 @@ import com.bizintelapps.cars.dao.CarDao;
 import com.bizintelapps.cars.entity.Car;
 import com.bizintelapps.cars.entity.ResultDto;
 import com.bizintelapps.cars.service.CarService;
+import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,11 @@ public class CarServiceImpl implements CarService {
     @Override
     public Car getCar(Long carId) {
         return carDao.find(carId);
+    }
+
+    @Override
+    public List<Car> getAllCars() {
+        return carDao.findAll();
     }
 
     @Override
@@ -70,4 +76,6 @@ public class CarServiceImpl implements CarService {
     protected CarDao carDao;
 
     protected static final Log logger = LogFactory.getLog(CarServiceImpl.class);
+
+
 }

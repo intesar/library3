@@ -3,6 +3,7 @@ package com.bizintelapps.cars.service;
 
 import com.bizintelapps.cars.entity.Car;
 import com.bizintelapps.cars.entity.ResultDto;
+import java.util.List;
 
 /**
  *
@@ -21,6 +22,12 @@ public interface CarService {
      * @return
      */
     Car getCar(Long carId);
+
+    /**
+     *
+     * @return
+     */
+    List<Car> getAllCars();
 
     /**
      * 

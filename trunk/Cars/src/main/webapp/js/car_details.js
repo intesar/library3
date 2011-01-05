@@ -1,11 +1,26 @@
 var link = '/library?p_p_id=31&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_31_struts_action=/image_gallery/view&_31_folderId=';
 var car_ = null;
 jQuery(document).ready(function() {
+    display_cars();
     jQuery("#car-save").live("click",car_save);
     jQuery("#car-cancel").live("click",car_cancel);
     jQuery("#car-search").click(car_search);
     jQuery("#new-car").click(show_newCarDiv);
 });
+function display_cars() {
+    AjaxCarService.getAllCars(function(cars) {
+        var html = "";
+        jQuery.each(cars, function(i, car) {
+            html += "<tr>"
+            + "<td>" + car.id + "</td>"
+            + "<td>" + car.stock + "</td>"
+            + "<td>" + car.make + "</td>"
+            + "</tr>";
+        });
+        jQuery("#all-cars-body").html(html);
+        jQuery("#all-cars").tablesorter();
+    })
+}
 var car_cancel = function() {
     car_ = null;
     // find all input and clear them
