@@ -11,6 +11,7 @@
         <dwr:remote javascript="AjaxCarService">
             <dwr:include method="saveCar" />
             <dwr:include method="getCar" />
+            <dwr:include method="getAllCars" />
             <dwr:include method="search" />
             <dwr:include method="emailTo" />
             <!--<dwr:filter class="com.bizintelapps.cars.ajax.LoginCheckFilter" /> -->

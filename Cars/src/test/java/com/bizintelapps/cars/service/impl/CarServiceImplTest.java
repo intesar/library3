@@ -1,5 +1,6 @@
 package com.bizintelapps.cars.service.impl;
 
+import java.util.List;
 import com.bizintelapps.cars.entity.Image;
 import com.bizintelapps.cars.entity.ResultDto;
 import com.bizintelapps.cars.service.CarService;
@@ -95,6 +96,18 @@ public class CarServiceImplTest {
         car.getImages().remove(image);
         car = carService.saveCar(car);
         //assertTrue(car.getImages().size() == 0);
+    }
+
+    /**
+     * Test of getAllCars method, of class CarServiceImpl.
+     */
+    @Test
+    public void testGetAllCars() {
+        System.out.println("getAllCars");
+        List<Car> cars = carService.getAllCars();
+        assertNotNull(cars);
+        assertTrue(!cars.isEmpty());
+        System.out.println(" Total cars getAllCars() -- " + cars.size());
     }
 
     /**

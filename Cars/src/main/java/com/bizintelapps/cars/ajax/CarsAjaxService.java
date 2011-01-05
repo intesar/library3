@@ -11,6 +11,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.imagegallery.model.IGFolder;
 import com.liferay.portlet.imagegallery.service.IGFolderLocalServiceUtil;
+import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -61,6 +62,10 @@ public class CarsAjaxService {
             log.trace(car.toString());
         }
         return car;
+    }
+
+    public List<Car> getAllCars() {
+        return carService.getAllCars();
     }
 
     /**
