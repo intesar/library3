@@ -10,6 +10,13 @@ import java.util.List;
  * @author intesar
  */
 public interface CarDao extends GenericDao<Car, Long> {
+
+    /**
+     * 
+     * @param stock
+     * @return
+     */
+    Car findByStock(long stock);
     /**
      * 
      * @param start

@@ -10,7 +10,7 @@
     </head>
     <body>
         <div>
-            <input type="text" value="" id="car-id" /> &nbsp;
+            <input type="text"  id="car-id" /> &nbsp;
             <input type="button" id="car-search" value="Search" /> &nbsp;
             <input type="button" id="new-car" value="Add A New Car" />
         </div>
