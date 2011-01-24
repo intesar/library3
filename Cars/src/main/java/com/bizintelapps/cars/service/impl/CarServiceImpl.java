@@ -34,7 +34,7 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public Car getCar(Long carId) {
-        return carDao.find(carId);
+        return carDao.findByStock(carId);
     }
 
     @Override

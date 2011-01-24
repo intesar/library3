@@ -15,18 +15,19 @@ import com.bizintelapps.cars.entity.Car;
  */
 public interface EmailService {
 
-    String SMTP_HOST_NAME = "smtp.gmail.com";
+    String SMTP_HOST_NAME = "smtp.mail.yahoo.com";
     String SMTP_PORT = "465";
-    String EMAIL_FROM_ADDRESS = "faceguard3@bizintelapps.com";
-    String SEND_FROM_USERNAME = "faceguard3@bizintelapps.com";
-    String SEND_FROM_PASSWORD = "Abbh1234";
+    String EMAIL_FROM_ADDRESS = "manheimotors@yahoo.com";
+    String SEND_FROM_USERNAME = "manheimotors@yahoo.com";
+    String SEND_FROM_PASSWORD = "allah1o1";
     String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
     String EMAIL_CONTENT_TYPE = "text/html";
     String EMAIL_SIGNATURE = "<br/><br/>"
             + "Thanks, <br/>"
-            + "Manheim Motors, Inc. <br/>"
+            + "Manheim Motors<br/>"
             + "417 N Villa Avenue, Villa Park, IL 60181 <br/>"
-            + "(630) 279-7000";
+            + "(630) 279-7000"
+            + "<br/>";
 
     
     /**

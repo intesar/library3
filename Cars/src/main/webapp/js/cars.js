@@ -50,28 +50,35 @@ var displayCars = function(cars) {
         cars_[car.id] = car; 
         html +=
         "<div class='box'>"+
-        "<div class='inner-box'>"+
-        "<div class='car-link' id='car-"+car.id +"'>"+
-        "<span>"
-        +"<a href='JavaScript:void(0)' class='car-record' >"
-        + car.year + " " + car.make + " " + car.model + " " + car.mileage +" miles"+"</a>"
-        +" </span>"
-        + "</div>" +
-        " <div class='comments-detail'>"+
-        "<span width='100%' id='comment-clr'> "
-        + car.comments +
-        "</span>"+
-        "</div>"+
-        "</div>"
-        +"<div class='car-image' width='15%' align='center'>"+
-        "<span>"
+        "  <div class='car-image' >"+
+        "   <span>"
         if(car.images.length > 0)
             html += "<img src='/image/image_gallery?img_id="+car.images[0].smallImageId+"&igImageId="+car.images[0].imageId+"&igSmallImage=1' >";
         html += "<br/> $"+car.askingPrice +
-        "</span>"+
-        "</div> "+
+        "   </span>"+
+        "  </div> "+
+        
+        " <div class='inner-box'>"+
+        "  <div class='car-link' id='car-"+car.id +"'>"+
+        "   <span>"
+        +"   <a href='JavaScript:void(0)' class='car-record' >"
+        + car.year + " " + car.make + " " + car.model + " " + car.mileage +" miles"+"</a>"
+        +"  </span>"
+        +" </div>" +
+        "  <div class='comments-detail'>"+
+        "   <span width='100%' id='comment-clr'> "
+        + car.comments +
+        "   </span>"+
+        "  </div>"+
+        "  <div class='email-clk'>"+
+        "  <span>"+
+        "   <a href='JavaScript:void(0)' class='email-link' id='email-" + car.stock + "'>Email listing</a>"+
+        "  </span>"+
+        "  </div>"+
+        " </div>"+
         "</div>"
-        +"<br/>"
+
+        +"" 
         +"<!--a href='http://localhost:8080/web/cars/library?p_p_id=31&p_p_lifecycle=0&p_p_state=pop_up&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_31_struts_action=%2Fimage_gallery%2Fview_slide_show&_31_folderId=" + cars.photosFolderId + ">Images</a -->"
         + "<!-- a href='#'> Video <a-->"
     ;
@@ -85,7 +92,7 @@ var view_details = function() {
     display_car(car);
     jQuery.facebox({
         div: '#view-details'
-    },'my-groovy-style');
+    },'my-groovy-style').width("1100px");
 }
 function display_images(car) {
     var url = '/library?p_p_id=31&p_p_lifecycle=0&p_p_state=pop_up&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_31_struts_action=%2Fimage_gallery%2Fview_slide_show&_31_folderId=' + car.photosFolderId;
@@ -94,6 +101,7 @@ function display_images(car) {
     +'</iframe>';
     jQuery(".images").html(html);
 }
+
 function display_car(car) {
     jQuery(".stock").text(car.stock);
     jQuery(".make").text(car.make);
@@ -168,15 +176,38 @@ function display_car(car) {
         jQuery(".towPackage").html("Tow Package");
 }
 var send_email = function() {
-    // TODO carId, subject, comment
-    var id = jQuery(this).attr("id").substr(4);
-    var to = "";
-    var subject = "";
-    var comment = "";
+    var id = carId_;
+    
+    var to = jQuery(jQuery(".toAddress")[1]).val();
+    var subject = jQuery(jQuery(".subjectEmail")[1]).val();
+    var comment = jQuery(jQuery(".commentEmail")[1]).val();
     AjaxCarService.emailTo(id, to, subject, comment);
 }
+
+var carId_ = null;
 var show_email_popup = function() {
-    jQuery.facebox({
+    carId_ = jQuery(this).attr("id").substr(6);
+    
+    jQuery.facebox  ({        
         div: '#email-div'
-    },'my-groovy-style');
+    },'my-groovy-style').width("450px");
+}
+
+function renderDataTest(car) {
+    for(var key in car){
+        //var attrValue = car[key];
+        var x = jQuery("." + key );
+        if ( x.length > 0 ) {
+            if ( x[1].type == "text") {
+                x[1].value = car[key];
+            } else if ( x[1].type == "checkbox") {
+                x[1].checked = car[key];
+            } else if ( x[1].type == "select-one") {
+                x[1].value = car[key];
+            } else if ( x[1].type == "radio") {
+                x[1].value = car[key];
+            }
+        }
+    }
+    return car;
 }

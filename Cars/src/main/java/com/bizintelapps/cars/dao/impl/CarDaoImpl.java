@@ -20,6 +20,11 @@ public class CarDaoImpl extends GenericDaoImpl<Car, Long> implements CarDao {
     }
 
     @Override
+    public Car findByStock(long stock) {
+        return (Car) entityManager.createNamedQuery("Car.findByStock").setParameter(1, stock).getSingleResult();
+    }
+
+    @Override
     public Car findCarByImageFolderId(long folderId) {
         return entityManager.createNamedQuery("Car.findByImageFolderId", Car.class).setParameter("photosFolderId", folderId).getSingleResult();
     }

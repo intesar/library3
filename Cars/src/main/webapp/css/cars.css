@@ -1,26 +1,50 @@
-.car-link{
-    font-size:large;
-    font-family: 'Lucida Grande', Helvetica, Arial, Verdana, sans-serif;
-    clear: both;
-    float: left;
-    color: white;
+#cars{
+    width:920px;
+    margin-top:20px;
+    margin-left:10px;
+    margin-bottom:10px;
+    float:left;
+
 }
 
-
-.comments-detail{
-    font-size:medium;
+.email-clk{
+    font-size:smaller;
     float: left;
-    clear:both;
-    padding-left: 10px;
-    padding-top: 10px;
+    padding-left: 0px;
+}
+
+.box{
+    width:450px;
+    float:left;
+    margin: 0 10px 10px 0;
+
+}
+.car-image{
+    float:left;
+    margin-right:5px;
+    width:155px;
+    height:auto;
+    border: 1px solid #999;
+    text-align:center;
+    padding: 3px;
+    color:white;
+    font-size: medium;
+}
+.inner-box{
+    margin:0;
+    padding:0;
+    width:450px;
+}
+
+#filter-list{
+    float:right;
+    padding: 1px;
+    color:white;
 }
 
 #car-newCar{
     color: black;
 }
-
-
-/* New style begins here*/
 
 #view-details{
     width:800px;
@@ -93,11 +117,6 @@
 
 }
 
-#facebox .content {
-    width: 1100px;
-
-}
-
 li{
     list-style-type: none;
 }
@@ -111,28 +130,17 @@ li{
     padding-left: 15px;
 }
 
-#comment-clr, #sort-range, #sort-list,
+#comment-clr, #sort-list,
 .car-record, .priceLimit, .mileageLimit, #span-heading{
     color: white;
 }
-.box{
-    width:700px;
-    position:relative;
-    height:150px;
+.toAddress, .subjectEmail, .commentEmail, .send-btn{
+    margin-left: 45px;
+    float:right;
 }
-.inner-box{
-    position:absolute;
-    left:0px;
-    width:500px;
-    height:200px;
+#toAdd, #sub, #com{
+    clear:both;
 }
-
-.car-image{
-    font-size: 18px;
-    text-align: center;
-    color: white;
-    position:absolute;
-    left:500px;
-    width:200px;
-    height:200px;
+.clear-btn{
+    float:left;
 }
