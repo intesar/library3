@@ -46,26 +46,26 @@
     color: black;
 }
 
-#view-details{
+/*#view-details{
     width:800px;
     border:1px;
     font-family:'Lucida Grande', Helvetica, Arial, Verdana, sans-serif;
     font-size:14px;
-}
+}*/
 
 #car-glimpse{
     float: left;
     text-align: justify;
-    margin-left: 25px;
+    margin-left: 5px;
     font-size: 14px;
-    padding: 15px;
+    padding: 0 15px 15px 0;
     padding-bottom: 0px;
 }
 
 #comfort-list{
     clear: both;
     float: left;
-    width: 130px;
+    width: 115px;
     font-size: 12px;
     list-style-type: none;
 }
@@ -79,26 +79,26 @@
 #seats-list{
     clear: both;
     float: left;
-    width: 130px;
+    width: 115px;
     font-size: 12px;
 }
 
 #soundSystem-list{
     float: left;
-    width: 130px;
+    width: 110px;
     font-size: 12px;
 }
 
 #windows-list{
     clear: both;
     float: left;
-    width: 130px;
+    width: 115px;
     font-size: 12px;
 }
 
 #extras-list{
     float: left;
-    width: 120px;
+    width: 110px;
     font-size: 12px;
 }
 
@@ -107,9 +107,9 @@
 }
 
 .images{
-    clear: both;
+/*    clear: both;*/
     float: left;
-    width: 720px;
+    width: 900px;
     height: 550px;
 }
 .car-info{

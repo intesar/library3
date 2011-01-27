@@ -63,7 +63,7 @@
                 </div>
 
                 <div id="car-glimpse">
-                    <h4 id="cg-head">Car Glimpse</h4>
+                    <h4 id="cg-head">Car Details</h4>
                     <ul>
                         <label>Body Style: </label>
                         <span  class="bodyStyle"></span><br/>
