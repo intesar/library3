@@ -115,8 +115,9 @@ public class EmailServiceImpl implements EmailService {
             ;
         // TODO - add images as <img> tags check js file for reference
         for ( Image image : car.getImages() ) {
+//            msg += "<div><img src='" + image.getUuid() + "' /> </div>";
             msg += "<div> "
-                    + "<img src='/library?p_p_id=31&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_31_struts_action=/image_gallery/view&_31_folderId="+image.getUuid()+"'/> </div>";
+                    + "<img src='/library?p_p_id=31&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_31_struts_action=/image_gallery/view&_31_folderId="+car.getPhotosFolderId()+"'/> </div>";
 
       }
 

@@ -16,6 +16,9 @@
   -webkit-box-shadow:0 0 18px rgba(0,0,0,0.4);
   -moz-box-shadow:0 0 18px rgba(0,0,0,0.4);
   box-shadow:0 0 18px rgba(0,0,0,0.4);
+/*  right: 190px;*/
+/*  width: 1205px;*/
+
 }
 
 #facebox .content {
@@ -68,7 +71,7 @@
   top: 0px;
   left: 0px;
   height:100%;
-  width:100%;
+/*  width:100%;*/
 }
 
 .facebox_hide {

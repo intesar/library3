@@ -92,7 +92,7 @@ var view_details = function() {
     display_car(car);
     jQuery.facebox({
         div: '#view-details'
-    },'my-groovy-style').width("1100px");
+    },'my-groovy-style');
 }
 function display_images(car) {
     var url = '/library?p_p_id=31&p_p_lifecycle=0&p_p_state=pop_up&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_31_struts_action=%2Fimage_gallery%2Fview_slide_show&_31_folderId=' + car.photosFolderId;
@@ -188,26 +188,9 @@ var carId_ = null;
 var show_email_popup = function() {
     carId_ = jQuery(this).attr("id").substr(6);
     
-    jQuery.facebox  ({        
+    jQuery.facebox  ({   
         div: '#email-div'
-    },'my-groovy-style').width("450px");
+    },'my-groovy-style')    ;
 }
 
-function renderDataTest(car) {
-    for(var key in car){
-        //var attrValue = car[key];
-        var x = jQuery("." + key );
-        if ( x.length > 0 ) {
-            if ( x[1].type == "text") {
-                x[1].value = car[key];
-            } else if ( x[1].type == "checkbox") {
-                x[1].checked = car[key];
-            } else if ( x[1].type == "select-one") {
-                x[1].value = car[key];
-            } else if ( x[1].type == "radio") {
-                x[1].value = car[key];
-            }
-        }
-    }
-    return car;
-}
+
