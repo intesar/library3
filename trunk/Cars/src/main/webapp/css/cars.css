@@ -134,6 +134,9 @@ li{
 .car-record, .priceLimit, .mileageLimit, #span-heading{
     color: white;
 }
+#sort-list {
+    float: right;
+}
 .toAddress, .subjectEmail, .commentEmail, .send-btn{
     margin-left: 45px;
     float:right;
