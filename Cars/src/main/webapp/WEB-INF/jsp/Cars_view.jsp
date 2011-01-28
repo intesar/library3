@@ -17,6 +17,7 @@
     </head>
     <body>
         <div class="main-box">
+            <!--
             <div id="filter-list">
                 <select id="sort-range">
                     <option>Mileage Range</option>
@@ -35,7 +36,8 @@
                     <option  class="priceLimit" value="20" > $5000 to $10,000 </option>
                     <option  class="priceLimit" value="30" > $10,000 or more</option>
                 </select>
-            </div>            
+            </div>
+            -->
             <div id="sort-list">
                 <span> Sort By </span>
                 <span><a href="#" id="sort-list" class="sort-by-new">New</a></span>
