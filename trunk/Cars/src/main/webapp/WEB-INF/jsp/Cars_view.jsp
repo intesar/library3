@@ -159,9 +159,9 @@
 
         </div>
         <div style="display:none;" id="email-div">
-            <div id="toAdd"><label>To</label><input type="text" class="toAddress" id="to-label1" value=""/> </div>
-            <div id="sub"><label>Subject</label><input type="text" class="subjectEmail" id="subject-label" value=""/> </div>
-            <div id="com"><label>Comment</label><input type="text" class="commentEmail" id="comment-label" value=""/> </div>
+            <div id="toAdd"><label>To (email)</label><br/><input type="text" size="30px" class="toAddress" id="to-label1" value=""/> </div><br/>
+            <div id="sub"><label>Subject</label><br/><input type="text" size="30px" class="subjectEmail" id="subject-label" value=""/> </div><br/>
+            <div id="com"><label>Comments</label><br/><textarea cols="28" rows="3" class="commentEmail" id="comment-label" ></textarea> </div><br/>
             <div>
                 <input type="button" value="Send" class="send-btn"/>
                 <input type="button" value="Clear" class="clear-btn"/>
