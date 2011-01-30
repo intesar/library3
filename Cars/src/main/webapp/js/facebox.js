@@ -110,14 +110,12 @@
       $('#facebox').css({
         left:   $(window).width() / 2 - 535,
         top:	getPageScroll()[1] + (getPageHeight() / 12)
-//        ,
-//        left:	$(window).width() / 2 - 205
       }).show()
 
-      $(document).bind('keydown.facebox', function(e) {
-        if (e.keyCode == 27) $.facebox.close()
-        return true
-      })
+//      $(document).bind('keydown.facebox', function(e) {
+//        if (e.keyCode == 27) $.facebox.close()
+//        return true
+//      })
       $(document).trigger('loading.facebox')
     },
 

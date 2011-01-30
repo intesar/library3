@@ -8,6 +8,7 @@ jQuery(document).ready(function() {
     getData();
     jQuery(".email-link").live("click", show_email_popup);
     jQuery(".send-btn").live("click", send_email);
+    jQuery(".clear-btn").live("click", close_email);
     jQuery(".car-link").live("click", view_details);
     jQuery(".sort-by-new").click(function() {
         sortBy = 1;
@@ -72,7 +73,7 @@ var displayCars = function(cars) {
         "  </div>"+
         "  <div class='email-clk'>"+
         "  <span>"+
-        "   <a href='JavaScript:void(0)' class='email-link' id='email-" + car.stock + "'>Email listing</a>"+
+        "   <a href='JavaScript:void(0)' class='email-link' id='email-" + car.stock + "'>Email This Car</a>"+
         "  </span>"+
         "  </div>"+
         " </div>"+
@@ -175,6 +176,22 @@ function display_car(car) {
     if(car.towPackage == true)
         jQuery(".towPackage").html("Tow Package");
 }
+
+var close_email = function() {
+    car_ = null;
+    // find all input and clear them
+    jQuery(':input').not(':button, :submit, :reset').each(function() {
+        switch(this.type) {
+            case 'text':
+                this.value = '';
+            case 'textarea':
+                this.value = '';            
+        }
+    }
+    );
+}
+
+
 var send_email = function() {
     var id = carId_;
     
@@ -182,15 +199,19 @@ var send_email = function() {
     var subject = jQuery(jQuery(".subjectEmail")[1]).val();
     var comment = jQuery(jQuery(".commentEmail")[1]).val();
     AjaxCarService.emailTo(id, to, subject, comment);
+    $("#email-div").trigger("close");
 }
+
 
 var carId_ = null;
 var show_email_popup = function() {
     carId_ = jQuery(this).attr("id").substr(6);
-    
+    AjaxCarService.getCar(carId_, function(car) {
+        jQuery(".subjectEmail").val(car.year +" "+ car.make+" "+car.model);
+    })    
     jQuery.facebox  ({   
         div: '#email-div'
-    },'my-groovy-style')    ;
+    },'my-groovy-style');
 }
 
 

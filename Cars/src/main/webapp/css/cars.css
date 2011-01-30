@@ -1,3 +1,16 @@
+/*TODO:
+    1. LOGO
+    2. Append car info into email sujbect
+    3. drop down colors - DONE
+    4. email popup size - DONE
+
+PROD Issues
+    1. pictures in email - 
+    2. popup size - DONE
+    3. dropdown color - DONE
+*/
+
+
 #cars{
     width:920px;
     margin-top:20px;
@@ -137,13 +150,14 @@ li{
 #sort-list {
     float: right;
 }
-.toAddress, .subjectEmail, .commentEmail, .send-btn{
-    margin-left: 45px;
+/*  .toAddress, .subjectEmail, .commentEmail{
+    margin-left: 25px;
     float:right;
 }
 #toAdd, #sub, #com{
     clear:both;
 }
-.clear-btn{
+.clear-btn, .send-btn{
     float:left;
-}
+    margin-left: 5px;
+}*/

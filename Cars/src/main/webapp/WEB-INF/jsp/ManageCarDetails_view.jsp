@@ -404,7 +404,7 @@
             <br/>
             <table>
                 <tr>
-                    <td><input type="button" id="car-cancel" value="Cancel" /></td>
+                    <td><input type="button" id="car-cancel" value="Clear" /></td>
                     <td><input type="button" id="car-save" value="Save" /></td>
                 </tr>
             </table>
