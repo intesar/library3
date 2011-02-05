@@ -14,18 +14,31 @@ public class IGImageHookAction implements ModelListener {
 
     @Override
     public void onAfterCreate(Object model) throws ModelListenerException {
-        if ( logger.isTraceEnabled() ) {
+        if (logger.isTraceEnabled()) {
             logger.trace("trying to add image details to car object");
         }
-        IGImage igImage = (IGImage) model;
-        CarService carService = (CarService) SpringApplicationContextFactory.getContext().getBean("CarServiceImpl");
-        Car car = carService.getCarByImageFolder(igImage.getFolderId());
-        Image image = new Image(igImage.getUuid(), igImage.getGroupId(), false);
-        image.setImageId(igImage.getImageId());
-        image.setSmallImageId(igImage.getSmallImageId());
-        image.setLargeImageId(igImage.getLargeImageId());
-        car.getImages().add(image);
-        carService.saveCar(car);
+
+        try {
+            IGImage igImage = (IGImage) model;
+            CarService carService = (CarService) SpringApplicationContextFactory.getContext().getBean("CarServiceImpl");
+            Car car = carService.getCarByImageFolder(igImage.getFolderId());
+            if (logger.isTraceEnabled()) {
+                logger.trace(car.getId() +" " + car.getMake() + igImage.getImageId());
+            }
+
+            Image image = new Image(igImage.getUuid(), igImage.getGroupId(), false);
+            image.setImageId(igImage.getImageId());
+            image.setSmallImageId(igImage.getSmallImageId());
+            image.setLargeImageId(igImage.getLargeImageId());
+            car.getImages().add(image);
+            carService.saveCar(car);
+            if (logger.isTraceEnabled()) {
+                logger.trace("Successfully added car object");
+            }
+        } catch (RuntimeException re) {
+            logger.warn(" Error adding Image ", re);
+            throw re;
+        }
     }
 
     @Override
@@ -35,15 +48,23 @@ public class IGImageHookAction implements ModelListener {
 
     @Override
     public void onAfterRemove(Object model) throws ModelListenerException {
-        if ( logger.isTraceEnabled() ) {
+        if (logger.isTraceEnabled()) {
             logger.trace("trying to remove image details from car object");
         }
-        IGImage igImage = (IGImage) model;
-        CarService carService = (CarService) SpringApplicationContextFactory.getContext().getBean("CarServiceImpl");
-        Car car = carService.getCarByImageFolder(igImage.getFolderId());
-        Image image = new Image(igImage.getUuid(), igImage.getGroupId(), false);
-        car.getImages().remove(image);
-        carService.saveCar(car);
+        try {
+            IGImage igImage = (IGImage) model;
+            CarService carService = (CarService) SpringApplicationContextFactory.getContext().getBean("CarServiceImpl");
+            Car car = carService.getCarByImageFolder(igImage.getFolderId());
+            Image image = new Image(igImage.getUuid(), igImage.getGroupId(), false);
+            car.getImages().remove(image);
+            carService.saveCar(car);
+            if (logger.isTraceEnabled()) {
+                logger.trace("Successfully deleted car object");
+            }
+        } catch (RuntimeException re) {
+            logger.warn(" Error adding Image ", re);
+            throw re;
+        }
     }
 
     @Override
@@ -80,6 +101,5 @@ public class IGImageHookAction implements ModelListener {
     public void onBeforeUpdate(Object model) throws ModelListenerException {
         //Add your implementation here
     }
-
     protected static final Log logger = LogFactory.getLog(IGImageHookAction.class);
 }
