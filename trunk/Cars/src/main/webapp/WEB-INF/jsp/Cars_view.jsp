@@ -40,10 +40,10 @@
             -->
             <div id="sort-list">
                 <span> Sort By </span>
-                <span><a href="#" id="sort-list" class="sort-by-new">New</a></span>
-                <span><a href="#" id="sort-list" class="sort-by-price">Price</a></span>
-                <span><a href="#" id="sort-list" class="sort-by-mileage">Mileage</a></span>
-                <span><a href="#" id="sort-list" class="sort-by-year">Year</a></span>
+                <span><a href="#" id="" class="sort-by-new">New</a></span>
+                <span><a href="#" id="" class="sort-by-price">Price</a></span>
+                <span><a href="#" id="" class="sort-by-mileage">Mileage</a></span>
+                <span><a href="#" id="" class="sort-by-year">Year</a></span>
             </div>
 
         </div>
