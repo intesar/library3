@@ -49,11 +49,11 @@ PROD Issues
     width:450px;
 }
 
-#filter-list{
+/*#filter-list{
     float:right;
     padding: 1px;
     color:white;
-}
+}*/
 
 #car-newCar{
     color: black;
@@ -148,7 +148,8 @@ li{
     color: white;
 }
 #sort-list {
-    float: right;
+    float: left;
+    margin: 2px;
 }
 /*  .toAddress, .subjectEmail, .commentEmail{
     margin-left: 25px;
