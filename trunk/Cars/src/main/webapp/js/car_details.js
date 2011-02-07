@@ -15,6 +15,7 @@ function display_cars() {
             + "<td>" + car.id + "</td>"
             + "<td>" + car.stock + "</td>"
             + "<td>" + car.make + "</td>"
+            + "<td>" + car.model + "</td>"
             + "</tr>";
         });
         jQuery("#all-cars-body").html(html);
