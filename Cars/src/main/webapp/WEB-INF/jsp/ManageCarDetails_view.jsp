@@ -21,6 +21,7 @@
                         <th>ID</th>
                         <th>Stock #</th>
                         <th>Make</th>
+                        <th>Model</th>
                     </tr>
                 </thead>
                 <tbody id="all-cars-body">
