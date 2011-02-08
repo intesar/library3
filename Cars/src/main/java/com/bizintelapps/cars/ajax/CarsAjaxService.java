@@ -11,6 +11,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.imagegallery.model.IGFolder;
 import com.liferay.portlet.imagegallery.service.IGFolderLocalServiceUtil;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
@@ -32,7 +33,7 @@ public class CarsAjaxService {
             if (car.getId() == null || car.getPhotosFolderId() == null) {
                 ThemeDisplay themeDisplay = (ThemeDisplay) session.getAttribute(SessionHandler.THEME_DISPLAY);
                 ServiceContext serviceContext = (ServiceContext) session.getAttribute(SessionHandler.SERVICE_CONTEXT);
-                String name = car.getMake() + " " + car.getModel() + " " + car.getYear() + " " + car.getVin();
+                String name = car.getMake() + " " + car.getModel() + " " + car.getYear() + " " + car.getVin() + " "+ (new Date()).getTime();
                 String description = car.getVin();
                 if(log.isTraceEnabled()) {
                     log.trace("themeDisplay " + themeDisplay);
