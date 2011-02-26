@@ -23,13 +23,10 @@ public class IGImageHookAction implements ModelListener {
             CarService carService = (CarService) SpringApplicationContextFactory.getContext().getBean("CarServiceImpl");
             Car car = carService.getCarByImageFolder(igImage.getFolderId());
             if (logger.isTraceEnabled()) {
-                logger.trace(car.getId() +" " + car.getMake() + igImage.getImageId());
+                logger.trace(car.getId() + " " + car.getMake() + igImage.getImageId());
             }
 
-            Image image = new Image(igImage.getUuid(), igImage.getGroupId(), false);
-            image.setImageId(igImage.getImageId());
-            image.setSmallImageId(igImage.getSmallImageId());
-            image.setLargeImageId(igImage.getLargeImageId());
+            Image image = new Image(igImage.getUuid(), igImage.getGroupId(), false, igImage.getImageId(), igImage.getSmallImageId(), igImage.getLargeImageId());
             car.getImages().add(image);
             carService.saveCar(car);
             if (logger.isTraceEnabled()) {
@@ -55,7 +52,8 @@ public class IGImageHookAction implements ModelListener {
             IGImage igImage = (IGImage) model;
             CarService carService = (CarService) SpringApplicationContextFactory.getContext().getBean("CarServiceImpl");
             Car car = carService.getCarByImageFolder(igImage.getFolderId());
-            Image image = new Image(igImage.getUuid(), igImage.getGroupId(), false);
+            Image image = new Image();
+            image.setUuid(igImage.getUuid());
             car.getImages().remove(image);
             carService.saveCar(car);
             if (logger.isTraceEnabled()) {

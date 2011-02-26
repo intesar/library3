@@ -20,10 +20,13 @@ public class Image implements Serializable {
     public Image() {
     }
 
-    public Image(String uuid, long groupId, boolean prefered) {
+    public Image(String uuid, long groupId, boolean prefered, long imageId, long smallImageId, long largeImageId) {
         this.uuid = uuid;
         this.groupId = groupId;
         this.prefered = prefered;
+        this.imageId = imageId;
+        this.smallImageId = smallImageId;
+        this.largeImageId = largeImageId;
     }
 
     public long getGroupId() {
