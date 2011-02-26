@@ -76,7 +76,7 @@ public class CarServiceImplTest {
         System.out.println("addCar");
         Car car = new Car();
         car.setAcFront(true);
-        Image image = new Image("abc", 11L, false);
+        Image image = new Image("abc", 11L, false, 1L, 1L, 1L);
         car.getImages().add(image);
         carService.saveCar(car);
     }
@@ -90,7 +90,7 @@ public class CarServiceImplTest {
         assertNotNull(dto.getList());
         assertTrue(dto.getList().size() == 1);
         Car car = dto.getList().get(0);
-        Image image = new Image("abc", 11L, false);
+        Image image = new Image("abc", 11L, false, 1L, 1L, 1L);
         car.getImages().add(image);
         car = carService.saveCar(car);
         car.getImages().remove(image);
